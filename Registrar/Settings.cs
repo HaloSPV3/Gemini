@@ -14,8 +14,8 @@ namespace Registrar
         // So I need the Keyname, Subkeyname (optional), to create the registry instance.
         string _rootKey = null;
         string _registryString = null;
-
-        public List<Option> SettingsArray = new List<Option>();
+        
+        public Dictionary<string, Option> SettingsDict = new Dictionary<string, Option>();
 
         public Settings(string root_key, string sub_key)
         {
@@ -39,14 +39,14 @@ namespace Registrar
                 throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
 
-            foreach (Option option in SettingsArray)
+            foreach (KeyValuePair<string, Option> kvp in SettingsDict)
             {
-                bool option_valid = option.RunValidators();
+                bool option_valid = kvp.Value.RunValidators();
                 if (!option_valid)
                 {
-                    throw new RegistryOptionException("Criteria was not met for option " + option.GetKeyName()); // Reason is needed
+                    throw new RegistryOptionException("Criteria was not met for option " + kvp.Value.GetKeyName()); // Reason is needed
                 }
-                Registry.SetValue(_registryString, option.GetKeyName(), option.Value);
+                Registry.SetValue(_registryString, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
             }
         }
     }

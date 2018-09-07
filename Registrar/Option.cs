@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Win32;
 
 namespace Registrar
 {
@@ -7,16 +6,13 @@ namespace Registrar
     {
         private string _keyName = null;
         private string _subKey = null;
-        private Type _optionType = null;
-        private RegistryValueKind _registryType;
         private Validator[] _validatorList = null;
         private object _optionValue = null;
 
-        public Option(string key_name, string sub_key, Type type, Validator[] validators, Object value)
+        public Option(string key_name, string sub_key, Validator[] validators, Object value)
         {
             _keyName = key_name;
             _subKey = sub_key;
-            _optionType = type;
             _validatorList = validators;
             _optionValue = value;
         }
@@ -42,9 +38,9 @@ namespace Registrar
             return true;
         }
 
-        public Object Value
+        public Object OptionValue
         {
-            get { return Convert.ChangeType(_optionValue, _optionType); }
+            get { return _optionValue; }
             set { _optionValue = RunValidators(value); }
         }
 
