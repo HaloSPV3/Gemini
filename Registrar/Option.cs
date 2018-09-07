@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Win32;
 
 namespace Registrar
 {
@@ -7,6 +8,7 @@ namespace Registrar
         private string _keyName = null;
         private string _subKey = null;
         private Type _optionType = null;
+        private RegistryValueKind _registryType;
         private Validator[] _validatorList = null;
         private object _optionValue = null;
 
@@ -26,13 +28,17 @@ namespace Registrar
                 value = _optionValue;
             }
 
-            foreach (Validator validator in _validatorList)
+            if (_validatorList != null)
             {
-                if (!validator.Validate(value))
+                foreach (Validator validator in _validatorList)
                 {
-                    return false;
+                    if (!validator.Validate(value))
+                    {
+                        return false;
+                    }
                 }
             }
+            
             return true;
         }
 

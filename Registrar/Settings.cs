@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Win32;
 
 namespace Registrar
@@ -11,31 +12,31 @@ namespace Registrar
         // Subkeys have Values
 
         // So I need the Keyname, Subkeyname (optional), to create the registry instance.
-        RegistryKey _rootKey = null;
-        RegistryKey _registry = null;
+        string _rootKey = null;
+        string _registryString = null;
 
-        public Option[] SettingsArray = new Option[] { };
+        public List<Option> SettingsArray = new List<Option>();
 
-        public Settings(RegistryKey root_key, string sub_key)
+        public Settings(string root_key, string sub_key)
         {
             _rootKey = root_key;
-            _registry = _rootKey.OpenSubKey(sub_key);
+            _registryString = root_key + "\\" + sub_key;
         }
 
         public void LoadSettings() // Load settings from the registry instance
         {
-            if (_registry == null)
+            if (_registryString == null)
             {
-                throw new RegistryNotSetException("The registry instance is null. Did you instantiate the settings object correctly?");
+                throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
 
         }
 
         public void SaveSettings() // Save the settings array values to the registry
         {
-            if (_registry == null)
+            if (_registryString == null)
             {
-                throw new RegistryNotSetException("The registry instance is null. Did you instantiate the settings object correctly?");
+                throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
 
             foreach (Option option in SettingsArray)
@@ -45,7 +46,7 @@ namespace Registrar
                 {
                     throw new RegistryOptionException("Criteria was not met for option " + option.GetKeyName()); // Reason is needed
                 }
-                _registry.SetValue(option.GetKeyName(), option.Value);
+                Registry.SetValue(_registryString, option.GetKeyName(), option.Value);
             }
         }
     }
