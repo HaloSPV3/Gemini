@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Permissions;
 using Microsoft.Win32;
 
 namespace Registrar
@@ -27,7 +26,7 @@ namespace Registrar
         {
             if (_registry == null)
             {
-                // Throw new exception
+                throw new RegistryNotSetException("The registry instance is null. Did you instantiate the settings object correctly?");
             }
 
         }
@@ -36,7 +35,7 @@ namespace Registrar
         {
             if (_registry == null)
             {
-                // Throw new exception
+                throw new RegistryNotSetException("The registry instance is null. Did you instantiate the settings object correctly?");
             }
 
             foreach (Option option in SettingsArray)
@@ -44,9 +43,9 @@ namespace Registrar
                 bool option_valid = option.RunValidators();
                 if (!option_valid)
                 {
-                    // Throw new exception
+                    throw new RegistryOptionException("Criteria was not met for option " + option.GetKeyName()); // Reason is needed
                 }
-                // Save it to the Registry
+                _registry.SetValue(option.GetKeyName(), option.Value);
             }
         }
     }

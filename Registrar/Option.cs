@@ -19,16 +19,36 @@ namespace Registrar
             _optionValue = value;
         }
 
-        public bool RunValidators()
+        public bool RunValidators(Object value = null)
         {
+            if (value == null)
+            {
+                value = _optionValue;
+            }
+
             foreach (Validator validator in _validatorList)
             {
-                if (!validator.Validate(_optionValue))
+                if (!validator.Validate(value))
                 {
                     return false;
                 }
             }
             return true;
+        }
+
+        public Object Value
+        {
+            get { return Convert.ChangeType(_optionValue, _optionType); }
+            set { _optionValue = RunValidators(value); }
+        }
+
+        public string GetKeyName()
+        {
+            if (_subKey != null)
+            {
+                return _subKey + "\\" + _keyName;
+            }
+            return _keyName;
         }
     }
 
