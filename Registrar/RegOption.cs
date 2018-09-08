@@ -30,9 +30,7 @@ namespace Registrar
             _optionValue = value;
             _optionType = value_type;
         }
-
-        // I need a way to check if the thing I am setting it to is valid,
-        // And a way to check if the current value is valid.
+        
         public ValidationResponse Validate(Object value = null)
         {
             if (value == null)
