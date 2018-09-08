@@ -45,8 +45,19 @@ namespace Registrar
                     keyPath += subKeys;
                 }
 
-                Object keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value);
-                kvp.Value.OptionValue = keyValue;
+                Object keyValue;
+                try
+                {
+                    keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value);
+                    kvp.Value.OptionValue = keyValue;
+                }
+                catch (FormatException)
+                {
+                    string exception_message = String.Format("Failed when loading setting {0}: " +
+                        "The format for the entry in the registry was wrong. " +
+                        "(EG: attempting to convert a string entry 'abc' to a float). The option will keep its default value if caught.", kvp.Value.GetKeyName());
+                    throw new RegistryOptionException(exception_message);
+                }
             }
         }
 

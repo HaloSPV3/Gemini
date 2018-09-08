@@ -9,8 +9,9 @@ namespace Registrar
         private IValidator _validator = null;
         private object _optionValue = null;
         private object _optionDefault = null;
+        private Type _optionType = null;
 
-        public RegOption(string key_name, IValidator validator, Object value, string sub_keys = null)
+        public RegOption(string key_name, IValidator validator, Object value, Type value_type, string sub_keys = null)
         {
             _keyName = key_name;
 
@@ -28,6 +29,7 @@ namespace Registrar
 
             _validator = validator;
             _optionValue = value;
+            _optionType = value_type;
         }
 
         public ValidationResponse Validate(Object value = null)
@@ -53,7 +55,7 @@ namespace Registrar
                     response.Information = "Successfully processed option.";
                 }
             }
-            _optionValue = value;
+            _optionValue = Convert.ChangeType(value.ToString(), _optionType);
             return response;
         }
 
