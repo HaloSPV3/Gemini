@@ -15,7 +15,6 @@ namespace Registrar
         {
             _baseKey = base_key;
             _registryString = String.Format("{0}\\{1}", base_key, root_key);
-            
         }
 
         public void RegisterSetting(string key_name, RegOption option)
@@ -30,11 +29,6 @@ namespace Registrar
 
         public void LoadSettings() // Load settings from the registry instance
         {
-            if (_registryString == null)
-            {
-                throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
-            }
-            
             foreach (KeyValuePair<string, RegOption> kvp in _settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
@@ -49,25 +43,24 @@ namespace Registrar
                 try
                 {
                     keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value);
-                    kvp.Value.OptionValue = keyValue;
+                    kvp.Value.OptionValue = keyValue ??
+                        throw new RegistryLoadException(String.Format("The registry key {0} at node {1} was not found. " +
+                        "Either the node doesn't exist, or the key doesn't exist at the node. " +
+                        "if caught, call SaveSettings to repopulate the node. " +
+                        "The setting will use the default value if caught as well.", kvp.Value.GetKeyName(), keyPath));
                 }
                 catch (FormatException)
                 {
-                    string exception_message = String.Format("Failed when loading setting {0}: " +
+                    throw new RegistryLoadException(String.Format("Failed when loading setting {0}: " +
                         "The format for the entry in the registry was wrong. " +
-                        "(EG: attempting to convert a string entry 'abc' to a float). The option will keep its default value if caught.", kvp.Value.GetKeyName());
-                    throw new RegistryOptionException(exception_message);
+                        "(EG: attempting to convert a string entry 'abc' to a float). " +
+                        "The option will keep its default value if caught.", kvp.Value.GetKeyName()));
                 }
             }
         }
 
         public void SaveSettings() // Save the settings dict values to the registry
         {
-            if (_registryString == null)
-            {
-                throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
-            }
-
             foreach (KeyValuePair<string, RegOption> kvp in _settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
