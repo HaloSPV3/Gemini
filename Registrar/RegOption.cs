@@ -5,14 +5,14 @@ namespace Registrar
     public class RegOption
     {
         private string _keyName = null;
-        private string _subKey = null;
+        private string _subKeys = null;
         private IValidator _validator = null;
         private object _optionValue = null;
 
-        public RegOption(string key_name, string sub_key, IValidator validator, Object value)
+        public RegOption(string key_name, string sub_keys, IValidator validator, Object value)
         {
             _keyName = key_name;
-            _subKey = sub_key;
+            _subKeys = sub_keys;
             _validator = validator;
             _optionValue = value;
         }
@@ -50,9 +50,9 @@ namespace Registrar
             set { _optionValue = Validate(value); }
         }
 
-        public string GetSubKey()
+        public string GetSubKeys()
         {
-            return _subKey;
+            return _subKeys;
         }
 
         public string GetKeyName()

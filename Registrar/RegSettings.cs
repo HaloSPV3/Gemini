@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Microsoft.Win32;
 
 namespace Registrar
@@ -32,7 +33,7 @@ namespace Registrar
 
         }
 
-        public void SaveSettings() // Save the settings array values to the registry
+        public void SaveSettings() // Save the settings dict values to the registry
         {
             if (_registryString == null)
             {
@@ -41,7 +42,7 @@ namespace Registrar
 
             foreach (KeyValuePair<string, RegOption> kvp in SettingsDict)
             {
-                string subKey = kvp.Value.GetSubKey();
+                string subKeys = kvp.Value.GetSubKeys();
 
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
@@ -50,9 +51,13 @@ namespace Registrar
                 }
 
                 string keyOut = _registryString;
-                if (subKey != null)
+                if (subKeys != null)
                 {
-                    keyOut += "\\" + subKey;
+                    if (subKeys[0] != '/')
+                    {
+                        subKeys = '/' + subKeys;
+                    }
+                    keyOut += subKeys.Replace(@"/", @"\\");
                 }
                 Registry.SetValue(keyOut, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
             }
