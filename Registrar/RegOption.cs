@@ -80,16 +80,4 @@ namespace Registrar
             return _keyName;
         }
     }
-
-    public interface IValidator
-    {
-        bool Validate(object value);
-        string Description();
-    }
-
-    public class ValidationResponse
-    {
-        public bool Successful { get; set; }
-        public string Information { get; set; }
-    }
 }

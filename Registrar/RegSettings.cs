@@ -43,14 +43,14 @@ namespace Registrar
                 {
                     keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value);
                     kvp.Value.OptionValue = keyValue ??
-                        throw new RegistryLoadException(String.Format("The registry key {0} at node {1} was not found. " +
+                        throw new RegistryKeyNotFoundException(String.Format("The registry key {0} at node {1} was not found. " +
                         "Either the node doesn't exist, or the key doesn't exist at the node. " +
                         "if caught, call SaveSettings to repopulate the node. " +
                         "The setting will use the default value if caught as well.", kvp.Value.GetKeyName(), keyPath));
                 }
                 catch (FormatException)
                 {
-                    throw new RegistryLoadException(String.Format("Failed when loading setting {0}: " +
+                    throw new RegistryKeyFormatException(String.Format("Failed when loading setting {0}: " +
                         "The format for the entry in the registry was wrong. " +
                         "(EG: attempting to convert a string entry 'abc' to a float). " +
                         "The option will keep its default value if caught.", kvp.Value.GetKeyName()));
