@@ -41,12 +41,20 @@ namespace Registrar
 
             foreach (KeyValuePair<string, RegOption> kvp in SettingsDict)
             {
+                string subKey = kvp.Value.GetSubKey();
+
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
                 {
                     throw new RegistryOptionException("Criteria was not met for option: " + kvp.Value.GetKeyName() + " Reason: " + validation_result.Information);
                 }
-                Registry.SetValue(_registryString, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
+
+                string keyOut = _registryString;
+                if (subKey != null)
+                {
+                    keyOut += "\\" + subKey;
+                }
+                Registry.SetValue(keyOut, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
             }
         }
     }

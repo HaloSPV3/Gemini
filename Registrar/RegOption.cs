@@ -50,12 +50,13 @@ namespace Registrar
             set { _optionValue = Validate(value); }
         }
 
+        public string GetSubKey()
+        {
+            return _subKey;
+        }
+
         public string GetKeyName()
         {
-            if (_subKey != null)
-            {
-                return _subKey + "\\" + _keyName;
-            }
             return _keyName;
         }
     }
