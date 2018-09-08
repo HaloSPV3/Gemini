@@ -31,37 +31,49 @@ namespace Registrar
             _optionType = value_type;
         }
 
+        // I need a way to check if the thing I am setting it to is valid,
+        // And a way to check if the current value is valid.
         public ValidationResponse Validate(Object value = null)
         {
-            ValidationResponse response = new ValidationResponse();
-            if (value == null)
+            bool option_valid = _validator.Validate(value);
+            ValidationResponse response = new ValidationResponse
             {
-                value = _optionValue;
-            }
+                Successful = true,
+                Information = "Successfully processed option."
+            };
 
             if (_validator != null)
             {
-                bool option_valid = _validator.Validate(value);
+                if (value == null)
+                {
+                    value = _optionValue;
+                }
+
                 if (!option_valid)
                 {
                     response.Successful = false;
                     response.Information = _validator.Description();
-                    //return _validator.Description();
-                }
-                else
-                {
-                    response.Successful = true;
-                    response.Information = "Successfully processed option.";
                 }
             }
-            _optionValue = Convert.ChangeType(value.ToString(), _optionType);
+
             return response;
         }
 
         public Object OptionValue
         {
             get { return _optionValue; }
-            set { Validate(value); }
+        }
+
+        public ValidationResponse SetOptionValue(Object value)
+        {
+            ValidationResponse response = Validate(value);
+
+            if (response.Successful)
+            {
+                _optionValue = Convert.ChangeType(value.ToString(), _optionType);
+            }
+
+            return response;
         }
 
         public string GetSubKeys()

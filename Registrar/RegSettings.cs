@@ -78,7 +78,11 @@ namespace Registrar
                     }
                     else
                     {
-                        kvp.Value.OptionValue = keyValue;
+                        ValidationResponse validation_result = kvp.Value.SetOptionValue(keyValue);
+                        if (!validation_result.Successful)
+                        {
+                            _result += String.Format("Failed when validating an option while loading: {0} - {1}", kvp.Value.GetKeyName(), validation_result.Information);
+                        }
                     }
                 }
                 catch (FormatException)
@@ -97,19 +101,22 @@ namespace Registrar
             foreach (KeyValuePair<string, RegOption> kvp in _settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
-
-                ValidationResponse validation_result = kvp.Value.Validate();
-                if (!validation_result.Successful)
-                {
-                    _result += String.Format("Failed when validating an option: {0} - {1}", kvp.Value.GetKeyName(), validation_result.Information);
-                }
-
                 string keyOut = _registryString;
                 if (subKeys != null)
                 {
                     keyOut += subKeys;
                 }
-                Registry.SetValue(keyOut, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
+
+                ValidationResponse validation_result = kvp.Value.Validate();
+                if (!validation_result.Successful)
+                {
+                    _result += String.Format("Failed when validating an option during saving: {0} - {1}, this occurs if someone manually edits the registry" +
+                        "to use an invalid value. Using default.", kvp.Value.GetKeyName(), validation_result.Information);
+                }
+                else
+                {
+                    Registry.SetValue(keyOut, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
+                }
             }
 
             return _result;
