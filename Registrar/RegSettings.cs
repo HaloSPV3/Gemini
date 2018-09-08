@@ -9,7 +9,7 @@ namespace Registrar
     {
         string _baseKey = null;
         string _registryString = null;
-        public Dictionary<string, RegOption> Settings = new Dictionary<string, RegOption>();
+        private Dictionary<string, RegOption> _settings = new Dictionary<string, RegOption>();
 
         public RegSettings(string base_key, string root_key)
         {
@@ -20,12 +20,12 @@ namespace Registrar
 
         public void RegisterSetting(string key_name, RegOption option)
         {
-            Settings.Add(key_name, option);
+            _settings.Add(key_name, option);
         }
 
         public Object GetSetting(string key_name)
         {
-            return Settings[key_name].OptionValue;
+            return _settings[key_name].OptionValue;
         }
 
         public void LoadSettings() // Load settings from the registry instance
@@ -35,7 +35,7 @@ namespace Registrar
                 throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
             
-            foreach (KeyValuePair<string, RegOption> kvp in Settings)
+            foreach (KeyValuePair<string, RegOption> kvp in _settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
                 string keyPath = _registryString;
@@ -57,7 +57,7 @@ namespace Registrar
                 throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
 
-            foreach (KeyValuePair<string, RegOption> kvp in Settings)
+            foreach (KeyValuePair<string, RegOption> kvp in _settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
 
