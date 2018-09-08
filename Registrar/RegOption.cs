@@ -35,6 +35,10 @@ namespace Registrar
         // And a way to check if the current value is valid.
         public ValidationResponse Validate(Object value = null)
         {
+            if (value == null)
+            {
+                value = _optionValue;
+            }
             bool option_valid = _validator.Validate(value);
             ValidationResponse response = new ValidationResponse
             {
@@ -44,11 +48,6 @@ namespace Registrar
 
             if (_validator != null)
             {
-                if (value == null)
-                {
-                    value = _optionValue;
-                }
-
                 if (!option_valid)
                 {
                     response.Successful = false;
