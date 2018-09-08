@@ -8,13 +8,27 @@ namespace Registrar
         private string _subKeys = null;
         private IValidator _validator = null;
         private object _optionValue = null;
+        private object _optionDefault = null;
 
-        public RegOption(string key_name, string sub_keys, IValidator validator, Object value)
+        public RegOption(string key_name, string sub_keys, IValidator validator, Object value, Object default_value = null)
         {
             _keyName = key_name;
-            _subKeys = sub_keys;
+
+            string keyOut;
+            if (sub_keys != null)
+            {
+                if (sub_keys[0] != '/')
+                {
+                    sub_keys = '/' + sub_keys;
+
+                }
+                keyOut = sub_keys.Replace(@"/", @"\\");
+                _subKeys = keyOut;
+            }
+
             _validator = validator;
             _optionValue = value;
+            _optionDefault = default_value;
         }
 
         public ValidationResponse Validate(Object value = null)
@@ -40,14 +54,19 @@ namespace Registrar
                     response.Information = "Successfully processed option.";
                 }
             }
-
+            _optionValue = value;
             return response;
         }
 
         public Object OptionValue
         {
             get { return _optionValue; }
-            set { _optionValue = Validate(value); }
+            set { Validate(value); }
+        }
+
+        public Object OptionDefault
+        {
+            get { return _optionDefault; }
         }
 
         public string GetSubKeys()
