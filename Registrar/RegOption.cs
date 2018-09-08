@@ -8,7 +8,6 @@ namespace Registrar
         private string _subKeys = null;
         private IValidator _validator = null;
         private object _optionValue = null;
-        private object _optionDefault = null;
         private Type _optionType = null;
 
         public RegOption(string key_name, IValidator validator, Object value, Type value_type, string sub_keys = null)
@@ -63,11 +62,6 @@ namespace Registrar
         {
             get { return _optionValue; }
             set { Validate(value); }
-        }
-
-        public Object OptionDefault
-        {
-            get { return _optionDefault; }
         }
 
         public string GetSubKeys()

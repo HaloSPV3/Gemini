@@ -7,12 +7,14 @@ namespace Registrar
     public class RegSettings
     {
         string _baseKey = null;
+        string _rootKey = null;
         string _registryString = null;
         private Dictionary<string, RegOption> _settings = new Dictionary<string, RegOption>();
 
         public RegSettings(string base_key, string root_key)
         {
             _baseKey = base_key;
+            _rootKey = root_key;
             _registryString = String.Format("{0}\\{1}", base_key, root_key);
         }
 
@@ -26,8 +28,35 @@ namespace Registrar
             return _settings[key_name].OptionValue;
         }
 
-        public void LoadSettings() // Load settings from the registry instance
+        public bool RootKeyEntryExists()
         {
+            RegistryKey _registryRoot;
+            switch (_baseKey)
+            {
+                case BaseKeys.HKEY_CURRENT_USER:
+                    _registryRoot = Registry.CurrentUser.OpenSubKey(_rootKey, false);
+                    break;
+                case BaseKeys.HKEY_CLASSES_ROOT:
+                    _registryRoot = Registry.ClassesRoot.OpenSubKey(_rootKey, false);
+                    break;
+                case BaseKeys.HKEY_CURRENT_CONFIG:
+                    _registryRoot = Registry.CurrentConfig.OpenSubKey(_rootKey, false);
+                    break;
+                case BaseKeys.HKEY_LOCAL_MACHINE:
+                    _registryRoot = Registry.LocalMachine.OpenSubKey(_rootKey, false);
+                    break;
+                case BaseKeys.HKEY_USERS:
+                    _registryRoot = Registry.Users.OpenSubKey(_rootKey, false);
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid Base Key given. Use the BaseKeys helper class.");
+            }
+            return _registryRoot != null;
+        }
+
+        public string LoadSettings() // Load settings from the registry instance
+        {
+            string _result = null;
             foreach (KeyValuePair<string, RegOption> kvp in _settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
@@ -41,25 +70,30 @@ namespace Registrar
                 Object keyValue;
                 try
                 {
-                    keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value);
-                    kvp.Value.OptionValue = keyValue ??
-                        throw new RegistryKeyNotFoundException(String.Format("The registry key {0} at node {1} was not found. " +
-                        "Either the node doesn't exist, or the key doesn't exist at the node. " +
-                        "if caught, call SaveSettings to repopulate the node. " +
-                        "The setting will use the default value if caught as well.", kvp.Value.GetKeyName(), keyPath));
+                    keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
+                    if (keyValue == null)
+                    {
+                        _result += string.Format("Failed loading option {0}: Option did not exist in the registry. " +
+                            "Using default.", kvp.Value.GetKeyName());
+                    }
+                    else
+                    {
+                        kvp.Value.OptionValue = keyValue;
+                    }
                 }
                 catch (FormatException)
                 {
-                    throw new RegistryKeyFormatException(String.Format("Failed when loading setting {0}: " +
-                        "The format for the entry in the registry was wrong. " +
-                        "(EG: attempting to convert a string entry 'abc' to a float). " +
-                        "The option will keep its default value if caught.", kvp.Value.GetKeyName()));
+                    _result += String.Format("Failed when loading option {0}: Option was not formatted correctly. " +
+                        "This usually occurs if someone manually" + "alters the entry in the registry. Using default.", kvp.Value.GetKeyName());
                 }
             }
+            return _result;
         }
 
-        public void SaveSettings() // Save the settings dict values to the registry
+        public string SaveSettings() // Save the settings dict values to the registry
         {
+            string _result = null;
+
             foreach (KeyValuePair<string, RegOption> kvp in _settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
@@ -67,7 +101,7 @@ namespace Registrar
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
                 {
-                    throw new RegistryOptionException(String.Format("Criteria was not met for option: {0} - Reason: {1}", kvp.Value.GetKeyName(), validation_result.Information));
+                    _result += String.Format("Failed when validating an option: {0} - {1}", kvp.Value.GetKeyName(), validation_result.Information);
                 }
 
                 string keyOut = _registryString;
@@ -77,6 +111,8 @@ namespace Registrar
                 }
                 Registry.SetValue(keyOut, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
             }
+
+            return _result;
         }
     }
 }
