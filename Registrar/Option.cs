@@ -46,7 +46,8 @@ namespace Registrar
         {
             if (_subKey != null)
             {
-                return _subKey + "\\" + _keyName;
+                return String.Format("{0}\\{1}", _subKey, _keyName);
+
             }
             return _keyName;
         }

@@ -21,7 +21,7 @@ namespace Registrar
         public RegSettings(string root_key, string sub_key)
         {
             _rootKey = root_key;
-            _registryString = root_key + "\\" + sub_key;
+            _registryString = String.Format("{0}\\{1}", root_key, sub_key);
         }
 
         public void LoadSettings() // Load settings from the registry instance
@@ -47,7 +47,7 @@ namespace Registrar
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
                 {
-                    throw new RegistryOptionException("Criteria was not met for option: " + kvp.Value.GetKeyName() + " Reason: " + validation_result.Information);
+                    throw new RegistryOptionException(String.Format("Criteria was not met for option: {0} - Reason: {1}", kvp.Value.GetKeyName(), validation_result.Information));
                 }
 
                 string keyOut = _registryString;
