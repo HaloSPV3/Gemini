@@ -17,8 +17,9 @@ namespace Registrar
             _optionValue = value;
         }
 
-        public bool Validate(Object value = null)
+        public ValidationResponse Validate(Object value = null)
         {
+            ValidationResponse response = new ValidationResponse();
             if (value == null)
             {
                 value = _optionValue;
@@ -29,11 +30,18 @@ namespace Registrar
                 bool option_valid = _validator.Validate(value);
                 if (!option_valid)
                 {
-                    return false;
+                    response.Successful = false;
+                    response.Information = _validator.Description();
+                    //return _validator.Description();
+                }
+                else
+                {
+                    response.Successful = true;
+                    response.Information = "Successfully processed option.";
                 }
             }
 
-            return true;
+            return response;
         }
 
         public Object OptionValue
@@ -55,5 +63,12 @@ namespace Registrar
     public interface IValidator
     {
         bool Validate(object value);
+        string Description();
+    }
+
+    public class ValidationResponse
+    {
+        public bool Successful { get; set; }
+        public string Information { get; set; }
     }
 }
