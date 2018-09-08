@@ -7,16 +7,9 @@ namespace Registrar
 {
     public class RegSettings
     {
-        // Registry Tree
-        // Node in the tree is a Key
-        // Keys have Subkeys and Values
-        // Subkeys have Values
-
-        // So I need the Keyname, Subkeyname (optional), to create the registry instance.
-
         string _baseKey = null;
         string _registryString = null;
-        public Dictionary<string, RegOption> SettingsDict = new Dictionary<string, RegOption>();
+        public Dictionary<string, RegOption> Settings = new Dictionary<string, RegOption>();
 
         public RegSettings(string base_key, string root_key)
         {
@@ -27,12 +20,12 @@ namespace Registrar
 
         public void RegisterSetting(string key_name, RegOption option)
         {
-            SettingsDict.Add(key_name, option);
+            Settings.Add(key_name, option);
         }
 
         public Object GetSetting(string key_name)
         {
-            return SettingsDict[key_name].OptionValue;
+            return Settings[key_name].OptionValue;
         }
 
         public void LoadSettings() // Load settings from the registry instance
@@ -41,10 +34,8 @@ namespace Registrar
             {
                 throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
-            // Go into the base key, then go into the root key
-            // Get the the sub key, the key name, and its value
             
-            foreach (KeyValuePair<string, RegOption> kvp in SettingsDict)
+            foreach (KeyValuePair<string, RegOption> kvp in Settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
                 string keyPath = _registryString;
@@ -54,7 +45,7 @@ namespace Registrar
                     keyPath += subKeys;
                 }
 
-                Object keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value.OptionDefault);
+                Object keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value);
                 kvp.Value.OptionValue = keyValue;
             }
         }
@@ -66,7 +57,7 @@ namespace Registrar
                 throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
 
-            foreach (KeyValuePair<string, RegOption> kvp in SettingsDict)
+            foreach (KeyValuePair<string, RegOption> kvp in Settings)
             {
                 string subKeys = kvp.Value.GetSubKeys();
 

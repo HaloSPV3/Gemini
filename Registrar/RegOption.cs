@@ -10,7 +10,7 @@ namespace Registrar
         private object _optionValue = null;
         private object _optionDefault = null;
 
-        public RegOption(string key_name, string sub_keys, IValidator validator, Object value, Object default_value = null)
+        public RegOption(string key_name, IValidator validator, Object value, string sub_keys = null)
         {
             _keyName = key_name;
 
@@ -28,7 +28,6 @@ namespace Registrar
 
             _validator = validator;
             _optionValue = value;
-            _optionDefault = default_value;
         }
 
         public ValidationResponse Validate(Object value = null)
