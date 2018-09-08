@@ -2,14 +2,14 @@
 
 namespace Registrar
 {
-    public class RegOption
+    public class Option
     {
         private string _keyName = null;
         private string _subKey = null;
-        private IValidator _validator = null;
+        private Validator _validator = null;
         private object _optionValue = null;
 
-        public RegOption(string key_name, string sub_key, IValidator validator, Object value)
+        public Option(string key_name, string sub_key, Validator validator, Object value)
         {
             _keyName = key_name;
             _subKey = sub_key;
@@ -17,7 +17,7 @@ namespace Registrar
             _optionValue = value;
         }
 
-        public bool Validate(Object value = null)
+        public bool RunValidators(Object value = null)
         {
             if (value == null)
             {
@@ -32,14 +32,14 @@ namespace Registrar
                     return false;
                 }
             }
-
+            
             return true;
         }
 
         public Object OptionValue
         {
             get { return _optionValue; }
-            set { _optionValue = Validate(value); }
+            set { _optionValue = RunValidators(value); }
         }
 
         public string GetKeyName()
@@ -52,8 +52,8 @@ namespace Registrar
         }
     }
 
-    public interface IValidator
+    public abstract class Validator
     {
-        bool Validate(object value);
+        public abstract bool Validate(object value);
     }
 }

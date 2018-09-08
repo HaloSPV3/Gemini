@@ -4,7 +4,7 @@ using Microsoft.Win32;
 
 namespace Registrar
 {
-    public class Settings
+    public class RegSettings
     {
         // Registry Tree
         // Node in the tree is a Key
@@ -15,9 +15,9 @@ namespace Registrar
         string _rootKey = null;
         string _registryString = null;
         
-        public Dictionary<string, Option> SettingsDict = new Dictionary<string, Option>();
+        public Dictionary<string, RegOption> SettingsDict = new Dictionary<string, RegOption>();
 
-        public Settings(string root_key, string sub_key)
+        public RegSettings(string root_key, string sub_key)
         {
             _rootKey = root_key;
             _registryString = root_key + "\\" + sub_key;
@@ -39,9 +39,9 @@ namespace Registrar
                 throw new RegistryNotSetException("The registry string is null. Did you instantiate the settings object correctly?");
             }
 
-            foreach (KeyValuePair<string, Option> kvp in SettingsDict)
+            foreach (KeyValuePair<string, RegOption> kvp in SettingsDict)
             {
-                bool option_valid = kvp.Value.RunValidators();
+                bool option_valid = kvp.Value.Validate();
                 if (!option_valid)
                 {
                     throw new RegistryOptionException("Criteria was not met for option " + kvp.Value.GetKeyName()); // Reason is needed
