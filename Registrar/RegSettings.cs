@@ -60,7 +60,7 @@ namespace Registrar
             ValidationResponse validationResult = _settingsMapping[optionName].SetOptionValue(value);
             if (!validationResult.Successful)
             {
-                return String.Format("Failed to set option {0}, reason: {1}. Option will keep its current value.", optionName, validationResult.Information);
+                return String.Format("Failed to set option '{0}', reason: '{1}'. Option will keep its current value.", optionName, validationResult.Information);
             }
             return null;
         }
@@ -118,7 +118,7 @@ namespace Registrar
                     keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
                     if (keyValue == null)
                     {
-                        loadResult += string.Format("\r\nFailed loading option {0}: Option did not exist in the registry. " +
+                        loadResult += string.Format("\r\nFailed loading option '{0}': Option did not exist in the registry. " +
                             "The value will use its default.", kvp.Value.GetKeyName());
                     }
                     else
@@ -126,13 +126,13 @@ namespace Registrar
                         ValidationResponse validation_result = kvp.Value.SetOptionValue(keyValue);
                         if (!validation_result.Successful)
                         {
-                            loadResult += String.Format("\r\nFailed when validating an option while loading: {0} - {1}. The value will use its default.", kvp.Value.GetKeyName(), validation_result.Information);
+                            loadResult += String.Format("\r\nFailed when validating an option while loading: '{0}' - '{1}'. The value will use its default.", kvp.Value.GetKeyName(), validation_result.Information);
                         }
                     }
                 }
                 catch (FormatException)
                 {
-                    loadResult += String.Format("\r\nFailed when loading option {0}: Option was not formatted correctly. " +
+                    loadResult += String.Format("\r\nFailed when loading option '{0}': Option was not formatted correctly. " +
                         "This usually occurs if someone manually" + "alters the entry in the registry. The value will use its default.", kvp.Value.GetKeyName());
                 }
             }
@@ -158,7 +158,7 @@ namespace Registrar
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
                 {
-                    saveResult += String.Format("\r\nFailed when validating an option during saving: {0} - {1}, this occurs if someone manually edits the registry" +
+                    saveResult += String.Format("\r\nFailed when validating an option during saving: '{0}' - '{1}', this occurs if someone manually edits the registry" +
                         "to use an invalid value. The value will use its default.", kvp.Value.GetKeyName(), validation_result.Information);
                 }
                 else
