@@ -43,9 +43,9 @@ namespace Registrar
         /// </summary>
         /// <param name="optionName">The name of the option to get the value of.</param>
         /// <returns>The option value. Raises an exception of type KeyNotFound if the option name was not found.</returns>
-        public Object GetOption(string optionName)
+        public T GetOption<T>(string optionName)
         {
-            return _settingsMapping[optionName].OptionValue;
+            return (T) _settingsMapping[optionName].OptionValue;
         }
 
         /// <summary>
