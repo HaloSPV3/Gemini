@@ -55,8 +55,8 @@ namespace Registrar
             {
                 value = _optionValue;
             }
-            bool option_valid = _validator.Validate(value);
-            ValidationResponse response = new ValidationResponse
+            bool optionValid = _validator.Validate(value);
+            ValidationResponse validationResult = new ValidationResponse
             {
                 Successful = true,
                 Information = "Successfully processed option."
@@ -64,14 +64,14 @@ namespace Registrar
 
             if (_validator != null)
             {
-                if (!option_valid)
+                if (!optionValid)
                 {
-                    response.Successful = false;
-                    response.Information = _validator.Description();
+                    validationResult.Successful = false;
+                    validationResult.Information = _validator.Description();
                 }
             }
 
-            return response;
+            return validationResult;
         }
 
         /// <summary>
@@ -89,14 +89,14 @@ namespace Registrar
         /// <returns>A ValidationResponse instance which contains the result of the validation.</returns>
         public ValidationResponse SetOptionValue(Object value)
         {
-            ValidationResponse response = Validate(value);
+            ValidationResponse validationResponse = Validate(value);
 
-            if (response.Successful)
+            if (validationResponse.Successful)
             {
                 _optionValue = Convert.ChangeType(value.ToString(), _optionType);
             }
 
-            return response;
+            return validationResponse;
         }
 
         /// <summary>

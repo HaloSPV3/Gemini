@@ -46,7 +46,7 @@ namespace Registrar
 
         public static bool ValidatorBooleanConverter(Object value)
         {
-            Dictionary<string, Object> _booleanConversion = new Dictionary<string, Object>() // This is a bit iffy.
+            Dictionary<string, Object> booleanConverterDict = new Dictionary<string, Object>() // This is a bit iffy.
             {
                 { "true", true },
                 { "false", false },
@@ -54,12 +54,12 @@ namespace Registrar
                 { "0", false },
             };
 
-            string _value_str = value.ToString().ToLower();
-            bool _out = _booleanConversion.TryGetValue(_value_str, out object _result);
+            string valueStr = value.ToString().ToLower();
+            bool conversionSuccessful = booleanConverterDict.TryGetValue(valueStr, out object convertedValue);
 
-            if (_out)
+            if (conversionSuccessful)
             {
-                return (bool)_result;
+                return (bool)convertedValue;
             }
             else
             {
