@@ -4,13 +4,23 @@ using Microsoft.Win32;
 
 namespace Registrar
 {
+    /// <summary>
+    /// Represents the settings in the registry.
+    /// Contains an internal dictionary which maps option names to option objects.
+    /// </summary>
     public class RegSettings
     {
         string _baseKey = null;
         string _rootKey = null;
         string _registryString = null;
+
         private Dictionary<string, RegOption> _settings = new Dictionary<string, RegOption>();
 
+        /// <summary>
+        /// Constructor for the settings instance.
+        /// </summary>
+        /// <param name="base_key">The base key in the registry the root key will go under. EG: HKEY_CURRENT_USERS.</param>
+        /// <param name="root_key">The root key which is where all the keys the options use will fall under. EG: passing 'RootKey' -> HKEY_CURRENT_USERS/RootKey in the registry.</param>
         public RegSettings(string base_key, string root_key)
         {
             _baseKey = base_key;
@@ -18,17 +28,31 @@ namespace Registrar
             _registryString = String.Format("{0}\\{1}", base_key, root_key);
         }
 
-        public void RegisterSetting(string key_name, RegOption option)
+        /// <summary>
+        /// Adds the option instance to the internal mapping of options.
+        /// </summary>
+        /// <param name="option_name">The name of the option to use in the registry. Can be different than the keyname.</param>
+        /// <param name="option">The option instance.</param>
+        public void RegisterSetting(string option_name, RegOption option)
         {
-            _settings.Add(key_name, option);
+            _settings.Add(option_name, option);
         }
 
-        public Object GetSetting(string key_name)
+        /// <summary>
+        /// Retrieves the value associated with the option in the settings mapping (not the option object).
+        /// </summary>
+        /// <param name="option_name">The name of the option to get the value of.</param>
+        /// <returns>The option value. Raises an exception of type KeyNotFound if the option name was not found.</returns>
+        public Object GetSetting(string option_name)
         {
-            return _settings[key_name].OptionValue;
+            return _settings[option_name].OptionValue;
         }
 
-        public bool RootKeyEntryExists()
+        /// <summary>
+        /// Check if the root key of the setting currently exists in the registry.
+        /// </summary>
+        /// <returns>True if the key does exist, false if it doesn't. Raises an exception of type InvalidOperationException if the base key was wrong.</returns>
+        public bool RootKeyExists()
         {
             RegistryKey _registryRoot;
             switch (_baseKey)
@@ -54,6 +78,10 @@ namespace Registrar
             return _registryRoot != null;
         }
 
+        /// <summary>
+        /// Attempts to load values out of the registry and set the option instance's values with the loaded values.
+        /// </summary>
+        /// <returns>Null if successful, or a string detailing which options failed and why.</returns>
         public string LoadSettings() // Load settings from the registry instance
         {
             string _result = null;
@@ -94,6 +122,10 @@ namespace Registrar
             return _result;
         }
 
+        /// <summary>
+        /// Attempts to save the current values in the settings dictionary to the registry.
+        /// </summary>
+        /// <returns>Null if successful, or a string detailing which options failed and why.</returns>
         public string SaveSettings() // Save the settings dict values to the registry
         {
             string _result = null;
@@ -106,7 +138,6 @@ namespace Registrar
                 {
                     keyOut += subKeys;
                 }
-
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
                 {
@@ -118,7 +149,6 @@ namespace Registrar
                     Registry.SetValue(keyOut, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
                 }
             }
-
             return _result;
         }
     }

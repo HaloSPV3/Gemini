@@ -1,5 +1,9 @@
 ﻿namespace Registrar
 {
+    /// <summary>
+    /// Defines constants used for the base keys in the registry, intended
+    /// to make creating settings instances easier.
+    /// </summary>
     public static class BaseKeys
     {
         public const string HKEY_CURRENT_USER=     "HKEY_CURRENT_USER";
