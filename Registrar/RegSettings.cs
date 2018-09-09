@@ -101,7 +101,7 @@ namespace Registrar
                     keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
                     if (keyValue == null)
                     {
-                        _result += string.Format("Failed loading option {0}: Option did not exist in the registry. " +
+                        _result += string.Format("\r\nFailed loading option {0}: Option did not exist in the registry. " +
                             "Using default.", kvp.Value.GetKeyName());
                     }
                     else
@@ -109,13 +109,13 @@ namespace Registrar
                         ValidationResponse validation_result = kvp.Value.SetOptionValue(keyValue);
                         if (!validation_result.Successful)
                         {
-                            _result += String.Format("Failed when validating an option while loading: {0} - {1}", kvp.Value.GetKeyName(), validation_result.Information);
+                            _result += String.Format("\r\nFailed when validating an option while loading: {0} - {1}", kvp.Value.GetKeyName(), validation_result.Information);
                         }
                     }
                 }
                 catch (FormatException)
                 {
-                    _result += String.Format("Failed when loading option {0}: Option was not formatted correctly. " +
+                    _result += String.Format("\r\nFailed when loading option {0}: Option was not formatted correctly. " +
                         "This usually occurs if someone manually" + "alters the entry in the registry. Using default.", kvp.Value.GetKeyName());
                 }
             }
@@ -141,7 +141,7 @@ namespace Registrar
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
                 {
-                    _result += String.Format("Failed when validating an option during saving: {0} - {1}, this occurs if someone manually edits the registry" +
+                    _result += String.Format("\r\nFailed when validating an option during saving: {0} - {1}, this occurs if someone manually edits the registry" +
                         "to use an invalid value. Using default.", kvp.Value.GetKeyName(), validation_result.Information);
                 }
                 else
