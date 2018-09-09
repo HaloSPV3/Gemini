@@ -32,9 +32,6 @@ namespace Registrar
             _rootKey = rootKey.Replace(@"/", @"\\");
 
             _registryString = String.Format("{0}\\{1}", _baseKey, _rootKey);
-            // HKEY_CURRENT_USER\Software/Test
-            // HKEY_CURRENT_USER\Software\Test
-            //throw new Exception(String.Format("\r\n \r\n{0} \r\n{1}", _rootKey, _registryString));
         }
 
         /// <summary>
