@@ -99,11 +99,19 @@ namespace Registrar
             return response;
         }
 
+        /// <summary>
+        /// Gets the subkeys the option uses.
+        /// </summary>
+        /// <returns>The subkeys string.</returns>
         public string GetSubKeys()
         {
             return _subKeys;
         }
 
+        /// <summary>
+        /// Gets the key name the option will be using in the registry.
+        /// </summary>
+        /// <returns>The keyname string.</returns>
         public string GetKeyName()
         {
             return _keyName;
