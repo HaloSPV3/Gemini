@@ -43,9 +43,26 @@ namespace Registrar
         /// </summary>
         /// <param name="option_name">The name of the option to get the value of.</param>
         /// <returns>The option value. Raises an exception of type KeyNotFound if the option name was not found.</returns>
-        public Object GetSetting(string option_name)
+        public Object GetOption(string option_name)
         {
             return _settings[option_name].OptionValue;
+        }
+
+        /// <summary>
+        /// Attempts to set the value of an option in the settings mapping to the supplied value.
+        /// If the option fails to get set, it will keep its default value.
+        /// </summary>
+        /// <param name="option_name">The name of the option in the mapping to be changed.</param>
+        /// <param name="value">The value to attempt to set the option to.</param>
+        /// <returns>Returns an error message detailing why it failed to be set, or null if it was sucessfully set.</returns>
+        public string SetOption(string option_name, Object value)
+        {
+            ValidationResponse _validationResult = _settings[option_name].SetOptionValue(value);
+            if (!_validationResult.Successful)
+            {
+                return String.Format("Failed to set option {0}, reason: {1}. Option will keep its current value.", option_name, _validationResult.Information);
+            }
+            return null;
         }
 
         /// <summary>
@@ -102,21 +119,21 @@ namespace Registrar
                     if (keyValue == null)
                     {
                         _result += string.Format("\r\nFailed loading option {0}: Option did not exist in the registry. " +
-                            "Using default.", kvp.Value.GetKeyName());
+                            "The value will use its default.", kvp.Value.GetKeyName());
                     }
                     else
                     {
                         ValidationResponse validation_result = kvp.Value.SetOptionValue(keyValue);
                         if (!validation_result.Successful)
                         {
-                            _result += String.Format("\r\nFailed when validating an option while loading: {0} - {1}", kvp.Value.GetKeyName(), validation_result.Information);
+                            _result += String.Format("\r\nFailed when validating an option while loading: {0} - {1}. The value will use its default.", kvp.Value.GetKeyName(), validation_result.Information);
                         }
                     }
                 }
                 catch (FormatException)
                 {
                     _result += String.Format("\r\nFailed when loading option {0}: Option was not formatted correctly. " +
-                        "This usually occurs if someone manually" + "alters the entry in the registry. Using default.", kvp.Value.GetKeyName());
+                        "This usually occurs if someone manually" + "alters the entry in the registry. The value will use its default.", kvp.Value.GetKeyName());
                 }
             }
             return _result;
@@ -142,7 +159,7 @@ namespace Registrar
                 if (!validation_result.Successful)
                 {
                     _result += String.Format("\r\nFailed when validating an option during saving: {0} - {1}, this occurs if someone manually edits the registry" +
-                        "to use an invalid value. Using default.", kvp.Value.GetKeyName(), validation_result.Information);
+                        "to use an invalid value. The value will use its default.", kvp.Value.GetKeyName(), validation_result.Information);
                 }
                 else
                 {
