@@ -66,6 +66,7 @@ class TestOptionOneValidator : Registrar.IValidator
 		return convertedValue <= 1;
 	}
 }
+```
 And in order to use the validator with an option, just pass it during instantian of the option object:
 ```csharp
 Registrar.RegOption optionOne = new Registrar.RegOption("option_one", validators.OptionOneValidator, 1, typeof(int));
