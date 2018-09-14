@@ -47,6 +47,10 @@ settings.SetOption("OptionOne", 1);
 settings.SetOption("OptionTwo", "Bye!!!");
 settings.SetOption("OptionThree", false);
 ```  
+If a set option call fails, then an exception of type RegOptionAssignmentException will be thrown.  
+If a get option call fails, then an exception of type RegOptionRetrievalException will be thrown.  
+When loading/saving settings, both of these exceptions are handled internally, and their message is added to the RegLoadException/RegSaveException messages.  
+  
 **NOTE: Make sure you call SaveSettings() to push the saved options to the registry.**
 
 ### Validation  
@@ -88,6 +92,29 @@ catch (Registrar.RegOptionAssignmentException ex)
 Console.WriteLine(settings.GetOption<int>("OptionOne")); // Prints 1, since the option failed to be set so it kept its previous value
 ```
 If it fails to validate during loading and saving, the RegOptionAssignmentException is handled internally and its message is put into the RegLoadException/RegSaveException message.  
+
+#### Validator Converters
+Registrar contains (at this moment, three) built-in helper classes for converting to specific value types. These are intended for use in user-implementations of the IValidator interface.  
+```csharp
+int convertedValue = Registrar.ValidatorConverters.ValidatorIntConverter(value);
+```
+If the conversion here fails, then an exception of type RegConversionException will occur with information as to why it failed. This exception is caught internally, and its result is appended to any exception message (EG: RegLoadException, RegSaveException, RegOptionAssignmentException)  which is generated with LoadSettings, SaveSettings, and SetOption.  
+
+A basic converter class is as follows:  
+```csharp
+public static int ValidatorIntConverter(Object value)
+{
+	bool conversionSuccessful = int.TryParse(value.ToString(), out int convertedValue);
+	
+	if (!conversionSuccessful)
+	{
+		throw new RegConversionException("Failed to convert the passed value to an int.");
+	}
+
+	return convertedValue;
+}
+```
+Make sure when making your own converter you follow this general template. In the future I plan on making this an interface for more ease of use.  
 ### Subkeys
 Registrar can do subkeys.  
 EG: To make the root key HKEY_CURRENT_USER\Software\Subkey\Test:
