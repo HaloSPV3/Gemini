@@ -1,31 +1,31 @@
 ﻿namespace Registrar
 {
-    public class OptionRegistrationException : System.Exception
+    public class RegOptionRegistrationException : System.Exception
     {
-        public OptionRegistrationException() { }
-        public OptionRegistrationException(string message) : base(message) { }
-        public OptionRegistrationException(string message, System.Exception inner) : base(message, inner) { }
-        protected OptionRegistrationException(
+        public RegOptionRegistrationException() { }
+        public RegOptionRegistrationException(string message) : base(message) { }
+        public RegOptionRegistrationException(string message, System.Exception inner) : base(message, inner) { }
+        protected RegOptionRegistrationException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class OptionRetrievalException : System.Exception
+    public class RegOptionRetrievalException : System.Exception
     {
-        public OptionRetrievalException() { }
-        public OptionRetrievalException(string message) : base(message) { }
-        public OptionRetrievalException(string message, System.Exception inner) : base(message, inner) { }
-        protected OptionRetrievalException(
+        public RegOptionRetrievalException() { }
+        public RegOptionRetrievalException(string message) : base(message) { }
+        public RegOptionRetrievalException(string message, System.Exception inner) : base(message, inner) { }
+        protected RegOptionRetrievalException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class OptionAssignmentException : System.Exception
+    public class RegOptionAssignmentException : System.Exception
     {
-        public OptionAssignmentException() { }
-        public OptionAssignmentException(string message) : base(message) { }
-        public OptionAssignmentException(string message, System.Exception inner) : base(message, inner) { }
-        protected OptionAssignmentException(
+        public RegOptionAssignmentException() { }
+        public RegOptionAssignmentException(string message) : base(message) { }
+        public RegOptionAssignmentException(string message, System.Exception inner) : base(message, inner) { }
+        protected RegOptionAssignmentException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }

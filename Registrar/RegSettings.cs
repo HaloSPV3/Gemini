@@ -50,11 +50,11 @@ namespace Registrar
             {
                 if (ex is ArgumentException)
                 {
-                    throw new OptionRegistrationException("The option being registered is already registered.", ex.InnerException);
+                    throw new RegOptionRegistrationException("The option being registered is already registered.", ex.InnerException);
                 }
                 if (ex is ArgumentNullException)
                 {
-                    throw new OptionRegistrationException("The option being registered can not be null.", ex.InnerException);
+                    throw new RegOptionRegistrationException("The option being registered can not be null.", ex.InnerException);
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace Registrar
             }
             catch (KeyNotFoundException ex)
             {
-                throw new OptionRetrievalException($"Failed to retrieve {optionName}: The option is not registered.", ex.InnerException);
+                throw new RegOptionRetrievalException($"Failed to retrieve {optionName}: The option is not registered.", ex.InnerException);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Registrar
             if (!validationResult.Successful)
             {
                 string exString = $"Failed to set option '{optionName}', reason: '{validationResult.Information}'. Option will keep its current value.";
-                throw new OptionAssignmentException(exString);
+                throw new RegOptionAssignmentException(exString);
             }
         }
 
