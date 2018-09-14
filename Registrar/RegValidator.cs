@@ -30,8 +30,8 @@ namespace Registrar
 
     /// <summary>
     /// A helper class of converters to be used when writing implementations of the IValidator interface.
-    /// Returns the converted value associated with the method name, or 0/false depending on the type of value to be returned
-    /// and the appropriate failure value representation.
+    /// Returns the converted value associated with the method name, or throws an exception of type RegConversionException
+    /// if it failed to be converted.
     /// </summary>
     public static class ValidatorConverters
     {
@@ -41,7 +41,7 @@ namespace Registrar
 
             if (!conversionSuccessful)
             {
-                return 0;
+                throw new RegConversionException("Failed to convert the passed value to an int.");
             }
 
             return convertedValue;
@@ -63,11 +63,11 @@ namespace Registrar
                 { "0", false },
             };
             
-            bool conversionSuccessful = booleanConverterDict.TryGetValue(value.ToString(), out object convertedValue);
+            bool conversionSuccessful = booleanConverterDict.TryGetValue(value.ToString().ToLower(), out object convertedValue);
 
             if (!conversionSuccessful)
             {
-                return false;
+                throw new RegConversionException("Failed to convert the passed value to a bool.");
             }
 
             return (bool)convertedValue;

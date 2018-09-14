@@ -64,12 +64,19 @@ namespace Registrar
 
             if (_validator != null)
             {
-                bool optionValid = _validator.Validate(value);
-
-                if (!optionValid)
+                try
+                {
+                    bool optionValid = _validator.Validate(value);
+                    if (!optionValid)
+                    {
+                        validationResult.Successful = false;
+                        validationResult.Information = _validator.Description();
+                    }
+                }
+                catch (RegConversionException ex)
                 {
                     validationResult.Successful = false;
-                    validationResult.Information = _validator.Description();
+                    validationResult.Information = ex.Message;
                 }
             }
 

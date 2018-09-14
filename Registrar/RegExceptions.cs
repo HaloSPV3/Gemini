@@ -49,4 +49,14 @@
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
+
+    public class RegConversionException : System.Exception
+    {
+        public RegConversionException() { }
+        public RegConversionException(string message) : base(message) { }
+        public RegConversionException(string message, System.Exception inner) : base(message, inner) { }
+        protected RegConversionException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
 }

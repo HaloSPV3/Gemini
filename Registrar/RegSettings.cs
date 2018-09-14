@@ -165,6 +165,7 @@ namespace Registrar
                         "This usually occurs if someone manually" + "alters the entry in the registry. The value will use its default.";
                 }
             }
+
             if (loadResult != null)
             {
                 throw new RegLoadException(loadResult);
