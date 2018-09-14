@@ -12,7 +12,7 @@ namespace RegistrarTest
             
             // This will create a key in the BaseKey 'HKEY_CURRENT_USER' called 'TestOptionsRootKey', which is where all
             // the registry entries for this particular instance will reside.
-            Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.BaseKeys.HKEY_CURRENT_USER, "TestOptionsRootKey");
+            Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Test");
             
             /*
              * Option instances.
@@ -25,6 +25,7 @@ namespace RegistrarTest
             Registrar.RegOption optionTwo = new Registrar.RegOption("option_two", validators.OptionTwoValidator, "hello!", typeof(string));
             Registrar.RegOption optionThree = new Registrar.RegOption("option_three", validators.OptionThreeValidator, true, typeof(bool), "/SubKey");
             Registrar.RegOption optionFour = new Registrar.RegOption("option_four", validators.OptionFourValidator, @"C:\", typeof(string), "/SubKey/AnotherSubkey");
+            Registrar.RegOption optionFive = new Registrar.RegOption("option_five", null, "Just a string.", typeof(string));
 
             // Register the options. This puts them in the settings objects internal dictionary of option objects.
             // The first parameter is the name to use for the option when retrieving it with GetSetting. The second
@@ -34,7 +35,7 @@ namespace RegistrarTest
             settings.RegisterSetting("OptionTwo", optionTwo);
             settings.RegisterSetting("OptionThree", optionThree);
             settings.RegisterSetting("OptionFour", optionFour);
-
+            settings.RegisterSetting("OptionFive", optionFive);
             
             /*
              * If the root key does not exist in the registry, call save settings to create one with current values.
@@ -44,19 +45,25 @@ namespace RegistrarTest
             if (!settings.RootKeyExists())
             {
                 Console.WriteLine("Didn't find the root key in the registry. \r\nPopulating one with current values.");
-                string saveResult = settings.SaveSettings();
-                if (saveResult != null)
+                try
                 {
-                    Console.WriteLine("Error(s) occurred while saving settings: \r\n{0}", saveResult);
+                    settings.SaveSettings();
+                }
+                catch (Registrar.RegSaveException ex)
+                {
+                    Console.WriteLine($"Error(s) occurred while saving settings: \r\n{ex.Message}");
                 }
             }
             else
             {
                 Console.WriteLine("Registry entry for root key was found. \r\nLoading settings.");
-                string loadResult = settings.LoadSettings();
-                if (loadResult != null)
+                try
                 {
-                    Console.WriteLine("Error(s) occurred while loading settings: \r\n{0}", loadResult);
+                    settings.LoadSettings();
+                }
+                catch (Registrar.RegLoadException ex)
+                {
+                    Console.WriteLine($"Error(s) occurred while loading settings: \r\n{ex.Message}");
                 }
             }
             
@@ -65,18 +72,21 @@ namespace RegistrarTest
             Console.WriteLine(settings.GetOption<string>("OptionTwo"));
             Console.WriteLine(settings.GetOption<bool>("OptionThree"));
             Console.WriteLine(settings.GetOption<string>("OptionFour"));
+            Console.WriteLine(settings.GetOption<string>("OptionFive"));
 
             Console.WriteLine("Setting OptionOne to 2 (this will fail since the validator makes sure its <= 1)");
-            string setOptionResult = settings.SetOption("OptionOne", 2);
-            if (setOptionResult != null)
+
+            try
             {
-                Console.WriteLine("Error occurred while setting OptionOne to 2: {0}", setOptionResult);
-            }
-            else
-            {
+                settings.SetOption("OptionOne", 2);
                 Console.WriteLine("Successfully set OptionOne to 2"); // This will never be reached but its here just for show.
             }
-            Console.WriteLine(settings.GetOption<int>("OptionOne"));
+            catch (Registrar.RegOptionAssignmentException ex)
+            {
+                Console.WriteLine($"Error occurred while setting OptionOne to 2: {ex.Message}");
+            }
+
+            Console.WriteLine(settings.GetOption<int>("OptionOne")); // Prints 1, since the option failed to be set so it kept its previous value
 
             // Keep the window open
             Console.Read();
