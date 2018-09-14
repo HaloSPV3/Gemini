@@ -55,7 +55,7 @@ namespace Registrar
             {
                 value = _optionValue;
             }
-            bool optionValid = _validator.Validate(value);
+
             ValidationResponse validationResult = new ValidationResponse
             {
                 Successful = true,
@@ -64,6 +64,8 @@ namespace Registrar
 
             if (_validator != null)
             {
+                bool optionValid = _validator.Validate(value);
+
                 if (!optionValid)
                 {
                     validationResult.Successful = false;

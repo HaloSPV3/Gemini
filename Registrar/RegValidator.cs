@@ -30,13 +30,22 @@ namespace Registrar
 
     /// <summary>
     /// A helper class of converters to be used when writing implementations of the IValidator interface.
-    /// Returns the converted value associated with the method name.
+    /// Returns the converted value associated with the method name, or 0/false depending on the type of value to be returned
+    /// and the appropriate failure value representation.
     /// </summary>
     public static class ValidatorConverters
     {
         public static int ValidatorIntConverter(Object value)
         {
-            return Convert.ToInt32(value);
+            bool conversionSuccessful = int.TryParse(value.ToString(), out int convertedValue);
+
+            if (!conversionSuccessful)
+            {
+                return 0;
+            }
+
+            return convertedValue;
+
         }
 
         public static string ValidatorStringConverter(Object value)
@@ -53,18 +62,15 @@ namespace Registrar
                 { "1", true },
                 { "0", false },
             };
+            
+            bool conversionSuccessful = booleanConverterDict.TryGetValue(value.ToString(), out object convertedValue);
 
-            string valueStr = value.ToString().ToLower();
-            bool conversionSuccessful = booleanConverterDict.TryGetValue(valueStr, out object convertedValue);
-
-            if (conversionSuccessful)
-            {
-                return (bool)convertedValue;
-            }
-            else
+            if (!conversionSuccessful)
             {
                 return false;
             }
+
+            return (bool)convertedValue;
         }
     }
 }

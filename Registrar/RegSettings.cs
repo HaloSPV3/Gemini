@@ -20,7 +20,8 @@ namespace Registrar
         /// Constructor for the settings instance.
         /// </summary>
         /// <param name="baseKey">The base key in the registry the root key will go under. EG: HKEY_CURRENT_USERS.</param>
-        /// <param name="rootKey">The root key which is where all the keys the options use will fall under. EG: passing 'RootKey' -> HKEY_CURRENT_USERS/RootKey in the registry.</param>
+        /// <param name="rootKey">The root key which is where all the keys the options use will fall under. 
+        /// EG: passing 'RootKey' -> HKEY_CURRENT_USERS/RootKey in the registry.</param>
         public RegSettings(string baseKey, string rootKey)
         {
             _baseKey = baseKey;
@@ -31,27 +32,48 @@ namespace Registrar
             }
             _rootKey = rootKey.Replace(@"/", @"\\");
 
-            _registryString = String.Format("{0}\\{1}", _baseKey, _rootKey);
+            _registryString = $"{_baseKey}\\{_rootKey}";
         }
 
         /// <summary>
-        /// Adds the option instance to the internal mapping of options.
+        /// Adds the option instance to the internal mapping of options. if the name is already in use.
         /// </summary>
         /// <param name="optionName">The name of the option to use in the registry. Can be different than the keyname.</param>
         /// <param name="option">The option instance.</param>
         public void RegisterSetting(string optionName, RegOption option)
         {
-            _settingsMapping.Add(optionName, option);
+            try
+            {
+                _settingsMapping.Add(optionName, option);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException)
+                {
+                    throw new OptionRegistrationException("The option being registered is already registered.", ex.InnerException);
+                }
+                if (ex is ArgumentNullException)
+                {
+                    throw new OptionRegistrationException("The option being registered can not be null.", ex.InnerException);
+                }
+            }
         }
 
         /// <summary>
         /// Retrieves the value associated with the option in the settings mapping (not the option object).
         /// </summary>
         /// <param name="optionName">The name of the option to get the value of.</param>
-        /// <returns>The option value. Raises an exception of type KeyNotFound if the option name was not found.</returns>
+        /// <returns>The option value. Raises an exception of type OptionRetrievalException if the option is not registered.</returns>
         public T GetOption<T>(string optionName)
         {
-            return (T) _settingsMapping[optionName].OptionValue;
+            try
+            {
+                return (T)_settingsMapping[optionName].OptionValue;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                throw new OptionRetrievalException($"Failed to retrieve {optionName}: The option is not registered.", ex.InnerException);
+            }
         }
 
         /// <summary>
@@ -61,14 +83,14 @@ namespace Registrar
         /// <param name="optionName">The name of the option in the mapping to be changed.</param>
         /// <param name="value">The value to attempt to set the option to.</param>
         /// <returns>Returns an error message detailing why it failed to be set, or null if it was sucessfully set.</returns>
-        public string SetOption(string optionName, Object value)
+        public void SetOption(string optionName, Object value)
         {
             ValidationResponse validationResult = _settingsMapping[optionName].SetOptionValue(value);
             if (!validationResult.Successful)
             {
-                return String.Format("Failed to set option '{0}', reason: '{1}'. Option will keep its current value.", optionName, validationResult.Information);
+                string exString = $"Failed to set option '{optionName}', reason: '{validationResult.Information}'. Option will keep its current value.";
+                throw new OptionAssignmentException(exString);
             }
-            return null;
         }
 
         /// <summary>
@@ -80,19 +102,19 @@ namespace Registrar
             RegistryKey registryRoot;
             switch (_baseKey)
             {
-                case BaseKeys.HKEY_CURRENT_USER:
+                case RegBaseKeys.HKEY_CURRENT_USER:
                     registryRoot = Registry.CurrentUser.OpenSubKey(_rootKey, false);
                     break;
-                case BaseKeys.HKEY_CLASSES_ROOT:
+                case RegBaseKeys.HKEY_CLASSES_ROOT:
                     registryRoot = Registry.ClassesRoot.OpenSubKey(_rootKey, false);
                     break;
-                case BaseKeys.HKEY_CURRENT_CONFIG:
+                case RegBaseKeys.HKEY_CURRENT_CONFIG:
                     registryRoot = Registry.CurrentConfig.OpenSubKey(_rootKey, false);
                     break;
-                case BaseKeys.HKEY_LOCAL_MACHINE:
+                case RegBaseKeys.HKEY_LOCAL_MACHINE:
                     registryRoot = Registry.LocalMachine.OpenSubKey(_rootKey, false);
                     break;
-                case BaseKeys.HKEY_USERS:
+                case RegBaseKeys.HKEY_USERS:
                     registryRoot = Registry.Users.OpenSubKey(_rootKey, false);
                     break;
                 default:
@@ -105,7 +127,7 @@ namespace Registrar
         /// Attempts to load values out of the registry and set the option instance's values with the loaded values.
         /// </summary>
         /// <returns>Null if successful, or a string detailing which options failed and why.</returns>
-        public string LoadSettings() // Load settings from the registry instance
+        public void LoadSettings() // Load settings from the registry instance
         {
             string loadResult = null;
             foreach (KeyValuePair<string, RegOption> kvp in _settingsMapping)
@@ -124,32 +146,36 @@ namespace Registrar
                     keyValue = Registry.GetValue(keyPath, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
                     if (keyValue == null)
                     {
-                        loadResult += string.Format("\r\nFailed loading option '{0}': Option did not exist in the registry. " +
-                            "The value will use its default.", kvp.Value.GetKeyName());
+                        loadResult += $"\r\nFailed loading option '{kvp.Value.GetKeyName()}': Option did not exist in the registry. " +
+                            $"The value will use its default.";
                     }
                     else
                     {
                         ValidationResponse validation_result = kvp.Value.SetOptionValue(keyValue);
                         if (!validation_result.Successful)
                         {
-                            loadResult += String.Format("\r\nFailed when validating an option while loading: '{0}' - '{1}'. The value will use its default.", kvp.Value.GetKeyName(), validation_result.Information);
+                            loadResult += $"\r\nFailed when validating an option while loading: '{kvp.Value.GetKeyName()}' - " +
+                                $"'{validation_result.Information}'. The value will use its default.";
                         }
                     }
                 }
                 catch (FormatException)
                 {
-                    loadResult += String.Format("\r\nFailed when loading option '{0}': Option was not formatted correctly. " +
-                        "This usually occurs if someone manually" + "alters the entry in the registry. The value will use its default.", kvp.Value.GetKeyName());
+                    loadResult += $"\r\nFailed when loading option '{kvp.Value.GetKeyName()}': Option was not formatted correctly. " +
+                        "This usually occurs if someone manually" + "alters the entry in the registry. The value will use its default.";
                 }
             }
-            return loadResult;
+            if (loadResult != null)
+            {
+                throw new RegLoadException(loadResult);
+            }
         }
 
         /// <summary>
         /// Attempts to save the current values in the settings dictionary to the registry.
         /// </summary>
         /// <returns>Null if successful, or a string detailing which options failed and why.</returns>
-        public string SaveSettings() // Save the settings dict values to the registry
+        public void SaveSettings()
         {
             string saveResult = null;
 
@@ -164,15 +190,20 @@ namespace Registrar
                 ValidationResponse validation_result = kvp.Value.Validate();
                 if (!validation_result.Successful)
                 {
-                    saveResult += String.Format("\r\nFailed when validating an option during saving: '{0}' - '{1}', this occurs if someone manually edits the registry" +
-                        "to use an invalid value. The value will use its default.", kvp.Value.GetKeyName(), validation_result.Information);
+                    saveResult += $"\r\nFailed when validating an option during saving: '{kvp.Value.GetKeyName()}' - " +
+                        $"'{validation_result.Information}', this occurs if someone manually edits the registry" + "to use an invalid value. " +
+                        "The value will use its default.";
                 }
                 else
                 {
                     Registry.SetValue(keyOut, kvp.Value.GetKeyName(), kvp.Value.OptionValue);
                 }
             }
-            return saveResult;
+
+            if (saveResult != null)
+            {
+                throw new RegSaveException(saveResult);
+            }
         }
     }
 }
