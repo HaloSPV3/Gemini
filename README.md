@@ -90,13 +90,13 @@ Console.WriteLine(settings.GetOption<int>("OptionOne")); // Prints 1, since the 
 If it fails to validate during loading and saving, the RegOptionAssignmentException is handled internally and its message is put into the RegLoadException/RegSaveException message.  
 ### Subkeys
 Registrar can do subkeys.  
-EG: To make the root key HKEY_CURRENT_USER\Software\Test\Subkey:
+EG: To make the root key HKEY_CURRENT_USER\Software\Subkey\Test:
 ```csharp
-Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Test/Subkey");
+Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Subkey/Test");
 ```
-To do HKEY_CURRENT_USER\Software\Test\Subkey\Subkey2\Subkey3:
+To do HKEY_CURRENT_USER\Software\Subkey\Subkey2\Subkey3\Test:
 ```csharp
-Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Test/Subkey/Subkey2/Subkey3");
+Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Subkey/Subkey2/Subkey3/Test");
 ```
 It also can do subkeys with options, as in, to put the option_one key into its own subkey(s):
 ```csharp
