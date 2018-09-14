@@ -1,18 +1,13 @@
 ## Registrar - A Registry Handling Configuration thing
-I made this because I was tired of writing things like [this](https://pastebin.com/m8vY9vwb)
-This has not been extensively tested yet, outside of the RegistrarTest application. I plan
-on migrating all my C# applications which use settings classes like the one linked
-over to using this one, and I am currently working on something that is going to use this.
-
+I made this because I was tired of writing things like [this](https://pastebin.com/m8vY9vwb). This has not been extensively tested yet, outside of the RegistrarTest application. I plan on migrating all my C# applications which use settings classes like the one linked over to using this one, and I am currently working on something that is going to use this.  
+  
 So don't be surprised if it explodes. I THINK everything should be working properly though.  
   
-Oh also if it does explode... Feel free to open an issue. I'd appreciate it.
+Oh also if it does explode... Feel free to open an issue. I'd appreciate it.  
 
 ## Usage
 ### Setting it all up
-First, create a RegSettings instance. This will hold and handle all the settings.
-Then, register some settings. They automatically will be put into the registry
-when calling the SaveSettings() method of the settings object.  
+First, create a RegSettings instance. This will hold and handle all the settings. Then, register some settings. They automatically will be put into the registry when calling the SaveSettings() method of the settings object.  
 
 ```csharp
 /*
@@ -35,10 +30,7 @@ settings.RegisterSetting("OptionThree", optionThree);
 settings.SaveSettings(); // Will throw RegSaveException if for whatever reason it fails, with information as to which values failed and why.
 ```
 
-Calling LoadSettings() will (attempt to) load the registered keys from the registry
-and set the appropriate values in the settings object's internal dictionary, and also  
-will throw an exception of type RegLoadException if it fails, with information on what  
-values failed to load and why.  
+Calling LoadSettings() will (attempt to) load the registered keys from the registry and set the appropriate values in the settings object's internal dictionary, and also will throw an exception of type RegLoadException if it fails, with information on what values failed to load and why.  
   
 So when saving or loading exceptions, you only need to try to catch those.  
   
@@ -58,9 +50,7 @@ settings.SetOption("OptionThree", false);
 **NOTE: Make sure you call SaveSettings() to push the saved options to the registry.**
 
 ### Validation  
-SetOption, LoadSettings, and SaveSettings will automatically run  
-the options they are working with through a validator interface you
-implement. A validator is optional.  
+SetOption, LoadSettings, and SaveSettings will automatically run the options they are working with through a validator interface you implement. A validator is optional.  
 Here is how you do it:  
 ```csharp
 class TestOptionOneValidator : Registrar.IValidator
@@ -96,8 +86,7 @@ catch (Registrar.RegOptionAssignmentException ex)
 
 Console.WriteLine(settings.GetOption<int>("OptionOne")); // Prints 1, since the option failed to be set so it kept its previous value
 ```
-If it fails to validate during loading and saving, the RegOptionAssignmentException is handled internally
-and its message is put into the RegLoadException/RegSaveException message.  
+If it fails to validate during loading and saving, the RegOptionAssignmentException is handled internally and its message is put into the RegLoadException/RegSaveException message.  
 ### Subkeys
 Registrar can do subkeys.  
 EG: To make the root key HKEY_CURRENT_USER\Software\Test\Subkey:
