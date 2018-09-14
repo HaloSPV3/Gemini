@@ -49,7 +49,7 @@ namespace Registrar
         /// </summary>
         /// <param name="value">If passed, the value to be validated.</param>
         /// <returns>Returns a ValidationResponse instance which contains the result of the validation.</returns>
-        public ValidationResponse Validate(Object value = null)
+        internal ValidationResponse Validate(Object value = null)
         {
             if (value == null)
             {
@@ -96,7 +96,7 @@ namespace Registrar
         /// </summary>
         /// <param name="value">The value to be attempted.</param>
         /// <returns>A ValidationResponse instance which contains the result of the validation.</returns>
-        public ValidationResponse SetOptionValue(Object value)
+        internal ValidationResponse SetOptionValue(Object value)
         {
             ValidationResponse validationResponse = Validate(value);
 

@@ -22,7 +22,7 @@ namespace Registrar
     /// be false.
     /// Information will contain information on why the check failed.
     /// </summary>
-    public class ValidationResponse
+    internal class ValidationResponse
     {
         public bool Successful { get; set; }
         public string Information { get; set; }
