@@ -1,18 +1,13 @@
 ## Registrar - A Registry Handling Configuration thing
-I made this because I was tired of writing things like [this](https://pastebin.com/m8vY9vwb)
-This has not been extensively tested yet, outside of the RegistrarTest application. I plan
-on migrating all my C# applications which use settings classes like the one linked
-over to using this one, and I am currently working on something that is going to use this.
-
+I made this because I was tired of writing things like [this](https://pastebin.com/m8vY9vwb). This has not been extensively tested yet, outside of the RegistrarTest application. I plan on migrating all my C# applications which use settings classes like the one linked over to using this one, and I am currently working on something that is going to use this.  
+  
 So don't be surprised if it explodes. I THINK everything should be working properly though.  
   
-Oh also if it does explode... Feel free to open an issue. I'd appreciate it.
+Oh also if it does explode... Feel free to open an issue. I'd appreciate it.  
 
 ## Usage
 ### Setting it all up
-First, create a RegSettings instance. This will hold and handle all the settings.
-Then, register some settings. They automatically will be put into the registry
-when calling the SaveSettings() method of the settings object.  
+First, create a RegSettings instance. This will hold and handle all the settings. Then, register some settings. They automatically will be put into the registry when calling the SaveSettings() method of the settings object.  
 
 ```csharp
 /*
@@ -35,10 +30,7 @@ settings.RegisterSetting("OptionThree", optionThree);
 settings.SaveSettings(); // Will throw RegSaveException if for whatever reason it fails, with information as to which values failed and why.
 ```
 
-Calling LoadSettings() will (attempt to) load the registered keys from the registry
-and set the appropriate values in the settings object's internal dictionary, and also  
-will throw an exception of type RegLoadException if it fails, with information on what  
-values failed to load and why.  
+Calling LoadSettings() will (attempt to) load the registered keys from the registry and set the appropriate values in the settings object's internal dictionary, and also will throw an exception of type RegLoadException if it fails, with information on what values failed to load and why.  
   
 So when saving or loading exceptions, you only need to try to catch those.  
   
@@ -55,12 +47,14 @@ settings.SetOption("OptionOne", 1);
 settings.SetOption("OptionTwo", "Bye!!!");
 settings.SetOption("OptionThree", false);
 ```  
+If a set option call fails, then an exception of type RegOptionAssignmentException will be thrown.  
+If a get option call fails, then an exception of type RegOptionRetrievalException will be thrown.  
+When loading/saving settings, both of these exceptions are handled internally, and their message is added to the RegLoadException/RegSaveException messages.  
+  
 **NOTE: Make sure you call SaveSettings() to push the saved options to the registry.**
 
 ### Validation  
-SetOption, LoadSettings, and SaveSettings will automatically run  
-the options they are working with through a validator interface you
-implement. A validator is optional.  
+SetOption, LoadSettings, and SaveSettings will automatically run the options they are working with through a validator interface you implement. A validator is optional.  
 Here is how you do it:  
 ```csharp
 class TestOptionOneValidator : Registrar.IValidator
@@ -76,6 +70,7 @@ class TestOptionOneValidator : Registrar.IValidator
 		return convertedValue <= 1;
 	}
 }
+```
 And in order to use the validator with an option, just pass it during instantian of the option object:
 ```csharp
 Registrar.RegOption optionOne = new Registrar.RegOption("option_one", validators.OptionOneValidator, 1, typeof(int));
@@ -96,17 +91,39 @@ catch (Registrar.RegOptionAssignmentException ex)
 
 Console.WriteLine(settings.GetOption<int>("OptionOne")); // Prints 1, since the option failed to be set so it kept its previous value
 ```
-If it fails to validate during loading and saving, the RegOptionAssignmentException is handled internally
-and its message is put into the RegLoadException/RegSaveException message.  
+If it fails to validate during loading and saving, the RegOptionAssignmentException is handled internally and its message is put into the RegLoadException/RegSaveException message.  
+
+#### Validator Converters
+Registrar contains (at this moment, three) built-in helper classes for converting to specific value types. These are intended for use in user-implementations of the IValidator interface.  
+```csharp
+int convertedValue = Registrar.ValidatorConverters.ValidatorIntConverter(value);
+```
+If the conversion here fails, then an exception of type RegConversionException will occur with information as to why it failed. This exception is caught internally, and its result is appended to any exception message (EG: RegLoadException, RegSaveException, RegOptionAssignmentException)  which is generated with LoadSettings, SaveSettings, and SetOption.  
+
+A basic converter class is as follows:  
+```csharp
+public static int ValidatorIntConverter(Object value)
+{
+	bool conversionSuccessful = int.TryParse(value.ToString(), out int convertedValue);
+	
+	if (!conversionSuccessful)
+	{
+		throw new RegConversionException("Failed to convert the passed value to an int.");
+	}
+
+	return convertedValue;
+}
+```
+Make sure when making your own converter you follow this general template. In the future I plan on making this an interface for more ease of use.  
 ### Subkeys
 Registrar can do subkeys.  
-EG: To make the root key HKEY_CURRENT_USER\Software\Test\Subkey:
+EG: To make the root key HKEY_CURRENT_USER\Software\Subkey\Test:
 ```csharp
-Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Test/Subkey");
+Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Subkey/Test");
 ```
-To do HKEY_CURRENT_USER\Software\Test\Subkey\Subkey2\Subkey3:
+To do HKEY_CURRENT_USER\Software\Subkey\Subkey2\Subkey3\Test:
 ```csharp
-Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Test/Subkey/Subkey2/Subkey3");
+Registrar.RegSettings settings = new Registrar.RegSettings(Registrar.RegBaseKeys.HKEY_CURRENT_USER, "Software/Subkey/Subkey2/Subkey3/Test");
 ```
 It also can do subkeys with options, as in, to put the option_one key into its own subkey(s):
 ```csharp

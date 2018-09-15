@@ -1,6 +1,8 @@
-﻿namespace Registrar
+﻿using System;
+
+namespace Registrar
 {
-    public class RegOptionRegistrationException : System.Exception
+    public class RegOptionRegistrationException : Exception
     {
         public RegOptionRegistrationException() { }
         public RegOptionRegistrationException(string message) : base(message) { }
@@ -10,7 +12,7 @@
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class RegOptionRetrievalException : System.Exception
+    public class RegOptionRetrievalException : Exception
     {
         public RegOptionRetrievalException() { }
         public RegOptionRetrievalException(string message) : base(message) { }
@@ -20,7 +22,7 @@
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class RegOptionAssignmentException : System.Exception
+    public class RegOptionAssignmentException : Exception
     {
         public RegOptionAssignmentException() { }
         public RegOptionAssignmentException(string message) : base(message) { }
@@ -30,7 +32,7 @@
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class RegLoadException : System.Exception
+    public class RegLoadException : Exception
     {
         public RegLoadException() { }
         public RegLoadException(string message) : base(message) { }
@@ -40,7 +42,7 @@
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class RegSaveException : System.Exception
+    public class RegSaveException : Exception
     {
         public RegSaveException() { }
         public RegSaveException(string message) : base(message) { }
@@ -50,7 +52,7 @@
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class RegConversionException : System.Exception
+    public class RegConversionException : Exception
     {
         public RegConversionException() { }
         public RegConversionException(string message) : base(message) { }

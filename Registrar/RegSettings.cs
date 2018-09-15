@@ -42,21 +42,11 @@ namespace Registrar
         /// <param name="option">The option instance.</param>
         public void RegisterSetting(string optionName, RegOption option)
         {
-            try
+            if (_settingsMapping.ContainsKey(optionName) || option == null)
             {
-                _settingsMapping.Add(optionName, option);
+                throw new RegOptionAssignmentException("The option being registered is already registered/option value can not be null.");
             }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentException)
-                {
-                    throw new RegOptionRegistrationException("The option being registered is already registered.", ex.InnerException);
-                }
-                if (ex is ArgumentNullException)
-                {
-                    throw new RegOptionRegistrationException("The option being registered can not be null.", ex.InnerException);
-                }
-            }
+            _settingsMapping.Add(optionName, option);
         }
 
         /// <summary>
@@ -66,14 +56,12 @@ namespace Registrar
         /// <returns>The option value. Raises an exception of type OptionRetrievalException if the option is not registered.</returns>
         public T GetOption<T>(string optionName)
         {
-            try
+            bool retrievalSuccessful = _settingsMapping.TryGetValue(optionName, out RegOption value);
+            if (!retrievalSuccessful)
             {
-                return (T)_settingsMapping[optionName].OptionValue;
+                throw new RegOptionRetrievalException($"Failed to retrieve {optionName}: The option is not registered.");
             }
-            catch (KeyNotFoundException ex)
-            {
-                throw new RegOptionRetrievalException($"Failed to retrieve {optionName}: The option is not registered.", ex.InnerException);
-            }
+            return (T)value.OptionValue;
         }
 
         /// <summary>
