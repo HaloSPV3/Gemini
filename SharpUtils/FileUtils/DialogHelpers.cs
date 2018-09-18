@@ -1,4 +1,6 @@
-﻿namespace FileUtils
+﻿using System.Windows.Forms;
+
+namespace FileUtils
 {
     /// <summary>
     /// Helper class which contains helper functions for basic file/folder dialogs.
@@ -14,14 +16,14 @@
         {
             string selectedPath = null;
 
-            System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog()
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog()
             {
                 Description = DialogDescription,
             };
 
-            System.Windows.Forms.DialogResult folderBrowserResult = folderBrowserDialog.ShowDialog();
+            DialogResult folderBrowserResult = folderBrowserDialog.ShowDialog();
 
-            if (folderBrowserResult == System.Windows.Forms.DialogResult.OK)
+            if (folderBrowserResult == DialogResult.OK)
             {
                 selectedPath = folderBrowserDialog.SelectedPath;
             }
@@ -40,16 +42,16 @@
         {
             string[] selectedFiles = null;
 
-            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog()
+            OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = DialogTitle,
                 Filter = FileFilter,
                 Multiselect = AllowMultiSelect
             };
 
-            System.Windows.Forms.DialogResult folderBrowserResult = openFileDialog.ShowDialog();
+            DialogResult folderBrowserResult = openFileDialog.ShowDialog();
 
-            if (folderBrowserResult == System.Windows.Forms.DialogResult.OK)
+            if (folderBrowserResult == DialogResult.OK)
             {
                 selectedFiles = openFileDialog.FileNames;
             }
