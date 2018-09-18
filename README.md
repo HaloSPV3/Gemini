@@ -4,7 +4,9 @@ that I frequently make use of in my various C# projects.
 Their uses range from File IO related to Web related.  
 The classes are grouped in a folder with the name of the particular  
 thing they focus on  + Utils at the end(EG: classes focusing on WebRequests are 
-in a folder called WebUtils).
+in a folder called WebUtils).  
+The classes are also all in a namespace they all share with the same name  
+as the containing folder.
   
 ## Current Utility List  
 ### WebUtils  
@@ -27,6 +29,12 @@ Contains various helper/util classes related to File IO.
 *FileSizeHelper.cs*: Helps convert Bytes to a human readable string representation.  
 *FolderNameHelper.cs*: Helps get the name of a folder a file is in. Kind of useless but  
 it's being used in StarboundAssetUnpacker. Probably going to move this there.  
+  
+## State of the code  
+At the moment, the existing utilities are not extensively tested, as I only recently  
+developed them for StarboundAssetUnpacker, so there's probably some things which need  
+to be worked out. I think they all work as they should though from what I've seen using  
+them in that project though.
   
 ## Usage  
 I've tried to document the code the best I can with XML documentation comments.  

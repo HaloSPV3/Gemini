@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpUtils", "SharpUtils\SharpUtils.csproj", "{AA18B44D-A111-4C75-81B7-3B8052D670EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpUtils", "SharpUtils\SharpUtils.csproj", "{5108A313-BEA9-4045-A408-3F3C107D797F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA18B44D-A111-4C75-81B7-3B8052D670EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA18B44D-A111-4C75-81B7-3B8052D670EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA18B44D-A111-4C75-81B7-3B8052D670EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA18B44D-A111-4C75-81B7-3B8052D670EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5108A313-BEA9-4045-A408-3F3C107D797F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5108A313-BEA9-4045-A408-3F3C107D797F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5108A313-BEA9-4045-A408-3F3C107D797F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5108A313-BEA9-4045-A408-3F3C107D797F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {643A0EA8-60CC-450E-B97E-8A3CD0085989}
+		SolutionGuid = {3D754FD9-1290-4E32-8EC4-4E8DB42ED1F9}
 	EndGlobalSection
 EndGlobal
