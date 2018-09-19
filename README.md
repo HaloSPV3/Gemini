@@ -27,6 +27,9 @@ WPF Application.
 Contains various helper/util classes related to File IO.  
 *DialogHelpers.cs*: Simple OpenFileDialog/OpenFolderDialog helpers. Bare bones right now.  
 *FileSizeHelper.cs*: Helps convert Bytes to a human readable string representation.  
+### MiscUtils
+Utilities/Helpers which don't fit anywhere else will go here.
+*AdminCheckHelper.cs*: Checks if the current application is being run as an administrator.
   
 ## State of the code  
 At the moment, the existing utilities are not extensively tested, as I only recently  

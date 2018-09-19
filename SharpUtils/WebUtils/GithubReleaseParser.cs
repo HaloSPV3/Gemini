@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace WebUtils
+namespace SharpUtils.WebUtils
 {
     /// <summary>
     /// A helper class for getting the latest release from a Github repo, and for

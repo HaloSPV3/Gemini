@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace WPFUtils
+namespace SharpUtils.WPFUtils
 {
     /// <summary>
     /// Helper class concerning WPF windows.

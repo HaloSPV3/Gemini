@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace FileUtils
+namespace SharpUtils.FileUtils
 {
     /// <summary>
     /// Helper class which contains helper functions for basic file/folder dialogs.

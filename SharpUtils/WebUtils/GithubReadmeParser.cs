@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace WebUtils
+namespace SharpUtils.WebUtils
 {
     /// <summary>
     /// A helper class for parsing a Github README.MD file.

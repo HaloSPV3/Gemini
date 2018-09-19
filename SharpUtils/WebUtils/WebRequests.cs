@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Web.Script.Serialization;
 
-namespace WebUtils
+namespace SharpUtils.WebUtils
 {
     /// <summary>
     /// A helper class for making simple web requests.

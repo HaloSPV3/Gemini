@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileUtils
+namespace SharpUtils.FileUtils
 {
     public static class FileSizeHelper
     {
