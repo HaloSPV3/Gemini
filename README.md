@@ -43,4 +43,11 @@ constructs for simple things like this). I've also tried to make sure all the fu
 have no side effects - they just take something in, and then pop something out in return.  
   
 This is licensed under the *GNU GENERAL PUBLIC LICENSE*, so feel free to take the code  
-and do with it what you will.
+and do with it what you will.  
+  
+## Credits  
+Since I don't like copying code from someone else without giving due credit, I should  
+note that I got the code for the GetHumanReadableSize function from this StackOverflow  
+https://stackoverflow.com/questions/281640/how-do-i-get-a-human-readable-file-size-in-bytes-abbreviation-using-net  
+I originally did use my own code to do it but it wasn't very elegant and I didn't have time  
+to try to roll my own since I was more interested in the task at hand.

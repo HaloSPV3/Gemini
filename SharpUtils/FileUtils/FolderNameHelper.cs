@@ -17,10 +17,10 @@
         }
 
         /// <summary>
-        /// Gets the path to the folder a file is in.
+        /// Gets the name of a folder that a file is in.
         /// </summary>
-        /// <param name="FilePath">The path of the file.</param>
-        /// <returns>The folder path.</returns>
+        /// <param name="FilePath">The path to the file.</param>
+        /// <returns>The folder name.</returns>
         public static string GetFolderNameFromFilePath(string FilePath)
         {
             return RemoveBefore(RemoveAfter(FilePath, '\\'), '\\');
