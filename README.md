@@ -27,8 +27,6 @@ WPF Application.
 Contains various helper/util classes related to File IO.  
 *DialogHelpers.cs*: Simple OpenFileDialog/OpenFolderDialog helpers. Bare bones right now.  
 *FileSizeHelper.cs*: Helps convert Bytes to a human readable string representation.  
-*FolderNameHelper.cs*: Helps get the name of a folder a file is in. Kind of useless but  
-it's being used in StarboundAssetUnpacker. Probably going to move this there.  
   
 ## State of the code  
 At the moment, the existing utilities are not extensively tested, as I only recently  

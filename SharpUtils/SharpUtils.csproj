@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="FileUtils\DialogHelpers.cs" />
     <Compile Include="FileUtils\FileSizeHelper.cs" />
-    <Compile Include="FileUtils\FolderNameHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebUtils\GithubReadmeParser.cs" />
     <Compile Include="WebUtils\GithubReleaseParser.cs" />
