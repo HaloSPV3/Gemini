@@ -19,7 +19,8 @@ namespace SharpUtils.WebUtils
         /// <returns>True if it found the repo, false otherwise.</returns>
         private static bool RepoFound(string JsonURL, int TimeOut)
         {
-            Dictionary<string, object> parsedJson = WebRequests.TryParseJson(JsonURL, TimeOut);
+            string jsonData = WebRequests.DownloadStringTimeout(JsonURL, TimeOut);
+            Dictionary<string, object> parsedJson = WebRequests.ParseJson(jsonData);
             // If the Github API fails to be parsed, it will always contain a message key.
             // From what I have seen, this key isn't present anywhere else in API calls.
             if (parsedJson != null)
@@ -45,13 +46,14 @@ namespace SharpUtils.WebUtils
         /// <param name="GithubRepoName">The name of the repo to get the latest release from.</param>
         /// <param name="TimeOut">After this specified amount of time in seconds, the check times out.</param>
         /// <returns>The latest release tag if successful, otherwise null.</returns>
-        public static string TryGetLatestRelease(string GithubUserName, string GithubRepoName, int TimeOut)
+        public static string GetLatestRelease(string GithubUserName, string GithubRepoName, int TimeOut)
         {
             string fullURL = String.Format("https://api.github.com/repos/{0}/{1}/releases/latest", GithubUserName, GithubRepoName);
+            string jsonData = WebRequests.DownloadStringTimeout(fullURL, TimeOut);
 
             if (RepoFound(fullURL, TimeOut))
             {
-                Dictionary<string, object> parsedJson = WebRequests.TryParseJson(fullURL, TimeOut);
+                Dictionary<string, object> parsedJson = WebRequests.ParseJson(jsonData);
                 if (parsedJson != null)
                 {
                     return parsedJson["tag_name"].ToString();
@@ -72,7 +74,7 @@ namespace SharpUtils.WebUtils
         public static bool GetUpdateAvailable(string GithubUsername, string RepoName, int Timeout)
         {
             string current_version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            string latestRelease = TryGetLatestRelease(GithubUsername, RepoName, Timeout);
+            string latestRelease = GetLatestRelease(GithubUsername, RepoName, Timeout);
             if (latestRelease != null)
             {
                 if (current_version != latestRelease)

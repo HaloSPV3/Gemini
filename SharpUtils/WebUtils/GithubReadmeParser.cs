@@ -16,7 +16,7 @@ namespace SharpUtils.WebUtils
         /// <returns>The downloaded string if successful, otherwise returns null.</returns>
         public static string TryGetLineFromReadme(string ReadmeURL, string LinePrefix, int TimeOut)
         {
-            string readmeText = WebRequests.TryDownloadString(ReadmeURL, TimeOut);
+            string readmeText = WebRequests.DownloadStringTimeout(ReadmeURL, TimeOut);
 
             if (readmeText != null)
             {

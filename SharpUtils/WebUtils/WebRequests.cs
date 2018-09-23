@@ -25,6 +25,7 @@ namespace SharpUtils.WebUtils
             {
                 _t = Timeout * 1000;
             }
+
             protected override WebRequest GetWebRequest(Uri address)
             {
                 WebRequest wr = base.GetWebRequest(address);
@@ -39,12 +40,13 @@ namespace SharpUtils.WebUtils
         /// <param name="Url">The URL to download the string from.</param>
         /// <param name="TimeOut">After this specified amount of time in seconds, the request will timeout.</param>
         /// <returns>The downloaded string, or null if it failed to download.</returns>
-        public static string TryDownloadString(string Url, int TimeOut)
+        public static string DownloadStringTimeout(string Url, int TimeOut)
         {
             string downloadResult = null;
+
             WebClientWithTimeout webClient = new WebClientWithTimeout(TimeOut);
             webClient.Headers["user-agent"] = "WebUtils Parsing";
-            
+
             downloadResult = webClient.DownloadString(Url);
             
             return downloadResult;
@@ -56,13 +58,12 @@ namespace SharpUtils.WebUtils
         /// <param name="JsonUrl">The URL to read JSON from.</param>
         /// <param name="TimeOut">After this specified amount of time in seconds, the request will time out.</param>
         /// <returns>A dictionary with the parsed JSON, or null if it failed to parse.</returns>
-        public static Dictionary<string, object> TryParseJson(string JsonUrl, int TimeOut)
+        public static Dictionary<string, object> ParseJson(string JsonData)
         {
             Dictionary<string, object> jsonDictionary = new Dictionary<string, object>();
-
-            var json_data = TryDownloadString(JsonUrl, TimeOut);
+            
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-            var result = jsSerializer.DeserializeObject(json_data);
+            var result = jsSerializer.DeserializeObject(JsonData);
 
             jsonDictionary = (Dictionary<string, object>)(result);
 
