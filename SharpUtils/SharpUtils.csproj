@@ -49,6 +49,9 @@
     <Compile Include="FileUtils\FileSizeHelper.cs" />
     <Compile Include="MiscUtils\AdminCheckHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebUtilsAsync\GithubReadmeParser.cs" />
+    <Compile Include="WebUtilsAsync\GithubReleaseParser.cs" />
+    <Compile Include="WebUtilsAsync\WebRequests.cs" />
     <Compile Include="WebUtils\GithubReadmeParser.cs" />
     <Compile Include="WebUtils\GithubReleaseParser.cs" />
     <Compile Include="WebUtils\WebRequests.cs" />

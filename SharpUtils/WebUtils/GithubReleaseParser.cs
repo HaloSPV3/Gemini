@@ -8,19 +8,16 @@ namespace SharpUtils.WebUtils
     /// A helper class for getting the latest release from a Github repo, and for
     /// checking if an update is available.
     /// </summary>
-    public static class LatestReleaseParser
+    public static class GithubReleaseParser
     {
         /// <summary>
-        /// Attempts to find the Github repo at the given URL. Throws WebException if anything goes awry/the request times out, or FormatException
-        /// if parsing the JSON failed.
+        /// Checks the Json to see if a repo was found. Throws FormatException if it fails to parse.
         /// </summary>
-        /// <param name="JsonURL">The URL to find the repo at.</param>
-        /// <param name="TimeOut">After this specified time in seconds, the request will time out.</param>
+        /// <param name="JsonString">The Json to parse and search for relevant Github repo information in.</param>
         /// <returns>True if it found the repo, false otherwise.</returns>
-        private static bool RepoFound(string JsonURL, int TimeOut)
+        internal static bool RepoFound(string JsonString)
         {
-            string jsonData = WebRequests.DownloadStringTimeout(JsonURL, TimeOut);
-            Dictionary<string, object> parsedJson = WebRequests.ParseJson(jsonData);
+            Dictionary<string, object> parsedJson = WebRequests.ParseJson(JsonString);
             // If the Github API fails to be parsed, it will always contain a message key.
             // From what I have seen, this key isn't present anywhere else in API calls.
             if (parsedJson != null)
@@ -35,7 +32,7 @@ namespace SharpUtils.WebUtils
                 return true;
             }
 
-            throw new FormatException($"Failed to parse JSON at url {JsonURL}");
+            throw new FormatException($"Failed to parse JSON: {JsonString}");
         }
 
         /// <summary>
@@ -51,7 +48,7 @@ namespace SharpUtils.WebUtils
             string fullURL = String.Format("https://api.github.com/repos/{0}/{1}/releases/latest", GithubUserName, GithubRepoName);
             string jsonData = WebRequests.DownloadStringTimeout(fullURL, TimeOut);
 
-            if (RepoFound(fullURL, TimeOut))
+            if (RepoFound(jsonData))
             {
                 Dictionary<string, object> parsedJson = WebRequests.ParseJson(jsonData);
                 if (parsedJson != null)
