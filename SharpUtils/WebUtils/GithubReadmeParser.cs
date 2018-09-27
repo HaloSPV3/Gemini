@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SharpUtils.WebUtils
 {
@@ -17,6 +19,28 @@ namespace SharpUtils.WebUtils
         public static string GetLineFromReadme(string ReadmeURL, string LinePrefix, int TimeOut)
         {
             string readmeText = WebRequests.DownloadStringTimeout(ReadmeURL, TimeOut);
+
+            if (readmeText != null)
+            {
+                using (StringReader sr = new StringReader(readmeText))
+                {
+                    string currentLine;
+                    while ((currentLine = sr.ReadLine()) != null)
+                    {
+                        if (currentLine.StartsWith(LinePrefix))
+                        {
+                            return currentLine.Substring(LinePrefix.Length);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public static async Task<string> GetLineFromReadmeAsync(string ReadmeURL, string LinePrefix, int TimeOut, CancellationToken cancellationToken)
+        {
+            string readmeText = await WebRequests.DownloadStringTimeoutAsync(ReadmeURL, TimeOut, cancellationToken);
 
             if (readmeText != null)
             {
