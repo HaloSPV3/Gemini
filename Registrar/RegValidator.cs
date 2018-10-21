@@ -45,7 +45,18 @@ namespace Registrar
             }
 
             return convertedValue;
+        }
 
+        public static float ValidatorFloatConverter(Object value)
+        {
+            bool conversionSuccessful = float.TryParse(value.ToString(), out float convertedValue);
+
+            if (!conversionSuccessful)
+            {
+                throw new RegConversionException("Failed to convert the passed value to a float.");
+            }
+
+            return convertedValue;
         }
 
         public static string ValidatorStringConverter(Object value)

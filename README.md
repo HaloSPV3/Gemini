@@ -129,4 +129,7 @@ It also can do subkeys with options, as in, to put the option_one key into its o
 ```csharp
 Registrar.RegOption optionOne = new Registrar.RegOption("option_one", validators.OptionOneValidator, 1, typeof(int), "Subkey/Subkey2/Subkey3");
 ```
-This will equate to Software\Test\Subkey\Subkey2\Subkey3\option_one
+This will equate to Software\Test\Subkey\Subkey2\Subkey3\option_one  
+### Note on Releases  
+In the unlikely event someone else is going to use this, note that I am no longer posting updated releases.  
+Just the repository is being updated. If you want to use it, just compile it.
