@@ -1,12 +1,8 @@
 ## SharpUtils  
-This is a personal class library of common utility/helper classes
-that I frequently make use of in my various C# projects.  
-Their uses range from File IO related to Web related.  
-The classes are grouped in a folder with the name of the particular  
-thing they focus on  + Utils at the end(EG: classes focusing on WebRequests are 
-in a folder called WebUtils).  
-The classes are also all in a namespace they all share with the same name  
-as the containing folder.
+This is a personal class library of common utility/helper classes that I frequently make use of in my various C# projects.  
+Their uses range from File IO related to Web related. The classes are grouped in a folder with the name of the particular  
+thing they focus on  + Utils at the end(EG: classes focusing on WebRequests are in a folder called WebUtils).  
+The classes are also all in a namespace they all share with the same name as the containing folder.
   
 ## Current Utility List  
 ### WebUtils  
