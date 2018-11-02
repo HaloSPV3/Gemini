@@ -63,25 +63,5 @@ namespace Registrar
         {
             return value.ToString();
         }
-
-        public static bool ValidatorBooleanConverter(Object value)
-        {
-            Dictionary<string, Object> booleanConverterDict = new Dictionary<string, Object>() // This is a bit iffy.
-            {
-                { "true", true },
-                { "false", false },
-                { "1", true },
-                { "0", false },
-            };
-            
-            bool conversionSuccessful = booleanConverterDict.TryGetValue(value.ToString().ToLower(), out object convertedValue);
-
-            if (!conversionSuccessful)
-            {
-                throw new RegConversionException("Failed to convert the passed value to a bool.");
-            }
-
-            return (bool)convertedValue;
-        }
     }
 }

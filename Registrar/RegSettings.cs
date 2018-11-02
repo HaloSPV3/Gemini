@@ -180,7 +180,7 @@ namespace Registrar
                 if (!validation_result.Successful)
                 {
                     saveResult += $"\r\nFailed when validating an option during saving: '{kvp.Value.GetKeyName()}' - " +
-                        $"'{validation_result.Information}', this occurs if someone manually edits the registry" + "to use an invalid value. " +
+                        $"'{validation_result.Information}', this occurs if someone manually edits the registry " + "to use an invalid value. " +
                         "The value will use its default.";
                 }
                 else
