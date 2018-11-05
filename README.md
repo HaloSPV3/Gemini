@@ -26,6 +26,7 @@ Contains various helper/util classes related to File IO.
 ### MiscUtils
 Utilities/Helpers which don't fit anywhere else will go here.
 *AdminCheckHelper.cs*: Checks if the current application is being run as an administrator.
+*WriteMemoryHelper.cs*: Provides a PINVOKE wrapper around WriteProcessMemory.
   
 ## State of the code  
 At the moment, the existing utilities are not extensively tested, as I only recently  

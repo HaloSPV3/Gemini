@@ -5,7 +5,7 @@ using System.Diagnostics;
 // TODO: This could use some work/refactoring.
 // TODO: Should write a Win32ErrorCode helper too (maybe not).
 // TODO: Maybe an IsProcessRunning(string ProcessName) helper?
-namespace SharpUtils.LowLevel
+namespace SharpUtils.MiscUtils
 {
     /// <summary>
     /// If the PID for the target process was not found, this will be raised. Typically this means the process
