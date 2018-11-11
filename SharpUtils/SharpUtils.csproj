@@ -47,8 +47,8 @@
   <ItemGroup>
     <Compile Include="FileUtils\DialogHelpers.cs" />
     <Compile Include="FileUtils\FileSizeHelper.cs" />
-    <Compile Include="LowLevel\WriteMemoryHelper.cs" />
     <Compile Include="MiscUtils\AdminCheckHelper.cs" />
+    <Compile Include="MiscUtils\WriteMemoryHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebUtils\GithubReadmeParser.cs" />
     <Compile Include="WebUtils\GithubReleaseParser.cs" />
