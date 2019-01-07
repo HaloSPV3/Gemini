@@ -92,21 +92,19 @@ namespace SharpUtils.WebUtils
         /// Attempt to check if an update is available. Throws WebException if anything goes awry/requset times out, or FormatException
         /// if the JSON from the request failed to be parsed.
         /// </summary>
+        /// <param name="CurrentVersion">The current version of the application being checked.</param>
         /// <param name="GithubUsername">The username of the user who owns the repo to check.</param>
         /// <param name="RepoName">The name of the repo to check.</param>
         /// <param name="Timeout">After this specified amount of time in seconds, the request will time out.</param>
         /// <returns>True/False depending on if an update is availble or not.</returns>
-        public static bool GetUpdateAvailable(string GithubUsername, string RepoName, int Timeout)
+        public static bool GetUpdateAvailable(string CurrentVersion, string GithubUsername, string RepoName, int Timeout)
         {
-            string current_version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             string latestRelease = GetLatestRelease(GithubUsername, RepoName, Timeout);
             if (latestRelease != null)
             {
-                if (current_version != latestRelease)
-                {
-                    return true;
-                }
+                return CurrentVersion != latestRelease;
             }
+
             return false;
         }
 
@@ -114,21 +112,18 @@ namespace SharpUtils.WebUtils
         /// Attempt to check if an update is available. Throws WebException if anything goes awry/requset times out, or FormatException
         /// if the JSON from the request failed to be parsed.
         /// </summary>
+        /// <param name="CurrentVersion">The current version of the application being checked.</param>
         /// <param name="GithubUsername">The username of the user who owns the repo to check.</param>
         /// <param name="RepoName">The name of the repo to check.</param>
         /// <param name="Timeout">After this specified amount of time in seconds, the request will time out.</param>
         /// <param name="cancellationToken">The cancellation token to use download string task.</param>
         /// <returns>True/False depending on if an update is availble or not.</returns>
-        public static async Task<bool> GetUpdateAvailableAsync(string GithubUsername, string RepoName, int Timeout, CancellationToken cancellationToken)
+        public static async Task<bool> GetUpdateAvailableAsync(string CurrentVersion, string GithubUsername, string RepoName, int Timeout, CancellationToken cancellationToken)
         {
-            string current_version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             string latestRelease = await GetLatestReleaseAsync(GithubUsername, RepoName, Timeout, cancellationToken);
             if (latestRelease != null)
             {
-                if (current_version != latestRelease)
-                {
-                    return true;
-                }
+                return CurrentVersion != latestRelease;
             }
 
             return false;
