@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2019 Emilian Roman
  * 
  * This software is provided 'as-is', without any express or implied
@@ -19,33 +19,42 @@
  */
 
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
+using static System.Environment;
 
 namespace SPV3.GUI
 {
-  /// <summary>
-  /// Interaction logic for MainWindow.xaml
-  /// </summary>
-  public partial class MainWindow
+  public partial class CompilerWindow : Window
   {
-    public MainWindow()
+    public CompilerWindow()
     {
       InitializeComponent();
+      Source.Text = CurrentDirectory;
+      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "My Packages", "SPV3");
     }
 
-    private void Load(object sender, RoutedEventArgs e)
+    private void BrowseSource(object sender, RoutedEventArgs e)
     {
-      Process.Start("SPV3.CLI.exe");
+      using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+      {
+        dialog.ShowDialog();
+        Source.Text = dialog.SelectedPath;
+      }
     }
 
-    private void Installer(object sender, RoutedEventArgs e)
+    private void BrowseTarget(object sender, RoutedEventArgs e)
     {
-      new InstallerWindow().Show();
+      using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+      {
+        dialog.ShowDialog();
+        Target.Text = dialog.SelectedPath;
+      }
     }
 
-    private void Compiler(object sender, RoutedEventArgs e)
+    private void Compile(object sender, RoutedEventArgs e)
     {
-      new CompilerWindow().Show();
+      Process.Start("SPV3.CLI.exe", $"compile {Target.Text} {Source.Text}");
     }
   }
 }

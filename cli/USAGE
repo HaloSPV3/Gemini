@@ -1,0 +1,51 @@
+USAGE INSTRUCTIONS
+==================
+
+INTRODUCTION
+------------
+
+The SPV3 CLI can be invoked from a command line/terminal environment.
+This document makes an important distinguishing between commands and
+arguments:
+
+  ----------------------------------------------------------------------
+  Term       Description                         Example
+  ---------- ----------------------------------- -----------------------
+  Command    Instructs the CLI what procedure to compile, install
+             invoke                              
+
+  Argument   Provides the commands more          target directory for
+             information                         install
+  ----------------------------------------------------------------------
+
+The anatomy of a typical invocation is as such:
+
+    .\SPV3.CLI.exe <command> <argument1...argument2...>
+                       +          +           +
+                       |          |           |
+                       |          |           + - "X:\target"
+                       |          + ------------- "Y:\source"
+                       + ------------------------ "compile"
+
+Here is a practical example of how the CLI can be used to compile SPV3:
+
+    .\SPV3.CLI compile "X:\Source" "Y:\Target"
+
+COMMANDS
+--------
+
+The following table outlines the commands that are necessary for common
+actions. When "n/a" is used, it means that no command and/or argument is
+needed.
+
+  Action               Command              Arguments
+  -------------------- -------------------- ------------------------------------------
+  Execute SPV3         n/a                  n/a
+  Compile SPV3         compile              1: path to folder to compile the data to
+  Install SPV3         install              1: path to target installation directory
+  Apply Placeholder    placeholder commit   1: path to bitmap placeholder
+                                            2: path to bitmaps directory
+                                            3: bitmaps filter, e.g. \"\*.bitmap\"
+  Restore Bitmaps      placeholder revert   1: path to generated records text file
+  Dump Configuration   dump                 1: opensauce -or- overrides
+  Update SPV3.CLI      n/a                  1: --auto-update
