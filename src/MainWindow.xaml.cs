@@ -18,13 +18,13 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System.Diagnostics;
 using System.Windows;
+using static SPV3.CLI.Exit.Code;
 
 namespace SPV3.GUI
 {
   /// <summary>
-  /// Interaction logic for MainWindow.xaml
+  ///   Interaction logic for MainWindow.xaml
   /// </summary>
   public partial class MainWindow
   {
@@ -35,7 +35,15 @@ namespace SPV3.GUI
 
     private void Load(object sender, RoutedEventArgs e)
     {
-      Process.Start("SPV3.CLI.exe");
+      switch (Cli.Start())
+      {
+        case Success:
+          Status.Content = "SPV3 loading routine has gracefully succeeded.";
+          break;
+        case Exception:
+          Status.Content = "Exception has occurred. Review log file.";
+          break;
+      }
     }
 
     private void Installer(object sender, RoutedEventArgs e)

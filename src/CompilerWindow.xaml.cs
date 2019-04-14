@@ -18,10 +18,11 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Forms;
 using static System.Environment;
+using static SPV3.CLI.Exit.Code;
 
 namespace SPV3.GUI
 {
@@ -36,7 +37,7 @@ namespace SPV3.GUI
 
     private void BrowseSource(object sender, RoutedEventArgs e)
     {
-      using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+      using (var dialog = new FolderBrowserDialog())
       {
         dialog.ShowDialog();
         Source.Text = dialog.SelectedPath;
@@ -45,7 +46,7 @@ namespace SPV3.GUI
 
     private void BrowseTarget(object sender, RoutedEventArgs e)
     {
-      using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+      using (var dialog = new FolderBrowserDialog())
       {
         dialog.ShowDialog();
         Target.Text = dialog.SelectedPath;
@@ -54,7 +55,15 @@ namespace SPV3.GUI
 
     private void Compile(object sender, RoutedEventArgs e)
     {
-      Process.Start("SPV3.CLI.exe", $"compile {Target.Text} {Source.Text}");
+      switch (Cli.Start($"compile {Target.Text} {Source.Text}"))
+      {
+        case Success:
+          Status.Content = "SPV3 compilation routine has gracefully succeeded.";
+          break;
+        case Exception:
+          Status.Content = "Exception has occurred. Review log file.";
+          break;
+      }
     }
   }
 }

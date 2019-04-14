@@ -34,9 +34,6 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="SPV3.CLI, Version=80.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\cli\Debug\SPV3.CLI.exe</HintPath>
-        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
@@ -64,6 +61,7 @@
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Include="Cli.cs" />
         <Compile Include="CompilerWindow.xaml.cs">
           <DependentUpon>CompilerWindow.xaml</DependentUpon>
         </Compile>

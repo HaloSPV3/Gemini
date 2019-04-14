@@ -40,5 +40,10 @@
         <Button Click="Compiler">
             Compiler
         </Button>
+
+        <!-- Status -->
+        <Label Name="Status">
+            Awaiting end-user invocation.
+        </Label>
     </StackPanel>
 </Window>

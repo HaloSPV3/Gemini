@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2019 Emilian Roman
  * 
  * This software is provided 'as-is', without any express or implied
@@ -18,12 +18,31 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
+using System.Diagnostics;
+using static SPV3.CLI.Exit;
+
 namespace SPV3.GUI
 {
   /// <summary>
-  ///   Interaction logic for App.xaml
+  ///   Helper class for invoking the CLI executable.
   /// </summary>
-  public partial class App
+  public static class Cli
   {
+    public static Code Start(string args)
+    {
+      var process = Process.Start("SPV3.CLI.exe", args);
+
+      if (process == null)
+        throw new NullReferenceException("Could not construct CLI process.");
+
+      process.WaitForExit();
+      return (Code) process.ExitCode;
+    }
+
+    public static Code Start()
+    {
+      return Start(string.Empty);
+    }
   }
 }

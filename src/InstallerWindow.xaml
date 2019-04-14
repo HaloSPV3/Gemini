@@ -46,10 +46,15 @@
             </Button>
             <TextBox Name="Target" />
         </DockPanel>
-        
+
         <!-- Install -->
         <Button Click="Install">
             Install
         </Button>
+
+        <!-- Status -->
+        <Label Name="Status">
+            Awaiting end-user invocation.
+        </Label>
     </StackPanel>
 </Window>
