@@ -1,0 +1,106 @@
+<!--
+ Copyright (c) 2019 Emilian Roman
+ 
+ This software is provided 'as-is', without any express or implied
+ warranty. In no event will the authors be held liable for any damages
+ arising from the use of this software.
+ 
+ Permission is granted to anyone to use this software for any purpose,
+ including commercial applications, and to alter it and redistribute it
+ freely, subject to the following restrictions:
+ 
+ 1. The origin of this software must not be misrepresented; you must not
+    claim that you wrote the original software. If you use this software
+    in a product, an acknowledgment in the product documentation would be
+    appreciated but is not required.
+ 2. Altered source versions must be plainly marked as such, and must not be
+    misrepresented as being the original software.
+ 3. This notice may not be removed or altered from any source distribution.
+-->
+
+OVERRIDES
+=========
+
+The overrides configuration is used by the loader to explicitly impose
+configuration values in debugging contexts.
+
+INSTRUCTIONS
+------------
+
+To create an XML configuration for overriding OpenSauce,
+Post-Processing, HCE & Chimera configurations:
+
+1.  invoke `SPV3.CLI.exe override dump` to create
+    `%USERPROFILE%\Documents\overrides.xml`; and
+2.  move `%USERPROFILE%\Documents\overrides.xml` to
+    `%APPDATA%\SPV3\overrides.xml`.
+
+The variables in the configuration can have the following values
+assigned to them:
+
+  Variable              Values
+  --------------------- -------------------------------------------
+  Fov                   range 0-180
+  IgnoreCinematicsFov   true, false
+  External              true, false
+  GBuffer               true, false
+  DepthFade             true, false
+  Bloom                 true, false
+  DynamicLensFlares     true, false
+  Volumetrics           true, false
+  LensDirt              true, false
+  HudVisor              true, false
+  Mxao                  Off, Low, High
+  Dof                   Off, Low, High
+  MotionBlur            Off, BuiltIn, PombLow, PombHigh
+  ThreeDimensional      Off, Anaglyphic, Interleaving, SideBySide
+  ColorBlindMode        Off, Protanopia, Deuteranopes, Tritanopes
+
+Note that the values are CaSe SeNSiTiVE!
+
+OVERRIDE XML
+------------
+
+The following XML is what the `override dump` command outputs:
+
+    <?xml version="1.0" encoding="utf-16"?>
+    <Override xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <Name>override.xml</Name>
+      <General>
+        <Window>false</Window>
+      </General>
+      <Chimera>
+        <Fps60Gameplay>false</Fps60Gameplay>
+        <Fps60Cinematics>false</Fps60Cinematics>
+        <DisableModelDownscaling>false</DisableModelDownscaling>
+        <AnisotropicFiltering>false</AnisotropicFiltering>
+      </Chimera>
+      <OpenSauce>
+        <Fov>0</Fov>
+        <IgnoreCinematicsFov>false</IgnoreCinematicsFov>
+        <Hud>
+          <ShowHud>false</ShowHud>
+          <ScaleHud>false</ScaleHud>
+          <HideVisor>false</HideVisor>
+        </Hud>
+        <PostProcessing>
+          <Internal>false</Internal>
+          <External>false</External>
+          <GBuffer>false</GBuffer>
+          <DepthFade>false</DepthFade>
+          <Bloom>false</Bloom>
+          <LensDirt>false</LensDirt>
+          <DynamicLensFlares>false</DynamicLensFlares>
+          <Volumetrics>false</Volumetrics>
+          <AntiAliasing>false</AntiAliasing>
+          <HudVisor>false</HudVisor>
+          <MotionBlur>PombHigh</MotionBlur>
+          <Mxao>High</Mxao>
+          <Dof>High</Dof>
+          <Experimental>
+            <ThreeDimensional>Off</ThreeDimensional>
+            <ColorBlindMode>Off</ColorBlindMode>
+          </Experimental>
+        </PostProcessing>
+      </OpenSauce>
+    </Override>

@@ -92,5 +92,11 @@
     <ItemGroup>
         <None Include="App.config" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\cli\src\SPV3.CLI.csproj">
+        <Project>{acaa5d9f-b23d-43e1-b2df-8c03230975a1}</Project>
+        <Name>SPV3.CLI</Name>
+      </ProjectReference>
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
