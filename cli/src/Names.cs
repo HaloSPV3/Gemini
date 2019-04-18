@@ -54,10 +54,6 @@ namespace SPV3.CLI
         "OS_Settings.User.xml"
       );
 
-      public static readonly string Overrides = Path.Combine(GetFolderPath(ApplicationData),
-        Directories.Data,
-        "overrides.xml");
-
       public static readonly string PostProcessing = Path.Combine(GetFolderPath(ApplicationData),
         Directories.Data,
         "postprocessing.bin"

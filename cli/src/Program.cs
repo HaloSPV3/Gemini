@@ -253,13 +253,6 @@ namespace SPV3.CLI
 
             switch (args[1])
             {
-              case "overrides":
-                Info("Explicitly invoked 'overrides' argument.");
-
-                var overridesPath = Path.Combine(Environment.GetFolderPath(MyDocuments), Overrides);
-
-                Run(() => { new Override {Path = overridesPath}.Save(); });
-                return;
               case "opensauce":
                 Info("Explicitly invoked 'opensauce' argument.");
 

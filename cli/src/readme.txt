@@ -37,9 +37,8 @@ The loading procedure, in a nutshell, is as follows:
 2.  resume of the SPV3 campaign, through heuristic detection of the
     player's profile and inference of the mission & difficulty; and
 
-3.  check for an override file, for the purpose of easy debugging of
-    SPV3 by forcefully changing any imposed loader/HCE/OS/Chimera
-    settings; and
+3.  find the post-processing settings on the filesystem, infer the
+    integer that represents them, and save it to the initc file; and
 
 4.  invoke of the HCE executable within the working directory, with
     arguments being passed onto the invoked executable process.
@@ -201,11 +200,6 @@ File type:
                    the kernel's auto-detection mechanism. This object
                    permits the retrieval of the last played profile
                    name.
-
-  Override         Represents the overrides.XML file, which is used for
-                   debugging purposes by forcefully overriding any
-                   imposed or default settings by the loader, HCE,
-                   OpenSauce or Chimera.
 
   Progress         Represents the savegame.bin file, which contains the
                    player's checkpoint data. This object infers and

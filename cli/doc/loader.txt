@@ -26,7 +26,7 @@ responsible for:
 
 1.  verifying the main assets, e.g. maps & executables; and
 2.  determining the player's campaign progress for resuming; and
-3.  overriding any configurations using the debug XML file; and
+3.  inferring the post-processing settings and encoding them; and
 4.  loading SPV3 with user start-up parameters for HCE.
 
 The sections below elaborate upon the aforementioned steps.
@@ -113,9 +113,9 @@ values:
 
   Property                 Offset   Values
   ------------------------ -------- ---------------------
-  Skip Heuristic Install   0x01     0x0 = off; 0x1 = on
-  Skip Verify MainAssets   0x02     0x0 = off; 0x1 = on
-  Skip Invoke CoreTweaks   0x03     0x0 = off; 0x1 = on
-  Skip Resume Checkpoint   0x04     0x0 = off; 0x1 = on
-  Skip Invoke Overriding   0x05     0x0 = off; 0x1 = on
-  Skip Invoke Executable   0x06     0x0 = off; 0x1 = on
+  Skip Heuristic Install   0x00     0x0 = off; 0x1 = on
+  Skip Verify MainAssets   0x01     0x0 = off; 0x1 = on
+  Skip Invoke CoreTweaks   0x02     0x0 = off; 0x1 = on
+  Skip Resume Checkpoint   0x03     0x0 = off; 0x1 = on
+  Skip Set Shader Config   0x04     0x0 = off; 0x1 = on
+  Skip Invoke Executable   0x05     0x0 = off; 0x1 = on

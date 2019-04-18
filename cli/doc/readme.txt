@@ -51,10 +51,6 @@ specific to the SPV3 programs:
                                         including distribution &
                                         installation decisions.
 
-  overrides.txt                         Documentation & instructions on
-                                        overriding configurations, for
-                                        debugging purposes.
-
   distributing.txt                      Documentation & instructions on
                                         compiling, distributing, and
                                         installing SPV3.2.

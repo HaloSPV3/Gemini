@@ -17,6 +17,7 @@ Current features include:
     -   automatic HCE/SPV3 player profile detection
     -   automatic detection & launching the HCE executable
     -   verification of the SPV3 assets/maps/executables
+    -   patching of post-processing user configurations
 
 -   UPDATING
 
@@ -35,7 +36,6 @@ Current features include:
 -   DEVELOPER
 
     -   ability to apply placeholders to bitmaps for Sapien
-    -   ability to override HCE/Chimera/OpenSauce configurations
 
 USAGE
 -----
@@ -45,7 +45,6 @@ nutshell:
 
     .\SPV3.exe                     # verifies, resumes & runs SPV3
 
-    .\SPV3.exe dump overrides      # writes overrides xml template
     .\SPV3.exe dump opensauce      # writes opensauce xml template
     .\SPV3.exe compile "dst"       # compile current folder to dst
     .\SPV3.exe install "dst"       # installs packages data to dst

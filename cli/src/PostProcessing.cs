@@ -55,8 +55,8 @@ namespace SPV3.CLI
     public enum MxaoOptions
     {
       Off  = 0x0,
-      Low  = 0x0,
-      High = 0x0
+      Low  = 0x1,
+      High = 0x2
     }
 
     /// <summary>
@@ -75,9 +75,9 @@ namespace SPV3.CLI
     public bool AntiAliasing      { get; set; }
     public bool HudVisor          { get; set; }
 
-    public MotionBlurOptions MotionBlur { get; set; } = MotionBlurOptions.PombHigh;
-    public MxaoOptions       Mxao       { get; set; } = MxaoOptions.High;
-    public DofOptions        Dof        { get; set; } = DofOptions.High;
+    public MotionBlurOptions MotionBlur { get; set; } = MotionBlurOptions.Off;
+    public MxaoOptions       Mxao       { get; set; } = MxaoOptions.Off;
+    public DofOptions        Dof        { get; set; } = DofOptions.Off;
 
     public ExperimentalPostProcessing Experimental { get; set; } = new ExperimentalPostProcessing();
 
@@ -97,15 +97,16 @@ namespace SPV3.CLI
         bw.Write(GBuffer);                                   /* 0x02 */
         bw.Write(DepthFade);                                 /* 0x03 */
         bw.Write(Bloom);                                     /* 0x04 */
-        bw.Write(DynamicLensFlares);                         /* 0x05 */
-        bw.Write(Volumetrics);                               /* 0x06 */
-        bw.Write(AntiAliasing);                              /* 0x07 */
-        bw.Write(HudVisor);                                  /* 0x08 */
-        bw.Write((byte) MotionBlur);                         /* 0x09 */
-        bw.Write((byte) Mxao);                               /* 0x0A */
-        bw.Write((byte) Dof);                                /* 0x0B */
-        bw.Write((byte) Experimental.ThreeDimensional);      /* 0x0C */
-        bw.Write((byte) Experimental.ColorBlindMode);        /* 0x0D */
+        bw.Write(LensDirt);                                  /* 0x05 */
+        bw.Write(DynamicLensFlares);                         /* 0x06 */
+        bw.Write(Volumetrics);                               /* 0x07 */
+        bw.Write(AntiAliasing);                              /* 0x08 */
+        bw.Write(HudVisor);                                  /* 0x09 */
+        bw.Write((byte) MotionBlur);                         /* 0x0A */
+        bw.Write((byte) Mxao);                               /* 0x0B */
+        bw.Write((byte) Dof);                                /* 0x0C */
+        bw.Write((byte) Experimental.ThreeDimensional);      /* 0x0D */
+        bw.Write((byte) Experimental.ColorBlindMode);        /* 0x0E */
         bw.Write(new byte[Length - bw.BaseStream.Position]); /* pad */
 
         ms.WriteTo(fs);
@@ -129,15 +130,16 @@ namespace SPV3.CLI
         GBuffer                       = br.ReadBoolean();                                                   /* 0x02 */
         DepthFade                     = br.ReadBoolean();                                                   /* 0x03 */
         Bloom                         = br.ReadBoolean();                                                   /* 0x04 */
-        DynamicLensFlares             = br.ReadBoolean();                                                   /* 0x05 */
-        Volumetrics                   = br.ReadBoolean();                                                   /* 0x06 */
-        AntiAliasing                  = br.ReadBoolean();                                                   /* 0x07 */
-        HudVisor                      = br.ReadBoolean();                                                   /* 0x08 */
-        MotionBlur                    = (MotionBlurOptions) br.ReadByte();                                  /* 0x09 */
-        Mxao                          = (MxaoOptions) br.ReadByte();                                        /* 0x0A */
-        Dof                           = (DofOptions) br.ReadByte();                                         /* 0x0B */
-        Experimental.ThreeDimensional = (ExperimentalPostProcessing.ThreeDimensionalOptions) br.ReadByte(); /* 0x0C */
-        Experimental.ColorBlindMode   = (ExperimentalPostProcessing.ColorBlindModeOptions) br.ReadByte();   /* 0x0D */
+        LensDirt                      = br.ReadBoolean();                                                   /* 0x05 */
+        DynamicLensFlares             = br.ReadBoolean();                                                   /* 0x06 */
+        Volumetrics                   = br.ReadBoolean();                                                   /* 0x07 */
+        AntiAliasing                  = br.ReadBoolean();                                                   /* 0x08 */
+        HudVisor                      = br.ReadBoolean();                                                   /* 0x09 */
+        MotionBlur                    = (MotionBlurOptions) br.ReadByte();                                  /* 0x0A */
+        Mxao                          = (MxaoOptions) br.ReadByte();                                        /* 0x0B */
+        Dof                           = (DofOptions) br.ReadByte();                                         /* 0x0C */
+        Experimental.ThreeDimensional = (ExperimentalPostProcessing.ThreeDimensionalOptions) br.ReadByte(); /* 0x0D */
+        Experimental.ColorBlindMode   = (ExperimentalPostProcessing.ColorBlindModeOptions) br.ReadByte();   /* 0x0E */
       }
     }
 

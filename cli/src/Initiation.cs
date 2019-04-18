@@ -22,6 +22,7 @@ using System;
 using System.Text;
 using static SPV3.CLI.Campaign;
 using static SPV3.CLI.Console;
+using static SPV3.CLI.PostProcessing;
 
 namespace SPV3.CLI
 {
@@ -31,11 +32,12 @@ namespace SPV3.CLI
   /// </summary>
   public class Initiation : File
   {
-    public bool       CinematicBars   { get; set; } = true;
-    public bool       PlayerAutoaim   { get; set; } = true;
-    public bool       PlayerMagnetism { get; set; } = true;
-    public Mission    Mission         { get; set; } = Mission.Spv3A10;
-    public Difficulty Difficulty      { get; set; } = Difficulty.Normal;
+    public bool           CinematicBars   { get; set; } = true;
+    public bool           PlayerAutoaim   { get; set; } = true;
+    public bool           PlayerMagnetism { get; set; } = true;
+    public Mission        Mission         { get; set; } = Mission.Spv3A10;
+    public Difficulty     Difficulty      { get; set; } = Difficulty.Normal;
+    public PostProcessing PostProcessing  { get; set; } = new PostProcessing();
 
     /// <summary>
     ///   Saves object state to the inbound file.
@@ -63,16 +65,64 @@ namespace SPV3.CLI
         }
       }
 
+      /**
+       * Encodes formal permutations to an integer. The permutations and values are specified in the doc/shaders.txt
+       * documentation.
+       */
+
+      int GetPostProcessing()
+      {
+        var mxao = PostProcessing.Mxao;
+        var dof  = PostProcessing.Dof;
+        var mb   = PostProcessing.MotionBlur;
+        var lf   = PostProcessing.DynamicLensFlares;
+        var vol  = PostProcessing.Volumetrics;
+        var ld   = PostProcessing.LensDirt;
+
+        if (mxao == MxaoOptions.Off && dof == DofOptions.Off && mb == MotionBlurOptions.Off &&
+            lf   == false           && vol == false          && ld)
+          return 0;
+
+        if (mxao == MxaoOptions.Off && dof == DofOptions.Off && mb == MotionBlurOptions.Off &&
+            lf   == false           && vol                   && ld)
+          return 1;
+
+        if (mxao == MxaoOptions.Off && dof == DofOptions.Low && mb == MotionBlurOptions.BuiltIn &&
+            lf   == false           && vol                   && ld)
+          return 2;
+
+        if (mxao == MxaoOptions.Low && dof == DofOptions.Low && mb == MotionBlurOptions.BuiltIn &&
+            lf   == false           && vol                   && ld)
+          return 3;
+
+        if (mxao == MxaoOptions.Low && dof == DofOptions.Low && mb == MotionBlurOptions.PombLow &&
+            lf                      && vol                   && ld)
+          return 4;
+
+        if (mxao == MxaoOptions.Low && dof == DofOptions.High && mb == MotionBlurOptions.PombLow &&
+            lf                      && vol                    && ld)
+          return 5;
+
+        if (mxao == MxaoOptions.High && dof == DofOptions.High && mb == MotionBlurOptions.PombLow &&
+            lf                    && vol                    && ld)
+          return 6;
+
+        if (mxao == MxaoOptions.High && dof == DofOptions.High && mb == MotionBlurOptions.PombHigh &&
+            lf                    && vol                    && ld)
+          return 7;
+
+        return 0;
+      }
+
       var difficulty = GetDifficulty();
+      var shaders    = GetPostProcessing();
       var mission    = (int) Mission;
       var autoaim    = PlayerAutoaim ? 1 : 0;
       var magnetism  = PlayerMagnetism ? 1 : 0;
       var cinematic  = CinematicBars ? 1 : 0;
 
-      const int unlock31 = 0x8; /* unlock value for 3.1 */
-
       var output = new StringBuilder();
-      output.AppendLine($"set f1 {unlock31}");
+      output.AppendLine($"set f1 {shaders}");
       output.AppendLine($"set f3 {mission}");
       output.AppendLine($"set f5 {cinematic}");
       output.AppendLine($"player_autoaim {autoaim}");

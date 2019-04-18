@@ -38,6 +38,9 @@ purpose:
   ---------------------------------------------------------------------
   Variable   Description
   ---------- ----------------------------------------------------------
+  f1         Post-processing settings for SPV3. Refer to shaders.txt
+             for the relevant values
+
   f3         Stores the integer identifier of the last played mission
              (see MISSIONS)
 
