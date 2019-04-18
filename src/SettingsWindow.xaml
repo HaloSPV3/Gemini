@@ -25,12 +25,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:SPV3.GUI"
         mc:Ignorable="d"
-        Title="SettingsWindow"
+        Title="Settings"
         SnapsToDevicePixels="True"
-        SizeToContent="WidthAndHeight"
+        SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize">
-    <StackPanel>
+        ResizeMode="CanMinimize"
+        Width="320"
+        FontFamily="Consolas">
+    <StackPanel Margin="10">
         <GroupBox Header="Post-Processing">
             <DockPanel>
                 <TextBox Name="PostProcessing"

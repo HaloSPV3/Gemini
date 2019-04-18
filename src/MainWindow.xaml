@@ -25,27 +25,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SPV3.GUI"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="SPV3 GUI"
         SnapsToDevicePixels="True"
-        SizeToContent="WidthAndHeight"
+        SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize">
-    <StackPanel>
-        <Button Click="Load">
-            Load
+        ResizeMode="CanMinimize"
+        Width="320"
+        FontFamily="Consolas">
+    <StackPanel Margin="10">
+        <Button Click="Load" Margin="0,1,0,0">
+            Load SPV3
         </Button>
-        <Button Click="Settings">
+        <Button Click="Settings" Margin="0,1,0,0">
             Settings
         </Button>
-        <Button Click="Installer">
+        <Button Click="Installer" Margin="0,1,0,0">
             Installer
         </Button>
-        <Button Click="Compiler">
+        <Button Click="Compiler" Margin="0,1,0,0">
             Compiler
         </Button>
 
         <!-- Status -->
-        <Label Name="Status">
+        <Label Name="Status" HorizontalAlignment="Center" Margin="0,10,0,0">
             Awaiting end-user invocation.
         </Label>
     </StackPanel>

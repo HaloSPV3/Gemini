@@ -24,6 +24,14 @@
              xmlns:local="clr-namespace:SPV3.GUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Padding" Value="5,0" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Margin" Value="0,1" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
     </Application.Resources>
 </Application>
