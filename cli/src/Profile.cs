@@ -302,6 +302,36 @@ namespace SPV3.CLI
     }
 
     /// <summary>
+    ///   Returns object representing the HCE profile detected on the filesystem.
+    /// </summary>
+    /// <returns>
+    ///   Object representing the HCE profile detected on the filesystem.
+    /// </returns>
+    /// <exception cref="FileNotFoundException">
+    ///   lastprof.txt does not exist.
+    ///   - or -
+    ///   blam.sav does not exist.
+    /// </exception>
+    public static Profile Detect()
+    {
+      var lastprof = (LastProfile) System.IO.Path.Combine(Paths.Directories.HCE, Paths.Files.LastProfile);
+
+      if (!lastprof.Exists())
+        throw new FileNotFoundException("Cannot detect profile - lastprof.txt does not exist.");
+
+      lastprof.Load();
+
+      var profile = (Profile) System.IO.Path.Combine(Paths.Directories.Profiles, lastprof.Profile, Paths.Files.Profile);
+
+      if (!profile.Exists())
+        throw new FileNotFoundException("Cannot load detected profile - its blam.sav does not exist.");
+
+      profile.Load();
+
+      return profile;
+    }
+
+    /// <summary>
     ///   Represents the inbound object as a string.
     /// </summary>
     /// <param name="profile">

@@ -32,17 +32,6 @@
         ResizeMode="CanMinimize"
         FontFamily="Consolas">
     <StackPanel Margin="10">
-        <!-- Browse Source -->
-        <DockPanel>
-            <Label>
-                Source:
-            </Label>
-            <Button DockPanel.Dock="Right" Click="BrowseSource">
-                Browse
-            </Button>
-            <TextBox Name="Source" Margin="0,0,1,0" />
-        </DockPanel>
-
         <!-- Browse Target -->
         <DockPanel Margin="0,1,0,0">
             <Label>

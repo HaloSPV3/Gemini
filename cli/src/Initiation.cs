@@ -79,36 +79,36 @@ namespace SPV3.CLI
         var vol  = PostProcessing.Volumetrics;
         var ld   = PostProcessing.LensDirt;
 
-        if (mxao == MxaoOptions.Off && dof == DofOptions.Off && mb == MotionBlurOptions.Off &&
-            lf   == false           && vol == false          && ld)
+        if (mxao  == MxaoOptions.Off && dof == DofOptions.Off && mb == MotionBlurOptions.Off
+            && lf == false           && vol == false          && ld)
           return 0;
 
-        if (mxao == MxaoOptions.Off && dof == DofOptions.Off && mb == MotionBlurOptions.Off &&
-            lf   == false           && vol                   && ld)
+        if (mxao  == MxaoOptions.Off && dof == DofOptions.Off && mb == MotionBlurOptions.Off
+            && lf == false           && vol                   && ld)
           return 1;
 
-        if (mxao == MxaoOptions.Off && dof == DofOptions.Low && mb == MotionBlurOptions.BuiltIn &&
-            lf   == false           && vol                   && ld)
+        if (mxao  == MxaoOptions.Off && dof == DofOptions.Low && mb == MotionBlurOptions.BuiltIn
+            && lf == false           && vol                   && ld)
           return 2;
 
-        if (mxao == MxaoOptions.Low && dof == DofOptions.Low && mb == MotionBlurOptions.BuiltIn &&
-            lf   == false           && vol                   && ld)
+        if (mxao  == MxaoOptions.Low && dof == DofOptions.Low && mb == MotionBlurOptions.BuiltIn
+            && lf == false           && vol                   && ld)
           return 3;
 
-        if (mxao == MxaoOptions.Low && dof == DofOptions.Low && mb == MotionBlurOptions.PombLow &&
-            lf                      && vol                   && ld)
+        if (mxao == MxaoOptions.Low && dof == DofOptions.Low && mb == MotionBlurOptions.PombLow
+            && lf                   && vol                   && ld)
           return 4;
 
-        if (mxao == MxaoOptions.Low && dof == DofOptions.High && mb == MotionBlurOptions.PombLow &&
-            lf                      && vol                    && ld)
+        if (mxao == MxaoOptions.Low && dof == DofOptions.High && mb == MotionBlurOptions.PombLow
+            && lf                   && vol                    && ld)
           return 5;
 
-        if (mxao == MxaoOptions.High && dof == DofOptions.High && mb == MotionBlurOptions.PombLow &&
-            lf                    && vol                    && ld)
+        if (mxao == MxaoOptions.High && dof == DofOptions.High && mb == MotionBlurOptions.PombLow
+            && lf                    && vol                    && ld)
           return 6;
 
-        if (mxao == MxaoOptions.High && dof == DofOptions.High && mb == MotionBlurOptions.PombHigh &&
-            lf                    && vol                    && ld)
+        if (mxao == MxaoOptions.High && dof == DofOptions.High && mb == MotionBlurOptions.PombHigh
+            && lf                    && vol                    && ld)
           return 7;
 
         return 0;

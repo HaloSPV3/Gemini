@@ -31,17 +31,7 @@ namespace SPV3.GUI
     public CompilerWindow()
     {
       InitializeComponent();
-      Source.Text = CurrentDirectory;
-      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "My Packages", "SPV3");
-    }
-
-    private void BrowseSource(object sender, RoutedEventArgs e)
-    {
-      using (var dialog = new FolderBrowserDialog())
-      {
-        dialog.ShowDialog();
-        Source.Text = dialog.SelectedPath;
-      }
+      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "SPV3.Compile");
     }
 
     private void BrowseTarget(object sender, RoutedEventArgs e)
@@ -55,7 +45,7 @@ namespace SPV3.GUI
 
     private void Compile(object sender, RoutedEventArgs e)
     {
-      switch (Cli.Start($"compile {Target.Text} {Source.Text}"))
+      switch (Cli.Start($"/compile {Target.Text}"))
       {
         case Success:
           Status.Content = "SPV3 compilation routine has gracefully succeeded.";

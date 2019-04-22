@@ -18,15 +18,12 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using static System.Environment;
-using static System.Environment.SpecialFolder;
 using static System.IO.Compression.ZipFile;
 using static System.IO.Directory;
 using static System.IO.Path;
 using static SPV3.CLI.Console;
-using static SPV3.CLI.Names;
-using static SPV3.CLI.Names.Directories;
-using static SPV3.CLI.Names.Files;
+using static SPV3.CLI.Paths;
+using static SPV3.CLI.Paths.Files;
 
 namespace SPV3.CLI
 {
@@ -117,13 +114,12 @@ namespace SPV3.CLI
        * Store the installation path in a text file that other applications can rely on for inferring the location where
        * SPV3 is installed.
        */
-      var dataDirectory = Combine(GetFolderPath(ApplicationData), Data);
 
-      CreateDirectory(dataDirectory);
+      CreateDirectory(Directories.SPV3);
 
       new File
       {
-        Path = Combine(dataDirectory, InstallPath)
+        Path = Combine(Directories.SPV3, InstallPath)
       }.WriteAllText(target);
     }
   }

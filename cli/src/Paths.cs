@@ -27,7 +27,7 @@ namespace SPV3.CLI
   /// <summary>
   ///   Lists all of the files & directories on the filesystem that SPV3 deals with.
   /// </summary>
-  public static class Names
+  public static class Paths
   {
     /// <summary>
     ///   Files on the filesystem that SPV3 reads/writes.
@@ -40,32 +40,10 @@ namespace SPV3.CLI
       public const string Profile     = "blam.sav";
       public const string InstallPath = "install.txt";
       public const string Manifest    = "0x00.bin";
+      public const string LastProfile = "lastprof.txt";
 
-      public static readonly string LastProfile = Path.Combine(GetFolderPath(Personal),
-        Directories.Games,
-        Directories.Halo,
-        "lastprof.txt"
-      );
-
-      public static readonly string OpenSauce = Path.Combine(GetFolderPath(Personal),
-        Directories.Games,
-        Directories.Halo,
-        Directories.OpenSauce,
-        "OS_Settings.User.xml"
-      );
-
-      public static readonly string PostProcessing = Path.Combine(GetFolderPath(ApplicationData),
-        Directories.Data,
-        "postprocessing.bin"
-      );
-
-      public static readonly string UpdateVersion = Path.Combine(GetFolderPath(ApplicationData),
-        Directories.Data,
-        "updateversion.bin");
-
-      public static readonly string Kernel = Path.Combine(GetFolderPath(ApplicationData),
-        Directories.Data,
-        "kernel.bin");
+      public static readonly string PostProcessing = Path.Combine(Directories.SPV3, "postprocessing.bin");
+      public static readonly string Kernel         = Path.Combine(Directories.SPV3, "kernel.bin");
     }
 
     /// <summary>
@@ -73,16 +51,12 @@ namespace SPV3.CLI
     /// </summary>
     public static class Directories
     {
-      public const string Games     = "My Games";
-      public const string Halo      = "Halo CE";
-      public const string Data      = "SPV3";
-      public const string OpenSauce = "OpenSauce";
+      public const string Profiles = "savegames";
 
-      public static readonly string Profiles = Path.Combine(GetFolderPath(Personal),
-        Games,
-        Halo,
-        "savegames"
-      );
+      public static readonly  string SPV3     = Path.Combine(GetFolderPath(ApplicationData), "SPV3");
+      private static readonly string Personal = GetFolderPath(SpecialFolder.Personal);
+      private static readonly string Games    = Path.Combine(Personal, "My Games");
+      public static readonly  string HCE      = Path.Combine(Games,    "Halo CE");
     }
   }
 }

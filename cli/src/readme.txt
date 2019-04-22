@@ -140,37 +140,6 @@ The installation procedure, in a nutshell, is as follows:
 For further information on the aforementioned installation text file,
 please refer to the installer.txt documentation in the doc directory.
 
-SELF-UPDATE INFORMATION
------------------------
-
-The loader includes a self-update mechanism, which is invoked using:
-
-    .\SPV3.CLI.exe --auto-update
-
-Otherwise, the update is carried out interactively, by having the user
-prompted on whether they want to update or not.
-
-The update is comprised of the following steps:
-
-1.  deleting any existing files which will exist in the downloaded
-    archive; and
-
-2.  infer the latest hash, and download the relevant archive to the
-    application data; and
-
-3.  extract the contents of the archive to the current directory; and
-
-4.  rename the current loader executable to a temporary name; and
-
-5.  have the new loader move its own files to the current directory, and
-    then delete the old executable binary.
-
-The update mechanism also permits for mere verification of whether an
-update is available or not. This is accomplished by caching the hash to
-a binary on the filesystem when an update is committed.
-
-Verification is carried out automatically on the loader start-up.
-
 FILESYSTEM OBJECTS
 ------------------
 

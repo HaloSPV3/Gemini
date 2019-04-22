@@ -20,14 +20,14 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using Mono.Options;
 using static System.Console;
-using static System.Environment.SpecialFolder;
+using static System.Environment;
+using static System.Int32;
 using static System.Reflection.Assembly;
 using static SPV3.CLI.Console;
 using static SPV3.CLI.Exit.Code;
-using static SPV3.CLI.Names.Files;
 
 namespace SPV3.CLI
 {
@@ -44,235 +44,66 @@ namespace SPV3.CLI
     /// </param>
     public static void Main(string[] args)
     {
-      InitiateData(); /* startup data initiation       */
-      OutputBanner(); /* startup ascii output          */
-      HandleUpdate(); /* startup update verification   */
-      HandleInvoke(); /* startup command invocations   */
+      var v = GetEntryAssembly().GetName().Version.Major.ToString("D3");
 
-      /**
-       * Displays the ASCII art, key information, and build version.
-       */
+      ForegroundColor = ConsoleColor.Green;
+      WriteLine(@"   _____ ____ _    _______  ________    ____");
+      WriteLine(@"  / ___// __ \ |  / /__  / / ____/ /   /  _/");
+      WriteLine(@"  \__ \/ /_/ / | / / /_ < / /   / /    / /  ");
+      WriteLine(@" ___/ / ____/| |/ /___/ // /___/ /____/ /   ");
+      WriteLine(@"/____/_/     |___//____(_)____/_____/___/   ");
+      WriteLine(@"============================================");
+      WriteLine(@"The SPV3 CLI ~ Automatic loader for HCE/SPV3");
+      WriteLine(@"--------------------------------------------");
+      WriteLine(@"source  ::  https://cgit.n2.network/spv3.cli");
+      WriteLine(@"binary  ::  https://dist.n2.network/spv3.cli");
+      WriteLine(@"--------------------------------------------");
+      WriteLine($"Executable has been compiled from build: {v}");
+      WriteLine(@"--------------------------------------------");
+      ForegroundColor = ConsoleColor.White;
 
-      void OutputBanner()
-      {
-        var v = GetEntryAssembly().GetName().Version.Major.ToString("D3");
+      Directory.CreateDirectory(Paths.Directories.SPV3);
 
-        ForegroundColor = ConsoleColor.Green;
-        WriteLine(@"   _____ ____ _    _______  ________    ____");
-        WriteLine(@"  / ___// __ \ |  / /__  / / ____/ /   /  _/");
-        WriteLine(@"  \__ \/ /_/ / | / / /_ < / /   / /    / /  ");
-        WriteLine(@" ___/ / ____/| |/ /___/ // /___/ /____/ /   ");
-        WriteLine(@"/____/_/     |___//____(_)____/_____/___/   ");
-        WriteLine(@"============================================");
-        WriteLine(@"The SPV3 CLI ~ Automatic loader for HCE/SPV3");
-        WriteLine(@"--------------------------------------------");
-        WriteLine(@"source  ::  https://cgit.n2.network/spv3.cli");
-        WriteLine(@"binary  ::  https://dist.n2.network/spv3.cli");
-        WriteLine(@"--------------------------------------------");
-        WriteLine($"Executable has been compiled from build: {v}");
-        WriteLine(@"--------------------------------------------");
-        ForegroundColor = ConsoleColor.White;
-      }
+      var hce = (Executable) Paths.Files.Executable;
 
-      /**
-       * Conduct data initiation on each start-up.
-       */
-
-      void InitiateData()
-      {
-        Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(ApplicationData), Names.Directories.Data));
-      }
-
-      /**
-       * The CLI provides both an interactive and automatic update mechanism. Using --auto-update, the loader will
-       * automatically update itself when necessary. Without the argument, the user will be prompted to choose whether
-       * to update the loader now or not.
-       *
-       * Once that's out of the way, the --auto-update will be removed from the array of arguments, as it's no longer
-       * needed in subsequent invocations throughout the CLI.
-       */
-
-      void HandleUpdate()
-      {
-        try
-        {
-          if (!Update.Verify()) return;
-
-          Warn(@"Loader update is available to download!");
-
-          using (var reader = new StringReader(Update.Logs()))
+      var options = new OptionSet()
+        .Add("load", "Initiates HCE/SPV3",
+          s => Run(() => { Kernel.Bootstrap(hce); }))
+        .Add("install=", "Installs SPV3 to destination",
+          s => Run(() => { Installer.Install(CurrentDirectory, s); }))
+        .Add("compile=", "Compiles SPV3 to destination",
+          s => Run(() => { Compiler.Compile(CurrentDirectory, s); }))
+        .Add("console", "Loads HCE with console mode",
+          s => hce.Debug.Console = true)
+        .Add("devmode", "Loads HCE with developer mode",
+          s => hce.Debug.Developer = true)
+        .Add("screenshot", "Loads HCE with screenshot ability",
+          s => hce.Debug.Screenshot = true)
+        .Add("window", "Loads HCE in window mode",
+          s => hce.Video.Window = true)
+        .Add("adapter=", "Loads HCE on monitor X",
+          s => hce.Video.Adapter = Parse(s))
+        .Add("path=", "Loads HCE with custom profile path",
+          s => hce.Profile.Path = s)
+        .Add("vidmode=", "Loads HCE with video mode",
+          s =>
           {
-            string line;
-            while ((line = reader.ReadLine()) != null)
-              Logs("> " + line);
-          }
+            var a = s.Split(',');
 
-          if (args.Contains("--auto-update"))
-          {
-            Warn(@"Will automatically conduct auto-update!");
-            Update.Commit();
-          }
-          else
-          {
-            Warn(@"Would you like to conduct update? [y/n]");
-            if (ReadLine() == "y")
-              Update.Commit();
-          }
-        }
-        catch (Exception e)
-        {
-          Info(e.Message);
-        }
+            if (a.Length != 3) return;
 
-        args = args.Where(val => val != "--auto-update").ToArray();
-      }
+            hce.Video.Width   = Parse(a[0]);
+            hce.Video.Height  = Parse(a[1]);
+            hce.Video.Refresh = Parse(a[2]);
+          });
 
-      /**
-       * Commands are invoked either explicitly or implicitly. The only implicitly invoked command is the loading one,
-       * and it's done when there are no commands being passed to the CLI.
-       */
+      options.WriteOptionDescriptions(Out);
+      var input = options.Parse(args);
 
-      void HandleInvoke()
-      {
-        /**
-         * Implicit Loading command.
-         */
-        if (args.Length == 0)
-        {
-          Info("Implicitly invoked 'load' command.");
-          Run(Kernel.Bootstrap);
-
-          return;
-        }
-
-        var command = args[0];
-
-        /**
-         * Updating command.
-         */
-
-        switch (command)
-        {
-          case "update" when args.Length >= 2:
-          {
-            Info("Explicitly invoked 'update' command.");
-
-            switch (args[1])
-            {
-              case "install":
-                Info("Explicitly invoked 'install' argument.");
-                Run(Update.Install);
-                Warn("Update has been successfully installed!");
-
-                return;
-              case "finish":
-                Info("Explicitly invoked 'finish' argument.");
-                Run(Update.Finish);
-                Warn("Update has been successfully finished!");
-
-                return;
-            }
-
-            return;
-          }
-
-          /**
-           * Compilation command.
-           */
-
-          case "compile" when args.Length >= 2:
-          {
-            Info("Explicitly invoked 'compile' command.");
-
-            var source = args.Length == 2 ? Environment.CurrentDirectory : args[2]; /* implicitly use working dir */
-            var target = args[1];
-
-            Run(() => { Compiler.Compile(source, target); });
-            return;
-          }
-
-          /**
-           * Installation command.
-           */
-
-          case "install" when args.Length >= 1:
-          {
-            Info("Explicitly invoked 'install' command.");
-
-            var source = args.Length == 2 ? Environment.CurrentDirectory : args[2]; /* allow non-working dir paths */
-            var target = args.Length == 1 ? Path.Combine(Environment.GetFolderPath(ApplicationData), "SPV3") : args[1];
-
-            Run(() => { Installer.Install(source, target); });
-            return;
-          }
-
-          /**
-           * Placeholder command.
-           */
-
-          case "placeholder" when args.Length > 1:
-          {
-            Info("Explicitly invoked 'placeholder' command.");
-
-            switch (args[1])
-            {
-              case "commit" when args.Length >= 4:
-              {
-                Info("Explicitly invoked 'commit' argument.");
-
-                var bitmap = args[2];
-                var target = args[3];
-                var filter = args.Length == 4 ? "*.bitmap" : args[4];
-
-                Run(() => { Placeholder.Commit(bitmap, target, filter); });
-                return;
-              }
-              case "revert" when args.Length >= 2:
-              {
-                Info("Explicitly invoked 'revert' argument.");
-
-                var records = args[2];
-
-                Run(() => { Placeholder.Revert(records); });
-                return;
-              }
-              default:
-                Error("Invalid placeholder args.");
-                Exit.WithCode(InvalidArgument);
-                return;
-            }
-          }
-
-          /**
-           * Dump command.
-           */
-
-          case "dump" when args.Length > 1:
-          {
-            Info("Explicitly invoked 'dump' command.");
-
-            switch (args[1])
-            {
-              case "opensauce":
-                Info("Explicitly invoked 'opensauce' argument.");
-
-                var openSaucePath = Names.Files.OpenSauce;
-
-                Run(() => { new OpenSauce {Path = openSaucePath}.Save(); });
-                return;
-              default:
-                Error("Invalid dump args.");
-                Exit.WithCode(InvalidArgument);
-                return;
-            }
-          }
-
-          default:
-            Error("Invalid command.");
-            Exit.WithCode(InvalidCommand);
-            return;
-        }
-      }
+      if (!input.Contains("load")    &&
+          !input.Contains("install") &&
+          !input.Contains("compile"))
+        Run(() => { Kernel.Bootstrap(hce); });
     }
 
     private static void Run(Action action)
@@ -280,6 +111,7 @@ namespace SPV3.CLI
       try
       {
         Task.Run(action).GetAwaiter().GetResult();
+        Exit.WithCode(Success);
       }
       catch (Exception e)
       {

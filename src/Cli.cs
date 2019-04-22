@@ -20,6 +20,7 @@
 
 using System;
 using System.Diagnostics;
+using SPV3.CLI;
 using static SPV3.CLI.Exit;
 
 namespace SPV3.GUI
@@ -31,7 +32,7 @@ namespace SPV3.GUI
   {
     public static Code Start(string args)
     {
-      var process = Process.Start("SPV3.CLI.exe", args);
+      var process = Process.Start("SPV3.exe", args + $" -path {Paths.Directories.SPV3}");
 
       if (process == null)
         throw new NullReferenceException("Could not construct CLI process.");

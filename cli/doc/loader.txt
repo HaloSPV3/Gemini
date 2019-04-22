@@ -113,9 +113,8 @@ values:
 
   Property                 Offset   Values
   ------------------------ -------- ---------------------
-  Skip Heuristic Install   0x00     0x0 = off; 0x1 = on
-  Skip Verify MainAssets   0x01     0x0 = off; 0x1 = on
-  Skip Invoke CoreTweaks   0x02     0x0 = off; 0x1 = on
-  Skip Resume Checkpoint   0x03     0x0 = off; 0x1 = on
-  Skip Set Shader Config   0x04     0x0 = off; 0x1 = on
-  Skip Invoke Executable   0x05     0x0 = off; 0x1 = on
+  Skip Verify MainAssets   0x00     0x0 = off; 0x1 = on
+  Skip Invoke CoreTweaks   0x01     0x0 = off; 0x1 = on
+  Skip Resume Checkpoint   0x02     0x0 = off; 0x1 = on
+  Skip Set Shader Config   0x03     0x0 = off; 0x1 = on
+  Skip Invoke Executable   0x04     0x0 = off; 0x1 = on

@@ -6,7 +6,7 @@ namespace SPV3.GUI
 {
   public partial class SettingsWindow : Window
   {
-    private readonly PostProcessing _postProcessing = (PostProcessing) Names.Files.PostProcessing;
+    private readonly PostProcessing _postProcessing = (PostProcessing) Paths.Files.PostProcessing;
 
     public SettingsWindow()
     {
@@ -95,6 +95,8 @@ namespace SPV3.GUI
       }
 
       _postProcessing.Save();
+      
+      Close();
     }
 
     private void Load()

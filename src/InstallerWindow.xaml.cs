@@ -31,17 +31,7 @@ namespace SPV3.GUI
     public InstallerWindow()
     {
       InitializeComponent();
-      Source.Text = CurrentDirectory;
       Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "My Games", "Halo SPV3");
-    }
-
-    private void BrowseSource(object sender, RoutedEventArgs e)
-    {
-      using (var dialog = new FolderBrowserDialog())
-      {
-        dialog.ShowDialog();
-        Source.Text = dialog.SelectedPath;
-      }
     }
 
     private void BrowseTarget(object sender, RoutedEventArgs e)
@@ -55,7 +45,7 @@ namespace SPV3.GUI
 
     private void Install(object sender, RoutedEventArgs e)
     {
-      switch (Cli.Start($"install {Target.Text} {Source.Text}"))
+      switch (Cli.Start($"/install {Target.Text}"))
       {
         case Success:
           Status.Content = "SPV3 installation routine has gracefully succeeded.";

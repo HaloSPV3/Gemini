@@ -33,7 +33,6 @@ namespace SPV3.CLI
     public enum Code
     {
       Success         = 0,
-      SuccessUpdate   = Success         + 0,
       InvalidCommand  = Success         + 1,
       InvalidArgument = InvalidCommand  + 2,
       Exception       = InvalidArgument + 4

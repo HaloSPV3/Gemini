@@ -64,7 +64,7 @@ namespace SPV3.CLI
        * Given that the manifest is represented by 0x00, the subsequent packages should be represented by a >=1 ID. 
        */
 
-      var manifest    = (Manifest) Combine(target, Names.Files.Manifest);
+      var manifest    = (Manifest) Combine(target, Paths.Files.Manifest);
       var directories = GetDirectories(source, "*", AllDirectories).ToList();
       var i           = 0x1;
 

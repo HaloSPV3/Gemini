@@ -29,8 +29,9 @@ namespace SPV3.CLI
   /// </summary>
   public class Executable : File
   {
-    public VideoOptions Video { get; set; } = new VideoOptions();
-    public DebugOptions Debug { get; set; } = new DebugOptions();
+    public VideoOptions   Video   { get; set; } = new VideoOptions();
+    public DebugOptions   Debug   { get; set; } = new DebugOptions();
+    public ProfileOptions Profile { get; set; } = new ProfileOptions();
 
     /// <summary>
     ///   Invokes the HCE executable with the arguments that represent this object's properties' states.
@@ -57,7 +58,13 @@ namespace SPV3.CLI
         if (Video.Window) args.Append("-window ");
 
         if (Video.Width > 0 && Video.Height > 0 && Video.Refresh > 0)
-          args.Append($"-vidmode {Video.Width},{Video.Height},{Video.Refresh}");
+          args.Append($"-vidmode {Video.Width},{Video.Height},{Video.Refresh} ");
+
+        if (Video.Adapter > 1)
+          args.Append($"-adapter {Video.Adapter}");
+
+        if (!string.IsNullOrWhiteSpace(Profile.Path))
+          args.Append($"-path {System.IO.Path.GetFullPath(Profile.Path)}");
 
         return args.ToString();
       }
@@ -109,6 +116,12 @@ namespace SPV3.CLI
       public int  Width   { get; set; }
       public int  Height  { get; set; }
       public int  Refresh { get; set; }
+      public int  Adapter { get; set; }
+    }
+
+    public class ProfileOptions
+    {
+      public string Path { get; set; } = Paths.Directories.HCE;
     }
   }
 }

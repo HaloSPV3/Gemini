@@ -20,18 +20,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using SPV3.CLI.Exceptions;
 using static System.Environment;
-using static System.Environment.SpecialFolder;
-using static System.IO.File;
 using static SPV3.CLI.Console;
-using static SPV3.CLI.Names;
+using static SPV3.CLI.Paths;
 
 namespace SPV3.CLI
 {
@@ -49,7 +44,7 @@ namespace SPV3.CLI
     /// <summary>
     ///   Invokes the SPV3 loading procedure.
     /// </summary>
-    public static void Bootstrap()
+    public static void Bootstrap(Executable executable)
     {
       var configuration = (Configuration) Files.Kernel;
 
@@ -58,23 +53,18 @@ namespace SPV3.CLI
 
       configuration.Load();
 
-      if (!configuration.SkipHeuristicInstall)
-        HeuristicInstall();
-      else
-        Info("Skipping Kernel.HeuristicInstall");
-
       if (!configuration.SkipVerifyMainAssets)
         VerifyMainAssets();
       else
         Info("Skipping Kernel.VerifyMainAssets");
 
       if (!configuration.SkipInvokeCoreTweaks)
-        InvokeCoreTweaks();
+        InvokeCoreTweaks(executable);
       else
         Info("Skipping Kernel.InvokeCoreTweaks");
 
       if (!configuration.SkipResumeCheckpoint)
-        ResumeCheckpoint();
+        ResumeCheckpoint(executable);
       else
         Info("Skipping Kernel.ResumeCheckpoint");
 
@@ -82,35 +72,9 @@ namespace SPV3.CLI
         SetShadersConfig();
 
       if (!configuration.SkipInvokeExecutable)
-        InvokeExecutable();
+        InvokeExecutable(executable);
       else
         Info("Skipping Kernel.InvokeExecutable");
-    }
-
-    /// <summary>
-    ///   Heuristically conducts pre-loading installation, if necessary.
-    /// </summary>
-    private static void HeuristicInstall()
-    {
-      /**
-       * If the HCE executable does not exist in the working directory, but the manifest and an initial package exists,
-       * then we can conclude that this is an installation scenario. We can bootstrap the installer to install SPV3 to
-       * the default path.
-       */
-
-      if (Exists("haloce.exe") || !Exists("0x00.bin") || !Exists("0x01.bin")) return;
-      Info("Found manifest & package, but not the HCE executable. Assuming installation environment.");
-
-      var destination = Path.Combine(GetFolderPath(Personal), Directories.Games, "Halo SPV3");
-      Installer.Install(CurrentDirectory, destination);
-
-      var cli = new ProcessStartInfo
-      {
-        FileName         = Path.Combine(destination, "SPV3.CLI.exe"),
-        WorkingDirectory = destination
-      };
-
-      Process.Start(cli);
     }
 
     /// <summary>
@@ -188,45 +152,62 @@ namespace SPV3.CLI
     ///   Invokes core improvements to the auto-detected profile, such as auto max resolution and gamma fixes. This is
     ///   NOT done when a profile does not exist/cannot be found!
     /// </summary>
-    private static void InvokeCoreTweaks()
+    /// <param name="executable"></param>
+    private static void InvokeCoreTweaks(Executable executable)
     {
-      var lastprof = (LastProfile) Files.LastProfile;
+      try
+      {
+        var lastprof = (LastProfile) Path.Combine(executable.Profile.Path, Files.LastProfile);
 
-      if (!lastprof.Exists()) return;
+        if (!lastprof.Exists()) return;
 
-      lastprof.Load();
+        lastprof.Load();
 
-      Info("Found lastprof file - proceeding with profile detection ...");
+        var profile = (Profile) Path.Combine(
+          executable.Profile.Path,
+          Directories.Profiles,
+          lastprof.Profile,
+          Files.Profile
+        );
 
-      var profblam = (Profile) Path.Combine(Directories.Profiles, lastprof.Profile, Files.Profile);
+        if (!profile.Exists()) return;
 
-      if (!profblam.Exists()) return;
+        profile.Load();
 
-      profblam.Load();
+        Info("Auto-loaded HCE profile. Proceeding to apply core tweaks ...");
 
-      Info("Found blam.sav file - proceeding with core patches ...");
+        profile.Video.Resolution.Width  = (ushort) Screen.PrimaryScreen.Bounds.Width;
+        profile.Video.Resolution.Height = (ushort) Screen.PrimaryScreen.Bounds.Height;
+        profile.Video.FrameRate         = Profile.ProfileVideo.VideoFrameRate.VsyncOff; /* ensure no FPS locking */
+        profile.Video.Particles         = Profile.ProfileVideo.VideoParticles.High;
+        profile.Video.Quality           = Profile.ProfileVideo.VideoQuality.High;
+        profile.Video.Effects.Specular  = true;
+        profile.Video.Effects.Shadows   = true;
+        profile.Video.Effects.Decals    = true;
 
-      profblam.Video.Resolution.Width  = (ushort) Screen.PrimaryScreen.Bounds.Width;
-      profblam.Video.Resolution.Height = (ushort) Screen.PrimaryScreen.Bounds.Height;
-      profblam.Video.FrameRate         = Profile.ProfileVideo.VideoFrameRate.VsyncOff; /* ensure no FPS locking */
-      profblam.Video.Particles         = Profile.ProfileVideo.VideoParticles.High;
-      profblam.Video.Quality           = Profile.ProfileVideo.VideoQuality.High;
+        profile.Save();
 
-      profblam.Save();
-
-      Info("Patched video resolution width  - " + profblam.Video.Resolution.Width);
-      Info("Patched video resolution height - " + profblam.Video.Resolution.Height);
-      Info("Patched video frame rate        - " + profblam.Video.FrameRate);
-      Info("Patched video quality           - " + profblam.Video.Particles);
-      Info("Patched video texture           - " + profblam.Video.Quality);
+        Info("Patched video resolution width  - " + profile.Video.Resolution.Width);
+        Info("Patched video resolution height - " + profile.Video.Resolution.Height);
+        Info("Patched video frame rate        - " + profile.Video.FrameRate);
+        Info("Patched video quality           - " + profile.Video.Particles);
+        Info("Patched video texture           - " + profile.Video.Quality);
+        Info("Patched video effect - specular - " + profile.Video.Effects.Specular);
+        Info("Patched video effect - shadows  - " + profile.Video.Effects.Shadows);
+        Info("Patched video effect - decals   - " + profile.Video.Effects.Decals);
+      }
+      catch (Exception e)
+      {
+        Error(e.Message + " -- CORE TWEAKS WILL NOT BE APPLIED.");
+      }
     }
 
     /// <summary>
     ///   Invokes the profile & campaign auto-detection mechanism.
     /// </summary>
-    private static void ResumeCheckpoint()
+    private static void ResumeCheckpoint(Executable executable)
     {
-      var lastprof = (LastProfile) Files.LastProfile;
+      var lastprof = (LastProfile) Path.Combine(executable.Profile.Path, Files.LastProfile);
 
       if (!lastprof.Exists()) return;
 
@@ -235,9 +216,11 @@ namespace SPV3.CLI
       Info("Found lastprof file - proceeding with checkpoint detection ...");
 
       var playerDat = (Progress) Path.Combine(
+        executable.Profile.Path,
         Directories.Profiles,
         lastprof.Profile,
-        Files.Progress);
+        Files.Progress
+      );
 
       if (!playerDat.Exists()) return;
 
@@ -293,35 +276,38 @@ namespace SPV3.CLI
     /// <summary>
     ///   Invokes the HCE executable.
     /// </summary>
-    private static void InvokeExecutable()
+    private static void InvokeExecutable(Executable executable)
     {
-      /**
-       * Gets the path of the HCE executable on the filesystem, which conventionally should be the working directory of
-       * the loader, given that the loader is bundled with the rest of the SPV3.2 data.
-       */
+      Info("Attempting to start executable with the following parameters:");
 
-      string GetPath()
-      {
-        return Path.Combine(CurrentDirectory, Files.Executable);
-      }
+      if (executable.Video.Width > 0)
+        Info("+   Video.Width      - " + executable.Video.Width);
+      if (executable.Video.Height > 0)
+        Info("+   Video.Height     - " + executable.Video.Height);
 
-      var executable = (Executable) GetPath();
+      if (executable.Video.Refresh > 0)
+        Info("+   Video.Refresh    - " + executable.Video.Refresh);
 
-      if (!executable.Exists()) throw new FileNotFoundException("Could not find HCE executable.");
+      if (executable.Video.Adapter > 0)
+        Info("+   Video.Adapter    - " + executable.Video.Adapter);
 
-      Info("Found HCE executable in the working directory - proceeding to execute it ...");
+      if (executable.Video.Window)
+        Info("+   Video.Window     - " + executable.Video.Window);
 
-      executable.Debug.Console    = true;
-      executable.Debug.Developer  = true;
-      executable.Debug.Screenshot = true;
+      if (executable.Debug.Console)
+        Info("+   Debug.Console    - " + executable.Debug.Console);
 
-      Info("Debug.Console    = true");
-      Info("Debug.Developer  = true");
-      Info("Debug.Screenshot = true");
+      if (executable.Debug.Developer)
+        Info("+   Debug.Developer  - " + executable.Debug.Developer);
 
-      Info("Using the aforementioned start-up parameters when initiating HCE process.");
+      if (executable.Debug.Developer)
+        Info("+   Debug.Screenshot - " + executable.Debug.Developer);
+
+      if (!string.IsNullOrWhiteSpace(executable.Profile.Path))
+        Info("+   Profile.Path     - " + executable.Profile.Path);
 
       executable.Start();
+
       Info("And... we're done!");
     }
 
@@ -336,7 +322,6 @@ namespace SPV3.CLI
       /// </summary>
       private const int Length = 0x100;
 
-      public bool SkipHeuristicInstall { get; set; }
       public bool SkipVerifyMainAssets { get; set; }
       public bool SkipInvokeCoreTweaks { get; set; }
       public bool SkipResumeCheckpoint { get; set; }
@@ -355,12 +340,11 @@ namespace SPV3.CLI
           fs.CopyTo(ms);
           br.BaseStream.Seek(0x00, SeekOrigin.Begin);
 
-          SkipHeuristicInstall = br.ReadBoolean(); /* 0x00 */
-          SkipVerifyMainAssets = br.ReadBoolean(); /* 0x01 */
-          SkipInvokeCoreTweaks = br.ReadBoolean(); /* 0x02 */
-          SkipResumeCheckpoint = br.ReadBoolean(); /* 0x03 */
-          SkipSetShadersConfig = br.ReadBoolean(); /* 0x04 */
-          SkipInvokeExecutable = br.ReadBoolean(); /* 0x05 */
+          SkipVerifyMainAssets = br.ReadBoolean(); /* 0x00 */
+          SkipInvokeCoreTweaks = br.ReadBoolean(); /* 0x01 */
+          SkipResumeCheckpoint = br.ReadBoolean(); /* 0x02 */
+          SkipSetShadersConfig = br.ReadBoolean(); /* 0x03 */
+          SkipInvokeExecutable = br.ReadBoolean(); /* 0x04 */
         }
       }
 
@@ -375,12 +359,11 @@ namespace SPV3.CLI
         {
           bw.BaseStream.Seek(0x00, SeekOrigin.Begin);
 
-          bw.Write(SkipHeuristicInstall);                      /* 0x00 */
-          bw.Write(SkipVerifyMainAssets);                      /* 0x01 */
-          bw.Write(SkipInvokeCoreTweaks);                      /* 0x02 */
-          bw.Write(SkipResumeCheckpoint);                      /* 0x03 */
-          bw.Write(SkipSetShadersConfig);                      /* 0x04 */
-          bw.Write(SkipInvokeExecutable);                      /* 0x05 */
+          bw.Write(SkipVerifyMainAssets);                      /* 0x00 */
+          bw.Write(SkipInvokeCoreTweaks);                      /* 0x01 */
+          bw.Write(SkipResumeCheckpoint);                      /* 0x02 */
+          bw.Write(SkipSetShadersConfig);                      /* 0x03 */
+          bw.Write(SkipInvokeExecutable);                      /* 0x04 */
           bw.Write(new byte[Length - bw.BaseStream.Position]); /* pad  */
 
           ms.WriteTo(fs);
