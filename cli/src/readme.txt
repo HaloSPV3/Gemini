@@ -189,12 +189,9 @@ File type:
                    hash of the blam.sav upon saving, to ensure that HCE
                    accepts the edited binary.
 
-  PostProcessing   Represents the postprocessing.bin binary, which SPV3
-                   uses to store the user preferences for its
-                   post-processing features. The object permits
-                   loading, editing, and saving this data. Refer to the
-                   doc/shaders.txt for more documentation on the
-                   aforementioned binary.
+  Configuration    Represents the loader.bin binary, which SPV3 uses to
+                   store the user preferences for its post-processing
+                   features, and for kernel options.
   ---------------------------------------------------------------------
 
 Documentation on any of the aforementioned files can be found in the doc

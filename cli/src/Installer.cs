@@ -75,12 +75,12 @@ namespace SPV3.CLI
 
           if (!file.Exists()) continue;
 
-          file.Delete();
+          Debug("Deleting discovered file - " + entry.Name);
 
-          Debug("Deleted discovered file - " + entry.Name);
+          file.Delete();
         }
 
-        Debug("Any existing entries on the filesystem have been deleted - preparing to extract package ...");
+        Debug("Any existing entries on the filesystem have been deleted - preparing to extract package");
 
         /**
          * Given that the package filename on the filesystem is expected to match the package's name in the manifest, we
@@ -92,12 +92,13 @@ namespace SPV3.CLI
          */
         var packagePath = Combine(source, package.Name);
         var destination = Combine(target, package.Path);
-        ExtractToDirectory(packagePath, destination);
 
-        Debug("Package has been successfully extracted to destination - " + destination);
+        Debug("Extracting package to destination - " + destination);
+
+        ExtractToDirectory(packagePath, destination);
       }
 
-      Debug("Finished installation of main data - proceeding with post-install routines ...");
+      Debug("Finished installation of main data - proceeding with post-install routines");
 
       /**
        * Delete potential manifest file at the target destination.
@@ -119,7 +120,7 @@ namespace SPV3.CLI
 
       new File
       {
-        Path = Combine(Directories.SPV3, InstallPath)
+        Path = Installation
       }.WriteAllText(target);
     }
   }

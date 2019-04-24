@@ -18,8 +18,14 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
+using Microsoft.Win32;
+using static System.IO.File;
+using static System.IO.Path;
+using static SPV3.CLI.Console;
 
 namespace SPV3.CLI
 {
@@ -32,6 +38,91 @@ namespace SPV3.CLI
     public VideoOptions   Video   { get; set; } = new VideoOptions();
     public DebugOptions   Debug   { get; set; } = new DebugOptions();
     public ProfileOptions Profile { get; set; } = new ProfileOptions();
+
+    public static Executable Detect()
+    {
+      const string hce = Paths.Files.Executable;
+
+      /**
+       * Detect based on the current directory.
+       */
+
+      {
+        var currentPath = Combine(Environment.CurrentDirectory, hce);
+
+        if (System.IO.File.Exists(currentPath))
+          return (Executable) currentPath;
+      }
+
+      /**
+       * Detect based on the default installation path.
+       */
+
+      {
+        const string directory64   = @"C:\Program Files (x86)\Microsoft Games\Halo Custom Edition";
+        var          defaultPath64 = Combine(directory64, hce);
+
+        if (System.IO.File.Exists(defaultPath64))
+          return (Executable) defaultPath64;
+
+        const string directory32   = @"C:\Program Files\Microsoft Games\Halo Custom Edition";
+        var          defaultPath32 = Combine(directory32, hce);
+
+        if (System.IO.File.Exists(defaultPath32))
+          return (Executable) defaultPath32;
+      }
+
+      /**
+       * Detect based on registry key values.
+       */
+
+      {
+        const string registryLocation = @"SOFTWARE\Microsoft\Microsoft Games\Halo CE";
+        const string registryIdentity = @"EXE Path";
+
+        using (var view = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+        using (var key = view.OpenSubKey(registryLocation))
+        {
+          var path = key?.GetValue(registryIdentity);
+          if (path != null)
+          {
+            var registryExe64 = $@"{path}\{hce}";
+
+            if (System.IO.File.Exists(registryExe64))
+              return (Executable) registryExe64;
+          }
+        }
+
+        using (var view = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+        using (var key = view.OpenSubKey(registryLocation))
+        {
+          var path = key?.GetValue(registryIdentity);
+          if (path != null)
+          {
+            var registryExe32 = $@"{path}\{hce}";
+
+            if (System.IO.File.Exists(registryExe32))
+              return (Executable) registryExe32;
+          }
+        }
+      }
+
+      /**
+       * Detect based on SPV3 installation path.
+       */
+
+      {
+        if (!System.IO.File.Exists(Paths.Files.Installation))
+          throw new FileNotFoundException("Could not detect executable on the filesystem.");
+
+        var spv3exe = Combine(System.IO.File.ReadAllText(Paths.Files.Installation).TrimEnd('\n'), hce);
+
+        if (System.IO.File.Exists(spv3exe))
+          return (Executable) spv3exe;
+      }
+
+      throw new FileNotFoundException("Could not detect executable on the filesystem.");
+    }
 
     /// <summary>
     ///   Invokes the HCE executable with the arguments that represent this object's properties' states.
@@ -48,28 +139,55 @@ namespace SPV3.CLI
         /**
          * Arguments for debugging purposes. 
          */
-        if (Debug.Console) args.Append("-console ");
-        if (Debug.Developer) args.Append("-devmode -screenshot ");
-        if (Debug.Screenshot) args.Append("-screenshot ");
+        if (Debug.Console)
+          ApplyArgument(args, "-console ");
+
+        if (Debug.Developer)
+          ApplyArgument(args, "-devmode ");
+
+        if (Debug.Screenshot)
+          ApplyArgument(args, "-screenshot ");
 
         /**
          * Arguments for video overrides.
          */
-        if (Video.Window) args.Append("-window ");
+
+        if (Video.Window)
+          ApplyArgument(args, "-window ");
 
         if (Video.Width > 0 && Video.Height > 0 && Video.Refresh > 0)
-          args.Append($"-vidmode {Video.Width},{Video.Height},{Video.Refresh} ");
+          ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height},{Video.Refresh} ");
 
         if (Video.Adapter > 1)
-          args.Append($"-adapter {Video.Adapter}");
+          ApplyArgument(args, $"-adapter {Video.Adapter} ");
+
+        /**
+         * Argument for custom profile path.
+         */
 
         if (!string.IsNullOrWhiteSpace(Profile.Path))
-          args.Append($"-path {System.IO.Path.GetFullPath(Profile.Path)}");
+          ApplyArgument(args, $"-path {GetFullPath(Profile.Path)} ");
 
         return args.ToString();
       }
 
-      Process.Start(Path, GetArguments());
+      Info("Starting process for HCE executable");
+
+      Process.Start(new ProcessStartInfo
+      {
+        FileName = Path,
+        WorkingDirectory = GetDirectoryName(Path) ??
+                           throw new DirectoryNotFoundException("Failed to infer process working directory."),
+        Arguments = GetArguments()
+      });
+
+      Info("Successfully started HCE executable");
+    }
+
+    private static void ApplyArgument(StringBuilder args, string arg)
+    {
+      args.Append(arg);
+      Debug("Appending argument: " + arg);
     }
 
     /// <summary>

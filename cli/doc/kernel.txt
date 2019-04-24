@@ -18,16 +18,17 @@
  3. This notice may not be removed or altered from any source distribution.
 -->
 
-LOADER
-======
+LOADER KERNEL
+=============
 
-The loader is the core component of the SPV3.2 launcher, which is
-responsible for:
+The kernel is the core component of the SPV3 CLI, which is responsible
+for:
 
 1.  verifying the main assets, e.g. maps & executables; and
 2.  determining the player's campaign progress for resuming; and
 3.  inferring the post-processing settings and encoding them; and
-4.  loading SPV3 with user start-up parameters for HCE.
+4.  patching the HCE executable with Large Address Aware; and
+5.  loading SPV3 with user start-up parameters for HCE.
 
 The sections below elaborate upon the aforementioned steps.
 
@@ -100,21 +101,12 @@ To see how difficulties are stored in the savegame.bin and initc.txt,
 please refer to the savegame.txt and initc.txt documentation,
 respectively.
 
-CONFIGURATION
--------------
+PATCHING
+--------
 
-The kernel's loading procedure can be configured by editing the
-following binary file:
+On kernel invocation, the HCE executable will be patched with Large
+Address Aware:
 
-    %APPDATA%\SPV3\kernel.bin
-
-The following table showcases the properties, offsets, and possible
-values:
-
-  Property                 Offset   Values
-  ------------------------ -------- ---------------------
-  Skip Verify MainAssets   0x00     0x0 = off; 0x1 = on
-  Skip Invoke CoreTweaks   0x01     0x0 = off; 0x1 = on
-  Skip Resume Checkpoint   0x02     0x0 = off; 0x1 = on
-  Skip Set Shader Config   0x03     0x0 = off; 0x1 = on
-  Skip Invoke Executable   0x04     0x0 = off; 0x1 = on
+  Offset   Value
+  -------- -------
+  0x136    0x2F

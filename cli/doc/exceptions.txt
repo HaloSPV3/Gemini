@@ -18,23 +18,17 @@
  3. This notice may not be removed or altered from any source distribution.
 -->
 
-EXIT CODES
+EXCEPTIONS
 ==========
 
-The CLI process returns various exit codes depending on what causes it
-to exit. The following table outlines the available exit codes, and what
-they represent:
+The CLI will capture any unhandled exception and:
 
-  Integer   Description
-  --------- ---------------------------
-  0         Successful execution
-  1         Invalid command provided
-  3         Invalid argument provided
-  7         Exception has been thrown
+-   output the stack trace to the console for the user to read; and
+-   exit the process with a non-zer code (see doc/exit.txt); and
+-   save a copy of the stack trace to the filesystem.
 
-These codes can be used by calling applications to infer whether an
-operation has succeeded or not, and respond accordingly.
+The file that last exception is saved to is located at:
 
-For example, if the CLI exits with a code representing an exception
-being thrown, then the calling application should display the relevant
-logs to the end-user.
+    %APPDATA%\SPV3\exception.log
+
+You should send this file to yumiris in case of emergencies.

@@ -46,32 +46,39 @@ namespace SPV3.CLI
     /// </summary>
     public static void Bootstrap(Executable executable)
     {
-      var configuration = (Configuration) Files.Kernel;
+      var configuration = (Configuration) Files.Configuration;
 
       if (!configuration.Exists())
         configuration.Save(); /* gracefully create new configuration */
 
       configuration.Load();
 
-      if (!configuration.SkipVerifyMainAssets)
+      if (!configuration.Kernel.SkipVerifyMainAssets)
         VerifyMainAssets();
       else
         Info("Skipping Kernel.VerifyMainAssets");
 
-      if (!configuration.SkipInvokeCoreTweaks)
+      if (!configuration.Kernel.SkipInvokeCoreTweaks)
         InvokeCoreTweaks(executable);
       else
         Info("Skipping Kernel.InvokeCoreTweaks");
 
-      if (!configuration.SkipResumeCheckpoint)
+      if (!configuration.Kernel.SkipResumeCheckpoint)
         ResumeCheckpoint(executable);
       else
         Info("Skipping Kernel.ResumeCheckpoint");
 
-      if (!configuration.SkipSetShadersConfig)
-        SetShadersConfig();
+      if (!configuration.Kernel.SkipSetShadersConfig)
+        SetShadersConfig(configuration);
+      else
+        Info("Skipping Kernel.SkipSetShadersConfig");
 
-      if (!configuration.SkipInvokeExecutable)
+      if (!configuration.Kernel.SkipPatchLargeAAware)
+        PatchLargeAAware(executable);
+      else
+        Info("Skipping Kernel.SkipPatchLargeAAware");
+
+      if (!configuration.Kernel.SkipInvokeExecutable)
         InvokeExecutable(executable);
       else
         Info("Skipping Kernel.InvokeExecutable");
@@ -127,10 +134,10 @@ namespace SPV3.CLI
        */
       if (!manifest.Exists()) return;
 
+      Info("Deserialising found manifest file");
       manifest.Load();
 
-      Info("Found manifest file - proceeding with data verification ...");
-
+      Info("Verifying assets recorded in the manifest file");
       foreach (var package in manifest.Packages)
       foreach (var entry in package.Entries)
       {
@@ -161,6 +168,7 @@ namespace SPV3.CLI
 
         if (!lastprof.Exists()) return;
 
+        Info("Deserialising found lastprof file");
         lastprof.Load();
 
         var profile = (Profile) Path.Combine(
@@ -172,10 +180,10 @@ namespace SPV3.CLI
 
         if (!profile.Exists()) return;
 
+        Info("Deserialising inferred HCE profile");
         profile.Load();
 
-        Info("Auto-loaded HCE profile. Proceeding to apply core tweaks ...");
-
+        Info("Applying profile video settings");
         profile.Video.Resolution.Width  = (ushort) Screen.PrimaryScreen.Bounds.Width;
         profile.Video.Resolution.Height = (ushort) Screen.PrimaryScreen.Bounds.Height;
         profile.Video.FrameRate         = Profile.ProfileVideo.VideoFrameRate.VsyncOff; /* ensure no FPS locking */
@@ -185,20 +193,21 @@ namespace SPV3.CLI
         profile.Video.Effects.Shadows   = true;
         profile.Video.Effects.Decals    = true;
 
+        Info("Saving profile data to the filesystem");
         profile.Save();
 
-        Info("Patched video resolution width  - " + profile.Video.Resolution.Width);
-        Info("Patched video resolution height - " + profile.Video.Resolution.Height);
-        Info("Patched video frame rate        - " + profile.Video.FrameRate);
-        Info("Patched video quality           - " + profile.Video.Particles);
-        Info("Patched video texture           - " + profile.Video.Quality);
-        Info("Patched video effect - specular - " + profile.Video.Effects.Specular);
-        Info("Patched video effect - shadows  - " + profile.Video.Effects.Shadows);
-        Info("Patched video effect - decals   - " + profile.Video.Effects.Decals);
+        Debug("Patched video resolution width  - " + profile.Video.Resolution.Width);
+        Debug("Patched video resolution height - " + profile.Video.Resolution.Height);
+        Debug("Patched video frame rate        - " + profile.Video.FrameRate);
+        Debug("Patched video quality           - " + profile.Video.Particles);
+        Debug("Patched video texture           - " + profile.Video.Quality);
+        Debug("Patched video effect - specular - " + profile.Video.Effects.Specular);
+        Debug("Patched video effect - shadows  - " + profile.Video.Effects.Shadows);
+        Debug("Patched video effect - decals   - " + profile.Video.Effects.Decals);
       }
       catch (Exception e)
       {
-        Error(e.Message + " -- CORE TWEAKS WILL NOT BE APPLIED.");
+        Error(e.Message + " -- CORE TWEAKS WILL NOT BE APPLIED");
       }
     }
 
@@ -207,57 +216,54 @@ namespace SPV3.CLI
     /// </summary>
     private static void ResumeCheckpoint(Executable executable)
     {
-      var lastprof = (LastProfile) Path.Combine(executable.Profile.Path, Files.LastProfile);
-
-      if (!lastprof.Exists()) return;
-
-      lastprof.Load();
-
-      Info("Found lastprof file - proceeding with checkpoint detection ...");
-
-      var playerDat = (Progress) Path.Combine(
-        executable.Profile.Path,
-        Directories.Profiles,
-        lastprof.Profile,
-        Files.Progress
-      );
-
-      if (!playerDat.Exists()) return;
-
-      Info("Found checkpoint file - proceeding with resuming campaign ...");
-
-      playerDat.Load();
-
       try
       {
+        var lastprof = (LastProfile) Path.Combine(executable.Profile.Path, Files.LastProfile);
+
+        if (!lastprof.Exists()) return;
+
+        Info("Deserialising found lastprof file");
+        lastprof.Load();
+
+        var playerDat = (Progress) Path.Combine(
+          executable.Profile.Path,
+          Directories.Profiles,
+          lastprof.Profile,
+          Files.Progress
+        );
+
+        if (!playerDat.Exists()) return;
+
+        Info("Deserialising inferred progress binary");
+        playerDat.Load();
+
+        Info("Updating the initiation file with campaign progress");
         RootInitc.Mission    = playerDat.Mission;
         RootInitc.Difficulty = playerDat.Difficulty;
+
+        Info("Saving campaign progress to the initiation file");
         RootInitc.Save();
 
-        Info("Resumed campaign MISSION    - " + playerDat.Mission);
-        Info("Resumed campaign DIFFICULTY - " + playerDat.Difficulty);
+        Debug("Resumed campaign mission    - " + playerDat.Mission);
+        Debug("Resumed campaign difficulty - " + playerDat.Difficulty);
       }
       catch (UnauthorizedAccessException e)
       {
-        Error(e.Message + " -- CAMPAIGN WILL NOT RESUME!");
+        Error(e.Message + " -- CAMPAIGN WILL NOT RESUME");
       }
     }
 
     /// <summary>
     ///   Applies the post-processing settings.
     /// </summary>
-    private static void SetShadersConfig()
+    private static void SetShadersConfig(Configuration configuration)
     {
       try
       {
-        var pp = (PostProcessing) Files.PostProcessing;
+        Info("Updating the initiation file with the post-processing settings");
+        RootInitc.PostProcessing = configuration.PostProcessing;
 
-        if (!pp.Exists())
-          pp.Save();
-
-        pp.Load();
-
-        RootInitc.PostProcessing = pp;
+        Info("Saving post-processing settings to the initiation file");
         RootInitc.Save();
 
         Info("Applied PP settings for MXAO        - " + RootInitc.PostProcessing.Mxao);
@@ -269,7 +275,30 @@ namespace SPV3.CLI
       }
       catch (UnauthorizedAccessException e)
       {
-        Error(e.Message + " -- POST PROCESSING WILL NOT BE APPLIED!");
+        Error(e.Message + " -- POST PROCESSING WILL NOT BE APPLIED");
+      }
+    }
+
+    /// <summary>
+    ///   Patches HCE executable for Large Address Aware.
+    /// </summary>
+    private static void PatchLargeAAware(Executable executable)
+    {
+      try
+      {
+        Info("Patching HCE executable with LAA flag");
+        using (var fs = new FileStream(executable.Path, FileMode.Open, FileAccess.ReadWrite))
+        using (var bw = new BinaryWriter(fs))
+        {
+          fs.Position = 0x136;
+          bw.Write((byte) 0x2F);
+        }
+
+        Info("Applied LAA patch to the HCE executable");
+      }
+      catch (Exception e)
+      {
+        Error(e.Message + " -- LAA PATCH WILL NOT BE APPLIED");
       }
     }
 
@@ -278,128 +307,7 @@ namespace SPV3.CLI
     /// </summary>
     private static void InvokeExecutable(Executable executable)
     {
-      Info("Attempting to start executable with the following parameters:");
-
-      if (executable.Video.Width > 0)
-        Info("+   Video.Width      - " + executable.Video.Width);
-      if (executable.Video.Height > 0)
-        Info("+   Video.Height     - " + executable.Video.Height);
-
-      if (executable.Video.Refresh > 0)
-        Info("+   Video.Refresh    - " + executable.Video.Refresh);
-
-      if (executable.Video.Adapter > 0)
-        Info("+   Video.Adapter    - " + executable.Video.Adapter);
-
-      if (executable.Video.Window)
-        Info("+   Video.Window     - " + executable.Video.Window);
-
-      if (executable.Debug.Console)
-        Info("+   Debug.Console    - " + executable.Debug.Console);
-
-      if (executable.Debug.Developer)
-        Info("+   Debug.Developer  - " + executable.Debug.Developer);
-
-      if (executable.Debug.Developer)
-        Info("+   Debug.Screenshot - " + executable.Debug.Developer);
-
-      if (!string.IsNullOrWhiteSpace(executable.Profile.Path))
-        Info("+   Profile.Path     - " + executable.Profile.Path);
-
       executable.Start();
-
-      Info("And... we're done!");
-    }
-
-    /// <inheritdoc />
-    /// <summary>
-    ///   File-driven kernel configuration object.
-    /// </summary>
-    public class Configuration : File
-    {
-      /// <summary>
-      ///   Binary file length.
-      /// </summary>
-      private const int Length = 0x100;
-
-      public bool SkipVerifyMainAssets { get; set; }
-      public bool SkipInvokeCoreTweaks { get; set; }
-      public bool SkipResumeCheckpoint { get; set; }
-      public bool SkipSetShadersConfig { get; set; }
-      public bool SkipInvokeExecutable { get; set; }
-
-      /// <summary>
-      ///   Loads object state from the inbound file.
-      /// </summary>
-      public void Load()
-      {
-        using (var fs = new FileStream(Path, FileMode.Open))
-        using (var ms = new MemoryStream(0x10))
-        using (var br = new BinaryReader(ms))
-        {
-          fs.CopyTo(ms);
-          br.BaseStream.Seek(0x00, SeekOrigin.Begin);
-
-          SkipVerifyMainAssets = br.ReadBoolean(); /* 0x00 */
-          SkipInvokeCoreTweaks = br.ReadBoolean(); /* 0x01 */
-          SkipResumeCheckpoint = br.ReadBoolean(); /* 0x02 */
-          SkipSetShadersConfig = br.ReadBoolean(); /* 0x03 */
-          SkipInvokeExecutable = br.ReadBoolean(); /* 0x04 */
-        }
-      }
-
-      /// <summary>
-      ///   Saves object state to the inbound file.
-      /// </summary>
-      public void Save()
-      {
-        using (var fs = new FileStream(Path, FileMode.Create))
-        using (var ms = new MemoryStream(16))
-        using (var bw = new BinaryWriter(ms))
-        {
-          bw.BaseStream.Seek(0x00, SeekOrigin.Begin);
-
-          bw.Write(SkipVerifyMainAssets);                      /* 0x00 */
-          bw.Write(SkipInvokeCoreTweaks);                      /* 0x01 */
-          bw.Write(SkipResumeCheckpoint);                      /* 0x02 */
-          bw.Write(SkipSetShadersConfig);                      /* 0x03 */
-          bw.Write(SkipInvokeExecutable);                      /* 0x04 */
-          bw.Write(new byte[Length - bw.BaseStream.Position]); /* pad  */
-
-          ms.WriteTo(fs);
-        }
-      }
-
-      /// <summary>
-      ///   Represents the inbound object as a string.
-      /// </summary>
-      /// <param name="configuration">
-      ///   Object to represent as string.
-      /// </param>
-      /// <returns>
-      ///   String representation of the inbound object.
-      /// </returns>
-      public static implicit operator string(Configuration configuration)
-      {
-        return configuration.Path;
-      }
-
-      /// <summary>
-      ///   Represents the inbound string as an object.
-      /// </summary>
-      /// <param name="path">
-      ///   String to represent as object.
-      /// </param>
-      /// <returns>
-      ///   Object representation of the inbound string.
-      /// </returns>
-      public static explicit operator Configuration(string path)
-      {
-        return new Configuration
-        {
-          Path = path
-        };
-      }
     }
   }
 }

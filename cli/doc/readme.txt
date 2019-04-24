@@ -47,11 +47,14 @@ specific to the SPV3 programs:
   ---------------------------------------------------------------------
   Documentation                         Description
   ------------------------------------- -------------------------------
-  loader.txt                            Outlines the loading procedure,
+  kernel.txt                            Outlines the loading procedure,
                                         including asset verification,
                                         campaign resuming,
                                         configuration overrides and
                                         loading SPV3.
+
+  haloce.txt                            Rudimentary information on the
+                                        HCE executable.
 
   shaders.txt                           Specification on the
                                         user-configurable

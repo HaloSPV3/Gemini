@@ -38,12 +38,12 @@ namespace SPV3.CLI
       public const string Initiation  = "initc.txt";
       public const string Progress    = "savegame.bin";
       public const string Profile     = "blam.sav";
-      public const string InstallPath = "install.txt";
       public const string Manifest    = "0x00.bin";
       public const string LastProfile = "lastprof.txt";
 
-      public static readonly string PostProcessing = Path.Combine(Directories.SPV3, "postprocessing.bin");
-      public static readonly string Kernel         = Path.Combine(Directories.SPV3, "kernel.bin");
+      public static readonly string Installation  = Path.Combine(Directories.SPV3, "install.txt");
+      public static readonly string Configuration = Path.Combine(Directories.SPV3, "loader.bin");
+      public static readonly string Exception     = Path.Combine(Directories.SPV3, "exception.log");
     }
 
     /// <summary>

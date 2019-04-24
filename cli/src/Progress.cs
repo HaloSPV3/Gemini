@@ -30,7 +30,7 @@ namespace SPV3.CLI
   public class Progress : File
   {
     public Campaign.Mission    Mission    { get; set; } = Campaign.Mission.Spv3A10;
-    public Campaign.Difficulty Difficulty { get; set; } = Campaign.Difficulty.Normal;
+    public Campaign.Difficulty Difficulty { get; set; } = Campaign.Difficulty.Heroic;
 
     /// <summary>
     ///   Loads object state from the inbound file.

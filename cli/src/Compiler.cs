@@ -109,8 +109,8 @@ namespace SPV3.CLI
 
         if (archive.Exists())
         {
+          Info("Deleting existing archive: " + archive);
           archive.Delete();
-          Info("Deleted existing archive: " + archive);
         }
 
         /**
@@ -124,9 +124,9 @@ namespace SPV3.CLI
           {
             var fileName = GetFileName(file);
 
-            deflate.CreateEntryFromFile(file, fileName, Optimal);
+            Debug("Creating archive entry for file - " + file);
 
-            Debug("Created archive entry for file - " + file);
+            deflate.CreateEntryFromFile(file, fileName, Optimal);
 
             /*
              * For the LOADER's asset verification routine, we must create an entry for the file in the manifest. The
@@ -134,13 +134,13 @@ namespace SPV3.CLI
              * infer the full path on the filesystem, and compare the file's actual size versus the declared one!
              */
 
+            Info("Creating package entry for file - " + file);
+            
             package.Entries.Add(new Manifest.Package.Entry
             {
               Name = fileName,
               Size = new FileInfo(file).Length
             });
-
-            Debug("Created package entry for file - " + file);
           }
         }
 
@@ -163,22 +163,22 @@ namespace SPV3.CLI
           ? string.Empty
           : directory.Substring(source.TrimEnd('/', '\\').Length + 1);
 
-        manifest.Packages.Add(package);
+        Info("Adding package for the current directory to the manifest");
 
-        Debug("Added package for the current directory to the manifest.");
+        manifest.Packages.Add(package);
 
         i++;
       }
 
       if (manifest.Exists())
       {
+        Info("Deleting existing manifest binary");
         manifest.Delete();
-        Info("Deleted existing manifest binary.");
       }
 
-      manifest.Save();
+      Info("Serialising the manifest to the filesystem");
 
-      Debug("Manifest successfully saved. The loader can now install and verify the SPV3.2 assets.");
+      manifest.Save();
 
       /**
        * For subsequent installation convenience, we will make a copy of the current CLI to the target directory.
