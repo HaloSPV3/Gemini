@@ -39,9 +39,6 @@
         <Button Click="Load" Margin="0,10,0,0">
             Load SPV3
         </Button>
-        <Button Click="Settings" Margin="0,1,0,0">
-            Settings
-        </Button>
         <Button Click="Installer" Margin="0,1,0,0">
             Installer
         </Button>

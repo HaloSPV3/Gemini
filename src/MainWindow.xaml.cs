@@ -19,7 +19,7 @@
  */
 
 using System.Windows;
-using static SPV3.CLI.Exit.Code;
+using static HXE.Exit.Code;
 
 namespace SPV3.GUI
 {
@@ -44,11 +44,6 @@ namespace SPV3.GUI
           Status.Content = "Exception has occurred. Review log file.";
           break;
       }
-    }
-
-    private void Settings(object sender, RoutedEventArgs e)
-    {
-      new SettingsWindow().Show();
     }
 
     private void Installer(object sender, RoutedEventArgs e)

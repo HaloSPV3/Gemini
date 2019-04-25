@@ -18,42 +18,35 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System.IO;
-using System.Windows;
-using System.Windows.Forms;
 using static System.Environment;
-using static HXE.Exit.Code;
 
-namespace SPV3.GUI
+namespace HXE
 {
-  public partial class CompilerWindow : Window
+  /// <summary>
+  ///   Object for permitting enum-identified process existing.
+  /// </summary>
+  public static class Exit
   {
-    public CompilerWindow()
+    /// <summary>
+    ///   Available exit codes for HXE.
+    /// </summary>
+    public enum Code
     {
-      InitializeComponent();
-      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "SPV3.Compile");
+      Success         = 0,
+      InvalidCommand  = Success         + 1,
+      InvalidArgument = InvalidCommand  + 2,
+      Exception       = InvalidArgument + 4
     }
 
-    private void BrowseTarget(object sender, RoutedEventArgs e)
+    /// <summary>
+    ///   Wrapper for Environment.Exit with enum support.
+    /// </summary>
+    /// <param name="code">
+    ///   Exit code represented by <see cref="Code" />.
+    /// </param>
+    public static void WithCode(Code code)
     {
-      using (var dialog = new FolderBrowserDialog())
-      {
-        dialog.ShowDialog();
-        Target.Text = dialog.SelectedPath;
-      }
-    }
-
-    private void Compile(object sender, RoutedEventArgs e)
-    {
-      switch (Cli.Start($"/compile {Target.Text}"))
-      {
-        case Success:
-          Status.Content = "SPV3 compilation routine has gracefully succeeded.";
-          break;
-        case Exception:
-          Status.Content = "Exception has occurred. Review log file.";
-          break;
-      }
+      Exit((int) code);
     }
   }
 }

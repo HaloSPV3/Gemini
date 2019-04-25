@@ -18,42 +18,37 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System.IO;
-using System.Windows;
-using System.Windows.Forms;
-using static System.Environment;
-using static HXE.Exit.Code;
+using System;
+using System.Runtime.Serialization;
 
-namespace SPV3.GUI
+namespace HXE.Exceptions
 {
-  public partial class CompilerWindow : Window
+  [Serializable]
+  public class AssetException : Exception
   {
-    public CompilerWindow()
+    //
+    // For guidelines regarding the creation of new exception types, see
+    //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconerrorraisinghandlingguidelines.asp
+    // and
+    //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
+    //
+
+    public AssetException()
     {
-      InitializeComponent();
-      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "SPV3.Compile");
     }
 
-    private void BrowseTarget(object sender, RoutedEventArgs e)
+    public AssetException(string message) : base(message)
     {
-      using (var dialog = new FolderBrowserDialog())
-      {
-        dialog.ShowDialog();
-        Target.Text = dialog.SelectedPath;
-      }
     }
 
-    private void Compile(object sender, RoutedEventArgs e)
+    public AssetException(string message, Exception inner) : base(message, inner)
     {
-      switch (Cli.Start($"/compile {Target.Text}"))
-      {
-        case Success:
-          Status.Content = "SPV3 compilation routine has gracefully succeeded.";
-          break;
-        case Exception:
-          Status.Content = "Exception has occurred. Review log file.";
-          break;
-      }
+    }
+
+    protected AssetException(
+      SerializationInfo info,
+      StreamingContext  context) : base(info, context)
+    {
     }
   }
 }

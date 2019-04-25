@@ -18,42 +18,46 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System.IO;
-using System.Windows;
-using System.Windows.Forms;
-using static System.Environment;
-using static HXE.Exit.Code;
-
-namespace SPV3.GUI
+namespace HXE
 {
-  public partial class CompilerWindow : Window
+  /// <summary>
+  ///   Object representation of the SPV3.2 campaign attributes.
+  /// </summary>
+  public static class Campaign
   {
-    public CompilerWindow()
+    /// <summary>
+    ///   Available SPV3.2 difficulties.
+    /// </summary>
+    public enum Difficulty
     {
-      InitializeComponent();
-      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "SPV3.Compile");
+      Normal,    // normal
+      Heroic,    // hard
+      Legendary, // impossible
+      Noble      // easy
     }
 
-    private void BrowseTarget(object sender, RoutedEventArgs e)
+    /// <summary>
+    ///   Availabl3 SPV3.2 missions.
+    /// </summary>
+    public enum Mission
     {
-      using (var dialog = new FolderBrowserDialog())
-      {
-        dialog.ShowDialog();
-        Target.Text = dialog.SelectedPath;
-      }
-    }
-
-    private void Compile(object sender, RoutedEventArgs e)
-    {
-      switch (Cli.Start($"/compile {Target.Text}"))
-      {
-        case Success:
-          Status.Content = "SPV3 compilation routine has gracefully succeeded.";
-          break;
-        case Exception:
-          Status.Content = "Exception has occurred. Review log file.";
-          break;
-      }
+      Spv3A10 = 1,
+      Spv3A30,
+      Spv3A50,
+      Spv3B30,
+      Spv3B30Evolved,
+      Spv3B40,
+      Spv3C10,
+      Spv3C20,
+      Spv3C40,
+      Spv3D20,
+      Spv3D25,
+      Spv3D30,
+      Spv3D30Evolved,
+      Spv3D40,
+      LumoriaA,
+      LumoriaB,
+      LumoriaCd
     }
   }
 }

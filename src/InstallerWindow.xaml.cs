@@ -22,7 +22,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using static System.Environment;
-using static SPV3.CLI.Exit.Code;
+using static HXE.Exit.Code;
 
 namespace SPV3.GUI
 {
