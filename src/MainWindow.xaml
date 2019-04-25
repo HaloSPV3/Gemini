@@ -18,12 +18,11 @@
  3. This notice may not be removed or altered from any source distribution.
 -->
 
-<Window x:Class="SPV3.GUI.MainWindow"
+<Window x:Class="SPV3.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SPV3.GUI"
         mc:Ignorable="d"
         Title="SPV3 GUI"
         SnapsToDevicePixels="True"

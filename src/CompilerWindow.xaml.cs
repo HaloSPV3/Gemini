@@ -18,20 +18,20 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
-using static System.Environment;
-using static HXE.Exit.Code;
+using HXE;
 
-namespace SPV3.GUI
+namespace SPV3
 {
   public partial class CompilerWindow : Window
   {
     public CompilerWindow()
     {
       InitializeComponent();
-      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "SPV3.Compile");
+      Target.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "SPV3.Compile");
     }
 
     private void BrowseTarget(object sender, RoutedEventArgs e)
@@ -47,10 +47,10 @@ namespace SPV3.GUI
     {
       switch (Cli.Start($"/compile {Target.Text}"))
       {
-        case Success:
+        case Exit.Code.Success:
           Status.Content = "SPV3 compilation routine has gracefully succeeded.";
           break;
-        case Exception:
+        case Exit.Code.Exception:
           Status.Content = "Exception has occurred. Review log file.";
           break;
       }

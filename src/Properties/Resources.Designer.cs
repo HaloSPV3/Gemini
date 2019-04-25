@@ -28,7 +28,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SPV3.GUI.Properties
+namespace SPV3.Properties
 {
   /// <summary>
   ///   A strongly-typed resource class, for looking up localized strings, etc.

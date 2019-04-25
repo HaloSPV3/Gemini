@@ -19,9 +19,9 @@
  */
 
 using System.Windows;
-using static HXE.Exit.Code;
+using HXE;
 
-namespace SPV3.GUI
+namespace SPV3
 {
   /// <summary>
   ///   Interaction logic for MainWindow.xaml
@@ -37,10 +37,10 @@ namespace SPV3.GUI
     {
       switch (Cli.Start())
       {
-        case Success:
+        case Exit.Code.Success:
           Status.Content = "SPV3 loading routine has gracefully succeeded.";
           break;
-        case Exception:
+        case Exit.Code.Exception:
           Status.Content = "Exception has occurred. Review log file.";
           break;
       }

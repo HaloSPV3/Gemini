@@ -21,20 +21,18 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using static System.Environment;
-using static System.Environment.SpecialFolder;
-using static HXE.Exit;
+using HXE;
 
-namespace SPV3.GUI
+namespace SPV3
 {
   /// <summary>
   ///   Helper class for invoking the CLI executable.
   /// </summary>
   public static class Cli
   {
-    public static Code Start(string args)
+    public static Exit.Code Start(string args)
     {
-      var profile = Path.Combine(GetFolderPath(ApplicationData), "SPV3");
+      var profile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SPV3");
 
       var process = Process.Start("SPV3.exe", args + $" -path {profile}");
 
@@ -42,10 +40,10 @@ namespace SPV3.GUI
         throw new NullReferenceException("Could not construct CLI process.");
 
       process.WaitForExit();
-      return (Code) process.ExitCode;
+      return (Exit.Code) process.ExitCode;
     }
 
-    public static Code Start()
+    public static Exit.Code Start()
     {
       return Start(string.Empty);
     }

@@ -18,7 +18,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-namespace SPV3.GUI
+namespace SPV3
 {
   /// <summary>
   ///   Interaction logic for App.xaml

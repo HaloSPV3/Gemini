@@ -18,20 +18,20 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
-using static System.Environment;
-using static HXE.Exit.Code;
+using HXE;
 
-namespace SPV3.GUI
+namespace SPV3
 {
   public partial class InstallerWindow : Window
   {
     public InstallerWindow()
     {
       InitializeComponent();
-      Target.Text = Path.Combine(GetFolderPath(SpecialFolder.Personal), "My Games", "Halo SPV3");
+      Target.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "My Games", "Halo SPV3");
     }
 
     private void BrowseTarget(object sender, RoutedEventArgs e)
@@ -47,10 +47,10 @@ namespace SPV3.GUI
     {
       switch (Cli.Start($"/install {Target.Text}"))
       {
-        case Success:
+        case Exit.Code.Success:
           Status.Content = "SPV3 installation routine has gracefully succeeded.";
           break;
-        case Exception:
+        case Exit.Code.Exception:
           Status.Content = "Exception has occurred. Review log file.";
           break;
       }
