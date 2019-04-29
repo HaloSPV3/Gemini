@@ -23,6 +23,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:spv3="clr-namespace:SPV3"
         mc:Ignorable="d"
         Title="SPV3 GUI"
         SnapsToDevicePixels="True"
@@ -33,8 +34,8 @@
         FontFamily="Consolas">
     <StackPanel Margin="10">
         <Image Source="/Assets/icon.ico"
-               Stretch="None"/>
-        
+               Stretch="None" />
+
         <Button Click="Load" Margin="0,10,0,0">
             Load SPV3
         </Button>
@@ -49,5 +50,8 @@
         <Label Name="Status" HorizontalAlignment="Center" Margin="0,10,0,0">
             Awaiting end-user invocation.
         </Label>
+
+        <!-- Update -->
+        <spv3:UpdateUserControl />
     </StackPanel>
 </Window>
