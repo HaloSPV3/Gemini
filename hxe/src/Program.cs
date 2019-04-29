@@ -43,7 +43,7 @@ namespace HXE
     /// </param>
     public static void Main(string[] args)
     {
-      var v = Assembly.GetEntryAssembly().GetName().Version.Major.ToString("D3");
+      var bn = Assembly.GetEntryAssembly().GetName().Version.Major.ToString("D4");
 
       ForegroundColor = ConsoleColor.Green;
       WriteLine(@" _    ___   ________ ");
@@ -51,15 +51,15 @@ namespace HXE
       WriteLine(@"| |__| |\ V /| |__   ");
       WriteLine(@"|  __  | > < |  __|  ");
       WriteLine(@"| |  | |/ . \| |____ ");
-      WriteLine(@"|_|  |_/_/ \_\______| ~ Halo XE");
-      WriteLine(@"===============================");
-      WriteLine(@"A HCE wrapper and SPV3.2 loader");
-      WriteLine(@"-------------------------------");
-      WriteLine(@"src https://cgit.n2.network/hxe");
-      WriteLine(@"bin https://dist.n2.network/hxe");
-      WriteLine(@"-------------------------------");
-      WriteLine($"Current binary build number {v}");
-      WriteLine(@"-------------------------------");
+      WriteLine(@"|_|  |_/_/ \_\______| :: Halo XE");
+      WriteLine(@"================================");
+      WriteLine(@"A HCE wrapper and SPV3.2 loader.");
+      WriteLine(@"--------------------------------");
+      WriteLine(@"src: https://cgit.n2.network/hxe");
+      WriteLine(@"bin: https://dist.n2.network/hxe");
+      WriteLine(@"--------------------------------");
+      WriteLine($"Current binary build number {bn}");
+      WriteLine(@"--------------------------------");
       ForegroundColor = ConsoleColor.White;
 
       Directory.CreateDirectory(Paths.Directories.HXE);

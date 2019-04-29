@@ -78,9 +78,9 @@ SOURCES
 Source code and binaries are officially provided at the following
 sources:
 
--   https://cgit.n2.network/spv3.cli - upstream source code
--   https://dist.n2.network/spv3.cli - compiled executables
--   https://github.com/yumiris/spv3.cli - mirror repository
+-   https://cgit.n2.network/hxe - upstream source code
+-   https://dist.n2.network/hxe - compiled executables
+-   https://github.com/yumiris/hxe - mirror repository
 
 LICENCE
 -------
