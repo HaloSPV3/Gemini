@@ -26,7 +26,8 @@
         mc:Ignorable="d"
         Title="Compiler"
         SnapsToDevicePixels="True"
-        SizeToContent="WidthAndHeight"
+        SizeToContent="Height"
+        Width="480"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         FontFamily="Consolas">
