@@ -20,11 +20,11 @@
 
 using System.IO;
 using System.Text;
+using HXE.SPV3;
 using static System.IO.FileAccess;
 using static System.IO.FileMode;
-using static HXE.Configuration.PostProcessingConfiguration;
-using static HXE.Configuration.PostProcessingConfiguration.ExperimentalPostProcessing;
-using static HXE.Paths.Files;
+using static HXE.SPV3.PostProcessing;
+using static HXE.SPV3.PostProcessing.ExperimentalPostProcessing;
 
 namespace HXE
 {
@@ -33,8 +33,8 @@ namespace HXE
   /// </summary>
   public class Configuration : File
   {
-    public KernelConfiguration         Kernel         { get; set; } = new KernelConfiguration();
-    public PostProcessingConfiguration PostProcessing { get; set; } = new PostProcessingConfiguration();
+    public KernelConfiguration Kernel         { get; set; } = new KernelConfiguration();
+    public PostProcessing      PostProcessing { get; set; } = new PostProcessing();
 
     public void Save()
     {
@@ -62,6 +62,7 @@ namespace HXE
           bw.Write(Kernel.SkipSetShadersConfig);
           bw.Write(Kernel.SkipInvokeExecutable);
           bw.Write(Kernel.SkipPatchLargeAAware);
+          bw.Write(Kernel.EnableSpv3KernelMode);
         }
 
         /* padding */
@@ -121,6 +122,7 @@ namespace HXE
           Kernel.SkipSetShadersConfig = br.ReadBoolean();
           Kernel.SkipInvokeExecutable = br.ReadBoolean();
           Kernel.SkipPatchLargeAAware = br.ReadBoolean();
+          Kernel.EnableSpv3KernelMode = br.ReadBoolean();
         }
 
         /* padding */
@@ -193,80 +195,7 @@ namespace HXE
       public bool SkipSetShadersConfig { get; set; }
       public bool SkipInvokeExecutable { get; set; }
       public bool SkipPatchLargeAAware { get; set; }
-    }
-
-    public class PostProcessingConfiguration
-    {
-      /// <summary>
-      ///   Depth of Field values.
-      /// </summary>
-      public enum DofOptions
-      {
-        Off  = 0x0,
-        Low  = 0x1,
-        High = 0x2
-      }
-
-      /// <summary>
-      ///   Motion Blur values.
-      /// </summary>
-      public enum MotionBlurOptions
-      {
-        Off      = 0x0,
-        BuiltIn  = 0x1,
-        PombLow  = 0x2,
-        PombHigh = 0x3
-      }
-
-      /// <summary>
-      ///   MXAO values.
-      /// </summary>
-      public enum MxaoOptions
-      {
-        Off  = 0x0,
-        Low  = 0x1,
-        High = 0x2
-      }
-
-      public bool                       Internal          { get; set; }
-      public bool                       External          { get; set; }
-      public bool                       GBuffer           { get; set; }
-      public bool                       DepthFade         { get; set; }
-      public bool                       Bloom             { get; set; }
-      public bool                       LensDirt          { get; set; }
-      public bool                       DynamicLensFlares { get; set; }
-      public bool                       Volumetrics       { get; set; }
-      public bool                       AntiAliasing      { get; set; }
-      public bool                       HudVisor          { get; set; }
-      public MotionBlurOptions          MotionBlur        { get; set; } = MotionBlurOptions.Off;
-      public MxaoOptions                Mxao              { get; set; } = MxaoOptions.Off;
-      public DofOptions                 Dof               { get; set; } = DofOptions.Off;
-      public ExperimentalPostProcessing Experimental      { get; set; } = new ExperimentalPostProcessing();
-
-      /// <summary>
-      ///   Experimental overrides for HCE.
-      /// </summary>
-      public class ExperimentalPostProcessing
-      {
-        public enum ColorBlindModeOptions
-        {
-          Off          = 0x0,
-          Protanopia   = 0x1,
-          Deuteranopes = 0x2,
-          Tritanopes   = 0x3
-        }
-
-        public enum ThreeDimensionalOptions
-        {
-          Off          = 0x0,
-          Anaglyphic   = 0x1,
-          Interleaving = 0x2,
-          SideBySide   = 0x3
-        }
-
-        public ThreeDimensionalOptions ThreeDimensional { get; set; } = ThreeDimensionalOptions.Off;
-        public ColorBlindModeOptions   ColorBlindMode   { get; set; } = ColorBlindModeOptions.Off;
-      }
+      public bool EnableSpv3KernelMode { get; set; }
     }
   }
 }

@@ -18,7 +18,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-namespace HXE
+namespace HXE.SPV3
 {
   /// <summary>
   ///   Object representation of the SPV3.2 campaign attributes.
@@ -37,7 +37,7 @@ namespace HXE
     }
 
     /// <summary>
-    ///   Availabl3 SPV3.2 missions.
+    ///   Available SPV3.2 missions.
     /// </summary>
     public enum Mission
     {

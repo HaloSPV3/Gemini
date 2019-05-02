@@ -19,12 +19,9 @@
  */
 
 using System.IO;
-using static System.IO.File;
-using static System.Text.Encoding;
-using static HXE.Campaign;
-using static HXE.Campaign.Difficulty;
+using System.Text;
 
-namespace HXE
+namespace HXE.SPV3
 {
   /// <inheritdoc />
   /// <summary>
@@ -32,8 +29,8 @@ namespace HXE
   /// </summary>
   public class Progress : File
   {
-    public Mission    Mission    { get; set; } = Mission.Spv3A10;
-    public Difficulty Difficulty { get; set; } = Heroic;
+    public Campaign.Mission    Mission    { get; set; } = Campaign.Mission.Spv3A10;
+    public Campaign.Difficulty Difficulty { get; set; } = Campaign.Difficulty.Heroic;
 
     /// <summary>
     ///   Loads object state from the inbound file.
@@ -44,22 +41,22 @@ namespace HXE
        * Infers the difficulty and returns the Campaign.Difficulty representation.
        */
 
-      Difficulty GetDifficulty(BinaryReader reader)
+      Campaign.Difficulty GetDifficulty(BinaryReader reader)
       {
         reader.BaseStream.Seek(0x1E2, SeekOrigin.Begin);
 
         switch (reader.ReadByte())
         {
           case 0x0:
-            return Noble;
+            return Campaign.Difficulty.Noble;
           case 0x1:
-            return Normal;
+            return Campaign.Difficulty.Normal;
           case 0x2:
-            return Heroic;
+            return Campaign.Difficulty.Heroic;
           case 0x3:
-            return Legendary;
+            return Campaign.Difficulty.Legendary;
           default:
-            return Normal;
+            return Campaign.Difficulty.Normal;
         }
       }
 
@@ -67,55 +64,55 @@ namespace HXE
        * Infers the difficulty and returns the Campaign.Difficulty mission.
        */
 
-      Mission GetMission(BinaryReader reader)
+      Campaign.Mission GetMission(BinaryReader reader)
       {
         var bytes = new byte[32];
 
         reader.BaseStream.Seek(0x1E8, SeekOrigin.Begin);
         reader.BaseStream.Read(bytes, 0, 32);
 
-        switch (UTF8.GetString(bytes).TrimEnd('\0'))
+        switch (Encoding.UTF8.GetString(bytes).TrimEnd('\0'))
         {
           case "spv3a10":
-            return Mission.Spv3A10;
+            return Campaign.Mission.Spv3A10;
           case "spv3a30":
-            return Mission.Spv3A30;
+            return Campaign.Mission.Spv3A30;
           case "spv3a50":
-            return Mission.Spv3A50;
+            return Campaign.Mission.Spv3A50;
           case "spv3b30":
-            return Mission.Spv3B30;
+            return Campaign.Mission.Spv3B30;
           case "spv3b30_evolved":
-            return Mission.Spv3B30Evolved;
+            return Campaign.Mission.Spv3B30Evolved;
           case "spv3b40":
-            return Mission.Spv3B40;
+            return Campaign.Mission.Spv3B40;
           case "spv3c10":
-            return Mission.Spv3C10;
+            return Campaign.Mission.Spv3C10;
           case "spv3c20":
-            return Mission.Spv3C20;
+            return Campaign.Mission.Spv3C20;
           case "spv3c40":
-            return Mission.Spv3C40;
+            return Campaign.Mission.Spv3C40;
           case "spv3d20":
-            return Mission.Spv3D20;
+            return Campaign.Mission.Spv3D20;
           case "spv3d25":
-            return Mission.Spv3D25;
+            return Campaign.Mission.Spv3D25;
           case "spv3d30":
-            return Mission.Spv3D30;
+            return Campaign.Mission.Spv3D30;
           case "spv3d30_evolved":
-            return Mission.Spv3D30Evolved;
+            return Campaign.Mission.Spv3D30Evolved;
           case "spv3d40":
-            return Mission.Spv3D40;
+            return Campaign.Mission.Spv3D40;
           case "lumoria_a":
-            return Mission.LumoriaA;
+            return Campaign.Mission.LumoriaA;
           case "lumoria_b":
-            return Mission.LumoriaB;
+            return Campaign.Mission.LumoriaB;
           case "lumoria_cd":
-            return Mission.LumoriaCd;
+            return Campaign.Mission.LumoriaCd;
           default:
-            return Mission.Spv3A10;
+            return Campaign.Mission.Spv3A10;
         }
       }
 
-      using (var reader = new BinaryReader(Open(Path, FileMode.Open)))
+      using (var reader = new BinaryReader(System.IO.File.Open(Path, FileMode.Open)))
       {
         Difficulty = GetDifficulty(reader);
         Mission    = GetMission(reader);

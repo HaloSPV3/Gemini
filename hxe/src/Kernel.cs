@@ -23,13 +23,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using HXE.Exceptions;
+using HXE.HCE;
+using HXE.SPV3;
 using static System.Environment;
 using static System.IO.Path;
 using static System.Windows.Forms.Screen;
 using static HXE.Console;
 using static HXE.Paths;
-using static HXE.Paths.Files;
-using static HXE.Profile.ProfileVideo;
+using static HXE.HCE.Profile.ProfileVideo;
 
 namespace HXE
 {
@@ -61,20 +62,25 @@ namespace HXE
       else
         Info("Skipping Kernel.VerifyMainAssets");
 
-      if (!configuration.Kernel.SkipInvokeCoreTweaks)
-        InvokeCoreTweaks(executable);
-      else
-        Info("Skipping Kernel.InvokeCoreTweaks");
+      if (configuration.Kernel.EnableSpv3KernelMode)
+      {
+        if (!configuration.Kernel.SkipInvokeCoreTweaks)
+          InvokeCoreTweaks(executable);
+        else
+          Info("Skipping Kernel.InvokeCoreTweaks");
 
-      if (!configuration.Kernel.SkipResumeCheckpoint)
-        ResumeCheckpoint(executable);
-      else
-        Info("Skipping Kernel.ResumeCheckpoint");
+        if (!configuration.Kernel.SkipResumeCheckpoint)
+          ResumeCheckpoint(executable);
+        else
+          Info("Skipping Kernel.ResumeCheckpoint");
 
-      if (!configuration.Kernel.SkipSetShadersConfig)
-        SetShadersConfig(configuration);
+        if (!configuration.Kernel.SkipSetShadersConfig)
+          SetShadersConfig(configuration);
+        else
+          Info("Skipping Kernel.SkipSetShadersConfig");
+      }
       else
-        Info("Skipping Kernel.SkipSetShadersConfig");
+        Info("Skipping Kernel.EnableSpv3KernelMode");
 
       if (!configuration.Kernel.SkipPatchLargeAAware)
         PatchLargeAAware(executable);

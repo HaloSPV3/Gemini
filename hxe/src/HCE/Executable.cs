@@ -18,17 +18,13 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Microsoft.Win32;
-using static System.Environment;
-using static System.IO.File;
-using static System.IO.Path;
-using static HXE.Console;
-using static Microsoft.Win32.RegistryKey;
 
-namespace HXE
+namespace HXE.HCE
 {
   /// <inheritdoc />
   /// <summary>
@@ -49,7 +45,7 @@ namespace HXE
        */
 
       {
-        var currentPath = Combine(CurrentDirectory, hce);
+        var currentPath = System.IO.Path.Combine(Environment.CurrentDirectory, hce);
 
         if (System.IO.File.Exists(currentPath))
           return (Executable) currentPath;
@@ -61,13 +57,13 @@ namespace HXE
 
       {
         const string directory64   = @"C:\Program Files (x86)\Microsoft Games\Halo Custom Edition";
-        var          defaultPath64 = Combine(directory64, hce);
+        var          defaultPath64 = System.IO.Path.Combine(directory64, hce);
 
         if (System.IO.File.Exists(defaultPath64))
           return (Executable) defaultPath64;
 
         const string directory32   = @"C:\Program Files\Microsoft Games\Halo Custom Edition";
-        var          defaultPath32 = Combine(directory32, hce);
+        var          defaultPath32 = System.IO.Path.Combine(directory32, hce);
 
         if (System.IO.File.Exists(defaultPath32))
           return (Executable) defaultPath32;
@@ -81,7 +77,7 @@ namespace HXE
         const string registryLocation = @"SOFTWARE\Microsoft\Microsoft Games\Halo CE";
         const string registryIdentity = @"EXE Path";
 
-        using (var view = OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+        using (var view = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
         using (var key = view.OpenSubKey(registryLocation))
         {
           var path = key?.GetValue(registryIdentity);
@@ -94,7 +90,7 @@ namespace HXE
           }
         }
 
-        using (var view = OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
+        using (var view = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
         using (var key = view.OpenSubKey(registryLocation))
         {
           var path = key?.GetValue(registryIdentity);
@@ -116,7 +112,7 @@ namespace HXE
         if (!System.IO.File.Exists(Paths.Files.Installation))
           throw new FileNotFoundException("Could not detect executable on the filesystem.");
 
-        var spv3exe = Combine(System.IO.File.ReadAllText(Paths.Files.Installation).TrimEnd('\n'), hce);
+        var spv3exe = System.IO.Path.Combine(System.IO.File.ReadAllText(Paths.Files.Installation).TrimEnd('\n'), hce);
 
         if (System.IO.File.Exists(spv3exe))
           return (Executable) spv3exe;
@@ -167,28 +163,28 @@ namespace HXE
          */
 
         if (!string.IsNullOrWhiteSpace(Profile.Path))
-          ApplyArgument(args, $"-path {GetFullPath(Profile.Path)} ");
+          ApplyArgument(args, $"-path {System.IO.Path.GetFullPath(Profile.Path)} ");
 
         return args.ToString();
       }
 
-      Info("Starting process for HCE executable");
+      Console.Info("Starting process for HCE executable");
 
       Process.Start(new ProcessStartInfo
       {
         FileName = Path,
-        WorkingDirectory = GetDirectoryName(Path) ??
+        WorkingDirectory = System.IO.Path.GetDirectoryName(Path) ??
                            throw new DirectoryNotFoundException("Failed to infer process working directory."),
         Arguments = GetArguments()
       });
 
-      Info("Successfully started HCE executable");
+      Console.Info("Successfully started HCE executable");
     }
 
     private static void ApplyArgument(StringBuilder args, string arg)
     {
       args.Append(arg);
-      Debug("Appending argument: " + arg);
+      Console.Debug("Appending argument: " + arg);
     }
 
     /// <summary>

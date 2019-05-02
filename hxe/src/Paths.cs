@@ -20,7 +20,6 @@
 
 using static System.Environment;
 using static System.IO.Path;
-using static HXE.Paths.Directories;
 
 namespace HXE
 {

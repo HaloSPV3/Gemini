@@ -35,6 +35,15 @@ namespace SPV3
 
     private void Load(object sender, RoutedEventArgs e)
     {
+      var configuration = (Configuration) Paths.Files.Configuration;
+
+      if (configuration.Exists())
+      {
+        configuration.Load();
+        configuration.Kernel.EnableSpv3KernelMode = true;
+        configuration.Save();
+      }
+      
       switch (Cli.Start())
       {
         case Exit.Code.Success:

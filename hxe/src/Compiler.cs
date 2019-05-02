@@ -29,7 +29,6 @@ using static System.IO.Directory;
 using static System.IO.Path;
 using static System.IO.SearchOption;
 using static HXE.Console;
-using static HXE.Paths.Files;
 
 namespace HXE
 {
@@ -136,7 +135,7 @@ namespace HXE
              */
 
             Info("Creating package entry for file - " + file);
-            
+
             package.Entries.Add(new Manifest.Package.Entry
             {
               Name = fileName,
