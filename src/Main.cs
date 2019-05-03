@@ -30,6 +30,7 @@ using HXE;
 using SPV3.Annotations;
 using static System.DateTimeOffset;
 using static System.Environment;
+using static System.IO.Compression.ZipFile;
 using Exit = HXE.Exit;
 using File = System.IO.File;
 
@@ -230,7 +231,16 @@ namespace SPV3
 
             using (var client = new WebClient())
             {
-              client.DownloadFile(entry.URL, file);
+              var data = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString());
+              var temp = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString());
+
+              client.DownloadFile(entry.URL, data);
+
+              ExtractToDirectory(data, temp);
+
+              File.Move(Path.Combine(temp, entry.Name), file);
+              File.Delete(data);
+              File.Delete(temp);
             }
 
             if (File.Exists(backup))
