@@ -55,6 +55,11 @@ namespace SPV3
       }
     }
 
+    private void Settings(object sender, RoutedEventArgs e)
+    {
+      new SettingsWindow().Show();
+    }
+
     private void Installer(object sender, RoutedEventArgs e)
     {
       new InstallerWindow().Show();

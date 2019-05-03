@@ -1,0 +1,238 @@
+<!--
+ Copyright (c) 2019 Emilian Roman
+ 
+ This software is provided 'as-is', without any express or implied
+ warranty. In no event will the authors be held liable for any damages
+ arising from the use of this software.
+ 
+ Permission is granted to anyone to use this software for any purpose,
+ including commercial applications, and to alter it and redistribute it
+ freely, subject to the following restrictions:
+ 
+ 1. The origin of this software must not be misrepresented; you must not
+    claim that you wrote the original software. If you use this software
+    in a product, an acknowledgment in the product documentation would be
+    appreciated but is not required.
+ 2. Altered source versions must be plainly marked as such, and must not be
+    misrepresented as being the original software.
+ 3. This notice may not be removed or altered from any source distribution.
+-->
+
+<Window x:Class="SPV3.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:SPV3"
+        mc:Ignorable="d"
+        Title="SPV3 GUI"
+        SnapsToDevicePixels="True"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Width="480">
+    <Window.DataContext>
+        <local:Settings />
+    </Window.DataContext>
+    <Window.Resources>
+        <local:Converter x:Key="Converter" />
+    </Window.Resources>
+    <StackPanel Margin="10">
+        <TabControl Height="225">
+            <!-- Post-Processing -->
+            <TabItem Header="Post-Processing">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left -->
+                    <StackPanel Grid.Column="0">
+                        <!-- MXAO -->
+                        <GroupBox Header="MXAO">
+                            <StackPanel>
+                                <RadioButton Content="Off"
+                                             GroupName="MXAO"
+                                             IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=Off}" />
+                                <RadioButton Content="Low"
+                                             GroupName="MXAO"
+                                             IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=Low}" />
+                                <RadioButton Content="High"
+                                             GroupName="MXAO"
+                                             IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=High}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Motion Blur -->
+                        <GroupBox Header="Motion Blur">
+                            <StackPanel>
+                                <RadioButton Content="Off"
+                                             GroupName="MotionBlur"
+                                             IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=Off}" />
+                                <RadioButton Content="Built-in"
+                                             GroupName="MotionBlur"
+                                             IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=BuiltIn}" />
+                                <RadioButton Content="POMB Low"
+                                             GroupName="MotionBlur"
+                                             IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=PombLow}" />
+                                <RadioButton Content="POMB High"
+                                             GroupName="MotionBlur"
+                                             IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=PombHigh}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- 3D -->
+                        <GroupBox Header="3D">
+                            <ComboBox>
+                                <ComboBoxItem Content="Off"
+                                              IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=Off}" />
+                                <ComboBoxItem Content="Anaglyph"
+                                              IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=Anaglyphic}" />
+                                <ComboBoxItem Content="Interleaving"
+                                              IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=Interleaving}" />
+                                <ComboBoxItem Content="Side-by-side"
+                                              IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=SideBySide}" />
+                            </ComboBox>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <!-- Right -->
+                    <StackPanel Grid.Column="1">
+                        <!-- DOF -->
+                        <GroupBox Header="DOF">
+                            <StackPanel>
+                                <RadioButton Content="Off"
+                                             GroupName="DOF"
+                                             IsChecked="{Binding Path=Dof, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=Off}" />
+                                <RadioButton Content="Low"
+                                             GroupName="DOF"
+                                             IsChecked="{Binding Path=Dof, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=Low}" />
+                                <RadioButton Content="High"
+                                             GroupName="DOF"
+                                             IsChecked="{Binding Path=Dof, Mode=TwoWay, 
+                                                                 Converter={StaticResource Converter},
+                                                                 ConverterParameter=High}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Toggles -->
+                        <GroupBox Header="Toggles">
+                            <StackPanel>
+                                <CheckBox Content="Dynamic Lens Flares"
+                                          IsChecked="{Binding DynamicLensFlares}" />
+                                <CheckBox Content="Volumetric Lighting"
+                                          IsChecked="{Binding Volumetrics}" />
+                                <CheckBox Content="Lens Dirt"
+                                          IsChecked="{Binding LensDirt}" />
+                                <CheckBox Content="HUDv5 Visor"
+                                          IsChecked="{Binding HudVisor}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Color-blind Mode -->
+                        <GroupBox Header="Color-blind Mode">
+                            <ComboBox>
+                                <ComboBoxItem Content="Off"
+                                              IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=Off}" />
+                                <ComboBoxItem Content="Protanopia"
+                                              IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=Protanopia}" />
+                                <ComboBoxItem Content="Deuteranopes"
+                                              IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=Deuteranopes}" />
+                                <ComboBoxItem Content="Tritanopes"
+                                              IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                                   Converter={StaticResource Converter},
+                                                                   ConverterParameter=Tritanopes}" />
+                            </ComboBox>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- HXE Kernel -->
+            <TabItem Header="HXE Kernel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Overrides -->
+                    <GroupBox Header="Overrides"
+                              Grid.Column="0">
+                        <StackPanel>
+                            <CheckBox Content="Set: SPV3.1 Legacy Mode"
+                                      IsChecked="{Binding EnableSpv3LegacyMode}" />
+                            <CheckBox Content="Skip: Verify Main Assets"
+                                      IsChecked="{Binding SkipVerifyMainAssets}" />
+                            <CheckBox Content="Skip: Invoke Core Tweaks"
+                                      IsChecked="{Binding SkipInvokeCoreTweaks}" />
+                            <CheckBox Content="Skip: Resume Checkpoint"
+                                      IsChecked="{Binding SkipResumeCheckpoint}" />
+                            <CheckBox Content="Skip: Set Shader Config"
+                                      IsChecked="{Binding SkipSetShadersConfig}" />
+                            <CheckBox Content="Skip: Invoke Executable"
+                                      IsChecked="{Binding SkipInvokeExecutable}" />
+                            <CheckBox Content="Skip: Patch Large Address Aware"
+                                      IsChecked="{Binding SkipPatchLargeAAware}" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <Image Grid.Column="1"
+                           Source="/Assets/hxe.ico"
+                           Stretch="None" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Margin="0,10,0,0"
+                    Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Width" Value="75" />
+                </Style>
+            </StackPanel.Resources>
+
+            <Button Click="Save">
+                Save
+            </Button>
+
+            <Button Margin="1,0,0,0"
+                    Click="Cancel">
+                Cancel
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -73,11 +73,25 @@ namespace HXE
           ResumeCheckpoint(executable);
         else
           Info("Skipping Kernel.ResumeCheckpoint");
+        
+        /**
+         * The main difference between SPV3.1 and SPV3.2 is what the f1 variable in the initiation file is used for. In
+         * 3.1, it's used for unlocking the maps. In SPV3.2, it's used for encoding the post-processing settings.
+         */
 
-        if (!configuration.Kernel.SkipSetShadersConfig)
-          SetShadersConfig(configuration);
+        if (configuration.Kernel.EnableSpv3LegacyMode)
+        {
+          Info("Using SPV3.1 initiation mode");
+          SetSpv31InitMode(configuration);
+        }
         else
-          Info("Skipping Kernel.SkipSetShadersConfig");
+        {
+          Info("Using SPV3.2 initiation mode");
+          if (!configuration.Kernel.SkipSetShadersConfig)
+            SetShadersConfig(configuration);
+          else
+            Info("Skipping Kernel.SkipSetShadersConfig");
+        }
       }
       else
         Info("Skipping Kernel.EnableSpv3KernelMode");
@@ -259,6 +273,25 @@ namespace HXE
       catch (UnauthorizedAccessException e)
       {
         Error(e.Message + " -- CAMPAIGN WILL NOT RESUME");
+      }
+    }
+
+    /// <summary>
+    ///   Sets the initc.txt to SPV3.1 mode, i.e. unlocking maps instead of encoding post-processing settings. 
+    /// </summary>
+    private static void SetSpv31InitMode(Configuration configuration)
+    {
+      try
+      {
+        Info("Updating the initiation file with SPV3.1 maps unlocking code");
+        RootInitc.Unlock = configuration.Kernel.EnableSpv3LegacyMode;
+
+        Info("Saving unlocking code to the initiation file");
+        RootInitc.Save();
+      }
+      catch (UnauthorizedAccessException e)
+      {
+        Error(e.Message + " -- PLEASE RUN AS ADMINISTRATOR");
       }
     }
 

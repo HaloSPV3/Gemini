@@ -54,6 +54,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UpdateUserControl.xaml.cs">
       <DependentUpon>UpdateUserControl.xaml</DependentUpon>
     </Compile>
@@ -78,6 +83,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SettingsWindow.xaml" />
     <Page Include="UpdateUserControl.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +111,9 @@
       <Project>{acaa5d9f-b23d-43e1-b2df-8c03230975a1}</Project>
       <Name>HXE</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\hxe.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

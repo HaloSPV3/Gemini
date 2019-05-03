@@ -63,6 +63,7 @@ namespace HXE
           bw.Write(Kernel.SkipInvokeExecutable);
           bw.Write(Kernel.SkipPatchLargeAAware);
           bw.Write(Kernel.EnableSpv3KernelMode);
+          bw.Write(Kernel.EnableSpv3LegacyMode);
         }
 
         /* padding */
@@ -123,6 +124,7 @@ namespace HXE
           Kernel.SkipInvokeExecutable = br.ReadBoolean();
           Kernel.SkipPatchLargeAAware = br.ReadBoolean();
           Kernel.EnableSpv3KernelMode = br.ReadBoolean();
+          Kernel.EnableSpv3LegacyMode = br.ReadBoolean();
         }
 
         /* padding */
@@ -196,6 +198,7 @@ namespace HXE
       public bool SkipInvokeExecutable { get; set; }
       public bool SkipPatchLargeAAware { get; set; }
       public bool EnableSpv3KernelMode { get; set; }
+      public bool EnableSpv3LegacyMode { get; set; }
     }
   }
 }
