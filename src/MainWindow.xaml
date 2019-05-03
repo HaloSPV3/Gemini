@@ -61,5 +61,12 @@
 
         <!-- Update -->
         <spv3:UpdateUserControl />
+        
+        <!-- Version -->
+        <Label Name="Version"
+               HorizontalAlignment="Center"
+               Margin="0,10,0,0">
+            build-0000
+        </Label>
     </StackPanel>
 </Window>

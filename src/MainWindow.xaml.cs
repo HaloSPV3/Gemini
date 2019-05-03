@@ -18,6 +18,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.Reflection;
 using System.Windows;
 
 namespace SPV3
@@ -34,6 +35,8 @@ namespace SPV3
       InitializeComponent();
       _main = (Main) DataContext;
       _main.Initialise();
+
+      Version.Content = $"build-{Assembly.GetEntryAssembly().GetName().Version.Major:D4}";
     }
 
     private void Load(object sender, RoutedEventArgs e)
