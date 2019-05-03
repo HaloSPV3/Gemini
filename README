@@ -1,15 +1,13 @@
 THE SPV3 GUI
 ============
 
-This repository contains the source for the SPV3 GUI, which is a simple
-front-end to the SPV3 CLI. The CLI contains the main logic for the
-entire loader, and the GUI merely serves to hide all of that away behind
-a pretty interface.
+This repository contains the source for the SPV3 GUI, which is a nifty
+front-end to the HXE. The HXE contains the main logic for the entire
+loader, whereas the GUI serves as an UI to the HXE loader and its
+configuration.
 
-One would argue that the logic should be extracted into a shared
-library, rather than have the GUI simply call the CLI; however, the GUI
-is an after-thought and is designed to be as simple as possible. In
-essence, it just calls the CLI with the relevant arguments.
+Additionally, the SPV3 GUI permits automatic updating of SPV3 data, and
+isolates the SPV3 campaign progress to its own dedicated directory.
 
 SOURCES
 -------
@@ -17,8 +15,8 @@ SOURCES
 Source code and binaries are officially provided at the following
 sources:
 
--   https://cgit.n2.network/spv3.gui - upstream source code
--   https://dist.n2.network/spv3.gui - compiled executables
+-   https://cgit.n2.network/spv3 - upstream source code
+-   https://dist.n2.network/spv3 - compiled executables
 
 LICENCE
 -------
