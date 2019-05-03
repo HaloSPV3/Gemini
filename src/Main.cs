@@ -72,6 +72,10 @@ namespace SPV3
     /// </summary>
     public void Initialise()
     {
+      /**
+       * Gracefully create directories and configuration data.
+       */
+      
       Directory.CreateDirectory(Paths.Directories.Data);
       Directory.CreateDirectory(HXE.Paths.Directories.HXE);
 
@@ -79,6 +83,11 @@ namespace SPV3
 
       if (!configuration.Exists())
         configuration.Save();
+      
+      /**
+       * Test if the working directory is read-only. If a simple file cannot be written or deleted, then any loading or
+       * updating routines will likely fail. As such, we will prevent updating or loading in such circumstances.
+       */
 
       try
       {
@@ -86,6 +95,8 @@ namespace SPV3
 
         File.WriteAllBytes(test, new byte[8]);
         File.Delete(test);
+
+        CanLoad = true;
       }
       catch (Exception)
       {
