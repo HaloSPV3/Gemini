@@ -20,7 +20,6 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using HXE;
 
 namespace SPV3
@@ -32,9 +31,7 @@ namespace SPV3
   {
     public static Exit.Code Start(string args)
     {
-      var profile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SPV3");
-
-      var process = Process.Start("SPV3.exe", args + $" -path {profile}");
+      var process = Process.Start("SPV3.exe", args + $" -path {Paths.Directories.Data}");
 
       if (process == null)
         throw new NullReferenceException("Could not construct CLI process.");

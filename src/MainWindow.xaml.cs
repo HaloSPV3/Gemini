@@ -19,7 +19,6 @@
  */
 
 using System.Windows;
-using HXE;
 
 namespace SPV3
 {
@@ -28,31 +27,18 @@ namespace SPV3
   /// </summary>
   public partial class MainWindow
   {
+    private readonly Main _main;
+
     public MainWindow()
     {
       InitializeComponent();
+      _main = (Main) DataContext;
+      _main.Initialise();
     }
 
     private void Load(object sender, RoutedEventArgs e)
     {
-      var configuration = (Configuration) Paths.Files.Configuration;
-
-      if (configuration.Exists())
-      {
-        configuration.Load();
-        configuration.Kernel.EnableSpv3KernelMode = true;
-        configuration.Save();
-      }
-      
-      switch (Cli.Start())
-      {
-        case Exit.Code.Success:
-          Status.Content = "SPV3 loading routine has gracefully succeeded.";
-          break;
-        case Exit.Code.Exception:
-          Status.Content = "Exception has occurred. Review log file.";
-          break;
-      }
+      _main.Start();
     }
 
     private void Settings(object sender, RoutedEventArgs e)

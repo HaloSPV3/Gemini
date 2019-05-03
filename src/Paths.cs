@@ -18,43 +18,20 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Forms;
-using HXE;
+using static System.Environment;
+using static System.Environment.SpecialFolder;
+using static System.IO.Path;
 
 namespace SPV3
 {
-  public partial class InstallerWindow : Window
+  /// <summary>
+  ///   Paths for the files and directories used by the SPV3 loader.
+  /// </summary>
+  public static class Paths
   {
-    public InstallerWindow()
+    public static class Directories
     {
-      InitializeComponent();
-      Target.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "My Games",
-        "Halo SPV3");
-    }
-
-    private void BrowseTarget(object sender, RoutedEventArgs e)
-    {
-      using (var dialog = new FolderBrowserDialog())
-      {
-        dialog.ShowDialog();
-        Target.Text = dialog.SelectedPath;
-      }
-    }
-
-    private void Install(object sender, RoutedEventArgs e)
-    {
-      switch (Cli.Start($"/install {Target.Text}"))
-      {
-        case Exit.Code.Success:
-          Status.Content = "SPV3 installation routine has gracefully succeeded.";
-          break;
-        case Exit.Code.Exception:
-          Status.Content = "Exception has occurred. Review log file.";
-          break;
-      }
+      public static readonly string Data = Combine(GetFolderPath(ApplicationData), "SPV3");
     }
   }
 }

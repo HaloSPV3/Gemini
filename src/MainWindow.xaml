@@ -30,8 +30,11 @@
         SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Width="240"
+        Width="640"
         FontFamily="Consolas">
+    <Window.DataContext>
+        <spv3:Main />
+    </Window.DataContext>
     <StackPanel Margin="10">
         <Image Source="/Assets/icon.ico"
                Stretch="None" />
@@ -50,9 +53,10 @@
         </Button>
 
         <!-- Status -->
-        <Label Name="Status" HorizontalAlignment="Center" Margin="0,10,0,0">
-            Awaiting end-user invocation.
-        </Label>
+        <TextBlock Margin="0,10"
+                   HorizontalAlignment="Center"
+                   TextWrapping="WrapWithOverflow"
+                   Text="{Binding Status}" />
 
         <!-- Update -->
         <spv3:UpdateUserControl />

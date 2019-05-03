@@ -36,7 +36,7 @@ namespace SPV3
   public class Settings : INotifyPropertyChanged
   {
     private readonly Configuration _configuration =
-      (Configuration) Paths.Files.Configuration;
+      (Configuration) HXE.Paths.Files.Configuration;
 
     private ColorBlindModeOptions   _colorBlind;
     private DofOptions              _dof;
