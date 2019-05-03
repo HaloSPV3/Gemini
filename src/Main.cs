@@ -70,12 +70,12 @@ namespace SPV3
     /// <summary>
     ///   Initialises the loader
     /// </summary>
-    public void Initialise()
+    public async void Initialise()
     {
       /**
        * Gracefully create directories and configuration data.
        */
-      
+
       Directory.CreateDirectory(Paths.Directories.Data);
       Directory.CreateDirectory(HXE.Paths.Directories.HXE);
 
@@ -83,7 +83,7 @@ namespace SPV3
 
       if (!configuration.Exists())
         configuration.Save();
-      
+
       /**
        * Test if the working directory is read-only. If a simple file cannot be written or deleted, then any loading or
        * updating routines will likely fail. As such, we will prevent updating or loading in such circumstances.
@@ -108,7 +108,26 @@ namespace SPV3
         return;
       }
 
-      Fetch();
+      try
+      {
+        var update = new Update();
+
+        Status = "Checking for latest updates...";
+        await Task.Run(() => update.Load());
+
+        CanLoad = false;
+        Status  = "Applying any necessary updates. Please wait...";
+
+        await Task.Run(() => update.Commit());
+
+        CanLoad = true;
+        Status  = "Your main SPV3 data is up to date!";
+      }
+      catch (Exception e)
+      {
+        CanLoad = true;
+        Status  = "Update error -- " + e.Message + " -- any old files have been restored!";
+      }
     }
 
     /// <summary>
@@ -136,30 +155,6 @@ namespace SPV3
       }
     }
 
-    /// <summary>
-    ///   Conducts updates on the main SPV3 data.
-    /// </summary>
-    public async void Fetch()
-    {
-      try
-      {
-        var update = new Update();
-
-        Status = "Checking for latest updates...";
-        await Task.Run(() => update.Load());
-
-        Status = "Applying any necessary updates...";
-        await Task.Run(() => update.Commit());
-
-        Status = "Your main SPV3 data is up to date!";
-      }
-
-      catch (Exception e)
-      {
-        Status = e.Message;
-      }
-    }
-
     [NotifyPropertyChangedInvocator]
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
@@ -171,7 +166,7 @@ namespace SPV3
     /// </summary>
     public class Update
     {
-      private const string Address = "https://raw.githubusercontent.com/yumiris/SPV3/update/manifest.xml";
+      private const string Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.xml";
 
       public string      Name        { get; set; } = string.Empty;               /* name of the update */
       public string      Description { get; set; } = string.Empty;               /* update description */
@@ -243,8 +238,10 @@ namespace SPV3
           }
           catch (Exception)
           {
-            if (File.Exists(backup))
-              File.Move(backup, file);
+            if (!File.Exists(backup)) throw;
+
+            if (File.Exists(file)) File.Delete(file);
+            File.Move(backup, file);
 
             throw;
           }
