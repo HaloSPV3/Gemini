@@ -23,6 +23,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using HXE;
+using static System.Diagnostics.Process;
+using File = HXE.File;
 
 namespace SPV3
 {
@@ -48,6 +50,9 @@ namespace SPV3
       switch (Cli.Start($"/compile {Target.Text}"))
       {
         case Exit.Code.Success:
+          var cli = (File) GetCurrentProcess().MainModule.FileName;
+          cli.CopyTo(Target.Text);
+          
           Status.Content = "SPV3 compilation routine has gracefully succeeded.";
           break;
         case Exit.Code.Exception:
