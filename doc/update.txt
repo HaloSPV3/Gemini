@@ -13,12 +13,18 @@ METHOD
 The update mechanism is implemented as the following steps:
 
 1.  retrieve and deserialise the manifest file from the server;
+
 2.  for each entry declared in it, check if it exists on the file
     system;
+
 3.  if it exists, check if the length is the same as the one in the
     entry;
-4.  if step 2 or 3 end up being false, then download the file to the
-    system.
+
+4.  if step 2 or 3 end up being false, then download the file to a
+    temporary directory on the file system;
+
+5.  decompress the contents from the temporary package to the actual
+    file.
 
 Mechanisms for graceful preparation and handling of failures include:
 

@@ -31,6 +31,9 @@ using SPV3.Annotations;
 using static System.DateTimeOffset;
 using static System.Environment;
 using static System.IO.Compression.ZipFile;
+using static System.IO.Directory;
+using static System.IO.File;
+using static System.IO.Path;
 using Exit = HXE.Exit;
 using File = System.IO.File;
 
@@ -77,8 +80,8 @@ namespace SPV3
        * Gracefully create directories and configuration data.
        */
 
-      Directory.CreateDirectory(Paths.Directories.Data);
-      Directory.CreateDirectory(HXE.Paths.Directories.HXE);
+      CreateDirectory(Paths.Directories.Data);
+      CreateDirectory(HXE.Paths.Directories.HXE);
 
       var configuration = (Configuration) HXE.Paths.Files.Configuration;
 
@@ -92,9 +95,9 @@ namespace SPV3
 
       try
       {
-        var test = Path.Combine(CurrentDirectory, "io.bin");
+        var test = Combine(CurrentDirectory, "io.bin");
 
-        File.WriteAllBytes(test, new byte[8]);
+        WriteAllBytes(test, new byte[8]);
         File.Delete(test);
 
         CanLoad = true;
@@ -199,19 +202,19 @@ namespace SPV3
       {
         foreach (var entry in Entries)
         {
-          var file   = Path.Combine(CurrentDirectory, entry.Path ?? string.Empty, entry.Name);
-          var backup = file + ".bak";
+          var target = Combine(CurrentDirectory, entry.Path ?? string.Empty, entry.Name);
+          var backup = target + ".bak";
 
           /**
            * If the file exists AND is the same length as the value declared in the current entry, then it's safe to
            * assume that the end-user has the updated file.
            */
 
-          if (File.Exists(file))
+          if (File.Exists(target))
           {
-            if (new FileInfo(file).Length != entry.Size)
+            if (new FileInfo(target).Length != entry.Size)
             {
-              if (!File.Exists(backup)) File.Move(file, backup);
+              if (!File.Exists(backup)) File.Move(target, backup);
             }
             else
             {
@@ -226,21 +229,21 @@ namespace SPV3
 
           try
           {
-            if (entry.Path != null)
-              Directory.CreateDirectory(Path.Combine(CurrentDirectory, entry.Path));
-
             using (var client = new WebClient())
             {
-              var data = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString());
-              var temp = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString());
+              var temp = Combine(CurrentDirectory, Guid.NewGuid().ToString()); /* temporary directory */
+              var pack = Combine(temp,             Guid.NewGuid().ToString()); /* compressed package  */
+              var file = Combine(temp,             entry.Name);                /* package entry file  */
 
-              client.DownloadFile(entry.URL, data);
+              CreateDirectory(temp);
+              client.DownloadFile(entry.URL, pack);
+              ExtractToDirectory(pack, temp);
 
-              ExtractToDirectory(data, temp);
+              if (entry.Path != null)
+                CreateDirectory(Combine(CurrentDirectory, entry.Path));
 
-              File.Move(Path.Combine(temp, entry.Name), file);
-              File.Delete(data);
-              File.Delete(temp);
+              File.Move(file, target);
+              Delete(temp, true);
             }
 
             if (File.Exists(backup))
@@ -250,8 +253,8 @@ namespace SPV3
           {
             if (!File.Exists(backup)) throw;
 
-            if (File.Exists(file)) File.Delete(file);
-            File.Move(backup, file);
+            if (File.Exists(target)) File.Delete(target);
+            File.Move(backup, target);
 
             throw;
           }
