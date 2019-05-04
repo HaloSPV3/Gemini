@@ -18,73 +18,25 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using static System.Environment;
-using static System.Environment.SpecialFolder;
-using static System.IO.File;
-using static System.IO.Path;
 
 namespace SPV3
 {
   public partial class UpdateUserControl : UserControl
   {
-    private const string Header  = "HEADER.txt";
-    private const string Address = "https://dist.n2.network/spv3/";
-
-    private int _version;
+    private readonly Update _update;
 
     public UpdateUserControl()
     {
       InitializeComponent();
-      InitialiseUpdate();
-      DownloadButton.Visibility = Visibility.Collapsed;
-    }
-
-    private async void InitialiseUpdate()
-    {
-      await Task.Run(() =>
-      {
-        try
-        {
-          var request = (HttpWebRequest) WebRequest.Create(Address + Header);
-          using (var response = (HttpWebResponse) request.GetResponse())
-          using (var stream = response.GetResponseStream())
-          using (var reader = new StreamReader(stream ?? throw new Exception("Could not get response stream.")))
-          {
-            var serverVersion = int.Parse(reader.ReadLine()?.TrimEnd()
-                                          ?? throw new Exception("Could not infer server-side version."));
-
-            var clientVersion = Assembly.GetEntryAssembly().GetName().Version.Major;
-
-            if (serverVersion <= clientVersion) return;
-
-            _version = serverVersion;
-          }
-        }
-        catch (Exception e)
-        {
-          var log = Combine(GetFolderPath(ApplicationData), "SPV3", "exception.log");
-
-          WriteAllText(log, e.ToString());
-        }
-      });
-
-      if (_version <= 0) return;
-
-      DownloadButton.Content    = $"Loader update available! (build-{_version:D4})";
-      DownloadButton.Visibility = Visibility.Visible;
+      _update = (Update) DataContext;
+      _update.Initialise();
     }
 
     private void Download(object sender, RoutedEventArgs e)
     {
-      Process.Start($"https://dist.n2.network/spv3/{_version:D4}/bin.zip");
+      _update.Loader.Commit();
     }
   }
 }

@@ -52,7 +52,7 @@ namespace SPV3
         case Exit.Code.Success:
           var cli = (File) GetCurrentProcess().MainModule.FileName;
           cli.CopyTo(Target.Text);
-          
+
           Status.Content = "SPV3 compilation routine has gracefully succeeded.";
           break;
         case Exit.Code.Exception:

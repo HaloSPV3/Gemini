@@ -35,7 +35,7 @@
         <TextBlock TextWrapping="WrapWithOverflow">
             The data in the current folder will be compiled <Underline>into</Underline> the following target folder:
         </TextBlock>
-        
+
         <!-- Browse Target -->
         <DockPanel Margin="0,10,0,0">
             <Button DockPanel.Dock="Right" Click="BrowseTarget">
