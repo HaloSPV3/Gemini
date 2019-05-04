@@ -44,6 +44,8 @@ namespace SPV3
     private bool                    _enableSpv3LegacyMode;
     private bool                    _hudVisor;
     private bool                    _lensDirt;
+    private int                     _level;
+    private string                  _levelDescription;
     private MotionBlurOptions       _motionBlur;
     private MxaoOptions             _mxao;
     private bool                    _skipInvokeCoreTweaks;
@@ -54,6 +56,114 @@ namespace SPV3
     private bool                    _skipVerifyMainAssets;
     private ThreeDimensionalOptions _threeDimensional;
     private bool                    _volumetrics;
+
+    public int Level
+    {
+      get => _level;
+      set
+      {
+        if (value == _level) return;
+        _level = value;
+
+        switch (_level)
+        {
+          case 0: /* bare */
+            LevelDescription  = "Bare";
+            Mxao              = MxaoOptions.Off;
+            Dof               = DofOptions.Off;
+            MotionBlur        = MotionBlurOptions.Off;
+            DynamicLensFlares = false;
+            Volumetrics       = false;
+            LensDirt          = true;
+            break;
+          case 1: /* essentials */
+            LevelDescription  = "Essentials";
+            Mxao              = MxaoOptions.Off;
+            Dof               = DofOptions.Off;
+            MotionBlur        = MotionBlurOptions.Off;
+            DynamicLensFlares = false;
+            Volumetrics       = true;
+            LensDirt          = true;
+            break;
+          case 2: /* minimal */
+            LevelDescription  = "Minimal";
+            Mxao              = MxaoOptions.Off;
+            Dof               = DofOptions.Low;
+            MotionBlur        = MotionBlurOptions.BuiltIn;
+            DynamicLensFlares = false;
+            Volumetrics       = true;
+            LensDirt          = true;
+            break;
+          case 3: /* low */
+            LevelDescription  = "Low";
+            Mxao              = MxaoOptions.Low;
+            Dof               = DofOptions.Low;
+            MotionBlur        = MotionBlurOptions.BuiltIn;
+            DynamicLensFlares = false;
+            Volumetrics       = true;
+            LensDirt          = true;
+            break;
+          case 4: /* medium */
+            LevelDescription  = "Medium";
+            Mxao              = MxaoOptions.Low;
+            Dof               = DofOptions.Low;
+            MotionBlur        = MotionBlurOptions.BuiltIn;
+            DynamicLensFlares = true;
+            Volumetrics       = true;
+            LensDirt          = true;
+            break;
+          case 5: /* high */
+            LevelDescription  = "High";
+            Mxao              = MxaoOptions.Low;
+            Dof               = DofOptions.High;
+            MotionBlur        = MotionBlurOptions.BuiltIn;
+            DynamicLensFlares = true;
+            Volumetrics       = true;
+            LensDirt          = true;
+            break;
+          case 6: /* ultra */
+            LevelDescription  = "Ultra";
+            Mxao              = MxaoOptions.High;
+            Dof               = DofOptions.High;
+            MotionBlur        = MotionBlurOptions.BuiltIn;
+            DynamicLensFlares = true;
+            Volumetrics       = true;
+            LensDirt          = true;
+            break;
+          case 7: /* full */
+            LevelDescription  = "Full";
+            Mxao              = MxaoOptions.High;
+            Dof               = DofOptions.High;
+            MotionBlur        = MotionBlurOptions.PombHigh;
+            DynamicLensFlares = true;
+            Volumetrics       = true;
+            LensDirt          = true;
+            break;
+          case 8: /* off */
+            LevelDescription  = "Off";
+            Mxao              = MxaoOptions.Off;
+            Dof               = DofOptions.Off;
+            MotionBlur        = MotionBlurOptions.Off;
+            DynamicLensFlares = false;
+            Volumetrics       = false;
+            LensDirt          = false;
+            break;
+        }
+
+        OnPropertyChanged();
+      }
+    }
+
+    public string LevelDescription
+    {
+      get => _levelDescription;
+      set
+      {
+        if (value == _levelDescription) return;
+        _levelDescription = value;
+        OnPropertyChanged();
+      }
+    }
 
     public bool EnableSpv3LegacyMode
     {

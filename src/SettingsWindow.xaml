@@ -38,147 +38,171 @@
         <local:Converter x:Key="Converter" />
     </Window.Resources>
     <StackPanel Margin="10">
-        <TabControl Height="225">
+        <TabControl Height="270">
             <!-- Post-Processing -->
             <TabItem Header="Post-Processing">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <!-- Options -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Left -->
-                    <StackPanel Grid.Column="0">
-                        <!-- MXAO -->
-                        <GroupBox Header="MXAO">
-                            <StackPanel>
-                                <RadioButton Content="Off"
+                        <!-- Left -->
+                        <StackPanel Grid.Column="0">
+                            <!-- MXAO -->
+                            <GroupBox Header="MXAO">
+                                <StackPanel>
+                                    <RadioButton Content="Off"
                                              GroupName="MXAO"
                                              IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Off}" />
-                                <RadioButton Content="Low"
+                                    <RadioButton Content="Low"
                                              GroupName="MXAO"
                                              IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Low}" />
-                                <RadioButton Content="High"
+                                    <RadioButton Content="High"
                                              GroupName="MXAO"
                                              IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=High}" />
-                            </StackPanel>
-                        </GroupBox>
+                                </StackPanel>
+                            </GroupBox>
 
-                        <!-- Motion Blur -->
-                        <GroupBox Header="Motion Blur">
-                            <StackPanel>
-                                <RadioButton Content="Off"
+                            <!-- Motion Blur -->
+                            <GroupBox Header="Motion Blur">
+                                <StackPanel>
+                                    <RadioButton Content="Off"
                                              GroupName="MotionBlur"
                                              IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Off}" />
-                                <RadioButton Content="Built-in"
+                                    <RadioButton Content="Built-in"
                                              GroupName="MotionBlur"
                                              IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=BuiltIn}" />
-                                <RadioButton Content="POMB Low"
+                                    <RadioButton Content="POMB Low"
                                              GroupName="MotionBlur"
                                              IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=PombLow}" />
-                                <RadioButton Content="POMB High"
+                                    <RadioButton Content="POMB High"
                                              GroupName="MotionBlur"
                                              IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=PombHigh}" />
-                            </StackPanel>
-                        </GroupBox>
+                                </StackPanel>
+                            </GroupBox>
 
-                        <!-- 3D -->
-                        <GroupBox Header="3D">
-                            <ComboBox>
-                                <ComboBoxItem Content="Off"
+                            <!-- 3D -->
+                            <GroupBox Header="3D">
+                                <ComboBox>
+                                    <ComboBoxItem Content="Off"
                                               IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Off}" />
-                                <ComboBoxItem Content="Anaglyph"
+                                    <ComboBoxItem Content="Anaglyph"
                                               IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Anaglyphic}" />
-                                <ComboBoxItem Content="Interleaving"
+                                    <ComboBoxItem Content="Interleaving"
                                               IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Interleaving}" />
-                                <ComboBoxItem Content="Side-by-side"
+                                    <ComboBoxItem Content="Side-by-side"
                                               IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=SideBySide}" />
-                            </ComboBox>
-                        </GroupBox>
-                    </StackPanel>
+                                </ComboBox>
+                            </GroupBox>
+                        </StackPanel>
 
-                    <!-- Right -->
-                    <StackPanel Grid.Column="1">
-                        <!-- DOF -->
-                        <GroupBox Header="DOF">
-                            <StackPanel>
-                                <RadioButton Content="Off"
+                        <!-- Right -->
+                        <StackPanel Grid.Column="1">
+                            <!-- DOF -->
+                            <GroupBox Header="DOF">
+                                <StackPanel>
+                                    <RadioButton Content="Off"
                                              GroupName="DOF"
                                              IsChecked="{Binding Path=Dof, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Off}" />
-                                <RadioButton Content="Low"
+                                    <RadioButton Content="Low"
                                              GroupName="DOF"
                                              IsChecked="{Binding Path=Dof, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Low}" />
-                                <RadioButton Content="High"
+                                    <RadioButton Content="High"
                                              GroupName="DOF"
                                              IsChecked="{Binding Path=Dof, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=High}" />
-                            </StackPanel>
-                        </GroupBox>
+                                </StackPanel>
+                            </GroupBox>
 
-                        <!-- Toggles -->
-                        <GroupBox Header="Toggles">
-                            <StackPanel>
-                                <CheckBox Content="Dynamic Lens Flares"
+                            <!-- Toggles -->
+                            <GroupBox Header="Toggles">
+                                <StackPanel>
+                                    <CheckBox Content="Dynamic Lens Flares"
                                           IsChecked="{Binding DynamicLensFlares}" />
-                                <CheckBox Content="Volumetric Lighting"
+                                    <CheckBox Content="Volumetric Lighting"
                                           IsChecked="{Binding Volumetrics}" />
-                                <CheckBox Content="Lens Dirt"
+                                    <CheckBox Content="Lens Dirt"
                                           IsChecked="{Binding LensDirt}" />
-                                <CheckBox Content="HUDv5 Visor"
+                                    <CheckBox Content="HUDv5 Visor"
                                           IsChecked="{Binding HudVisor}" />
-                            </StackPanel>
-                        </GroupBox>
+                                </StackPanel>
+                            </GroupBox>
 
-                        <!-- Color-blind Mode -->
-                        <GroupBox Header="Color-blind Mode">
-                            <ComboBox>
-                                <ComboBoxItem Content="Off"
+                            <!-- Color-blind Mode -->
+                            <GroupBox Header="Color-blind Mode">
+                                <ComboBox>
+                                    <ComboBoxItem Content="Off"
                                               IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Off}" />
-                                <ComboBoxItem Content="Protanopia"
+                                    <ComboBoxItem Content="Protanopia"
                                               IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Protanopia}" />
-                                <ComboBoxItem Content="Deuteranopes"
+                                    <ComboBoxItem Content="Deuteranopes"
                                               IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Deuteranopes}" />
-                                <ComboBoxItem Content="Tritanopes"
+                                    <ComboBoxItem Content="Tritanopes"
                                               IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Tritanopes}" />
-                            </ComboBox>
-                        </GroupBox>
-                    </StackPanel>
-                </Grid>
+                                </ComboBox>
+                            </GroupBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Slider -->
+                    <DockPanel VerticalAlignment="Center" Margin="10">
+                        <Label Content="{Binding LevelDescription}"
+                                 DockPanel.Dock="Right"
+                                 Width="75"
+                               HorizontalContentAlignment="Center"
+                               VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding ElementName=PostProcessingSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                 DockPanel.Dock="Right"
+                                 TextAlignment="Center"
+                                 Width="50" />
+                        <Slider Maximum="8"
+                                Minimum="0"
+                                TickPlacement="Both"
+                                TickFrequency="1"
+                                IsSnapToTickEnabled="True"
+                                Value="{Binding Level}"
+                                Name="PostProcessingSlider" />
+                    </DockPanel>
+                </StackPanel>
+                
             </TabItem>
 
             <!-- HXE Kernel -->
