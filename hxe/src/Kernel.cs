@@ -73,7 +73,7 @@ namespace HXE
           ResumeCheckpoint(executable);
         else
           Info("Skipping Kernel.ResumeCheckpoint");
-        
+
         /**
          * The main difference between SPV3.1 and SPV3.2 is what the f1 variable in the initiation file is used for. In
          * 3.1, it's used for unlocking the maps. In SPV3.2, it's used for encoding the post-processing settings.

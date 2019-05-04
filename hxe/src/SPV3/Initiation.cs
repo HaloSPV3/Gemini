@@ -34,7 +34,7 @@ namespace HXE.SPV3
     public bool                PlayerMagnetism { get; set; } = true;
     public Campaign.Mission    Mission         { get; set; } = Campaign.Mission.Spv3A10;
     public Campaign.Difficulty Difficulty      { get; set; } = Campaign.Difficulty.Normal;
-    public bool                Unlock          { get; set; } = false;
+    public bool                Unlock          { get; set; }
 
     public PostProcessing PostProcessing { get; set; } =
       new PostProcessing();
@@ -119,6 +119,11 @@ namespace HXE.SPV3
             && lf && vol && ld)
           return 7;
 
+        if (mxao  == PostProcessing.MxaoOptions.Off && dof == PostProcessing.DofOptions.Off &&
+            mb    == PostProcessing.MotionBlurOptions.Off
+            && lf == false && vol == false && ld == false)
+          return 8;
+
         return 0;
       }
 
@@ -135,6 +140,9 @@ namespace HXE.SPV3
       output.AppendLine($"player_autoaim {autoaim}");
       output.AppendLine($"player_magnetism {magnetism}");
       output.AppendLine($"game_difficulty_set {difficulty}");
+
+      if (!PostProcessing.HudVisor)
+        output.AppendLine("set multiplayer_draw_teammates_names 1");
 
       Console.Info("Saving initiation data to the initc.txt file");
       WriteAllText(output.ToString());

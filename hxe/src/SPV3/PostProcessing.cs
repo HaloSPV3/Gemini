@@ -65,7 +65,7 @@ namespace HXE.SPV3
     public bool                       DynamicLensFlares { get; set; }
     public bool                       Volumetrics       { get; set; }
     public bool                       AntiAliasing      { get; set; }
-    public bool                       HudVisor          { get; set; }
+    public bool                       HudVisor          { get; set; } = true;
     public MotionBlurOptions          MotionBlur        { get; set; } = MotionBlurOptions.Off;
     public MxaoOptions                Mxao              { get; set; } = MxaoOptions.Off;
     public DofOptions                 Dof               { get; set; } = DofOptions.Off;
