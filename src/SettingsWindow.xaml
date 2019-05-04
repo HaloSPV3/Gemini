@@ -43,14 +43,15 @@
             <TabItem Header="Post-Processing">
                 <StackPanel>
                     <!-- Options -->
-                    <Grid IsEnabled="False">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
                         <!-- Left -->
-                        <StackPanel Grid.Column="0">
+                        <StackPanel Grid.Column="0"
+                                    IsEnabled="False">
                             <!-- MXAO -->
                             <GroupBox Header="MXAO">
                                 <StackPanel>
@@ -124,7 +125,8 @@
                         <!-- Right -->
                         <StackPanel Grid.Column="1">
                             <!-- DOF -->
-                            <GroupBox Header="DOF">
+                            <GroupBox Header="DOF"
+                                      IsEnabled="False">
                                 <StackPanel>
                                     <RadioButton Content="Off"
                                                  GroupName="DOF"
@@ -148,18 +150,22 @@
                             <GroupBox Header="Toggles">
                                 <StackPanel>
                                     <CheckBox Content="Dynamic Lens Flares"
-                                              IsChecked="{Binding DynamicLensFlares}" />
+                                              IsChecked="{Binding DynamicLensFlares}"
+                                              IsEnabled="False" />
                                     <CheckBox Content="Volumetric Lighting"
-                                              IsChecked="{Binding Volumetrics}" />
+                                              IsChecked="{Binding Volumetrics}"
+                                              IsEnabled="False" />
                                     <CheckBox Content="Lens Dirt"
-                                              IsChecked="{Binding LensDirt}" />
+                                              IsChecked="{Binding LensDirt}"
+                                              IsEnabled="False" />
                                     <CheckBox Content="HUD Visor"
                                               IsChecked="{Binding HudVisor}" />
                                 </StackPanel>
                             </GroupBox>
 
                             <!-- Color-blind Mode -->
-                            <GroupBox Header="Color-blind Mode">
+                            <GroupBox Header="Color-blind Mode"
+                                      IsEnabled="False">
                                 <ComboBox>
                                     <ComboBoxItem Content="Off"
                                                   IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
