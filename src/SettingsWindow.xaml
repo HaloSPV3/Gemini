@@ -153,7 +153,7 @@
                                               IsChecked="{Binding Volumetrics}" />
                                     <CheckBox Content="Lens Dirt"
                                               IsChecked="{Binding LensDirt}" />
-                                    <CheckBox Content="HUDv5 Visor"
+                                    <CheckBox Content="HUD Visor"
                                               IsChecked="{Binding HudVisor}" />
                                 </StackPanel>
                             </GroupBox>
