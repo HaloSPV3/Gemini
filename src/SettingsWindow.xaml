@@ -30,7 +30,7 @@
         SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Width="480">
+        Width="640">
     <Window.DataContext>
         <local:Settings />
     </Window.DataContext>
