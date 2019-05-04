@@ -43,7 +43,7 @@
             <TabItem Header="Post-Processing">
                 <StackPanel>
                     <!-- Options -->
-                    <Grid>
+                    <Grid IsEnabled="False">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
