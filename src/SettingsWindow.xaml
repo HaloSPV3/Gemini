@@ -40,16 +40,17 @@
     <StackPanel Margin="10">
         <TabControl Height="276">
             <!-- Post-Processing -->
-            <TabItem Header="Post-Processing">
+            <TabItem Header="Post-Processing &amp; HXE Kernel">
                 <StackPanel>
                     <!-- Options -->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition Width="225" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Left -->
+                        <!-- Post-Processing: Left -->
                         <StackPanel Grid.Column="0"
                                     IsEnabled="False">
                             <!-- MXAO -->
@@ -122,7 +123,7 @@
                             </GroupBox>
                         </StackPanel>
 
-                        <!-- Right -->
+                        <!-- Post-Processing: Right -->
                         <StackPanel Grid.Column="1">
                             <!-- DOF -->
                             <GroupBox Header="DOF"
@@ -186,6 +187,34 @@
                                 </ComboBox>
                             </GroupBox>
                         </StackPanel>
+
+                        <!-- HXE Kernel -->
+                        <GroupBox Grid.Column="2"
+                                  Header="HXE Kernel">
+                            <StackPanel>
+                                <Label Content="HXE"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="Segoe UI Light"
+                                       FontSize="32"
+                                       Foreground="#8a80ad" />
+
+                                <CheckBox Content="Set: SPV3.1 Legacy Mode"
+                                          IsChecked="{Binding EnableSpv3LegacyMode}" />
+                                <CheckBox Content="Skip: Verify Main Assets"
+                                          IsChecked="{Binding SkipVerifyMainAssets}" />
+                                <CheckBox Content="Skip: Invoke Core Tweaks"
+                                          IsChecked="{Binding SkipInvokeCoreTweaks}" />
+                                <CheckBox Content="Skip: Resume Checkpoint"
+                                          IsChecked="{Binding SkipResumeCheckpoint}" />
+                                <CheckBox Content="Skip: Set Shader Config"
+                                          IsChecked="{Binding SkipSetShadersConfig}" />
+                                <CheckBox Content="Skip: Invoke Executable"
+                                          IsChecked="{Binding SkipInvokeExecutable}" />
+                                <CheckBox Content="Skip: Patch Large Address Aware"
+                                          IsChecked="{Binding SkipPatchLargeAAware}" />
+                            </StackPanel>
+                        </GroupBox>
                     </Grid>
 
                     <!-- Presets -->
@@ -238,42 +267,6 @@
                         </Grid>
                     </GroupBox>
                 </StackPanel>
-
-            </TabItem>
-
-            <!-- HXE Kernel -->
-            <TabItem Header="HXE Kernel">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Overrides -->
-                    <GroupBox Header="Overrides"
-                              Grid.Column="0">
-                        <StackPanel>
-                            <CheckBox Content="Set: SPV3.1 Legacy Mode"
-                                      IsChecked="{Binding EnableSpv3LegacyMode}" />
-                            <CheckBox Content="Skip: Verify Main Assets"
-                                      IsChecked="{Binding SkipVerifyMainAssets}" />
-                            <CheckBox Content="Skip: Invoke Core Tweaks"
-                                      IsChecked="{Binding SkipInvokeCoreTweaks}" />
-                            <CheckBox Content="Skip: Resume Checkpoint"
-                                      IsChecked="{Binding SkipResumeCheckpoint}" />
-                            <CheckBox Content="Skip: Set Shader Config"
-                                      IsChecked="{Binding SkipSetShadersConfig}" />
-                            <CheckBox Content="Skip: Invoke Executable"
-                                      IsChecked="{Binding SkipInvokeExecutable}" />
-                            <CheckBox Content="Skip: Patch Large Address Aware"
-                                      IsChecked="{Binding SkipPatchLargeAAware}" />
-                        </StackPanel>
-                    </GroupBox>
-
-                    <Image Grid.Column="1"
-                           Source="/Assets/hxe.ico"
-                           Stretch="None" />
-                </Grid>
             </TabItem>
         </TabControl>
 
