@@ -38,7 +38,7 @@
         <local:Converter x:Key="Converter" />
     </Window.Resources>
     <StackPanel Margin="10">
-        <TabControl Height="270">
+        <TabControl Height="276">
             <!-- Post-Processing -->
             <TabItem Header="Post-Processing">
                 <StackPanel>

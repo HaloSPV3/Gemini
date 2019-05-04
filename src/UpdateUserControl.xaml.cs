@@ -78,7 +78,7 @@ namespace SPV3
 
       if (_version <= 0) return;
 
-      DownloadButton.Content    = $"Loader update available (build-{_version:D4}). Click to download!";
+      DownloadButton.Content    = $"Loader update available! (build-{_version:D4})";
       DownloadButton.Visibility = Visibility.Visible;
     }
 

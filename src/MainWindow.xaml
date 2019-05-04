@@ -30,7 +30,7 @@
         SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Width="640"
+        Width="320"
         FontFamily="Consolas">
     <Window.DataContext>
         <spv3:Main />
