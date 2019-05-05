@@ -65,7 +65,17 @@ namespace HXE
 
       Directory.CreateDirectory(Paths.Directories.HXE);
 
-      var hce = Executable.Detect();
+      var hce = new Executable();
+
+      try
+      {
+        hce = Executable.Detect();
+      }
+      catch (Exception e)
+      {
+        Error(e.Message + " -- Legal copy of HCE needs to be installed!");
+        WithCode(Code.Exception);
+      }
 
       var options = new OptionSet()
         .Add("load", "Initiates HCE/SPV3",
