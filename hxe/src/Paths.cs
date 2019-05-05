@@ -40,9 +40,10 @@ namespace HXE
       public const string Manifest    = "0x00.bin";
       public const string LastProfile = "lastprof.txt";
 
-      public static readonly string Installation  = Combine(Directories.HXE, "install.txt");
-      public static readonly string Configuration = Combine(Directories.HXE, "loader.bin");
-      public static readonly string Exception     = Combine(Directories.HXE, "exception.log");
+      public static readonly string Installation  = Combine(Directories.HXE,       "install.txt");
+      public static readonly string Configuration = Combine(Directories.HXE,       "loader.bin");
+      public static readonly string Exception     = Combine(Directories.HXE,       "exception.log");
+      public static readonly string OpenSauce     = Combine(Directories.OpenSauce, "OS_Settings.User.xml");
     }
 
     /// <summary>
@@ -52,10 +53,11 @@ namespace HXE
     {
       public const string Profiles = "savegames";
 
-      public static readonly  string HXE      = Combine(GetFolderPath(SpecialFolder.ApplicationData), "HXE");
-      private static readonly string Personal = GetFolderPath(SpecialFolder.Personal);
-      private static readonly string Games    = Combine(Personal, "My Games");
-      public static readonly  string HCE      = Combine(Games,    "Halo CE");
+      public static readonly  string HXE       = Combine(GetFolderPath(SpecialFolder.ApplicationData), "HXE");
+      private static readonly string Personal  = GetFolderPath(SpecialFolder.Personal);
+      private static readonly string Games     = Combine(Personal, "My Games");
+      public static readonly  string HCE       = Combine(Games,    "Halo CE");
+      public static readonly  string OpenSauce = Combine(HCE,      "OpenSauce");
     }
   }
 }
