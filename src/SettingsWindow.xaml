@@ -58,17 +58,17 @@
                                 <StackPanel>
                                     <RadioButton Content="Off"
                                                  GroupName="MXAO"
-                                                 IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.Mxao, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Off}" />
                                     <RadioButton Content="Low"
                                                  GroupName="MXAO"
-                                                 IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.Mxao, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Low}" />
                                     <RadioButton Content="High"
                                                  GroupName="MXAO"
-                                                 IsChecked="{Binding Path=Mxao, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.Mxao, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=High}" />
                                 </StackPanel>
@@ -79,22 +79,22 @@
                                 <StackPanel>
                                     <RadioButton Content="Off"
                                                  GroupName="MotionBlur"
-                                                 IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Off}" />
                                     <RadioButton Content="Built-in"
                                                  GroupName="MotionBlur"
-                                                 IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=BuiltIn}" />
                                     <RadioButton Content="POMB Low"
                                                  GroupName="MotionBlur"
-                                                 IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=PombLow}" />
                                     <RadioButton Content="POMB High"
                                                  GroupName="MotionBlur"
-                                                 IsChecked="{Binding Path=MotionBlur, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.MotionBlur, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=PombHigh}" />
                                 </StackPanel>
@@ -104,19 +104,19 @@
                             <GroupBox Header="3D">
                                 <ComboBox>
                                     <ComboBoxItem Content="Off"
-                                                  IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Off}" />
                                     <ComboBoxItem Content="Anaglyph"
-                                                  IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Anaglyphic}" />
                                     <ComboBoxItem Content="Interleaving"
-                                                  IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Interleaving}" />
                                     <ComboBoxItem Content="Side-by-side"
-                                                  IsSelected="{Binding Path=ThreeDimensional, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ThreeDimensional, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=SideBySide}" />
                                 </ComboBox>
@@ -131,17 +131,17 @@
                                 <StackPanel>
                                     <RadioButton Content="Off"
                                                  GroupName="DOF"
-                                                 IsChecked="{Binding Path=Dof, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.Dof, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Off}" />
                                     <RadioButton Content="Low"
                                                  GroupName="DOF"
-                                                 IsChecked="{Binding Path=Dof, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.Dof, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=Low}" />
                                     <RadioButton Content="High"
                                                  GroupName="DOF"
-                                                 IsChecked="{Binding Path=Dof, Mode=TwoWay, 
+                                                 IsChecked="{Binding Path=Main.Dof, Mode=TwoWay, 
                                                                  Converter={StaticResource Converter},
                                                                  ConverterParameter=High}" />
                                 </StackPanel>
@@ -151,16 +151,16 @@
                             <GroupBox Header="Toggles">
                                 <StackPanel>
                                     <CheckBox Content="Dynamic Lens Flares"
-                                              IsChecked="{Binding DynamicLensFlares}"
+                                              IsChecked="{Binding Main.DynamicLensFlares}"
                                               IsEnabled="False" />
                                     <CheckBox Content="Volumetric Lighting"
-                                              IsChecked="{Binding Volumetrics}"
+                                              IsChecked="{Binding Main.Volumetrics}"
                                               IsEnabled="False" />
                                     <CheckBox Content="Lens Dirt"
-                                              IsChecked="{Binding LensDirt}"
+                                              IsChecked="{Binding Main.LensDirt}"
                                               IsEnabled="False" />
                                     <CheckBox Content="HUD Visor"
-                                              IsChecked="{Binding HudVisor}" />
+                                              IsChecked="{Binding Main.HudVisor}" />
                                 </StackPanel>
                             </GroupBox>
 
@@ -169,19 +169,19 @@
                                       IsEnabled="False">
                                 <ComboBox>
                                     <ComboBoxItem Content="Off"
-                                                  IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Off}" />
                                     <ComboBoxItem Content="Protanopia"
-                                                  IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Protanopia}" />
                                     <ComboBoxItem Content="Deuteranopes"
-                                                  IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Deuteranopes}" />
                                     <ComboBoxItem Content="Tritanopes"
-                                                  IsSelected="{Binding Path=ColorBlind, Mode=TwoWay, 
+                                                  IsSelected="{Binding Path=Main.ColorBlind, Mode=TwoWay, 
                                                                    Converter={StaticResource Converter},
                                                                    ConverterParameter=Tritanopes}" />
                                 </ComboBox>
@@ -200,19 +200,19 @@
                                        Foreground="#8a80ad" />
 
                                 <CheckBox Content="Set: SPV3.1 Legacy Mode"
-                                          IsChecked="{Binding EnableSpv3LegacyMode}" />
+                                          IsChecked="{Binding Main.EnableSpv3LegacyMode}" />
                                 <CheckBox Content="Skip: Verify Main Assets"
-                                          IsChecked="{Binding SkipVerifyMainAssets}" />
+                                          IsChecked="{Binding Main.SkipVerifyMainAssets}" />
                                 <CheckBox Content="Skip: Invoke Core Tweaks"
-                                          IsChecked="{Binding SkipInvokeCoreTweaks}" />
+                                          IsChecked="{Binding Main.SkipInvokeCoreTweaks}" />
                                 <CheckBox Content="Skip: Resume Checkpoint"
-                                          IsChecked="{Binding SkipResumeCheckpoint}" />
+                                          IsChecked="{Binding Main.SkipResumeCheckpoint}" />
                                 <CheckBox Content="Skip: Set Shader Config"
-                                          IsChecked="{Binding SkipSetShadersConfig}" />
+                                          IsChecked="{Binding Main.SkipSetShadersConfig}" />
                                 <CheckBox Content="Skip: Invoke Executable"
-                                          IsChecked="{Binding SkipInvokeExecutable}" />
+                                          IsChecked="{Binding Main.SkipInvokeExecutable}" />
                                 <CheckBox Content="Skip: Patch Large Address Aware"
-                                          IsChecked="{Binding SkipPatchLargeAAware}" />
+                                          IsChecked="{Binding Main.SkipPatchLargeAAware}" />
                             </StackPanel>
                         </GroupBox>
                     </Grid>
@@ -267,6 +267,198 @@
                         </Grid>
                     </GroupBox>
                 </StackPanel>
+            </TabItem>
+
+            <!-- OpenSauce -->
+            <TabItem Header="OpenSauce Configuration">
+                <Grid HorizontalAlignment="Center">
+                    <Grid.Resources>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- General -->
+                    <GroupBox Grid.Column="0"
+                              Grid.Row="0"
+                              Header="General">
+                        <StackPanel>
+                            <CheckBox Content="GBuffer Enabled"
+                                      IsChecked="{Binding OpenSauce.GBuffer}" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Engine Upgrades -->
+                    <GroupBox Grid.Column="1"
+                              Grid.Row="0"
+                              Header="Engine Upgrades">
+                        <StackPanel>
+                            <CheckBox Content="Increase max rendered triangles"
+                                      IsChecked="{Binding OpenSauce.IncreaseMaxRenderedTriangles}" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Camera -->
+                    <GroupBox Grid.Column="2"
+                              Grid.Row="0"
+                              Header="Camera">
+                        <StackPanel>
+                            <CheckBox Content="Ignore FOV changes in cinematics"
+                                      IsChecked="{Binding OpenSauce.IgnoreFovChangesInCinematics}" />
+                            <CheckBox Content="Ignore FOV changes in main menu"
+                                      IsChecked="{Binding OpenSauce.IgnoreFovChangesInMainMenu}" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Shader Extensions - Models -->
+                    <GroupBox Grid.Column="0"
+                              Grid.Row="1"
+                              Header="Shader Extensions - Models">
+                        <StackPanel>
+                            <CheckBox Content="Normal Maps Enabled"
+                                      IsChecked="{Binding OpenSauce.NormalMaps}" />
+                            <CheckBox Content="Detailed Maps Enabled"
+                                      IsChecked="{Binding OpenSauce.DetailedMaps}" />
+                            <CheckBox Content="Specular Maps Enabled"
+                                      IsChecked="{Binding OpenSauce.SpecularMaps}" />
+                            <CheckBox Content="Specular Lighting Enabled"
+                                      IsChecked="{Binding OpenSauce.SpecularLighting}" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Shader Extensions - Environment -->
+                    <StackPanel Grid.Column="1"
+                                Grid.Row="1">
+                        <GroupBox Header="Shader Extensions - Environment">
+                            <StackPanel>
+                                <CheckBox Content="Diffuse Dir. Lightmaps Enabled"
+                                          IsChecked="{Binding OpenSauce.DiffuseDirectionalLightmaps}" />
+                                <CheckBox Content="Specular Dir. Lightmaps Enabled"
+                                          IsChecked="{Binding OpenSauce.SpecularDirectionalLightmaps}" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Shader Extensions - Effects">
+                            <StackPanel>
+                                <CheckBox Content="Depth Fade Enabled"
+                                          IsChecked="{Binding OpenSauce.DepthFade}" />
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <!-- Post-Processing -->
+                    <GroupBox Grid.Column="0"
+                              Grid.Row="2"
+                              Header="Post-Processing">
+                        <StackPanel>
+                            <CheckBox Content="Motion Blur"
+                                      IsChecked="{Binding OpenSauce.MotionBlur}" />
+                            <CheckBox Content="Bloom"
+                                      IsChecked="{Binding OpenSauce.Bloom}" />
+                            <CheckBox Content="Anti Aliasing"
+                                      IsChecked="{Binding OpenSauce.AntiAliasing}" />
+                            <CheckBox Content="External Effects"
+                                      IsChecked="{Binding OpenSauce.ExternalEffects}" />
+                            <CheckBox Content="Map Effects"
+                                      IsChecked="{Binding OpenSauce.MapEffects}" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Internet -->
+                    <StackPanel Grid.Column="2"
+                                Grid.Row="1">
+                        <GroupBox Header="Internet">
+                            <StackPanel>
+                                <CheckBox Content="Check for game updates"
+                                          IsChecked="{Binding OpenSauce.CheckForGameUpdates}" />
+                                <CheckBox Content="Map Downloading"
+                                          IsChecked="{Binding OpenSauce.MapDownloading}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Map Files">
+                            <StackPanel>
+                                <CheckBox Content="Look for .yelo maps first"
+                                          IsChecked="{Binding OpenSauce.LookForYeloMapsFirst}" />
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <!-- Fix/Install OpenSauce -->
+                    <GroupBox Grid.Column="1"
+                              Grid.Row="2"
+                              Header="Fix/Install OpenSauce">
+                        <StackPanel>
+                            <Image Source="/Assets/amaisosu.png"
+                                   Stretch="None"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                            <Button Click="GetAmaiSosu">
+                                Get AmaiSosu
+                            </Button>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Motion Blur & Field of View -->
+                    <GroupBox Grid.Column="2"
+                              Grid.Row="2"
+                              Header="Motion Blur &amp; Field of View">
+                        <DockPanel>
+                            <DockPanel.Resources>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Setter Property="Height" Value="20" />
+                                    <Setter Property="Width" Value="40" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                                <Style TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                                    <Setter Property="Width" Value="80" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </DockPanel.Resources>
+
+                            <DockPanel DockPanel.Dock="Top">
+                                <Label Content="Motion Blur:" />
+                                <TextBox DockPanel.Dock="Right"
+                                         Text="{Binding ElementName=MotionBlurSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                                <Slider Name="MotionBlurSlider"
+                                        Minimum="0"
+                                        Maximum="5"
+                                        IsSnapToTickEnabled="True"
+                                        TickFrequency="0.1"
+                                        Value="{Binding OpenSauce.MotionBlurLevel}" />
+                            </DockPanel>
+
+                            <DockPanel DockPanel.Dock="Top">
+                                <Label Content="Field of View:" />
+                                <TextBox DockPanel.Dock="Right"
+                                         Text="{Binding ElementName=FieldOfViewSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                                <Slider Name="FieldOfViewSlider"
+                                        Minimum="40"
+                                        Maximum="160"
+                                        IsSnapToTickEnabled="True"
+                                        TickFrequency="5"
+                                        Value="{Binding OpenSauce.FieldOfViewLevel}" />
+                            </DockPanel>
+
+                            <Button VerticalAlignment="Bottom">
+                                Calculate FOV
+                            </Button>
+                        </DockPanel>
+                    </GroupBox>
+                </Grid>
             </TabItem>
         </TabControl>
 

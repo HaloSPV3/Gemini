@@ -120,5 +120,8 @@
   <ItemGroup>
     <Resource Include="Assets\hxe.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\amaisosu.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
