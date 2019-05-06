@@ -417,7 +417,7 @@ namespace SPV3
 
   public class OpenSauceSettings : INotifyPropertyChanged
   {
-    private readonly OpenSauce _openSauce = (OpenSauce) HXE.Paths.Files.OpenSauce;
+    private readonly OpenSauce _openSauce = (OpenSauce) Paths.Files.OpenSauce;
     private          bool      _antiAliasing;
     private          bool      _bloom;
     private          bool      _checkForGameUpdates;

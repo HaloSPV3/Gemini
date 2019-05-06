@@ -31,7 +31,13 @@ namespace SPV3
   {
     public static class Directories
     {
-      public static readonly string Data = Combine(GetFolderPath(ApplicationData), "SPV3");
+      public static readonly string Data      = Combine(GetFolderPath(ApplicationData), "SPV3");
+      public static readonly string OpenSauce = Combine(Data,                           "OpenSauce");
+    }
+
+    public static class Files
+    {
+      public static readonly string OpenSauce = Combine(Directories.OpenSauce, "OS_Settings.User.xml");
     }
   }
 }
