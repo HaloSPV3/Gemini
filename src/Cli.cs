@@ -31,7 +31,8 @@ namespace SPV3
   {
     public static Exit.Code Start(string args)
     {
-      var process = Process.Start("haloxe.exe", args + $" -path {Paths.Directories.Data}");
+      args = args + $" -path {Paths.Directories.Data} -console -devmode";
+      var process = Process.Start("haloxe.exe", args);
 
       if (process == null)
         throw new NullReferenceException("Could not construct CLI process.");
