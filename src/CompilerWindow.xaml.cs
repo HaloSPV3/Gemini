@@ -58,6 +58,9 @@ namespace SPV3
         case Exit.Code.Exception:
           Status.Content = "Exception has occurred. Review log file.";
           break;
+        case Exit.Code.InvalidInstall:
+          Status.Content = "Could not detect a legal HCE installation.";
+          break;
       }
     }
   }

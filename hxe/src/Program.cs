@@ -75,7 +75,7 @@ namespace HXE
       catch (Exception e)
       {
         Error(e.Message + " -- Legal copy of HCE needs to be installed!");
-        WithCode(Code.Exception);
+        WithCode(Code.InvalidInstall);
       }
 
       var options = new OptionSet()

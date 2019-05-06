@@ -31,6 +31,7 @@ they represent:
   1         Invalid command provided
   3         Invalid argument provided
   7         Exception has been thrown
+  15        No legal HCE install found
 
 These codes can be used by calling applications to infer whether an
 operation has succeeded or not, and respond accordingly.

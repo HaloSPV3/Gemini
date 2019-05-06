@@ -35,7 +35,8 @@ namespace HXE
       Success         = 0,
       InvalidCommand  = Success         + 1,
       InvalidArgument = InvalidCommand  + 2,
-      Exception       = InvalidArgument + 4
+      Exception       = InvalidArgument + 4,
+      InvalidInstall  = Exception       + 8
     }
 
     /// <summary>
