@@ -47,6 +47,8 @@ namespace SPV3
 
     private void Compile(object sender, RoutedEventArgs e)
     {
+      Status.Content = "Installing SPV3 ...";
+
       switch (Cli.Start($"/compile \"{Target.Text}\""))
       {
         case Exit.Code.Success:

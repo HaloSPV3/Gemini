@@ -119,6 +119,8 @@ namespace SPV3
         configuration.Save();
       }
 
+      Status = "Installing SPV3 ...";
+
       switch (Cli.Start(args))
       {
         case Exit.Code.Success:
