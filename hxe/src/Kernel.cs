@@ -169,7 +169,11 @@ namespace HXE
 
         var absolutePath = Combine(CurrentDirectory, package.Path, entry.Name);
         var expectedSize = entry.Size;
-        var actualSize   = new FileInfo(absolutePath).Length;
+
+        if (!System.IO.File.Exists(absolutePath))
+          throw new FileNotFoundException("File not found - " + entry.Name);
+
+        var actualSize = new FileInfo(absolutePath).Length;
 
         if (expectedSize == actualSize) continue;
 
