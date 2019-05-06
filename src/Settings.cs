@@ -417,91 +417,28 @@ namespace SPV3
 
   public class OpenSauceSettings : INotifyPropertyChanged
   {
-    private OpenSauce _openSauce = (OpenSauce) HXE.Paths.Files.OpenSauce;
-
-    private bool   _antiAliasing;
-    private bool   _bloom;
-    private bool   _checkForGameUpdates;
-    private bool   _depthFade;
-    private bool   _detailedMaps;
-    private bool   _diffuseDirectionalLightmaps;
-    private bool   _externalEffects;
-    public  double _fieldOfViewLevel;
-    private bool   _gBuffer;
-    private bool   _ignoreFovChangesInCinematics;
-    private bool   _ignoreFovChangesInMainMenu;
-    private bool   _increaseMaxRenderedTriangles;
-    private bool   _lookForYeloMapsFirst;
-    private bool   _mapDownloading;
-    private bool   _mapEffects;
-    private bool   _motionBlur;
-    public  double _motionBlurLevel;
-    private bool   _normalMaps;
-    private bool   _specularDirectionalLightmaps;
-    private bool   _specularLighting;
-    private bool   _specularMaps;
-
-    public void Load()
-    {
-      if (!_openSauce.Exists())
-        _openSauce.Save();
-
-      _openSauce.Load();
-
-      LookForYeloMapsFirst         = _openSauce.CacheFiles.CheckYeloFilesFirst;
-      FieldOfViewLevel             = _openSauce.Camera.FieldOfView;
-      IgnoreFovChangesInCinematics = _openSauce.Camera.IgnoreFOVChangeInCinematics;
-      IgnoreFovChangesInMainMenu   = _openSauce.Camera.IgnoreFOVChangeInMainMenu;
-      MapDownloading               = _openSauce.Networking.MapDownload.Enabled;
-      GBuffer                      = _openSauce.Rasterizer.GBuffer.Enabled;
-      AntiAliasing                 = _openSauce.Rasterizer.PostProcessing.AntiAliasing.Enabled;
-      Bloom                        = _openSauce.Rasterizer.PostProcessing.Bloom.Enabled;
-      ExternalEffects              = _openSauce.Rasterizer.PostProcessing.ExternalEffects.Enabled;
-      MapEffects                   = _openSauce.Rasterizer.PostProcessing.MapEffects.Enabled;
-      MotionBlurLevel              = _openSauce.Rasterizer.PostProcessing.MotionBlur.BlurAmount;
-      MotionBlur                   = _openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled;
-      DepthFade                    = _openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade;
-      DiffuseDirectionalLightmaps  = _openSauce.Rasterizer.ShaderExtensions.Environment.DiffuseDirectionalLightmaps;
-      SpecularDirectionalLightmaps = _openSauce.Rasterizer.ShaderExtensions.Environment.SpecularDirectionalLightmaps;
-      DetailedMaps                 = _openSauce.Rasterizer.ShaderExtensions.Object.DetailNormalMaps;
-      NormalMaps                   = _openSauce.Rasterizer.ShaderExtensions.Object.NormalMaps;
-      SpecularLighting             = _openSauce.Rasterizer.ShaderExtensions.Object.SpecularLighting;
-      SpecularMaps                 = _openSauce.Rasterizer.ShaderExtensions.Object.SpecularMaps;
-      IncreaseMaxRenderedTriangles = _openSauce.Rasterizer.Upgrades.MaximumRenderedTriangles;
-    }
-
-    public void Save()
-    {
-      _openSauce.CacheFiles.CheckYeloFilesFirst                                       = LookForYeloMapsFirst;
-      _openSauce.Camera.FieldOfView                                                   = FieldOfViewLevel;
-      _openSauce.Camera.IgnoreFOVChangeInCinematics                                   = IgnoreFovChangesInCinematics;
-      _openSauce.Camera.IgnoreFOVChangeInMainMenu                                     = IgnoreFovChangesInMainMenu;
-      _openSauce.Networking.MapDownload.Enabled                                       = MapDownloading;
-      _openSauce.Rasterizer.GBuffer.Enabled                                           = GBuffer;
-      _openSauce.Rasterizer.PostProcessing.AntiAliasing.Enabled                       = AntiAliasing;
-      _openSauce.Rasterizer.PostProcessing.Bloom.Enabled                              = Bloom;
-      _openSauce.Rasterizer.PostProcessing.ExternalEffects.Enabled                    = ExternalEffects;
-      _openSauce.Rasterizer.PostProcessing.MapEffects.Enabled                         = MapEffects;
-      _openSauce.Rasterizer.PostProcessing.MotionBlur.BlurAmount                      = MotionBlurLevel;
-      _openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled                         = MotionBlur;
-      _openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade                         = DepthFade;
-      _openSauce.Rasterizer.ShaderExtensions.Environment.DiffuseDirectionalLightmaps  = DiffuseDirectionalLightmaps;
-      _openSauce.Rasterizer.ShaderExtensions.Environment.SpecularDirectionalLightmaps = SpecularDirectionalLightmaps;
-      _openSauce.Rasterizer.ShaderExtensions.Object.DetailNormalMaps                  = DetailedMaps;
-      _openSauce.Rasterizer.ShaderExtensions.Object.NormalMaps                        = NormalMaps;
-      _openSauce.Rasterizer.ShaderExtensions.Object.SpecularLighting                  = SpecularLighting;
-      _openSauce.Rasterizer.ShaderExtensions.Object.SpecularMaps                      = SpecularMaps;
-      _openSauce.Rasterizer.Upgrades.MaximumRenderedTriangles                         = IncreaseMaxRenderedTriangles;
-
-      var backup = _openSauce.Path + Guid.NewGuid();
-
-      if (_openSauce.Exists())
-        File.Copy(_openSauce.Path, backup);
-
-      _openSauce.Save();
-
-      File.Delete(backup);
-    }
+    private readonly OpenSauce _openSauce = (OpenSauce) HXE.Paths.Files.OpenSauce;
+    private          bool      _antiAliasing;
+    private          bool      _bloom;
+    private          bool      _checkForGameUpdates;
+    private          bool      _depthFade;
+    private          bool      _detailedMaps;
+    private          bool      _diffuseDirectionalLightmaps;
+    private          bool      _externalEffects;
+    public           double    _fieldOfViewLevel;
+    private          bool      _gBuffer;
+    private          bool      _ignoreFovChangesInCinematics;
+    private          bool      _ignoreFovChangesInMainMenu;
+    private          bool      _increaseMaxRenderedTriangles;
+    private          bool      _lookForYeloMapsFirst;
+    private          bool      _mapDownloading;
+    private          bool      _mapEffects;
+    private          bool      _motionBlur;
+    public           double    _motionBlurLevel;
+    private          bool      _normalMaps;
+    private          bool      _specularDirectionalLightmaps;
+    private          bool      _specularLighting;
+    private          bool      _specularMaps;
 
     public bool GBuffer
     {
@@ -735,6 +672,74 @@ namespace SPV3
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
+
+    public void Load()
+    {
+      if (!_openSauce.Exists())
+        _openSauce.Save();
+
+      _openSauce.Load();
+
+      LookForYeloMapsFirst         = _openSauce.CacheFiles.CheckYeloFilesFirst;
+      FieldOfViewLevel             = _openSauce.Camera.FieldOfView;
+      IgnoreFovChangesInCinematics = _openSauce.Camera.IgnoreFOVChangeInCinematics;
+      IgnoreFovChangesInMainMenu   = _openSauce.Camera.IgnoreFOVChangeInMainMenu;
+      MapDownloading               = _openSauce.Networking.MapDownload.Enabled;
+      GBuffer                      = _openSauce.Rasterizer.GBuffer.Enabled;
+      AntiAliasing                 = _openSauce.Rasterizer.PostProcessing.AntiAliasing.Enabled;
+      Bloom                        = _openSauce.Rasterizer.PostProcessing.Bloom.Enabled;
+      ExternalEffects              = _openSauce.Rasterizer.PostProcessing.ExternalEffects.Enabled;
+      MapEffects                   = _openSauce.Rasterizer.PostProcessing.MapEffects.Enabled;
+      MotionBlurLevel              = _openSauce.Rasterizer.PostProcessing.MotionBlur.BlurAmount;
+      MotionBlur                   = _openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled;
+      DepthFade                    = _openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade;
+      DiffuseDirectionalLightmaps  = _openSauce.Rasterizer.ShaderExtensions.Environment.DiffuseDirectionalLightmaps;
+      SpecularDirectionalLightmaps = _openSauce.Rasterizer.ShaderExtensions.Environment.SpecularDirectionalLightmaps;
+      DetailedMaps                 = _openSauce.Rasterizer.ShaderExtensions.Object.DetailNormalMaps;
+      NormalMaps                   = _openSauce.Rasterizer.ShaderExtensions.Object.NormalMaps;
+      SpecularLighting             = _openSauce.Rasterizer.ShaderExtensions.Object.SpecularLighting;
+      SpecularMaps                 = _openSauce.Rasterizer.ShaderExtensions.Object.SpecularMaps;
+      IncreaseMaxRenderedTriangles = _openSauce.Rasterizer.Upgrades.MaximumRenderedTriangles;
+    }
+
+    public void Save()
+    {
+      _openSauce.CacheFiles.CheckYeloFilesFirst                                       = LookForYeloMapsFirst;
+      _openSauce.Camera.FieldOfView                                                   = FieldOfViewLevel;
+      _openSauce.Camera.IgnoreFOVChangeInCinematics                                   = IgnoreFovChangesInCinematics;
+      _openSauce.Camera.IgnoreFOVChangeInMainMenu                                     = IgnoreFovChangesInMainMenu;
+      _openSauce.Networking.MapDownload.Enabled                                       = MapDownloading;
+      _openSauce.Rasterizer.GBuffer.Enabled                                           = GBuffer;
+      _openSauce.Rasterizer.PostProcessing.AntiAliasing.Enabled                       = AntiAliasing;
+      _openSauce.Rasterizer.PostProcessing.Bloom.Enabled                              = Bloom;
+      _openSauce.Rasterizer.PostProcessing.ExternalEffects.Enabled                    = ExternalEffects;
+      _openSauce.Rasterizer.PostProcessing.MapEffects.Enabled                         = MapEffects;
+      _openSauce.Rasterizer.PostProcessing.MotionBlur.BlurAmount                      = MotionBlurLevel;
+      _openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled                         = MotionBlur;
+      _openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade                         = DepthFade;
+      _openSauce.Rasterizer.ShaderExtensions.Environment.DiffuseDirectionalLightmaps  = DiffuseDirectionalLightmaps;
+      _openSauce.Rasterizer.ShaderExtensions.Environment.SpecularDirectionalLightmaps = SpecularDirectionalLightmaps;
+      _openSauce.Rasterizer.ShaderExtensions.Object.DetailNormalMaps                  = DetailedMaps;
+      _openSauce.Rasterizer.ShaderExtensions.Object.NormalMaps                        = NormalMaps;
+      _openSauce.Rasterizer.ShaderExtensions.Object.SpecularLighting                  = SpecularLighting;
+      _openSauce.Rasterizer.ShaderExtensions.Object.SpecularMaps                      = SpecularMaps;
+      _openSauce.Rasterizer.Upgrades.MaximumRenderedTriangles                         = IncreaseMaxRenderedTriangles;
+
+      var backup = _openSauce.Path + Guid.NewGuid();
+
+      if (_openSauce.Exists())
+        File.Copy(_openSauce.Path, backup);
+
+      _openSauce.Save();
+
+      File.Delete(backup);
+    }
+
+    public void CalculateFOV()
+    {
+      _openSauce.Camera.CalculateFOV();
+      FieldOfViewLevel = _openSauce.Camera.FieldOfView;
+    }
 
     [NotifyPropertyChangedInvocator]
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

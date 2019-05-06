@@ -50,3 +50,4 @@ COMMANDS
   /load                          Initiates HCE/SPV3
   /install "C:\path\to\target"   Installs SPV3 to destination
   /compile "C:\path\to\target"   Compiles SPV3 to destination
+  /config                        Opens the configuration UI

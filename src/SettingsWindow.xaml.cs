@@ -74,5 +74,10 @@ namespace SPV3
     {
       Process.Start("https://github.com/yumiris/AmaiSosu");
     }
+
+    private void CalculateFOV(object sender, RoutedEventArgs e)
+    {
+      _settings.OpenSauce.CalculateFOV();
+    }
   }
 }

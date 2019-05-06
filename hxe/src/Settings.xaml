@@ -1,0 +1,63 @@
+﻿<Window x:Class="HXE.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HXE"
+        mc:Ignorable="d"
+        SnapsToDevicePixels="True"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        Width="240">
+    <StackPanel Margin="10">
+        <Label Content="HXE"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               FontFamily="Segoe UI Light"
+               FontSize="32"
+               Foreground="#8a80ad" />
+
+        <GroupBox Header="Enable">
+            <StackPanel>
+                <CheckBox Content="SPV3 Kernel Mode"
+                          Name="EnableSpv3KernelMode" />
+                <CheckBox Content="SPV3 Legacy Mode"
+                          Name="EnableSpv3LegacyMode" />
+            </StackPanel>
+        </GroupBox>
+        
+        <GroupBox Header="Skip">
+            <StackPanel>
+                <CheckBox Content="Skip: Verify Main Assets"
+                          Name="SkipVerifyMainAssets" />
+                <CheckBox Content="Skip: Invoke Core Tweaks"
+                          Name="SkipInvokeCoreTweaks" />
+                <CheckBox Content="Skip: Resume Checkpoint"
+                          Name="SkipResumeCheckpoint" />
+                <CheckBox Content="Skip: Set Shader Config"
+                          Name="SkipSetShadersConfig" />
+                <CheckBox Content="Skip: Invoke Executable"
+                          Name="SkipInvokeExecutable" />
+                <CheckBox Content="Skip: Patch Large Address Aware"
+                          Name="SkipPatchLargeAAware" />
+            </StackPanel>
+        </GroupBox>
+
+        <Grid Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                    Margin="0,0,0.5,0"
+                    Content="Save"
+                    Click="Save" />
+            <Button Grid.Column="1"
+                    Margin="0.5,0,0,0"
+                    Content="Cancel"
+                    Click="Cancel" />
+        </Grid>
+    </StackPanel>
+</Window>

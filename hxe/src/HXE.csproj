@@ -34,7 +34,12 @@
   <PropertyGroup>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>HXE.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -42,7 +47,9 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiler.cs" />
@@ -56,6 +63,7 @@
     <Compile Include="HCE\Profile.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="Kernel.cs" />
+    <Compile Include="Settings.xaml.cs" />
     <Compile Include="Manifest.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Paths.cs" />
@@ -69,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\icon.ico" />
+    <Page Include="Settings.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

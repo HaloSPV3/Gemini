@@ -453,7 +453,8 @@
                                         Value="{Binding OpenSauce.FieldOfViewLevel}" />
                             </DockPanel>
 
-                            <Button VerticalAlignment="Bottom">
+                            <Button VerticalAlignment="Bottom"
+                                    Click="CalculateFOV">
                                 Calculate FOV
                             </Button>
                         </DockPanel>

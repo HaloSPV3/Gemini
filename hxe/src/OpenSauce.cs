@@ -21,7 +21,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using System.Xml.Serialization;
+using static System.Math;
 
 namespace HXE
 {
@@ -190,6 +192,38 @@ namespace HXE
       public double FieldOfView                 { get; set; } = 70.00;
       public bool   IgnoreFOVChangeInCinematics { get; set; } = true;
       public bool   IgnoreFOVChangeInMainMenu   { get; set; } = true;
+
+      public void CalculateFOV()
+      {
+        double Degrees(double value)
+        {
+          return value * (180 / PI);
+        }
+
+        /**
+         * 2 * arctan(((A)/(B)) * tan(C))
+         * Formula by Mortis
+         *
+         * A = New Width / New Height
+         * B = Old Width / Old Height (or ratio) (HCE = 4:3)
+         *
+         * This gets me nostalgic!
+         */
+
+        var w = SystemParameters.PrimaryScreenWidth;
+        var h = SystemParameters.PrimaryScreenHeight;
+
+        var a = Degrees(w  / h);
+        var b = Degrees(4  / 3);
+        var c = Degrees(70 / 2);
+
+        var x = Atan2(a / b, Tan(c));
+
+        var dirtyResultFix = 9;
+        var y              = Degrees(2 * x) - dirtyResultFix;
+
+        FieldOfView = Truncate(y * 100) / 100;
+      }
     }
 
     public class OpenSauceNetworking
