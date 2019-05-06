@@ -45,11 +45,7 @@ namespace SPV3
     public void Initialise()
     {
       Task.Run(() => { Loader.Load(); });
-      Task.Run(() =>
-      {
-        Assets.Load();
-        Assets.Commit();
-      });
+      Task.Run(() => { Assets.Load(); });
     }
 
     /// <summary>
@@ -124,7 +120,7 @@ namespace SPV3
     {
       private const string Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.xml";
 
-      private string _status;
+      private string _status = "Awaiting user input...";
 
       [XmlIgnore]
       public string Status

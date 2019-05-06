@@ -31,15 +31,21 @@
 
     <StackPanel>
         <!-- Assets -->
+        <Button Click="UpdateAssets">
+            Update SPV3 Assets
+        </Button>
+
+        <!-- Loader -->
+        <Button Margin="0,1,0,0"
+                Click="UpdateLoader"
+                Visibility="{Binding Loader.Available}">
+            Update SPV3 Loader
+        </Button>
+        
+        <!-- Status -->
         <TextBlock Margin="0,10"
                    HorizontalAlignment="Center"
                    TextWrapping="WrapWithOverflow"
                    Text="{Binding Assets.Status}" />
-
-        <!-- Loader -->
-        <Button Click="Download"
-                Visibility="{Binding Loader.Available}">
-            Loader update available!
-        </Button>
     </StackPanel>
 </UserControl>

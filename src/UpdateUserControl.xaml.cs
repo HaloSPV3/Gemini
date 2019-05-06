@@ -18,6 +18,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -34,9 +35,14 @@ namespace SPV3
       _update.Initialise();
     }
 
-    private void Download(object sender, RoutedEventArgs e)
+    private void UpdateAssets(object sender, RoutedEventArgs e)
     {
-      _update.Loader.Commit();
+      Task.Run(() => { _update.Assets.Commit(); });
+    }
+
+    private void UpdateLoader(object sender, RoutedEventArgs e)
+    {
+      Task.Run(() => { _update.Loader.Commit(); });
     }
   }
 }
