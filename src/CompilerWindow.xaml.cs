@@ -47,7 +47,7 @@ namespace SPV3
 
     private void Compile(object sender, RoutedEventArgs e)
     {
-      switch (Cli.Start($"/compile {Target.Text}"))
+      switch (Cli.Start($"/compile \"{Target.Text}\""))
       {
         case Exit.Code.Success:
           var cli = (File) GetCurrentProcess().MainModule.FileName;
