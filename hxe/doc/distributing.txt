@@ -45,14 +45,14 @@ COMPILING
 
 Run HXE with the compile command:
 
-    .\haloxe.exe compile "C:\Target"
+    .\hxe.exe compile "C:\Target"
 
 The TARGET should be an empty folder, as the compiler will create the
 packages in this folder. These packages will be then shared with other
 people through the ISO image. Other files (e.g. READMEs) can be added at
 your own discretion!
 
-It is assumed that the folder which haloxe.exe is ran from contains the
+It is assumed that the folder which hxe.exe is ran from contains the
 relevant SPV3.2 data. If that's not the case, either:
 
 -   move the executable to the SPV3.2 folder; or
@@ -74,10 +74,10 @@ INSTALLING
 
 Run HXE with the install command, and target arguments:
 
-    .\haloxe.exe install "C:\Target"
+    .\hxe.exe install "C:\Target"
 
 This assumes that the packages are located in the same folder as the HXE
 executable. Should that not be the case, you can provide the path to the
 packages folder after "C:\Target":
 
-    .\haloxe.exe install "C:\Target" "C:\Packages"
+    .\hxe.exe install "C:\Target" "C:\Packages"

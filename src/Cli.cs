@@ -29,10 +29,12 @@ namespace SPV3
   /// </summary>
   public static class Cli
   {
+    private const string Executable = "hxe.exe";
+    
     public static Exit.Code Start(string args)
     {
       args = args + $" -path {Paths.Directories.Data} -console -devmode";
-      var process = Process.Start("haloxe.exe", args);
+      var process = Process.Start(Executable, args);
 
       if (process == null)
         throw new NullReferenceException("Could not construct CLI process.");

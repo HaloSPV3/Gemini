@@ -14,10 +14,10 @@ EXAMPLES
 --------
 
       # automatically loads SPV3 in 720p window
-      .\haloxe.exe -window -vidmode 1280,720,60
+      .\hxe.exe -window -vidmode 1280,720,60
 
       # installs SPV3 to C:\SPV3
-      .\haloxe.exe /install "C:\SPV3"
+      .\hxe.exe /install "C:\SPV3"
 
 ARGUMENTS
 ---------
