@@ -49,6 +49,7 @@ namespace HXE
        * Conventionally, we expect the manifest to be located in the source directory along with the packages. This is
        * assumed by the fact that the COMPILER creates the manifest in the target directory that is provided to it.
        */
+
       var manifest = (Manifest) Combine(source, Paths.Files.Manifest);
       manifest.Load();
 
@@ -58,6 +59,7 @@ namespace HXE
        * Installation is the reversal of the COMPILER routine: we get the data back from the DEFLATE packages, through
        * the use of the generated manifest, and inflate it to the provided target directory on the filesystem.
        */
+
       foreach (var package in manifest.Packages)
       {
         Debug("Preparing to install entries from package - " + package.Name);
@@ -66,6 +68,7 @@ namespace HXE
          * To handle reinstall circumstances, and for the sake of being more defensive, we check if the package files
          * already exist on the filesystem. Should they exist, we will proceed with deleting them.
          */
+
         foreach (var entry in package.Entries)
         {
           Debug("Checking if entry exists - " + entry.Name);
@@ -89,6 +92,7 @@ namespace HXE
          * the relevant subdirectory. This permits us to replicate the layout of the source directory that was given to
          * the COMPILER and - of course - properly install the files!
          */
+
         var packagePath = Combine(source, package.Name);
         var destination = Combine(target, package.Path);
 

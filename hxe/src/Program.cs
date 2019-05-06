@@ -100,6 +100,8 @@ namespace HXE
           s => hce.Debug.Screenshot = true)
         .Add("window", "Loads HCE in window mode",
           s => hce.Video.Window = true)
+        .Add("nogamma", "Loads HCE without gamma overriding",
+          s => hce.Video.NoGamma = true)
         .Add("adapter=", "Loads HCE on monitor X",
           s => hce.Video.Adapter = int.Parse(s))
         .Add("path=", "Loads HCE with custom profile path",

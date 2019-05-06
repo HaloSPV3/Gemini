@@ -152,6 +152,9 @@ namespace HXE.HCE
         if (Video.Window)
           ApplyArgument(args, "-window ");
 
+        if (Video.NoGamma)
+          ApplyArgument(args, "-nogamma ");
+
         if (Video.Width > 0 && Video.Height > 0 && Video.Refresh > 0)
           ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height},{Video.Refresh} ");
 
@@ -232,6 +235,7 @@ namespace HXE.HCE
       public int  Height  { get; set; }
       public int  Refresh { get; set; }
       public int  Adapter { get; set; }
+      public bool NoGamma { get; set; }
     }
 
     public class ProfileOptions
