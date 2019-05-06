@@ -108,7 +108,7 @@ namespace SPV3
     /// <summary>
     ///   Invokes SPV3 through the HXE loader.
     /// </summary>
-    public void Start()
+    public void Start(string args = null)
     {
       var configuration = (Configuration) HXE.Paths.Files.Configuration;
 
@@ -119,7 +119,7 @@ namespace SPV3
         configuration.Save();
       }
 
-      switch (Cli.Start())
+      switch (Cli.Start(args))
       {
         case Exit.Code.Success:
           Status = "SPV3 loading routine has gracefully succeeded.";
@@ -128,6 +128,11 @@ namespace SPV3
           Status = "Exception has occurred. Review log file.";
           break;
       }
+    }
+
+    public void StartWindow()
+    {
+      Start("-window");
     }
 
     [NotifyPropertyChangedInvocator]

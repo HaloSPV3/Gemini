@@ -44,6 +44,11 @@ namespace SPV3
       _main.Start();
     }
 
+    private void LoadWindow(object sender, RoutedEventArgs e)
+    {
+      _main.StartWindow();
+    }
+
     private void Settings(object sender, RoutedEventArgs e)
     {
       new SettingsWindow().Show();
