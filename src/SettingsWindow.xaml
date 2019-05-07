@@ -234,36 +234,45 @@
 
                             <Button Grid.Column="0"
                                     Content="Bare"
-                                    Click="SetPreset0" />
+                                    Click="SetPreset0"
+                                    Name="Preset0Button" />
                             <Button Grid.Column="1"
                                     Margin="1,0"
                                     Content="Essentials"
-                                    Click="SetPreset1" />
+                                    Click="SetPreset1"
+                                    Name="Preset1Button" />
                             <Button Grid.Column="2"
                                     Content="Minimal"
-                                    Click="SetPreset2" />
+                                    Click="SetPreset2"
+                                    Name="Preset2Button" />
                             <Button Grid.Column="3"
                                     Margin="1,0,0,0"
                                     Content="Low"
-                                    Click="SetPreset3" />
+                                    Click="SetPreset3"
+                                    Name="Preset3Button" />
                             <Button Grid.Column="4"
                                     Margin="1,0"
                                     Content="Medium"
-                                    Click="SetPreset4" />
+                                    Click="SetPreset4"
+                                    Name="Preset4Button" />
                             <Button Grid.Column="5"
                                     Margin="0,0,1,0"
                                     Content="High"
-                                    Click="SetPreset5" />
+                                    Click="SetPreset5"
+                                    Name="Preset5Button" />
                             <Button Grid.Column="6"
                                     Content="Ultra"
-                                    Click="SetPreset6" />
+                                    Click="SetPreset6"
+                                    Name="Preset6Button" />
                             <Button Grid.Column="7"
                                     Margin="1,0"
                                     Content="Full"
-                                    Click="SetPreset7" />
+                                    Click="SetPreset7"
+                                    Name="Preset7Button" />
                             <Button Grid.Column="8"
                                     Content="Off"
-                                    Click="SetPreset8" />
+                                    Click="SetPreset8"
+                                    Name="Preset8Button" />
                         </Grid>
                     </GroupBox>
                 </StackPanel>
