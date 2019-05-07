@@ -33,7 +33,7 @@ namespace SPV3
     
     public static Exit.Code Start(string args)
     {
-      args = args + $" -path {Paths.Directories.Data} -console -devmode";
+      args = args + $" -path {Paths.Directories.Data} -console -devmode -screenshot";
       var process = Process.Start(Executable, args);
 
       if (process == null)
