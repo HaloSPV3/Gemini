@@ -126,7 +126,7 @@ namespace SPV3
             LevelDescription  = "Medium";
             Mxao              = MxaoOptions.Low;
             Dof               = DofOptions.Low;
-            MotionBlur        = MotionBlurOptions.BuiltIn;
+            MotionBlur        = MotionBlurOptions.PombLow;
             DynamicLensFlares = true;
             Volumetrics       = true;
             LensDirt          = true;
@@ -135,7 +135,7 @@ namespace SPV3
             LevelDescription  = "High";
             Mxao              = MxaoOptions.Low;
             Dof               = DofOptions.High;
-            MotionBlur        = MotionBlurOptions.BuiltIn;
+            MotionBlur        = MotionBlurOptions.PombLow;
             DynamicLensFlares = true;
             Volumetrics       = true;
             LensDirt          = true;
@@ -144,7 +144,7 @@ namespace SPV3
             LevelDescription  = "Ultra";
             Mxao              = MxaoOptions.High;
             Dof               = DofOptions.High;
-            MotionBlur        = MotionBlurOptions.BuiltIn;
+            MotionBlur        = MotionBlurOptions.PombLow;
             DynamicLensFlares = true;
             Volumetrics       = true;
             LensDirt          = true;
