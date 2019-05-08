@@ -42,10 +42,5 @@ namespace SPV3
       process.WaitForExit();
       return (Exit.Code) process.ExitCode;
     }
-
-    public static Exit.Code Start()
-    {
-      return Start(string.Empty);
-    }
   }
 }
