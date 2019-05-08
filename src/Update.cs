@@ -103,7 +103,7 @@ namespace SPV3
 
       public void Commit()
       {
-        Process.Start(Address + $"/{Version:D4}/bin.zip");
+        Process.Start(Address + $"/{Version:D4}.iso");
       }
 
       [NotifyPropertyChangedInvocator]
