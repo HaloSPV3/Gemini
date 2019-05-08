@@ -49,9 +49,9 @@ namespace SPV3
       if (!_update.Loader.Available) return;
 
       var update = Show($"SPV3 Loader update is available: build-{_update.Loader.Version:D4}\n\n" +
-                        "Would you like to download the update?", "Update", YesNo);
+                        "Would you like to download the update?", "Update", OK);
 
-      if (update == MessageBoxResult.Yes)
+      if (update == MessageBoxResult.OK)
         _update.Loader.Commit();
     }
   }
