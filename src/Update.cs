@@ -53,12 +53,22 @@ namespace SPV3
     /// </summary>
     public class LoaderUpdate : INotifyPropertyChanged
     {
-      private const string Header  = "HEADER.txt";
-      private const string Address = "https://dist.n2.network/spv3/";
+      private const string Header = "https://dist.n2.network/spv3/HEADER.txt";
 
-      private bool _available;
+      private string _address;
+      private bool   _available;
+      private int    _version;
 
-      private int _version;
+      public string Address
+      {
+        get => _address;
+        set
+        {
+          if (value == _address) return;
+          _address = value;
+          OnPropertyChanged();
+        }
+      }
 
       public int Version
       {
@@ -86,7 +96,7 @@ namespace SPV3
 
       public void Load()
       {
-        var request = (HttpWebRequest) WebRequest.Create(Address + Header);
+        var request = (HttpWebRequest) WebRequest.Create(Header);
         using (var response = (HttpWebResponse) request.GetResponse())
         using (var stream = response.GetResponseStream())
         using (var reader = new StreamReader(stream ?? throw new Exception("Could not get response stream.")))
@@ -98,12 +108,13 @@ namespace SPV3
 
           Version   = serverVersion;
           Available = serverVersion > clientVersion;
+          Address   = reader.ReadLine()?.TrimEnd() ?? throw new Exception("Could not infer download address.");
         }
       }
 
       public void Commit()
       {
-        Process.Start(Address + $"/{Version:D4}.iso");
+        Process.Start(Address);
       }
 
       [NotifyPropertyChangedInvocator]
