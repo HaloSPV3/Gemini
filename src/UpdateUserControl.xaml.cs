@@ -21,6 +21,8 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static System.Windows.MessageBox;
+using static System.Windows.MessageBoxButton;
 
 namespace SPV3
 {
@@ -32,7 +34,7 @@ namespace SPV3
     {
       InitializeComponent();
       _update = (Update) DataContext;
-      _update.Initialise();
+      UpdateLoader();
     }
 
     private void UpdateAssets(object sender, RoutedEventArgs e)
@@ -40,9 +42,17 @@ namespace SPV3
       Task.Run(() => { _update.Assets.Commit(); });
     }
 
-    private void UpdateLoader(object sender, RoutedEventArgs e)
+    private async void UpdateLoader()
     {
-      Task.Run(() => { _update.Loader.Commit(); });
+      await Task.Run(() => { _update.Initialise(); });
+
+      if (!_update.Loader.Available) return;
+
+      var update = Show($"SPV3 Loader update is available: build-{_update.Loader.Version:D4}\n\n" +
+                        "Would you like to download the update?", "Update", YesNo);
+
+      if (update == MessageBoxResult.Yes)
+        _update.Loader.Commit();
     }
   }
 }

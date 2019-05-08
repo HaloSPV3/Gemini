@@ -34,13 +34,6 @@
         <Button Click="UpdateAssets">
             Update SPV3 Assets
         </Button>
-
-        <!-- Loader -->
-        <Button Margin="0,1,0,0"
-                Click="UpdateLoader"
-                Visibility="{Binding Loader.Available}">
-            Update SPV3 Loader
-        </Button>
         
         <!-- Status -->
         <TextBlock Margin="0,10"

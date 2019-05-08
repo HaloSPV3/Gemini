@@ -44,8 +44,8 @@ namespace SPV3
 
     public void Initialise()
     {
-      Task.Run(() => { Loader.Load(); });
-      Task.Run(() => { Assets.Load(); });
+      Loader.Load();
+      Assets.Load();
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ namespace SPV3
       private const string Header  = "HEADER.txt";
       private const string Address = "https://dist.n2.network/spv3/";
 
-      private Visibility _available = Visibility.Collapsed;
+      private bool _available;
 
       private int _version;
 
@@ -71,7 +71,7 @@ namespace SPV3
         }
       }
 
-      public Visibility Available
+      public bool Available
       {
         get => _available;
         set
@@ -97,7 +97,7 @@ namespace SPV3
           var clientVersion = Assembly.GetEntryAssembly().GetName().Version.Major;
 
           Version   = serverVersion;
-          Available = serverVersion > clientVersion ? Visibility.Visible : Visibility.Collapsed;
+          Available = serverVersion > clientVersion;
         }
       }
 
