@@ -20,7 +20,10 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using HXE;
+using HXE.HCE;
+using static System.Windows.Forms.Screen;
 
 namespace SPV3
 {
@@ -30,10 +33,30 @@ namespace SPV3
   public static class Cli
   {
     private const string Executable = "hxe.exe";
-    
+
     public static Exit.Code Start(string args)
     {
-      args = args + $" -path \"{Paths.Directories.Data}\" -console -devmode -screenshot";
+      var width  = (ushort) PrimaryScreen.Bounds.Width;
+      var height = (ushort) PrimaryScreen.Bounds.Height;
+
+      var lastProfile = (LastProfile) Paths.Files.LastProfile;
+
+      if (lastProfile.Exists())
+      {
+        lastProfile.Load();
+
+        var profile = (Profile) Path.Combine(Paths.Directories.Profiles, lastProfile.Profile);
+
+        if (profile.Exists())
+        {
+          profile.Load();
+
+          width  = profile.Video.Resolution.Width;
+          height = profile.Video.Resolution.Height;
+        }
+      }
+
+      args = args + $" -path \"{Paths.Directories.Data}\" -console -devmode -screenshot -vidmode {width},{height}";
       var process = Process.Start(Executable, args);
 
       if (process == null)
