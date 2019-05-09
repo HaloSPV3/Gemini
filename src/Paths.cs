@@ -21,6 +21,7 @@
 using static System.Environment;
 using static System.Environment.SpecialFolder;
 using static System.IO.Path;
+using static HXE.Paths.Directories;
 
 namespace SPV3
 {
@@ -33,11 +34,13 @@ namespace SPV3
     {
       public static readonly string Data      = Combine(GetFolderPath(ApplicationData), "SPV3");
       public static readonly string OpenSauce = Combine(Data,                           "OpenSauce");
+      public static readonly string Profiles  = Combine(Data,                           "savegames");
     }
 
     public static class Files
     {
-      public static readonly string OpenSauce = Combine(Directories.OpenSauce, "OS_Settings.User.xml");
+      public static readonly string OpenSauce   = Combine(Directories.OpenSauce, "OS_Settings.User.xml");
+      public static readonly string LastProfile = Combine(Directories.Data,      Profiles, HXE.Paths.Files.LastProfile);
     }
   }
 }
