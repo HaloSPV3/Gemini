@@ -111,17 +111,19 @@ namespace HXE
           {
             var a = s.Split(',');
 
-            if (a.Length != 3) return;
+            if (a.Length < 2) return;
 
-            hce.Video.Width   = int.Parse(a[0]);
-            hce.Video.Height  = int.Parse(a[1]);
-            hce.Video.Refresh = int.Parse(a[2]);
+            hce.Video.Width  = int.Parse(a[0]);
+            hce.Video.Height = int.Parse(a[1]);
+
+            if (a.Length > 2) /* optional refresh rate */
+              hce.Video.Refresh = int.Parse(a[2]);
           });
 
       options.WriteOptionDescriptions(Out);
       var input = options.Parse(args);
 
-      if (!input.Contains("load")   &&
+      if (!input.Contains("load")    &&
           !input.Contains("install") &&
           !input.Contains("compile"))
         Run(() => { Kernel.Bootstrap(hce); });
