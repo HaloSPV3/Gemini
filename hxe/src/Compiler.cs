@@ -21,6 +21,8 @@
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using static System.Diagnostics.Process;
 using static System.IO.Compression.CompressionLevel;
 using static System.IO.Compression.ZipArchiveMode;
@@ -92,7 +94,7 @@ namespace HXE
 
       foreach (var directory in directories)
       {
-        Debug("Preparing to compile directory - " + directory);
+        Info("Preparing to compile directory - " + directory);
 
         /**
          * We record the package's name on the filesystem to the manifest. This permits the INSTALLER to seek the
@@ -124,9 +126,26 @@ namespace HXE
           {
             var fileName = GetFileName(file);
 
-            Debug("Creating archive entry for file - " + file);
+            Info("Creating archive entry for file - " + file);
+            
+            /**
+             * While the task is running, we inform the user that is indeed running by updating the console.
+             */
 
-            deflate.CreateEntryFromFile(file, fileName, Optimal);
+            var task = new Task(() =>
+            {
+              deflate.CreateEntryFromFile(file, fileName, Optimal);
+            });
+
+            task.Start();
+
+            Wait("Compiling ...");
+
+            while (!task.IsCompleted)
+            {
+              System.Console.Write(".");
+              Thread.Sleep(1000);
+            }
 
             /*
              * For the LOADER's asset verification routine, we must create an entry for the file in the manifest. The
@@ -187,7 +206,7 @@ namespace HXE
       var cli = (File) GetCurrentProcess().MainModule.FileName;
       cli.CopyTo(target);
 
-      Debug("Loader executable has been successfully copied. The packages can now be distributed and installed!");
+      Done("Loader executable has been successfully copied. The packages can now be distributed and installed!");
     }
   }
 }

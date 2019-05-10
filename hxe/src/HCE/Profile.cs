@@ -19,9 +19,12 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using static System.IO.SearchOption;
+using static HXE.Paths;
 
 namespace HXE.HCE
 {
@@ -315,8 +318,8 @@ namespace HXE.HCE
     public static Profile Detect()
     {
       var lastprof = (LastProfile) System.IO.Path.Combine(
-        Paths.Directories.HCE,
-        Paths.Files.LastProfile
+        Directories.HCE,
+        Files.LastProfile
       );
 
       if (!lastprof.Exists())
@@ -325,10 +328,10 @@ namespace HXE.HCE
       lastprof.Load();
 
       var profile = (Profile) System.IO.Path.Combine(
-        Paths.Directories.HCE,
-        Paths.Directories.Profiles,
+        Directories.HCE,
+        Directories.Profiles,
         lastprof.Profile,
-        Paths.Files.Profile
+        Files.Profile
       );
 
       if (!profile.Exists())
@@ -337,6 +340,46 @@ namespace HXE.HCE
       profile.Load();
 
       return profile;
+    }
+
+    /// <summary>
+    ///   Returns a list of profiles representing the blam.sav files found in the specified directory.
+    /// </summary>
+    /// <param name="directory">
+    ///   Directory to look for.
+    /// </param>
+    /// <returns>
+    ///   List of Profile instances.
+    /// </returns>
+    /// <exception cref="DirectoryNotFoundException">
+    ///   Provided profiles directory does not exist.
+    /// </exception>
+    public static List<Profile> List(string directory)
+    {
+      if (!Directory.Exists(directory))
+        throw new DirectoryNotFoundException("Provided profiles directory does not exist.");
+
+      var profiles = new List<Profile>();
+
+      foreach (var current in Directory.GetFiles(directory, "blam.sav", AllDirectories))
+      {
+        var profile = (Profile) current;
+        profile.Load();
+        profiles.Add(profile);
+      }
+
+      return profiles;
+    }
+
+    /// <summary>
+    ///   Returns a list of profiles representing the blam.sav files found in the specified directory.
+    /// </summary>
+    /// <returns>
+    ///   List of Profile instances.
+    /// </returns>
+    public static List<Profile> List()
+    {
+      return List(System.IO.Path.Combine(Directories.HCE, Directories.Profiles));
     }
 
     /// <summary>

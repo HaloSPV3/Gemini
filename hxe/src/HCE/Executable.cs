@@ -232,12 +232,12 @@ namespace HXE.HCE
 
     public class VideoOptions
     {
-      public bool Window  { get; set; }
-      public int  Width   { get; set; }
-      public int  Height  { get; set; }
-      public int  Refresh { get; set; }
-      public int  Adapter { get; set; }
-      public bool NoGamma { get; set; }
+      public bool   Window  { get; set; }
+      public ushort Width   { get; set; }
+      public ushort Height  { get; set; }
+      public ushort Refresh { get; set; }
+      public ushort Adapter { get; set; }
+      public bool   NoGamma { get; set; }
     }
 
     public class ProfileOptions

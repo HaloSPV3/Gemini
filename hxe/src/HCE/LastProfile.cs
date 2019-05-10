@@ -44,6 +44,17 @@ namespace HXE.HCE
     }
 
     /// <summary>
+    ///   Writes the mutated profile value to the file system.
+    /// </summary>
+    public void Save()
+    {
+      var data  = ReadAllText();
+      var split = data.Split('\\');
+      split[split.Length - 2] = Profile;
+      WriteAllText(string.Join("\\", split));
+    }
+
+    /// <summary>
     ///   Represents the inbound object as a string.
     /// </summary>
     /// <param name="lastProfile">

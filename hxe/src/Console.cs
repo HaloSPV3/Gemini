@@ -44,6 +44,16 @@ namespace HXE
       Output("INFO", ConsoleColor.Cyan, value, ConsoleColor.White);
     }
 
+    public static void Wait(string value)
+    {
+      Output("WAIT", ConsoleColor.Yellow, value, ConsoleColor.White);
+    }
+
+    public static void Done(string value)
+    {
+      Output("DONE", ConsoleColor.Green, value, ConsoleColor.White);
+    }
+
     public static void Logs(string value)
     {
       Output("LOGS", ConsoleColor.Magenta, value);
@@ -63,8 +73,16 @@ namespace HXE
       Output(prefix, color, message, color);
     }
 
-    private static void Output(string prefix, ConsoleColor color, string message, ConsoleColor messageColor)
+    private static void Output(
+      string       prefix, ConsoleColor color,
+      string       message,
+      ConsoleColor messageColor,
+      bool         writeLine = true
+    )
     {
+      if (writeLine)
+        WriteLine();
+
       ForegroundColor = ConsoleColor.Gray;
       Write("> [ ");
 
@@ -75,7 +93,7 @@ namespace HXE
       Write(" ] - ");
 
       ForegroundColor = messageColor;
-      WriteLine(message);
+      Write(message);
     }
   }
 }

@@ -191,6 +191,17 @@ namespace HXE
     {
       try
       {
+        if (executable.Video.Width == 0 && executable.Video.Height == 0)
+        {
+          Info("Dimensions not specified - applying native resolution ...");
+
+          executable.Video.Width  = (ushort) PrimaryScreen.Bounds.Width;
+          executable.Video.Height = (ushort) PrimaryScreen.Bounds.Height;
+
+          Debug("Executable -vidmode width  - " + executable.Video.Width);
+          Debug("Executable -vidmode height - " + executable.Video.Height);
+        }
+
         var lastprof = (LastProfile) Combine(executable.Profile.Path, Files.LastProfile);
 
         if (!lastprof.Exists()) return;
@@ -210,9 +221,14 @@ namespace HXE
         Info("Deserialising inferred HCE profile");
         profile.Load();
 
+        foreach (var availableProfile in Profile.List(executable.Profile.Path))
+          Debug(availableProfile.Details.Name.Equals(profile.Details.Name)
+            ? $"Available profile: {availableProfile.Details.Name} << SELECTED PROFILE"
+            : $"Available profile: {availableProfile.Details.Name}");
+
         Info("Applying profile video settings");
-        profile.Video.Resolution.Width  = (ushort) PrimaryScreen.Bounds.Width;
-        profile.Video.Resolution.Height = (ushort) PrimaryScreen.Bounds.Height;
+        profile.Video.Resolution.Width  = executable.Video.Width;
+        profile.Video.Resolution.Height = executable.Video.Height;
         profile.Video.FrameRate         = VideoFrameRate.VsyncOff; /* ensure no FPS locking */
         profile.Video.Particles         = VideoParticles.High;
         profile.Video.Quality           = VideoQuality.High;

@@ -103,7 +103,7 @@ namespace HXE
         .Add("nogamma", "Loads HCE without gamma overriding",
           s => hce.Video.NoGamma = true)
         .Add("adapter=", "Loads HCE on monitor X",
-          s => hce.Video.Adapter = int.Parse(s))
+          s => hce.Video.Adapter = ushort.Parse(s))
         .Add("path=", "Loads HCE with custom profile path",
           s => hce.Profile.Path = s)
         .Add("vidmode=", "Loads HCE with video mode",
@@ -113,11 +113,11 @@ namespace HXE
 
             if (a.Length < 2) return;
 
-            hce.Video.Width  = int.Parse(a[0]);
-            hce.Video.Height = int.Parse(a[1]);
+            hce.Video.Width  = ushort.Parse(a[0]);
+            hce.Video.Height = ushort.Parse(a[1]);
 
             if (a.Length > 2) /* optional refresh rate */
-              hce.Video.Refresh = int.Parse(a[2]);
+              hce.Video.Refresh = ushort.Parse(a[2]);
           });
 
       options.WriteOptionDescriptions(Out);
