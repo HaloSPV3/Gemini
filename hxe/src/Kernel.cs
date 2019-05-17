@@ -29,6 +29,7 @@ using static System.Environment;
 using static System.IO.Path;
 using static System.Windows.Forms.Screen;
 using static HXE.Console;
+using static HXE.HCE.Profile.ProfileAudio;
 using static HXE.Paths;
 using static HXE.HCE.Profile.ProfileVideo;
 
@@ -193,7 +194,7 @@ namespace HXE
       {
         if (executable.Video.Width == 0 && executable.Video.Height == 0)
         {
-          Info("Dimensions not specified - applying native resolution ...");
+          Info("Dimensions not specified - applying native resolution");
 
           executable.Video.Width  = (ushort) PrimaryScreen.Bounds.Width;
           executable.Video.Height = (ushort) PrimaryScreen.Bounds.Height;
@@ -236,6 +237,10 @@ namespace HXE
         profile.Video.Effects.Shadows   = true;
         profile.Video.Effects.Decals    = true;
 
+        Info("Applying profile audio settings");
+        profile.Audio.Quality = AudioQuality.High;
+        profile.Audio.Variety = AudioVariety.High;
+
         Info("Saving profile data to the filesystem");
         profile.Save();
 
@@ -247,6 +252,8 @@ namespace HXE
         Debug("Patched video effect - specular - " + profile.Video.Effects.Specular);
         Debug("Patched video effect - shadows  - " + profile.Video.Effects.Shadows);
         Debug("Patched video effect - decals   - " + profile.Video.Effects.Decals);
+        Debug("Patched audio quality           - " + profile.Audio.Quality);
+        Debug("Patched audio variety           - " + profile.Audio.Variety);
       }
       catch (Exception e)
       {

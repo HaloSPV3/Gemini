@@ -63,6 +63,11 @@
     <Compile Include="HCE\Profile.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="Kernel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings.xaml.cs" />
     <Compile Include="Manifest.cs" />
     <Compile Include="Options.cs" />
@@ -76,8 +81,15 @@
     <Compile Include="SPV3\Progress.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\banner.txt" />
     <Content Include="Assets\icon.ico" />
     <Page Include="Settings.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

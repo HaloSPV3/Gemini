@@ -1,0 +1,27 @@
+ _    ___   ________
+| |  | \ \ / /  ____|
+| |__| |\ V /| |__
+|  __  | > < |  __|
+| |  | |/ . \| |____
+|_|  |_/_/ \_\______| :: Halo XE
+================================
+A HCE wrapper and SPV3.2 loader.
+--------------------------------
+src: https://cgit.n2.network/hxe
+bin: https://dist.n2.network/hxe
+--------------------------------
+
+HXE can be invoked with the following arguments:
+
+      --config               Opens configuration GUI
+      --load                 Initiates HCE/SPV3
+      --install=VALUE        Installs HCE/SPV3 to destination
+      --compile=VALUE        Compiles HCE/SPV3 to destination
+      --console              Loads HCE with console mode
+      --devmode              Loads HCE with developer mode
+      --screenshot           Loads HCE with screenshot ability
+      --window               Loads HCE in window mode
+      --nogamma              Loads HCE without gamma overriding
+      --adapter=VALUE        Loads HCE on monitor X
+      --path=VALUE           Loads HCE with custom profile path
+      --vidmode=VALUE        Loads HCE with video mode

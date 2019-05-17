@@ -1,16 +1,16 @@
 <html>
     <p align="center">
         <img src="https://user-images.githubusercontent.com/10241434/57498646-40c70800-730f-11e9-9e20-edbb764df836.png">
-    <p>
+    </p>
     <h1 align="center">
         Halo XE (HXE)
     </h1>
-    <h3 align="center">
+    <p align="center">
         Excellent HCE Wrapper • Functional SPV3 Loader • Versatile Library
-    </h3>
+    </p>
     <p align="center">
         <img src="https://user-images.githubusercontent.com/10241434/57498544-d6ae6300-730e-11e9-9558-1072d5c7c48d.png">
-    <p>
+    </p>
     <p align="center">
         <a href="https://dist.n2.network/hxe">
             Download

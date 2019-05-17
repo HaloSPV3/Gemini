@@ -49,6 +49,11 @@ namespace HXE
       Output("WAIT", ConsoleColor.Yellow, value, ConsoleColor.White);
     }
 
+    public static void Help(string value)
+    {
+      Output("HELP", ConsoleColor.Green, value, ConsoleColor.White);
+    }
+
     public static void Done(string value)
     {
       Output("DONE", ConsoleColor.Green, value, ConsoleColor.White);
