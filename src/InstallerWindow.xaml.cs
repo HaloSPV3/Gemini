@@ -20,10 +20,12 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using HXE;
+using static System.Environment;
+using static System.IO.Path;
+using Exit = HXE.Exit;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SPV3
@@ -33,7 +35,7 @@ namespace SPV3
     public InstallerWindow()
     {
       InitializeComponent();
-      Target.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "My Games",
+      Target.Text = Combine(GetFolderPath(SpecialFolder.Personal), "My Games",
         "Halo SPV3");
     }
 
@@ -49,13 +51,26 @@ namespace SPV3
     private void Install(object sender, RoutedEventArgs e)
     {
       Status.Content = "Installing SPV3 ...";
-      
-      switch (Cli.Start($"/install \"{Target.Text}\""))
+
+      var process = Process.Start(new ProcessStartInfo
+      {
+        FileName         = Combine(CurrentDirectory, "data", "hxe.exe"),
+        Arguments        = $"/install \"{Target.Text}\"",
+        WorkingDirectory = Combine(CurrentDirectory, "data")
+      });
+
+      if (process == null)
+        throw new NullReferenceException("Could not construct CLI process.");
+
+      process.WaitForExit();
+      var exit = (Exit.Code) process.ExitCode;
+
+      switch (exit)
       {
         case Exit.Code.Success:
           MessageBox.Show("SPV3 installation complete!");
-          Process.Start(Path.Combine(Target.Text, "spv3.exe"));
-          Environment.Exit(0);
+          Process.Start(Combine(Target.Text, "spv3.exe"));
+          Exit(0);
           break;
         case Exit.Code.Exception:
           Status.Content = "Exception has occurred. Review log file.";

@@ -27,8 +27,6 @@ using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Serialization;
 using SPV3.Annotations;
 

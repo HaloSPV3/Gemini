@@ -34,7 +34,7 @@
         <Button Click="UpdateAssets">
             Update SPV3 Assets
         </Button>
-        
+
         <!-- Status -->
         <TextBlock Margin="0,10"
                    HorizontalAlignment="Center"

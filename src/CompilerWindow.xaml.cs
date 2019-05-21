@@ -19,12 +19,12 @@
  */
 
 using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using HXE;
 using static System.Diagnostics.Process;
-using File = HXE.File;
+using static System.IO.File;
+using static System.IO.Path;
 
 namespace SPV3
 {
@@ -33,7 +33,7 @@ namespace SPV3
     public CompilerWindow()
     {
       InitializeComponent();
-      Target.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "SPV3.Compile");
+      Target.Text = Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "SPV3.Compile");
     }
 
     private void BrowseTarget(object sender, RoutedEventArgs e)
@@ -49,9 +49,13 @@ namespace SPV3
     {
       Status.Content = "Installing SPV3 ...";
 
-      switch (Cli.Start($"/compile \"{Target.Text}\""))
+      var target = Combine(Target.Text, "data");
+
+      switch (Cli.Start($"/compile \"{target}\""))
       {
         case Exit.Code.Success:
+          Copy(Combine(target, "hxe.exe"), Combine(Target.Text, "hxe.exe"));
+
           var cli = (File) GetCurrentProcess().MainModule.FileName;
           cli.CopyTo(Target.Text);
 
