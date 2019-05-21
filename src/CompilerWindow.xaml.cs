@@ -18,13 +18,15 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Forms;
-using HXE;
 using static System.Diagnostics.Process;
+using static System.Environment;
 using static System.IO.File;
 using static System.IO.Path;
+using Exit = HXE.Exit;
+using File = HXE.File;
 
 namespace SPV3
 {
@@ -33,7 +35,7 @@ namespace SPV3
     public CompilerWindow()
     {
       InitializeComponent();
-      Target.Text = Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "SPV3.Compile");
+      Target.Text = Combine(GetFolderPath(SpecialFolder.Personal), "SPV3.Compile");
     }
 
     private void BrowseTarget(object sender, RoutedEventArgs e)
@@ -58,6 +60,20 @@ namespace SPV3
 
           var cli = (File) GetCurrentProcess().MainModule.FileName;
           cli.CopyTo(Target.Text);
+
+          var mkisofs = Combine(CurrentDirectory, "mkisofs.exe");
+
+          if (Exists(mkisofs))
+          {
+            var baseDir = GetDirectoryName(Target.Text) ??
+                          throw new DirectoryNotFoundException("Base directory not found.");
+
+            var isoFile = Combine(baseDir, "SPV3.iso");
+
+            var command = $"-udf -V \"SPV3\" -o \"{isoFile}\" \"{Target.Text}\"";
+
+            Start(mkisofs, command);
+          }
 
           Status.Content = "SPV3 compilation routine has gracefully succeeded.";
           break;
