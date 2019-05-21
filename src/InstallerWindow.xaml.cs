@@ -69,7 +69,11 @@ namespace SPV3
       {
         case Exit.Code.Success:
           MessageBox.Show("SPV3 installation complete!");
-          Process.Start(Combine(Target.Text, "spv3.exe"));
+          Process.Start(new ProcessStartInfo
+          {
+            FileName         = Combine(Target.Text, "spv3.exe"),
+            WorkingDirectory = Target.Text
+          });
           Exit(0);
           break;
         case Exit.Code.Exception:
