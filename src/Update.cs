@@ -29,6 +29,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using SPV3.Annotations;
+using static System.Environment;
+using static System.IO.Path;
 
 namespace SPV3
 {
@@ -42,6 +44,24 @@ namespace SPV3
 
     public void Initialise()
     {
+      bool canUpdate;
+
+      try
+      {
+        var test = Combine(CurrentDirectory, "io.bin");
+
+        File.WriteAllBytes(test, new byte[8]);
+        File.Delete(test);
+
+        canUpdate = true;
+      }
+      catch (Exception)
+      {
+        canUpdate = false;
+      }
+
+      if (!canUpdate) return;
+
       Loader.Load();
       Assets.Load();
     }
@@ -179,7 +199,7 @@ namespace SPV3
         {
           Status = "Updating SPV3 main asset - " + entry.Name;
 
-          var target = Path.Combine(Environment.CurrentDirectory, entry.Path ?? string.Empty, entry.Name);
+          var target = Combine(CurrentDirectory, entry.Path ?? string.Empty, entry.Name);
           var backup = target + ".bak";
 
           /**
@@ -214,10 +234,10 @@ namespace SPV3
             {
               Status = "Preparing to update asset - " + entry.Name;
 
-              var temp = Path.Combine(Environment.CurrentDirectory,
-                Guid.NewGuid().ToString());                             /* temporary directory */
-              var pack = Path.Combine(temp, Guid.NewGuid().ToString()); /* compressed package  */
-              var file = Path.Combine(temp, entry.Name);                /* package entry file  */
+              var temp = Combine(CurrentDirectory,
+                Guid.NewGuid().ToString());                        /* temporary directory */
+              var pack = Combine(temp, Guid.NewGuid().ToString()); /* compressed package  */
+              var file = Combine(temp, entry.Name);                /* package entry file  */
 
               Directory.CreateDirectory(temp);
 
@@ -229,7 +249,7 @@ namespace SPV3
 
               Status = "Installing asset - " + entry.Name;
               if (entry.Path != null)
-                Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, entry.Path));
+                Directory.CreateDirectory(Combine(CurrentDirectory, entry.Path));
 
               File.Move(file, target);
               Directory.Delete(temp, true);
