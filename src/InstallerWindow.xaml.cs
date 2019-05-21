@@ -19,10 +19,12 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using HXE;
+using MessageBox = System.Windows.MessageBox;
 
 namespace SPV3
 {
@@ -51,7 +53,9 @@ namespace SPV3
       switch (Cli.Start($"/install \"{Target.Text}\""))
       {
         case Exit.Code.Success:
-          Status.Content = "SPV3 installation routine has gracefully succeeded.";
+          MessageBox.Show("SPV3 installation complete!");
+          Process.Start(Path.Combine(Target.Text, "spv3.exe"));
+          Environment.Exit(0);
           break;
         case Exit.Code.Exception:
           Status.Content = "Exception has occurred. Review log file.";
