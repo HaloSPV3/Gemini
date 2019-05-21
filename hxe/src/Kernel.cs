@@ -243,6 +243,7 @@ namespace HXE
 
         Info("Saving profile data to the filesystem");
         profile.Save();
+        profile.Load();
 
         Debug("Patched video resolution width  - " + profile.Video.Resolution.Width);
         Debug("Patched video resolution height - " + profile.Video.Resolution.Height);

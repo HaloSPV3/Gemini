@@ -79,7 +79,7 @@ ascending presence in the blam.sav binary:
   Section   Option                     Offset Type     Value                   Stored Equivalent
   --------- -------------------------- --------------- ----------- -----------------------------
   PROFILE   name                       0x0002 utf16    "XYZ"             "X", ".", "Y", ".", "Z"
-            colour                     0x011B uint8    white                               0x000
+            colour                     0x011A uint8    white                               0x000
                                                        black                               0x001
                                                        red                                 0x002
                                                        blue                                0x003
@@ -97,9 +97,9 @@ ascending presence in the blam.sav binary:
                                                        tan                                 0x011
                                                        maroon                              0x014
                                                        salmon                              0x015
-  MOUSE     invert vertical axis       0x0130 bool     false                               0x000
+  MOUSE     invert vertical axis       0x012F bool     false                               0x000
                                                        true                                0x001
-            sensitivity - horizontal   0x0955 uint8    1                                   0x001
+            sensitivity - horizontal   0x0954 uint8    1                                   0x001
                                                        2                                   0x002
                                                        3                                   0x003
                                                        4                                   0x004
@@ -109,7 +109,7 @@ ascending presence in the blam.sav binary:
                                                        8                                   0x008
                                                        9                                   0x009
                                                        10                                  0x00A
-            sensitivity - vertical     0x0956 uint8    1                                   0x001
+            sensitivity - vertical     0x0955 uint8    1                                   0x001
                                                        2                                   0x002
                                                        3                                   0x003
                                                        4                                   0x004
@@ -119,28 +119,28 @@ ascending presence in the blam.sav binary:
                                                        8                                   0x008
                                                        9                                   0x009
                                                        10                                  0x00A
-  VIDEO     resolution                 0x0A69 uint16   1280x960      0x000, 0x 005, 0x12C, 0x003
-            refresh rate               0x0A6D uint8    59                                  0x049
+  VIDEO     resolution                 0x0A68 uint16   1280x960      0x000, 0x 005, 0x12C, 0x003
+            refresh rate               0x0A6C uint8    59                                  0x049
                                                        60                                  0x04A
-            frame rate                 0x0A70 uint8    vsync off                           0x000
+            frame rate                 0x0A6F uint8    vsync off                           0x000
                                                        vsync on                            0x001
                                                        30 fps                              0x002
-            effects - specular         0x0A71 bool     false                               0x000
+            effects - specular         0x0A70 bool     false                               0x000
                                                        true                                0x001
-            effects - shadows          0x0A72 bool     false                               0x000
+            effects - shadows          0x0A71 bool     false                               0x000
                                                        true                                0x001
-            effects - decals           0x0A73 bool     false                               0x000
+            effects - decals           0x0A72 bool     false                               0x000
                                                        true                                0x001
-            quality - particles        0x0A74 uint8    off                                 0x000
+            quality - particles        0x0A73 uint8    off                                 0x000
                                                        low                                 0x001
                                                        high                                0x002
-            quality - textures         0x0A75 uint8    low                                 0x000
+            quality - textures         0x0A74 uint8    low                                 0x000
                                                        medium                              0x001
                                                        high                                0x002
-            miscellaneous - gamma      0x0A77 uint8    +1                                  0x0D8
+            miscellaneous - gamma      0x0A76 uint8    +1                                  0x0D8
                                                        +2                                  0x0DF
                                                        +3                                  0x0E6
-  AUDIO     volume - master            0x0B79 uint8    0                                   0x000
+  AUDIO     volume - master            0x0B78 uint8    0                                   0x000
                                                        1                                   0x001
                                                        2                                   0x002
                                                        3                                   0x003
@@ -151,7 +151,7 @@ ascending presence in the blam.sav binary:
                                                        8                                   0x008
                                                        9                                   0x009
                                                        10                                  0x00A
-            volume - effects           0x0B7A uint8    0                                   0x000
+            volume - effects           0x0B79 uint8    0                                   0x000
                                                        1                                   0x001
                                                        2                                   0x002
                                                        3                                   0x003
@@ -162,7 +162,7 @@ ascending presence in the blam.sav binary:
                                                        8                                   0x008
                                                        9                                   0x009
                                                        10                                  0x00A
-            volume - music             0x0B7B uint8    0                                   0x000
+            volume - music             0x0B7A uint8    0                                   0x000
                                                        1                                   0x001
                                                        2                                   0x002
                                                        3                                   0x003
@@ -173,21 +173,21 @@ ascending presence in the blam.sav binary:
                                                        8                                   0x008
                                                        9                                   0x009
                                                        10                                  0x00A
-            quality - quality          0x0B7E uint8    low                                 0x000
+            quality - quality          0x0B7D uint8    low                                 0x000
                                                        normal                              0x001
                                                        high                                0x002
-            quality - variety          0x0B80 uint8    low                                 0x000
+            quality - variety          0x0B7F uint8    low                                 0x000
                                                        medium                              0x001
                                                        high                                0x002
-            enhance - eax              0x0B7C bool     off                                 0x000
+            enhance - eax              0x0B7B bool     off                                 0x000
                                                        on                                  0x001
-            enhance - hwa              0x0B7D bool     off                                 0x000
+            enhance - hwa              0x0B7C bool     off                                 0x000
                                                        on                                  0x001
-  NETWORK   connection type            0x0FC1 uint8    dial-up                             0x000
+  NETWORK   connection type            0x0FC0 uint8    dial-up                             0x000
                                                        dsl-low                             0x001
                                                        dsl-avg                             0x002
                                                        dsl-high                            0x003
                                                        t1/lan                              0x004
-            port - server              0x1003 uint16   2304                        0x000, 0x 00B
-            port - client              0x1005 uint16   2304                        0x000, 0x 00B
+            port - server              0x1002 uint16   2304                        0x000, 0x 00B
+            port - client              0x1004 uint16   2304                        0x000, 0x 00B
   BINARY    crc32 hash                 0x1FFC uint32               

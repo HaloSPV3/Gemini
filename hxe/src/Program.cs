@@ -84,8 +84,7 @@ namespace HXE
       }
       catch (Exception e)
       {
-        Error(e.Message + " -- Legal copy of HCE needs to be installed!");
-        WithCode(Code.InvalidInstall);
+        Error(e.Message + " -- Legal copy of HCE needs to be installed for loading!");
       }
 
       var options = new OptionSet()
