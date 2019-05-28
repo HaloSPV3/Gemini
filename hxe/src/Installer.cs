@@ -18,11 +18,12 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.IO;
+using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.IO.Compression.ZipFile;
-using static System.IO.Directory;
-using static System.IO.Path;
+using HXE.Exceptions;
+using HXE.Properties;
 using static HXE.Console;
 using static HXE.Paths.Files;
 
@@ -44,18 +45,38 @@ namespace HXE
     /// </param>
     public static void Install(string source, string target)
     {
-      if (!Exists(target))
-        CreateDirectory(target);
-
       /**
-       * Conventionally, we expect the manifest to be located in the source directory along with the packages. This is
-       * assumed by the fact that the COMPILER creates the manifest in the target directory that is provided to it.
+       * Normalisation of the paths will preserve our sanity later on! ;-)
        */
 
-      var manifest = (Manifest) Combine(source, Paths.Files.Manifest);
+      source = Path.GetFullPath(source);
+      target = Path.GetFullPath(target);
+
+      Info("Normalised inbound source and target paths");
+
+      Debug("Source - " + source);
+      Debug("Target - " + target);
+
+      if (!Directory.Exists(source))
+        throw new DirectoryNotFoundException("Source directory does not exist");
+
+      Info("Source directory exists");
+
+      if (!Directory.Exists(target))
+        Directory.CreateDirectory(target);
+
+      Info("Gracefully created target directory");
+
+      var manifest = (Manifest) Path.Combine(source, Paths.Files.Manifest);
+
+      if (!manifest.Exists())
+        throw new FileNotFoundException("Manifest file does not exist in the source directory.");
+
+      Info("Manifest binary exists");
+
       manifest.Load();
 
-      Info("Found manifest file in the source directory - proceeding with installation ...");
+      Info("Loaded manifest binary - verifying manifest packages");
 
       /**
        * Installation is the reversal of the COMPILER routine: we get the data back from the DEFLATE packages, through
@@ -64,85 +85,70 @@ namespace HXE
 
       foreach (var package in manifest.Packages)
       {
-        Info("Preparing to install entries from package - " + package.Name);
-
-        /**
-         * To handle reinstall circumstances, and for the sake of being more defensive, we check if the package files
-         * already exist on the filesystem. Should they exist, we will proceed with deleting them.
-         */
-
-        foreach (var entry in package.Entries)
-        {
-          Info("Checking if entry exists - " + entry.Name);
-
-          var file = (File) Combine(target, package.Path, entry.Name);
-
-          if (!file.Exists()) continue;
-
-          Info("Deleting discovered file - " + entry.Name);
-
-          file.Delete();
-        }
-
-        Info("Any existing entries on the filesystem have been deleted - preparing to extract package");
-
         /**
          * Given that the package filename on the filesystem is expected to match the package's name in the manifest, we
          * infer the package's path by combining the source with the aforementioned name.
-         *
-         * Additionally, if the current iteration's package represents a subdirectory, we can extract its contents to
-         * the relevant subdirectory. This permits us to replicate the layout of the source directory that was given to
-         * the COMPILER and - of course - properly install the files!
          */
 
-        var packagePath = Combine(source, package.Name);
-        var destination = Combine(target, package.Path);
+        var archive = Path.Combine(source, package.Name);
 
-        Info("Extracting package to destination - " + destination);
+        if (!System.IO.File.Exists(archive))
+          throw new FileNotFoundException("Package does not exist in the source directory - " + package.Name);
 
-        /**
-         * While the task is running, we inform the user that is indeed running by updating the console.
-         */
+        Info("Package exists - " + package.Name);
 
-        var task = new Task(() => { ExtractToDirectory(packagePath, destination); });
+        if (package.Size != new FileInfo(archive).Length)
+          throw new AssetException("Asset size mismatch - " + package.Name);
+
+        Info("Length matches - " + package.Name);
+      }
+
+      foreach (var package in manifest.Packages)
+      {
+        var archive   = Path.Combine(source,    package.Name);
+        var directory = Path.Combine(target,    package.Entry.Path);
+        var file      = Path.Combine(directory, package.Entry.Name);
+
+        if (System.IO.File.Exists(file))
+        {
+          System.IO.File.Delete(file);
+          Info("Deleted existing file - " + file);
+        }
+
+        Directory.CreateDirectory(directory);
+        Info("Gracefully created directory - " + package.Entry.Path);
+
+        var task = new Task(() => { ZipFile.ExtractToDirectory(archive, directory); });
 
         task.Start();
+        Info("Started package inflation - " + package.Name + " - " + package.Entry.Name);
 
-        Wait("Installing ...");
+        /**
+         * While the task is running, we inform the user that is indeed running by updating the console. Aren't we nice
+         * people?
+         */
 
         while (!task.IsCompleted)
         {
-          System.Console.Write(".");
+          Wait(Resources.Progress);
           Thread.Sleep(1000);
         }
+
+        Info("Successfully finished package inflation");
       }
-
-      Info("Proceeding with post-install routines");
-
-      /**
-       * Delete potential manifest file at the target destination.
-       */
-
-      var potentialManifest = (File) Combine(target, manifest.Name);
-
-      if (potentialManifest.Exists())
-        potentialManifest.Delete();
 
       manifest.CopyTo(target);
 
-      /**
-       * Store the installation path in a text file that other applications can rely on for inferring the location where
-       * HCE is installed.
-       */
-
-      CreateDirectory(Paths.Directories.HXE);
+      Info("Copied manifest to the target directory - " + target);
 
       new File
       {
         Path = Installation
       }.WriteAllText(target);
 
-      Done("Installation routine is finished. The extracted assets can now be used!");
+      Info("Wrote the target path to the installation file");
+
+      Done("Installation routine has been successfully completed");
     }
   }
 }

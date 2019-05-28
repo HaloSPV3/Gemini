@@ -74,29 +74,24 @@ contains.
 
 The compilation procedure, in a nutshell, is as follows:
 
-1.  create a list containing:
+1.  create a list containing all of the files in the source directory.
 
-    -   the specified source directory, and
-    -   any subdirectories in the source directory.
-
-2.  for each subdirectory, create a DEFLATE package in the specified
-    target directory, and an entry in the manifest with:
+2.  for each inferred file, , and an entry in the manifest with:
 
     -   the package's name on the filesystem (hex.bin convention) and;
-    -   the path the subdirectory resides in, relative to the source.
+    -   file metadata, i.e. name, relative path and byte.
 
-3.  for each file within the respective subdirectory, add an entry to
-    the package on the filesystem, add an entry for it in the manifest
-    containing:
+3.  for each file within the respective subdirectory:
 
-    -   the filename (no paths) on the filesystem; and
-    -   the file size (byte length) on the filesystem.
+    -   create a DEFLATE package in the specified target directory
+    -   add an entry to the package on the filesystem, add an entry for
+        it in the manifest containing:
+
+        -   the filename (no paths) on the filesystem; and
+        -   the file size (byte length) on the filesystem.
 
 4.  save of the manifest data in DEFLATE format to the target directory,
     for the aforementioned distribution and installation.
-
-For further information on the anatomy of a manifest file, please refer
-to the manifest.txt documentation in the doc directory.
 
 INSTALLER INFORMATION
 ---------------------
@@ -192,6 +187,10 @@ File type:
   Configuration    Represents the loader.bin binary, which SPV3 uses to
                    store the user preferences for its post-processing
                    features, and for kernel options.
+
+  Manifest         Represents the manifest that contains metadata for
+                   the compiled & installed assets. This permits HXE to
+                   install packages and verify the files on loading.
   ---------------------------------------------------------------------
 
 Documentation on any of the aforementioned files can be found in the doc

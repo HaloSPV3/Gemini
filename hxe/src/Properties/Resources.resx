@@ -127,4 +127,7 @@
   <data name="BannerBuildSource" xml:space="preserve">
     <value>https://cgit.n2.network/hxe/tag/?h=build-{0}</value>
   </data>
+  <data name="Progress" xml:space="preserve">
+    <value>.</value>
+  </data>
 </root>

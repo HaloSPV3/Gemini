@@ -95,7 +95,9 @@ namespace HXE
         }
       }
       else
+      {
         Info("Skipping Kernel.EnableSpv3KernelMode");
+      }
 
       if (!configuration.Kernel.SkipPatchLargeAAware)
         PatchLargeAAware(executable);
@@ -124,8 +126,10 @@ namespace HXE
 
       var whitelist = new List<string>
       {
-        ".map",      /* map resources */
-        "haloce.exe" /* game executable */
+        "hxe.exe",
+        "spv3.exe",
+        "haloce.exe",
+        ".map"
       };
 
       /**
@@ -136,8 +140,8 @@ namespace HXE
        * This routine relies on combining...
        *
        * - the path of the working directory; with
-       * - the package's declared relative path; with
-       * - the filename of the respective file
+       * - the entry' declared relative path; with
+       * - the actual name of the respective file
        *
        * ... to determine the absolute path of the file on the filesystem:
        * 
@@ -156,31 +160,39 @@ namespace HXE
        * OR installations that weren't conducted by the installer, the manifest will likely not be present. As such, we
        * have no choice but to skip the verification mechanism.
        */
-      if (!manifest.Exists()) return;
 
-      Info("Deserialising found manifest file");
+      if (!manifest.Exists())
+      {
+        Info("Could not find manifest binary - skipping asset verification");
+        return;
+      }
+
       manifest.Load();
 
-      Info("Verifying assets recorded in the manifest file");
+      Info("Deserialised manifest binary to its corresponding object");
+
       foreach (var package in manifest.Packages)
-      foreach (var entry in package.Entries)
       {
-        if (!whitelist.Any(entry.Name.Contains)) /* skip verification if current file isn't in the whitelist */
+        var file = Combine(CurrentDirectory, package.Entry.Path, package.Entry.Name);
+        var size = package.Entry.Size;
+
+        if (!System.IO.File.Exists(file))
+          throw new FileNotFoundException("File does not currently exist - " + package.Entry.Name);
+
+        Info("Inferred file on the filesystem - " + package.Entry.Name);
+
+        if (whitelist.Any(package.Entry.Name.Contains)) /* skip verification if current file isn't in the whitelist */
           continue;
 
-        var absolutePath = Combine(CurrentDirectory, package.Path, entry.Name);
-        var expectedSize = entry.Size;
+        Info("File is not whitelisted - " + package.Entry.Name);
 
-        if (!System.IO.File.Exists(absolutePath))
-          throw new FileNotFoundException("File not found - " + entry.Name);
+        if (size != new FileInfo(file).Length)
+          throw new AssetException("Asset size mismatch - " + package.Entry.Name);
 
-        var actualSize = new FileInfo(absolutePath).Length;
-
-        if (expectedSize == actualSize) continue;
-
-        Info($"Size mismatch {entry.Name} (expect: {expectedSize}, actual: {actualSize}).");
-        throw new AssetException($"Size mismatch {entry.Name} (expect: {expectedSize}, actual: {actualSize}).");
+        Info("File matches its manifest metadata - " + package.Entry.Name);
       }
+
+      Done("Asset verification routine has been successfully completed");
     }
 
     /// <summary>
@@ -305,7 +317,7 @@ namespace HXE
     }
 
     /// <summary>
-    ///   Sets the initc.txt to SPV3.1 mode, i.e. unlocking maps instead of encoding post-processing settings. 
+    ///   Sets the initc.txt to SPV3.1 mode, i.e. unlocking maps instead of encoding post-processing settings.
     /// </summary>
     private static void SetSpv31InitMode(Configuration configuration)
     {

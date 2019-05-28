@@ -103,5 +103,14 @@ namespace HXE.Properties {
                 return ResourceManager.GetString("BannerBuildSource", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ..
+        /// </summary>
+        internal static string Progress {
+            get {
+                return ResourceManager.GetString("Progress", resourceCulture);
+            }
+        }
     }
 }

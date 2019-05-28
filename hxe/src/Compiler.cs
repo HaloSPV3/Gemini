@@ -20,16 +20,13 @@
 
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using HXE.Properties;
 using static System.Diagnostics.Process;
 using static System.IO.Compression.CompressionLevel;
 using static System.IO.Compression.ZipArchiveMode;
 using static System.IO.Compression.ZipFile;
-using static System.IO.Directory;
-using static System.IO.Path;
-using static System.IO.SearchOption;
 using static HXE.Console;
 
 namespace HXE
@@ -50,40 +47,51 @@ namespace HXE
     /// </param>
     public static void Compile(string source, string target)
     {
-      if (!Exists(target))
-        CreateDirectory(target);
+      /**
+       * Normalisation of the paths will preserve our sanity later on! ;-)
+       */
+
+      source = Path.GetFullPath(source); /* normalise source path */
+      target = Path.GetFullPath(target); /* normalise target path */
+
+      Info("Normalised inbound source and target paths");
+
+      if (!Directory.Exists(source))
+        throw new DirectoryNotFoundException("Source directory does not exist.");
+
+      Info("Source directory exists");
+
+      if (!Directory.Exists(target))
+        Directory.CreateDirectory(target);
+
+      Info("Gracefully created target directory");
 
       /**
        * We declare the manifest file to be in the target directory, because the target directory is expected to be the
        * distributed with the installer.
        * 
-       * We recursively retrieve a list of directories in the source directory, for the purpose of creating packages and
+       * We recursively retrieve a list of files in the source directory, for the purpose of creating packages and
        * manifest entries for each of them.
-       * 
-       * We must also add the source directory itself to the list, to ensure that the top-level SPV3/HCE binaries are
-       * packaged!
        * 
        * Given that the manifest is represented by 0x00, the subsequent packages should be represented by a >=1 ID. 
        */
 
-      var manifest    = (Manifest) Combine(target, Paths.Files.Manifest);
-      var directories = GetDirectories(source, "*", AllDirectories).ToList();
-      var i           = 0x1;
+      var manifest = (Manifest) Path.Combine(target, Paths.Files.Manifest);
+      var files    = new DirectoryInfo(source).GetFiles("*", SearchOption.AllDirectories);
+      var i        = 0x01; /* 0x00 = manifest */
 
-      directories.Add(source);
+      Info("Retrieved list of files - creating packages");
 
       /**
-       * For any subdirectory found in the source, we create a DEFLATE package for it containing its files. We also
-       * declare an entry for it in the manifest. Given that the files will be verified by the LOADER, we also declare
-       * entries for them in the manifest, with necessary information such as the name and size.
+       * For any file found in the source, we create a DEFLATE package for it . We also declare an entry for it in the
+       * manifest. This permits permits both decompression and verification.
        * 
        * The manifest information seeks to be compatible and portable, by recording only relative paths to the source
        * directory.
        *
-       * Each package represents a subdirectory in the source directory; hence, we must declare an entry for the
-       * respective directory's path relative to the source.
+       * Each package represents a file in the source directory; hence, we must declare an entry for the respective
+       * directory's path relative to the source.
        *
-       * We also declare an entry for each file within the respective subdirectory, by recording its name and size.
        * This effectively permits two scenarios:
        *
        * -   the INSTALLER can lay out the directories when installing the packages, by combining the particular
@@ -92,121 +100,87 @@ namespace HXE
        *     manifest, as part of its asset verification routine.
        */
 
-      foreach (var directory in directories)
+      foreach (var file in files)
       {
-        Info("Preparing to compile directory - " + directory);
+        var packageName = $"0x{i:D2}.bin";
+        var packagePath = Path.Combine(target, packageName);
+        var fileName    = file.Name;
+
+        using (var deflate = Open(packagePath, Create))
+        {
+          var task = new Task(() => { deflate.CreateEntryFromFile(file.FullName, fileName, Optimal); });
+
+          task.Start();
+          Info("Started package inflation - " + packageName + " - " + fileName);
+
+          while (!task.IsCompleted)
+          {
+            Wait(Resources.Progress);
+            Thread.Sleep(1000);
+          }
+
+          Info("Successfully finished package deflation");
+        }
 
         /**
          * We record the package's name on the filesystem to the manifest. This permits the INSTALLER to seek the
          * package within the source directory, and then extract its data to the target directory.
-         * 
-         * The packages are conventionally identified by the hexadecimal equivalent of the inbound integer, with ".bin" as
-         * the prefix, just like the manifest file.
+         *
+         * The packages are conventionally identified by the hexadecimal equivalent of the inbound integer, with ".bin"
+         * as the prefix, just like the manifest file.
          */
 
-        var name    = $"0x{i:x2}.bin";
-        var files   = GetFiles(directory, "*.*", TopDirectoryOnly);
-        var package = (Manifest.Package) name;
-        var archive = (File) Combine(target, name);
-
-        if (archive.Exists())
+        manifest.Packages.Add(new Manifest.Package
         {
-          Info("Deleting existing archive: " + archive);
-          archive.Delete();
-        }
-
-        /**
-         * We create an archive & package entry for the files. Note that the path does not need to be declared for the
-         * file's entry in the package, because it does not reside within a subdirectory.
-         */
-
-        using (var deflate = Open(archive.Path, Create))
-        {
-          foreach (var file in files)
+          Name = packageName,
+          Size = new FileInfo(packagePath).Length,
+          Entry = new Manifest.Package.PackageEntry
           {
-            var fileName = GetFileName(file);
+            Name = fileName,
+            Size = file.Length,
 
-            Info("Creating archive entry for file - " + file);
-            
             /**
-             * While the task is running, we inform the user that is indeed running by updating the console.
+             * We MUST declare the RELATIVE path as the value, by inferring the relative path from the absolute path
+             * which belongs to the source directory.
+             *
+             * X:\Development\HCE                  - source absolute path
+             * X:\Development\HCE\content\Gallery  - current directory path
+             *                   |---------------| - relative path to source
+             * 
+             * With the above diagram in mind, we can essentially remove the source path portion (and trailing slash)
+             * from the full absolute path, and thus declare the relative path as the package's path.
+             *
+             * NOTE: The aforementioned procedure is not carried out if this iteration's directory is the source
+             * directory itself.
              */
 
-            var task = new Task(() =>
-            {
-              deflate.CreateEntryFromFile(file, fileName, Optimal);
-            });
-
-            task.Start();
-
-            Wait("Compiling ...");
-
-            while (!task.IsCompleted)
-            {
-              System.Console.Write(".");
-              Thread.Sleep(1000);
-            }
-
-            /*
-             * For the LOADER's asset verification routine, we must create an entry for the file in the manifest. The
-             * respective entry must represent the filename and file size on the filesystem. This allows the LOADER to
-             * infer the full path on the filesystem, and compare the file's actual size versus the declared one!
-             */
-
-            Info("Creating package entry for file - " + file);
-
-            package.Entries.Add(new Manifest.Package.Entry
-            {
-              Name = fileName,
-              Size = new FileInfo(file).Length
-            });
+            Path = file.DirectoryName.Equals(source)
+              ? string.Empty
+              : file.DirectoryName.Substring(source.Length + 1)
           }
-        }
+        });
 
-        /*
-         * We MUST declare the RELATIVE path as the value, by inferring the relative path from the absolute path
-         * which belongs to the source directory.
-         *
-         * X:\Development\HCE                 - source absolute path
-         * X:\Development\HCE\content\Gallery - current directory path
-         *                   |---------------| - relative path to source
-         * 
-         * With the above diagram in mind, we can essentially remove the source path portion (and trailing slash)
-         * from the full absolute path, and thus declare the relative path as the package's path.
-         *
-         * NOTE: The aforementioned procedure is not carried out if this iteration's directory is the source directory
-         * itself.
-         */
-
-        package.Path = directory.Equals(source)
-          ? string.Empty
-          : directory.Substring(source.TrimEnd('/', '\\').Length + 1);
-
-        Info("Adding package for the current directory to the manifest");
-
-        manifest.Packages.Add(package);
+        Info("Successfully added package entry to the manifest");
 
         i++;
       }
 
-      if (manifest.Exists())
-      {
-        Info("Deleting existing manifest binary");
+      if (!manifest.Exists())
         manifest.Delete();
-      }
-
-      Info("Serialising the manifest to the filesystem");
 
       manifest.Save();
+
+      Info("Serialised manifest to the filesystem - " + manifest.Path);
 
       /**
        * For subsequent installation convenience, we will make a copy of the current CLI to the target directory.
        */
 
-      var cli = (File) GetCurrentProcess().MainModule.FileName;
+      var cli = (File) GetCurrentProcess().MainModule?.FileName;
       cli.CopyTo(target);
 
-      Done("Loader executable has been successfully copied. The packages can now be distributed and installed!");
+      Info("Copied current HXE assembly to the target directory");
+      Done("Compilation routine has been successfully completed");
     }
   }
 }

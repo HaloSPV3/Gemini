@@ -69,7 +69,7 @@ namespace HXE
 
     public void CopyTo(string target)
     {
-      System.IO.File.Copy(Path, Combine(target, Name));
+      System.IO.File.Copy(Path, Combine(target, Name), true);
     }
 
     public void WriteAllText(string contents)

@@ -119,48 +119,15 @@ namespace HXE
     /// </summary>
     public class Package
     {
-      public string      Name    { get; set; }                      // Package filename on the filesystem
-      public string      Path    { get; set; } = string.Empty;      // Path relative to root source/target dir
-      public List<Entry> Entries { get; set; } = new List<Entry>(); // Package entries == directory files
+      public string       Name  { get; set; }                       /* Package filename on the filesystem        */
+      public long         Size  { get; set; }                       /* Byte length of the file on the filesystem */
+      public PackageEntry Entry { get; set; } = new PackageEntry(); /* File contained in the package             */
 
-      /// <summary>
-      ///   Represents the inbound object as a string.
-      /// </summary>
-      /// <param name="package">
-      ///   Object to represent as string.
-      /// </param>
-      /// <returns>
-      ///   String representation of the inbound object.
-      /// </returns>
-      public static implicit operator string(Package package)
+      public class PackageEntry
       {
-        return package.Path;
-      }
-
-      /// <summary>
-      ///   Represents the inbound string as an object.
-      /// </summary>
-      /// <param name="name">
-      ///   String to represent as object.
-      /// </param>
-      /// <returns>
-      ///   Object representation of the inbound string.
-      /// </returns>
-      public static explicit operator Package(string name)
-      {
-        return new Package
-        {
-          Name = name
-        };
-      }
-
-      /// <summary>
-      ///   Package entry representing a file on the filesystem or entry in the package.
-      /// </summary>
-      public class Entry
-      {
-        public string Name { get; set; } // Filename with extension relative to dir
-        public long   Size { get; set; } // Bytes length of the entry on filesystem
+        public string Name { get; set; }                 /* Package filename on the filesystem        */
+        public string Path { get; set; } = string.Empty; /* Path relative to root source/target dir   */
+        public long   Size { get; set; }                 /* Byte length of the file on the filesystem */
       }
     }
   }
