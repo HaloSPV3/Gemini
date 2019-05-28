@@ -25,24 +25,11 @@ This section serves as documentation for the fundamental domain entities
 & logic of SPV3. For documentation on the implementations & source code,
 please review the readme.txt file in the src directory.
 
-MISCELLANEOUS
--------------
-
-The following table outlines the documentation that's not related to the
-SPV3 domain or filesystem files.
-
-  ---------------------------------------------------------------------
-  Documentation                         Description
-  ------------------------------------- -------------------------------
-  developer.txt                         Documentation for developers
-                                        who would use HXE in their
-                                        non-SPV3.2 projects.
-
-  V3 INFORMATION                        
-  ---------------------------------------------------------------------
+GENERAL & SPV3
+--------------
 
 The following table outlines the documentation focusing on information
-specific to the SPV3 programs:
+specific to the HXE:
 
   ---------------------------------------------------------------------
   Documentation                         Description
@@ -51,7 +38,7 @@ specific to the SPV3 programs:
                                         including asset verification,
                                         campaign resuming,
                                         configuration overrides and
-                                        loading SPV3.
+                                        loading HCE/SPV3.2.
 
   haloce.txt                            Rudimentary information on the
                                         HCE executable.
@@ -66,10 +53,6 @@ specific to the SPV3 programs:
                                         release procedure of SPV3.2,
                                         including distribution &
                                         installation decisions.
-
-  distributing.txt                      Documentation & instructions on
-                                        compiling, distributing, and
-                                        installing SPV3.2.
 
   exit.txt                              Documentation on the exit codes
                                         that HXE returns when its
@@ -108,4 +91,19 @@ filesystem that SPV3.2 deals with:
                                         file, which is used for storing
                                         HCE profile information &
                                         configurations.
+  ---------------------------------------------------------------------
+
+MISCELLANEOUS
+-------------
+
+The following table outlines the documentation that's not related to the
+SPV3 domain or filesystem files.
+
+  ---------------------------------------------------------------------
+  Documentation                         Description
+  ------------------------------------- -------------------------------
+  developer.txt                         Documentation for developers
+                                        who would use HXE in their
+                                        non-SPV3.2 projects.
+
   ---------------------------------------------------------------------

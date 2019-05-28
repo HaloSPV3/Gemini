@@ -136,7 +136,7 @@ namespace HXE.SPV3
       var output = new StringBuilder();
       output.AppendLine($"set f1 {(Unlock ? 8 : GetPostProcessing())}");
       output.AppendLine($"set f3 {mission}");
-      output.AppendLine($"set f5 {cinematic}");
+      output.AppendLine($"set loud_dialog_hack {cinematic}");
       output.AppendLine($"player_autoaim {autoaim}");
       output.AppendLine($"player_magnetism {magnetism}");
       output.AppendLine($"game_difficulty_set {difficulty}");
