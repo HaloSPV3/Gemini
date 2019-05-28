@@ -102,7 +102,7 @@ namespace HXE
 
       foreach (var file in files)
       {
-        var packageName = $"0x{i:D2}.bin";
+        var packageName = $"0x{i:X8}.bin";
         var packagePath = Path.Combine(target, packageName);
         var fileName    = file.Name;
 
