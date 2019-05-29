@@ -106,16 +106,25 @@ namespace HXE
         var packagePath = Path.Combine(target, packageName);
         var fileName    = file.Name;
 
-        using (var deflate = Open(packagePath, Create))
+        using (var archive = Open(packagePath, Create))
         {
-          var task = new Task(() => { deflate.CreateEntryFromFile(file.FullName, fileName, Optimal); });
+          var task = new Task(() =>
+          {
+            const CompressionLevel level = Optimal;
+            archive.CreateEntryFromFile(file.FullName, fileName, level);
+          });
+
+          /**
+           * While the task is running, we inform the user that is indeed running by updating the console. Aren't we
+           * nice people?
+           */
 
           task.Start();
-          Info("Started package inflation - " + packageName + " - " + fileName);
+          Wait("Started package deflation - " + packageName + " - " + fileName + " ...");
 
           while (!task.IsCompleted)
           {
-            Wait(Resources.Progress);
+            System.Console.Write(Resources.Progress);
             Thread.Sleep(1000);
           }
 
@@ -154,9 +163,9 @@ namespace HXE
              * directory itself.
              */
 
-            Path = file.DirectoryName.Equals(source)
+            Path = file.DirectoryName != null && file.DirectoryName.Equals(source)
               ? string.Empty
-              : file.DirectoryName.Substring(source.Length + 1)
+              : file.DirectoryName?.Substring(source.Length + 1)
           }
         });
 

@@ -120,17 +120,17 @@ namespace HXE
 
         var task = new Task(() => { ZipFile.ExtractToDirectory(archive, directory); });
 
-        task.Start();
-        Info("Started package inflation - " + package.Name + " - " + package.Entry.Name);
-
         /**
          * While the task is running, we inform the user that is indeed running by updating the console. Aren't we nice
          * people?
          */
 
+        task.Start();
+        Wait("Started package inflation - " + package.Name + " - " + package.Entry.Name + " ...");
+
         while (!task.IsCompleted)
         {
-          Wait(Resources.Progress);
+          System.Console.Write(Resources.Progress);
           Thread.Sleep(1000);
         }
 
