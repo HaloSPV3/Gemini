@@ -116,7 +116,7 @@ namespace HXE
     private static void VerifyMainAssets()
     {
       /**
-       * It is preferable to whitelist the type of files we would like to verify. The focus would be to skip any files
+       * It is preferable to blacklist the type of files we would like to skip. The focus would be to skip any files
        * which are expected to be changed.
        *
        * For example, if HCE were to be distributed with a configuration file, then changing its contents would
@@ -124,12 +124,15 @@ namespace HXE
        * the same error.
        */
 
-      var whitelist = new List<string>
+      var blacklist = new List<string>
       {
-        "hxe.exe",
-        "spv3.exe",
-        "haloce.exe",
-        ".map"
+        ".exe",
+        ".map",
+        ".txt",
+        ".cfg",
+        ".ini",
+        ".xml",
+        ".m"
       };
 
       /**
@@ -181,7 +184,9 @@ namespace HXE
 
         Info("Inferred file on the filesystem - " + package.Entry.Name);
 
-        if (whitelist.Any(package.Entry.Name.Contains)) /* skip verification if current file isn't in the whitelist */
+        var lowercaseName = package.Entry.Name.ToLower();
+        
+        if (blacklist.Any(lowercaseName.Contains)) /* skip verification if current file isn't in the whitelist */
           continue;
 
         Info("File is not whitelisted - " + package.Entry.Name);
