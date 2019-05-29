@@ -49,7 +49,7 @@ The missions are stored as their filenames in the savegame.bin file,
 without the MAP extension:
 
   Mission            Value
-  ------------------ ------------------
+  ------------------ -------------------
   SPV3 A10           spv3a10
   SPV3 A30           spv3a30
   SPV3 A50           spv3a50
@@ -64,9 +64,9 @@ without the MAP extension:
   SPV3 D30           spv3d30
   SPV3 D30 Evolved   spv3d30\_evolved
   SPV3 D40           spv3d40
-  Lumoria A          lumoria\_a
-  Lumoria B          lumoria\_b
-  Lumoria C & D      lumoria\_cd
+  Lumoria A          spv3\_lumoria\_a
+  Lumoria B          spv3\_lumoria\_b
+  Lumoria C & D      spv3\_lumoria\_cd
 
 DIFFICULTIES
 ------------

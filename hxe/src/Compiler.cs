@@ -76,9 +76,20 @@ namespace HXE
        * Given that the manifest is represented by 0x00, the subsequent packages should be represented by a >=1 ID. 
        */
 
-      var manifest = (Manifest) Path.Combine(target, Paths.Files.Manifest);
-      var files    = new DirectoryInfo(source).GetFiles("*", SearchOption.AllDirectories);
-      var i        = 0x01; /* 0x00 = manifest */
+      var manifest    = (Manifest) Path.Combine(target, Paths.Files.Manifest);
+      var files       = new DirectoryInfo(source).GetFiles("*", SearchOption.AllDirectories);
+      var i           = 0x01; /* 0x00 = manifest */
+      var compression = Optimal;
+
+      /**
+       * Yare yare daze, watashi wa aserimasu.
+       */
+
+      if (System.IO.File.Exists(Path.Combine(source, "speedwagon")))
+      {
+        Warn("No compression will be applied!");
+        compression = NoCompression;
+      }
 
       Info("Retrieved list of files - creating packages");
 
@@ -106,13 +117,15 @@ namespace HXE
         var packagePath = Path.Combine(target, packageName);
         var fileName    = file.Name;
 
+        if (System.IO.File.Exists(packagePath))
+        {
+          System.IO.File.Delete(packagePath);
+          Info("Deleted existing target package - " + packageName);
+        }
+
         using (var archive = Open(packagePath, Create))
         {
-          var task = new Task(() =>
-          {
-            const CompressionLevel level = Optimal;
-            archive.CreateEntryFromFile(file.FullName, fileName, level);
-          });
+          var task = new Task(() => { archive.CreateEntryFromFile(file.FullName, fileName, compression); });
 
           /**
            * While the task is running, we inform the user that is indeed running by updating the console. Aren't we

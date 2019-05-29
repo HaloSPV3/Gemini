@@ -101,11 +101,11 @@ namespace HXE.SPV3
             return Campaign.Mission.Spv3D30Evolved;
           case "spv3d40":
             return Campaign.Mission.Spv3D40;
-          case "lumoria_a":
+          case "spv3_lumoria_a":
             return Campaign.Mission.LumoriaA;
-          case "lumoria_b":
+          case "spv3_lumoria_b":
             return Campaign.Mission.LumoriaB;
-          case "lumoria_cd":
+          case "spv3_lumoria_cd":
             return Campaign.Mission.LumoriaCd;
           default:
             return Campaign.Mission.Spv3A10;
