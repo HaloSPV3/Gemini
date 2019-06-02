@@ -63,7 +63,6 @@ namespace SPV3
       if (!canUpdate) return;
 
       Loader.Load();
-      Assets.Load();
     }
 
     /// <summary>
@@ -163,30 +162,7 @@ namespace SPV3
         }
       }
 
-      public string      Name        { get; set; } = string.Empty;                              /* name of the update */
-      public string      Description { get; set; } = string.Empty;                              /* update description */
-      public long        Time        { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeSeconds(); /* manifest timestamp */
-      public List<Entry> Entries     { get; set; } = new List<Entry>();                         /* files for updating */
-
       public event PropertyChangedEventHandler PropertyChanged;
-
-      /// <summary>
-      ///   Updates object state using server-side metadata.
-      /// </summary>
-      public void Load()
-      {
-        using (var response = (HttpWebResponse) WebRequest.Create(Address).GetResponse())
-        using (var stream = response.GetResponseStream())
-        {
-          var update = (AssetsUpdate) new XmlSerializer(typeof(AssetsUpdate))
-            .Deserialize(stream ?? throw new Exception("Could not get response stream."));
-
-          Name        = update.Name;
-          Description = update.Description;
-          Time        = update.Time;
-          Entries     = update.Entries;
-        }
-      }
 
       /// <summary>
       ///   Conducts update on the filesystem using the current object state.
@@ -195,78 +171,17 @@ namespace SPV3
       {
         Status = "Updating SPV3 main assets ...";
 
-        foreach (var entry in Entries)
+        switch (Cli.Start($"-update \"{Address}\""))
         {
-          Status = "Updating SPV3 main asset - " + entry.Name;
-
-          var target = Combine(CurrentDirectory, entry.Path ?? string.Empty, entry.Name);
-          var backup = target + ".bak";
-
-          /**
-           * If the file exists AND is the same length as the value declared in the current entry, then it's safe to
-           * assume that the end-user has the updated file.
-           */
-
-          if (File.Exists(target))
-          {
-            if (new FileInfo(target).Length != entry.Size)
-            {
-              if (!File.Exists(backup))
-              {
-                Status = "Backing up current asset - " + entry.Name;
-                File.Move(target, backup);
-              }
-            }
-            else
-            {
-              continue;
-            }
-          }
-
-          /**
-           * We will gracefully create the relevant directories and download the file. On connection/download failure,
-           * the backed up file will be restored.
-           */
-
-          try
-          {
-            using (var client = new WebClient())
-            {
-              Status = "Preparing to update asset - " + entry.Name;
-
-              var temp = Combine(CurrentDirectory,
-                Guid.NewGuid().ToString());                        /* temporary directory */
-              var pack = Combine(temp, Guid.NewGuid().ToString()); /* compressed package  */
-              var file = Combine(temp, entry.Name);                /* package entry file  */
-
-              Directory.CreateDirectory(temp);
-
-              Status = "Downloading asset - " + entry.Name;
-              client.DownloadFile(entry.URL, pack);
-
-              Status = "Extracting asset - " + entry.Name;
-              ZipFile.ExtractToDirectory(pack, temp);
-
-              Status = "Installing asset - " + entry.Name;
-              if (entry.Path != null)
-                Directory.CreateDirectory(Combine(CurrentDirectory, entry.Path));
-
-              File.Move(file, target);
-              Directory.Delete(temp, true);
-            }
-
-            if (File.Exists(backup))
-              File.Delete(backup);
-          }
-          catch (Exception)
-          {
-            if (!File.Exists(backup)) throw;
-
-            if (File.Exists(target)) File.Delete(target);
-            File.Move(backup, target);
-
-            throw;
-          }
+          case HXE.Exit.Code.Success:
+            Status = "SPV3 update routine has gracefully succeeded.";
+            break;
+          case HXE.Exit.Code.Exception:
+            Status = "Exception has occurred. Review log file.";
+            break;
+          case HXE.Exit.Code.InvalidInstall:
+            Status = "Could not detect a legal HCE installation.";
+            break;
         }
 
         Status = "Your SPV3 assets are up to date!";
@@ -276,18 +191,6 @@ namespace SPV3
       protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
       {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-      }
-
-      /// <summary>
-      ///   Update entry object.
-      /// </summary>
-      public class Entry
-      {
-        public string URL  { get; set; } = string.Empty; /* http path for downloading the binary to the file system  */
-        public string Name { get; set; } = string.Empty; /* expected name for the binary once it has been downloaded */
-        public string Path { get; set; } = string.Empty; /* path relative to the working folder for storing the file */
-        public string Hash { get; set; } = string.Empty; /* md5 hash of the file for potential checksum verification */
-        public long   Size { get; set; } = 0;            /* byte size of the binary on for length-based verification */
       }
     }
   }

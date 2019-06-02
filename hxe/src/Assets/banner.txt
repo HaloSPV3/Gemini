@@ -17,6 +17,7 @@ HXE can be invoked with the following arguments:
       --load                 Initiates HCE/SPV3
       --install=VALUE        Installs HCE/SPV3 to destination
       --compile=VALUE        Compiles HCE/SPV3 to destination
+      --update=VALUE         Updates directory using manifest
       --console              Loads HCE with console mode
       --devmode              Loads HCE with developer mode
       --screenshot           Loads HCE with screenshot ability

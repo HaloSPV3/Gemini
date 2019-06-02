@@ -56,6 +56,9 @@ namespace HXE
 
       Info("Normalised inbound source and target paths");
 
+      Debug("Source - " + source);
+      Debug("Target - " + target);
+
       if (!Directory.Exists(source))
         throw new DirectoryNotFoundException("Source directory does not exist.");
 
@@ -87,8 +90,8 @@ namespace HXE
 
       if (System.IO.File.Exists(Path.Combine(source, "speedwagon")))
       {
-        Warn("No compression will be applied!");
         compression = NoCompression;
+        Info("No compression will be applied!");
       }
 
       Info("Retrieved list of files - creating packages");
@@ -120,28 +123,8 @@ namespace HXE
         if (System.IO.File.Exists(packagePath))
         {
           System.IO.File.Delete(packagePath);
+
           Info("Deleted existing target package - " + packageName);
-        }
-
-        using (var archive = Open(packagePath, Create))
-        {
-          var task = new Task(() => { archive.CreateEntryFromFile(file.FullName, fileName, compression); });
-
-          /**
-           * While the task is running, we inform the user that is indeed running by updating the console. Aren't we
-           * nice people?
-           */
-
-          task.Start();
-          Wait("Started package deflation - " + packageName + " - " + fileName + " ...");
-
-          while (!task.IsCompleted)
-          {
-            System.Console.Write(Resources.Progress);
-            Thread.Sleep(1000);
-          }
-
-          Info("Successfully finished package deflation");
         }
 
         /**
@@ -155,7 +138,6 @@ namespace HXE
         manifest.Packages.Add(new Manifest.Package
         {
           Name = packageName,
-          Size = new FileInfo(packagePath).Length,
           Entry = new Manifest.Package.PackageEntry
           {
             Name = fileName,
@@ -182,9 +164,55 @@ namespace HXE
           }
         });
 
-        Info("Successfully added package entry to the manifest");
+        Info("Successfully finished package inference - " + packageName + " - " + fileName);
 
         i++;
+      }
+
+      var c = 1;                       /* current package */
+      var t = manifest.Packages.Count; /* total progress */
+
+      foreach (var package in manifest.Packages)
+      {
+        var packagePath = Path.Combine(target, package.Name);
+
+        if (System.IO.File.Exists(packagePath))
+        {
+          System.IO.File.Delete(packagePath);
+          Info("Deleted existing target package - " + package.Name);
+        }
+
+        using (var archive = Open(packagePath, Create))
+        {
+          var task = new Task(() =>
+          {
+            var entryPath = Path.Combine(source, package.Entry.Path, package.Entry.Name);
+            archive.CreateEntryFromFile(entryPath, package.Entry.Name, compression);
+          });
+
+          /**
+           * While the task is running, we inform the user that is indeed running by updating the console. Aren't we
+           * nice people?
+           */
+
+          task.Start();
+
+          Wait($"Started package deflation - [{(c * 200 + t) / (t * 2):D3}%] - {package.Name} - {package.Entry.Name} ");
+
+          while (!task.IsCompleted)
+          {
+            System.Console.Write(Resources.Progress);
+            Thread.Sleep(1000);
+          }
+
+          package.Size = new FileInfo(packagePath).Length;
+
+          Info("Package size - " + package.Size);
+        }
+
+        Info("Successfully finished package deflation");
+
+        c++;
       }
 
       if (!manifest.Exists())

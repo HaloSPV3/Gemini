@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -47,6 +48,27 @@ namespace HXE
     [STAThread]
     public static void Main(string[] args)
     {
+      new Update
+      {
+        Assets = new List<Update.Asset>
+        {
+          new Update.Asset /* asset 01 */
+          {
+            Name = "chimera.dll",                                                                 /* asset to update */
+            URL  = "https://github.com/yumiris/SPV3/releases/download/2019-05-08.02/chimera.zip", /* download url    */
+            Path = "controls",                                                                    /* path in folder  */
+            Size = 8192                                                                           /* asset size      */
+          },
+          new Update.Asset /* asset 02 */
+          {
+            Name = "ui.map",                                                                     /* asset to update */
+            URL  = "https://github.com/yumiris/SPV3/releases/download/2019-05-08.02/ui.map.zip", /* download url    */
+            Path = "maps",                                                                       /* path in folder  */
+            Size = 16384                                                                         /* asset size      */
+          }
+        }
+      }.Export("manifest.xml");
+
       DisplayBanner();     /* impress our users */
       InvokeProgram(args); /* burn baby burn */
     }
@@ -101,6 +123,13 @@ namespace HXE
           s => Run(() => { Installer.Install(CurrentDirectory, s); }))
         .Add("compile=", "Compiles HCE/SPV3 to destination",
           s => Run(() => { Compiler.Compile(CurrentDirectory, s); }))
+        .Add("update=", "Updates directory using manifest",
+          s => Run(() =>
+          {
+            var update = new Update();
+            update.Import(s);
+            update.Commit();
+          }))
         .Add("console", "Loads HCE with console mode",
           s => hce.Debug.Console = true)
         .Add("devmode", "Loads HCE with developer mode",
@@ -132,12 +161,13 @@ namespace HXE
       var input = options.Parse(args);
 
       /**
-       * Implicitly invoke the HXE kernel when no install/compile/load command is passed.
+       * Implicitly invoke the HXE kernel when no install/compile/load/update command is passed.
        */
 
       if (!input.Contains("load")    &&
           !input.Contains("install") &&
-          !input.Contains("compile"))
+          !input.Contains("compile") &&
+          !input.Contains("update"))
         Run(() => { Kernel.Bootstrap(hce); });
 
       /**

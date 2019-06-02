@@ -61,19 +61,19 @@ namespace HXE
       if (!configuration.Kernel.SkipVerifyMainAssets)
         VerifyMainAssets();
       else
-        Info("Skipping Kernel.VerifyMainAssets");
+        Info("Skipped Kernel.VerifyMainAssets");
 
       if (configuration.Kernel.EnableSpv3KernelMode)
       {
         if (!configuration.Kernel.SkipInvokeCoreTweaks)
           InvokeCoreTweaks(executable);
         else
-          Info("Skipping Kernel.InvokeCoreTweaks");
+          Info("Skipped Kernel.InvokeCoreTweaks");
 
         if (!configuration.Kernel.SkipResumeCheckpoint)
           ResumeCheckpoint(executable);
         else
-          Info("Skipping Kernel.ResumeCheckpoint");
+          Info("Skipped Kernel.ResumeCheckpoint");
 
         /**
          * The main difference between SPV3.1 and SPV3.2 is what the f1 variable in the initiation file is used for. In
@@ -82,32 +82,31 @@ namespace HXE
 
         if (configuration.Kernel.EnableSpv3LegacyMode)
         {
-          Info("Using SPV3.1 initiation mode");
           SetSpv31InitMode(configuration);
+          Info("Enabled SPV3.1 initiation mode");
         }
         else
         {
-          Info("Using SPV3.2 initiation mode");
           if (!configuration.Kernel.SkipSetShadersConfig)
             SetShadersConfig(configuration);
           else
-            Info("Skipping Kernel.SkipSetShadersConfig");
+            Info("Skipped Kernel.SkipSetShadersConfig");
         }
       }
       else
       {
-        Info("Skipping Kernel.EnableSpv3KernelMode");
+        Info("Skipped Kernel.EnableSpv3KernelMode");
       }
 
       if (!configuration.Kernel.SkipPatchLargeAAware)
         PatchLargeAAware(executable);
       else
-        Info("Skipping Kernel.SkipPatchLargeAAware");
+        Info("Skipped Kernel.SkipPatchLargeAAware");
 
       if (!configuration.Kernel.SkipInvokeExecutable)
         InvokeExecutable(executable);
       else
-        Info("Skipping Kernel.InvokeExecutable");
+        Info("Skipped Kernel.InvokeExecutable");
     }
 
     /// <summary>
@@ -185,7 +184,7 @@ namespace HXE
         Info("Inferred file on the filesystem - " + package.Entry.Name);
 
         var lowercaseName = package.Entry.Name.ToLower();
-        
+
         if (blacklist.Any(lowercaseName.Contains)) /* skip verification if current file isn't in the whitelist */
           continue;
 
@@ -211,21 +210,22 @@ namespace HXE
       {
         if (executable.Video.Width == 0 && executable.Video.Height == 0)
         {
-          Info("Dimensions not specified - applying native resolution");
-
           executable.Video.Width  = (ushort) PrimaryScreen.Bounds.Width;
           executable.Video.Height = (ushort) PrimaryScreen.Bounds.Height;
 
-          Debug("Executable -vidmode width  - " + executable.Video.Width);
-          Debug("Executable -vidmode height - " + executable.Video.Height);
+          Info("Dimensions not specified - applied native resolution");
+          Info("Executable -vidmode width  - " + executable.Video.Width);
+          Info("Executable -vidmode height - " + executable.Video.Height);
         }
 
         var lastprof = (LastProfile) Combine(executable.Profile.Path, Files.LastProfile);
 
-        if (!lastprof.Exists()) return;
+        if (!lastprof.Exists())
+          return;
 
-        Info("Deserialising found lastprof file");
         lastprof.Load();
+
+        Info("Deserialised found lastprof file");
 
         var profile = (Profile) Combine(
           executable.Profile.Path,
@@ -234,17 +234,18 @@ namespace HXE
           Files.Profile
         );
 
-        if (!profile.Exists()) return;
+        if (!profile.Exists())
+          return;
 
-        Info("Deserialising inferred HCE profile");
         profile.Load();
+
+        Info("Deserialised inferred HCE profile");
 
         foreach (var availableProfile in Profile.List(executable.Profile.Path))
           Debug(availableProfile.Details.Name.Equals(profile.Details.Name)
             ? $"Available profile: {availableProfile.Details.Name} << SELECTED PROFILE"
             : $"Available profile: {availableProfile.Details.Name}");
 
-        Info("Applying profile video settings");
         profile.Video.Resolution.Width  = executable.Video.Width;
         profile.Video.Resolution.Height = executable.Video.Height;
         profile.Video.FrameRate         = VideoFrameRate.VsyncOff; /* ensure no FPS locking */
@@ -254,13 +255,17 @@ namespace HXE
         profile.Video.Effects.Shadows   = true;
         profile.Video.Effects.Decals    = true;
 
-        Info("Applying profile audio settings");
+        Info("Applied profile video patches");
+
         profile.Audio.Quality = AudioQuality.High;
         profile.Audio.Variety = AudioVariety.High;
 
-        Info("Saving profile data to the filesystem");
+        Info("Applied profile audio patches");
+
         profile.Save();
         profile.Load();
+
+        Info("Saved profile data to the filesystem");
 
         Debug("Patched video resolution width  - " + profile.Video.Resolution.Width);
         Debug("Patched video resolution height - " + profile.Video.Resolution.Height);
@@ -288,10 +293,12 @@ namespace HXE
       {
         var lastprof = (LastProfile) Combine(executable.Profile.Path, Files.LastProfile);
 
-        if (!lastprof.Exists()) return;
+        if (!lastprof.Exists())
+          return;
 
-        Info("Deserialising found lastprof file");
         lastprof.Load();
+
+        Info("Deserialised found lastprof file");
 
         var playerDat = (Progress) Combine(
           executable.Profile.Path,
@@ -300,17 +307,21 @@ namespace HXE
           Files.Progress
         );
 
-        if (!playerDat.Exists()) return;
+        if (!playerDat.Exists())
+          return;
 
-        Info("Deserialising inferred progress binary");
         playerDat.Load();
 
-        Info("Updating the initiation file with campaign progress");
+        Info("Deserialised inferred progress binary");
+
         RootInitc.Mission    = playerDat.Mission;
         RootInitc.Difficulty = playerDat.Difficulty;
 
-        Info("Saving campaign progress to the initiation file");
+        Info("Updated the initiation file with campaign progress");
+
         RootInitc.Save();
+
+        Info("Saved campaign progress to the initiation file");
 
         Debug("Resumed campaign mission    - " + playerDat.Mission);
         Debug("Resumed campaign difficulty - " + playerDat.Difficulty);
@@ -328,11 +339,13 @@ namespace HXE
     {
       try
       {
-        Info("Updating the initiation file with SPV3.1 maps unlocking code");
         RootInitc.Unlock = configuration.Kernel.EnableSpv3LegacyMode;
 
-        Info("Saving unlocking code to the initiation file");
+        Info("Updated the initiation file with SPV3.1 maps unlocking code");
+
         RootInitc.Save();
+
+        Info("Saved unlocking code to the initiation file");
       }
       catch (UnauthorizedAccessException e)
       {
@@ -347,18 +360,20 @@ namespace HXE
     {
       try
       {
-        Info("Updating the initiation file with the post-processing settings");
         RootInitc.PostProcessing = configuration.PostProcessing;
 
-        Info("Saving post-processing settings to the initiation file");
+        Info("Updated the initiation file with the post-processing settings");
+
         RootInitc.Save();
 
-        Info("Applied PP settings for MXAO        - " + RootInitc.PostProcessing.Mxao);
-        Info("Applied PP settings for DOF         - " + RootInitc.PostProcessing.Dof);
-        Info("Applied PP settings for Motion Blur - " + RootInitc.PostProcessing.MotionBlur);
-        Info("Applied PP settings for Lens Flares - " + RootInitc.PostProcessing.DynamicLensFlares);
-        Info("Applied PP settings for Volumetrics - " + RootInitc.PostProcessing.Volumetrics);
-        Info("Applied PP settings for Lens Dirt   - " + RootInitc.PostProcessing.LensDirt);
+        Info("Saved post-processing settings to the initiation file");
+
+        Debug("Applied PP settings for MXAO        - " + RootInitc.PostProcessing.Mxao);
+        Debug("Applied PP settings for DOF         - " + RootInitc.PostProcessing.Dof);
+        Debug("Applied PP settings for Motion Blur - " + RootInitc.PostProcessing.MotionBlur);
+        Debug("Applied PP settings for Lens Flares - " + RootInitc.PostProcessing.DynamicLensFlares);
+        Debug("Applied PP settings for Volumetrics - " + RootInitc.PostProcessing.Volumetrics);
+        Debug("Applied PP settings for Lens Dirt   - " + RootInitc.PostProcessing.LensDirt);
       }
       catch (UnauthorizedAccessException e)
       {
@@ -373,7 +388,6 @@ namespace HXE
     {
       try
       {
-        Info("Patching HCE executable with LAA flag");
         using (var fs = new FileStream(executable.Path, FileMode.Open, FileAccess.ReadWrite))
         using (var bw = new BinaryWriter(fs))
         {

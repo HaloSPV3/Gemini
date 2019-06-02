@@ -39,7 +39,7 @@ namespace SPV3
 
     private void UpdateAssets(object sender, RoutedEventArgs e)
     {
-      Task.Run(() => { _update.Assets.Commit(); });
+      _update.Assets.Commit();
     }
 
     private async void UpdateLoader()

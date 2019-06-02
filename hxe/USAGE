@@ -47,8 +47,9 @@ PARAMETERS
 COMMANDS
 
   Argument                       Description
-  ------------------------------ ------------------------------
+  ------------------------------ ----------------------------------
   /load                          Initiates HCE/SPV3
   /install "C:\path\to\target"   Installs SPV3 to destination
   /compile "C:\path\to\target"   Compiles SPV3 to destination
+  /update "http://path/to/xml"   Updates directory using manifest
   /config                        Opens the configuration UI
