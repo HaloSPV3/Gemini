@@ -386,16 +386,38 @@ namespace HXE
     /// </summary>
     private static void PatchLargeAAware(Executable executable)
     {
+      const int value  = (byte) 0xF2; /* LAA flag   */
+      const int offset = 0x136;       /* LAA offset */
+
       try
       {
         using (var fs = new FileStream(executable.Path, FileMode.Open, FileAccess.ReadWrite))
-        using (var bw = new BinaryWriter(fs))
+        using (var ms = new MemoryStream(0x24B000))
+        using (var bw = new BinaryWriter(ms))
+        using (var br = new BinaryReader(ms))
         {
-          fs.Position = 0x136;
-          bw.Write((byte) 0x2F);
-        }
+          ms.Position = 0;
+          fs.Position = 0;
+          fs.CopyTo(ms);
 
-        Info("Applied LAA patch to the HCE executable");
+          ms.Position = offset;
+
+          if (br.ReadByte() != value)
+          {
+            ms.Position -= 1; /* restore position */
+            bw.Write(value);  /* patch LAA flag   */
+
+            fs.Position = 0;
+            ms.Position = 0;
+            ms.CopyTo(fs);
+
+            Info("Applied LAA patch to the HCE executable");
+          }
+          else
+          {
+            Info("HCE executable already patched with LAA");
+          }
+        }
       }
       catch (Exception e)
       {
