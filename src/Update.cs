@@ -146,7 +146,7 @@ namespace SPV3
     /// </summary>
     public class AssetsUpdate : INotifyPropertyChanged
     {
-      private const string Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.xml";
+      private const string Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe";
 
       private string _status = "Awaiting user input...";
 
