@@ -48,27 +48,6 @@ namespace HXE
     [STAThread]
     public static void Main(string[] args)
     {
-      new Update
-      {
-        Assets = new List<Update.Asset>
-        {
-          new Update.Asset /* asset 01 */
-          {
-            Name = "chimera.dll",                                                                 /* asset to update */
-            URL  = "https://github.com/yumiris/SPV3/releases/download/2019-05-08.02/chimera.zip", /* download url    */
-            Path = "controls",                                                                    /* path in folder  */
-            Size = 8192                                                                           /* asset size      */
-          },
-          new Update.Asset /* asset 02 */
-          {
-            Name = "ui.map",                                                                     /* asset to update */
-            URL  = "https://github.com/yumiris/SPV3/releases/download/2019-05-08.02/ui.map.zip", /* download url    */
-            Path = "maps",                                                                       /* path in folder  */
-            Size = 16384                                                                         /* asset size      */
-          }
-        }
-      }.Export("manifest.xml");
-
       DisplayBanner();     /* impress our users */
       InvokeProgram(args); /* burn baby burn */
     }

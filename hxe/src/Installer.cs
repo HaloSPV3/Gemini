@@ -96,11 +96,6 @@ namespace HXE
           throw new FileNotFoundException("Package does not exist in the source directory - " + package.Name);
 
         Info("Package exists - " + package.Name);
-
-        if (package.Size != new FileInfo(archive).Length)
-          throw new AssetException("Asset size mismatch - " + package.Name);
-
-        Info("Length matches - " + package.Name);
       }
 
       var c = 1;                       /* current package */
