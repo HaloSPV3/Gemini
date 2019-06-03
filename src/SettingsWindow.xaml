@@ -304,6 +304,7 @@
                               Header="General">
                         <StackPanel>
                             <CheckBox Content="GBuffer Enabled"
+                                      IsEnabled="False"
                                       IsChecked="{Binding OpenSauce.GBuffer}" />
                         </StackPanel>
                     </GroupBox>
@@ -314,6 +315,7 @@
                               Header="Engine Upgrades">
                         <StackPanel>
                             <CheckBox Content="Increase max rendered triangles"
+                                      IsEnabled="False"
                                       IsChecked="{Binding OpenSauce.IncreaseMaxRenderedTriangles}" />
                         </StackPanel>
                     </GroupBox>
@@ -371,14 +373,18 @@
                               Header="Post-Processing">
                         <StackPanel>
                             <CheckBox Content="Motion Blur"
+                                      IsEnabled="False"
                                       IsChecked="{Binding OpenSauce.MotionBlur}" />
                             <CheckBox Content="Bloom"
                                       IsChecked="{Binding OpenSauce.Bloom}" />
                             <CheckBox Content="Anti Aliasing"
+                                      IsEnabled="False"
                                       IsChecked="{Binding OpenSauce.AntiAliasing}" />
                             <CheckBox Content="External Effects"
+                                      IsEnabled="False"
                                       IsChecked="{Binding OpenSauce.ExternalEffects}" />
                             <CheckBox Content="Map Effects"
+                                      IsEnabled="False"
                                       IsChecked="{Binding OpenSauce.MapEffects}" />
                         </StackPanel>
                     </GroupBox>
@@ -389,8 +395,10 @@
                         <GroupBox Header="Internet">
                             <StackPanel>
                                 <CheckBox Content="Check for game updates"
+                                          IsEnabled="False"
                                           IsChecked="{Binding OpenSauce.CheckForGameUpdates}" />
                                 <CheckBox Content="Map Downloading"
+                                          IsEnabled="False"
                                           IsChecked="{Binding OpenSauce.MapDownloading}" />
                             </StackPanel>
                         </GroupBox>
@@ -398,6 +406,7 @@
                         <GroupBox Header="Map Files">
                             <StackPanel>
                                 <CheckBox Content="Look for .yelo maps first"
+                                          IsEnabled="False"
                                           IsChecked="{Binding OpenSauce.LookForYeloMapsFirst}" />
                             </StackPanel>
                         </GroupBox>
