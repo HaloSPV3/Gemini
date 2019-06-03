@@ -19,14 +19,13 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Xml.Serialization;
 using SPV3.Annotations;
 using static System.Environment;
@@ -131,7 +130,9 @@ namespace SPV3
 
       public void Commit()
       {
+        MessageBox.Show("Please replace this loader with the contents from the ZIP you will download!");
         Process.Start(Address);
+        Exit(0);
       }
 
       [NotifyPropertyChangedInvocator]
