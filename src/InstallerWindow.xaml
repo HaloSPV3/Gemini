@@ -32,21 +32,33 @@
         ResizeMode="CanMinimize"
         FontFamily="Consolas">
     <StackPanel Margin="10">
-        <!-- Browse Target -->
-        <DockPanel Margin="0,1,0,0">
-            <Label>
-                Target:
-            </Label>
-            <Button DockPanel.Dock="Right" Click="BrowseTarget">
-                Browse
+        <!-- Halo CE -->
+        <GroupBox Header="1. HCE">
+            <!-- Download -->
+            <Button Click="Download" Margin="0,1,0,0">
+                Download HCE
             </Button>
-            <TextBox Name="Target" Margin="0,0,1,0" />
-        </DockPanel>
+        </GroupBox>
 
-        <!-- Install -->
-        <Button Click="Install" Margin="0,1,0,0">
-            Install
-        </Button>
+        <!-- SPV3 -->
+        <GroupBox Header="2. SPV3">
+            <StackPanel>
+                <!-- Browse Target -->
+                <DockPanel Margin="0,1,0,0">
+                    <Label>
+                        Target:
+                    </Label>
+                    <Button DockPanel.Dock="Right" Click="BrowseTarget">
+                        Browse
+                    </Button>
+                    <TextBox Name="Target" Margin="0,0,1,0" />
+                </DockPanel>
+                <!-- Install -->
+                <Button Click="Install" Margin="0,1,0,0">
+                    Install SPV3
+                </Button>
+            </StackPanel>
+        </GroupBox>
 
         <!-- Status -->
         <Label Name="Status" HorizontalAlignment="Center" Margin="0,10,0,0">

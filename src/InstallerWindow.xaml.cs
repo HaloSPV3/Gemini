@@ -83,5 +83,10 @@ namespace SPV3
           break;
       }
     }
+
+    private void Download(object sender, RoutedEventArgs e)
+    {
+      Process.Start("http://hce.halomaps.org/index.cfm?fid=410");
+    }
   }
 }
