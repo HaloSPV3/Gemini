@@ -386,8 +386,8 @@ namespace HXE
     /// </summary>
     private static void PatchLargeAAware(Executable executable)
     {
-      const int value  = (byte) 0xF2; /* LAA flag   */
-      const int offset = 0x136;       /* LAA offset */
+      const byte value  = 0x2F;  /* LAA flag   */
+      const long offset = 0x136; /* LAA offset */
 
       try
       {
