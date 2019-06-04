@@ -20,6 +20,7 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using HXE;
 using SPV3.Annotations;
@@ -111,12 +112,20 @@ namespace SPV3
     public void Start(string args = null)
     {
       var configuration = (Configuration) HXE.Paths.Files.Configuration;
+      var openSauce     = (OpenSauce) HXE.Paths.Files.OpenSauce;
 
       if (configuration.Exists())
       {
         configuration.Load();
         configuration.Kernel.EnableSpv3KernelMode = true;
         configuration.Save();
+      }
+
+      if (openSauce.Exists())
+      {
+        openSauce.Load();
+        openSauce.HUD.ScaleHUD = true;
+        openSauce.Save();
       }
 
       Status = "Installing SPV3 ...";
