@@ -18,6 +18,8 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -51,11 +53,23 @@ namespace SPV3
     {
       Status.Content = "Installing SPV3 ...";
 
-      var target = Combine(Target.Text, "data");
+      var process = Start(new ProcessStartInfo
+      {
+        FileName  = Combine(CurrentDirectory, "hxe.exe"),
+        Arguments = $"/install \"{Target.Text}\""
+      });
 
-      switch (Cli.Start($"/compile \"{target}\""))
+      if (process == null)
+        throw new NullReferenceException("Could not construct CLI process.");
+
+      process.WaitForExit();
+      var exit = (Exit.Code) process.ExitCode;
+
+      switch (exit)
       {
         case Exit.Code.Success:
+          var target = Combine(Target.Text, "data");
+
           Copy(Combine(target, "hxe.exe"), Combine(Target.Text, "hxe.exe"));
 
           var cli = (File) GetCurrentProcess().MainModule.FileName;

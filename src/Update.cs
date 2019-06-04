@@ -27,9 +27,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Xml.Serialization;
+using HXE;
 using SPV3.Annotations;
 using static System.Environment;
 using static System.IO.Path;
+using File = System.IO.File;
 
 namespace SPV3
 {
@@ -172,7 +174,19 @@ namespace SPV3
       {
         Status = "Updating SPV3 main assets ...";
 
-        switch (Cli.Start($"-update \"{Address}\""))
+        var process = Process.Start(new ProcessStartInfo
+        {
+          FileName  = Combine(CurrentDirectory, "hxe.exe"),
+          Arguments = $"-update \"{Address}\""
+        });
+
+        if (process == null)
+          throw new NullReferenceException("Could not construct CLI process.");
+
+        process.WaitForExit();
+        var exit = (Exit.Code) process.ExitCode;
+
+        switch (exit)
         {
           case HXE.Exit.Code.Success:
             Status = "SPV3 update routine has gracefully succeeded.";
