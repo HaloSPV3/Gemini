@@ -125,6 +125,7 @@ namespace SPV3
       {
         openSauce.Load();
         openSauce.HUD.ScaleHUD = true;
+        openSauce.HUD.ShowHUD  = true;
         openSauce.Save();
       }
 
