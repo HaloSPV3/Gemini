@@ -112,7 +112,7 @@ namespace SPV3
     public void Start(string args = null)
     {
       var configuration = (Configuration) HXE.Paths.Files.Configuration;
-      var openSauce     = (OpenSauce) HXE.Paths.Files.OpenSauce;
+      var openSauce     = (OpenSauce) Paths.Files.OpenSauce;
 
       if (configuration.Exists())
       {
