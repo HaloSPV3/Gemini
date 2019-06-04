@@ -115,19 +115,16 @@ namespace SPV3
       var openSauce     = (OpenSauce) Paths.Files.OpenSauce;
 
       if (configuration.Exists())
-      {
         configuration.Load();
-        configuration.Kernel.EnableSpv3KernelMode = true;
-        configuration.Save();
-      }
 
       if (openSauce.Exists())
-      {
         openSauce.Load();
-        openSauce.HUD.ScaleHUD = true;
-        openSauce.HUD.ShowHUD  = true;
-        openSauce.Save();
-      }
+
+      configuration.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
+      openSauce.HUD.ScaleHUD                    = true; /* fixes menu stretching  */
+      openSauce.HUD.ShowHUD                     = true; /* fixes menu stretching  */
+      configuration.Save();
+      openSauce.Save();
 
       Status = "Installing SPV3 ...";
 
