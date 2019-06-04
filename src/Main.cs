@@ -20,15 +20,14 @@
 
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using HXE;
+using HXE.HCE;
 using SPV3.Annotations;
 using static System.Environment;
 using static System.IO.Directory;
 using static System.IO.File;
 using static System.IO.Path;
-using Exit = HXE.Exit;
 using File = System.IO.File;
 
 namespace SPV3
@@ -109,7 +108,7 @@ namespace SPV3
     /// <summary>
     ///   Invokes SPV3 through the HXE loader.
     /// </summary>
-    public void Start(string args = null)
+    public void Start(bool window = false)
     {
       var configuration = (Configuration) HXE.Paths.Files.Configuration;
       var openSauce     = (OpenSauce) Paths.Files.OpenSauce;
@@ -126,25 +125,26 @@ namespace SPV3
       configuration.Save();
       openSauce.Save();
 
-      Status = "Installing SPV3 ...";
-
-      switch (Cli.Start(args))
+      try
       {
-        case Exit.Code.Success:
-          Status = "SPV3 loading routine has gracefully succeeded.";
-          break;
-        case Exit.Code.Exception:
-          Status = "Exception has occurred. Review log file.";
-          break;
-        case Exit.Code.InvalidInstall:
-          Status = "Could not detect a legal HCE installation.";
-          break;
-      }
-    }
+        Status = "Starting SPV3...";
 
-    public void StartWindow()
-    {
-      Start("-window");
+        var executable = Executable.Detect();
+
+        executable.Debug.Console    = true;
+        executable.Debug.Developer  = true;
+        executable.Debug.Screenshot = true;
+        executable.Video.Window     = window;
+        executable.Profile.Path     = Paths.Directories.Data;
+
+        executable.Start();
+
+        Status = "Successfully loaded SPV3!";
+      }
+      catch (Exception e)
+      {
+        Status = e.Message;
+      }
     }
 
     [NotifyPropertyChangedInvocator]
