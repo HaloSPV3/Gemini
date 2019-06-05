@@ -78,6 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Cli.cs" />
     <Compile Include="CompilerWindow.xaml.cs">
       <DependentUpon>CompilerWindow.xaml</DependentUpon>
     </Compile>
