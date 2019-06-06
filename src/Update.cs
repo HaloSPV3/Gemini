@@ -133,6 +133,7 @@ namespace SPV3
       {
         MessageBox.Show("Please replace this loader with the contents from the ZIP you will download!");
         Process.Start(Address);
+        Process.Start(CurrentDirectory);
         Exit(0);
       }
 
