@@ -123,6 +123,7 @@ namespace SPV3
       configuration.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
       openSauce.HUD.ScaleHUD                    = true; /* fixes menu stretching  */
       openSauce.HUD.ShowHUD                     = true; /* fixes menu stretching  */
+      openSauce.Camera.CalculateFOV();                  /* imposes initial fov    */
       configuration.Save();
       openSauce.Save();
 
