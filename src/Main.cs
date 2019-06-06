@@ -22,6 +22,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using HXE;
+using HXE.SPV3;
 using SPV3.Annotations;
 using static System.Environment;
 using static System.IO.Directory;
@@ -112,6 +113,7 @@ namespace SPV3
     {
       var configuration = (Configuration) HXE.Paths.Configuration;
       var openSauce     = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory);
+      var chimera       = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);
 
       if (configuration.Exists())
         configuration.Load();
@@ -120,6 +122,15 @@ namespace SPV3
         openSauce.Load();
       else
         openSauce.Camera.CalculateFOV(); /* imposes initial fov  */
+
+      if (chimera.Exists())
+      {
+        chimera.Load();
+        chimera.Interpolation        = 9;    /* enhancements */
+        chimera.AnisotropicFiltering = true; /* enhancements */
+        chimera.UncapCinematic       = true; /* enhancements */
+        chimera.BlockLOD             = true; /* enhancements */
+      }
 
       configuration.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
       openSauce.HUD.ScaleHUD                    = true; /* fixes menu stretching  */
