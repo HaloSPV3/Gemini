@@ -76,6 +76,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SPV3\Campaign.cs" />
+    <Compile Include="SPV3\Chimera.cs" />
     <Compile Include="SPV3\Initiation.cs" />
     <Compile Include="SPV3\PostProcessing.cs" />
     <Compile Include="SPV3\Progress.cs" />

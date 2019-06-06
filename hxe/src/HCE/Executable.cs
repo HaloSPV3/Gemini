@@ -38,7 +38,7 @@ namespace HXE.HCE
 
     public static Executable Detect()
     {
-      const string hce = Paths.Files.Executable;
+      const string hce = Paths.HCE.Executable;
 
       /**
        * Detect based on the current directory.
@@ -105,14 +105,14 @@ namespace HXE.HCE
       }
 
       /**
-       * Detect based on SPV3 installation path.
+       * Detect based on installation path of a HXE packaged mod.
        */
 
       {
-        if (!System.IO.File.Exists(Paths.Files.Installation))
+        if (!System.IO.File.Exists(Paths.Installation))
           throw new FileNotFoundException("Could not detect executable on the filesystem.");
 
-        var spv3exe = System.IO.Path.Combine(System.IO.File.ReadAllText(Paths.Files.Installation).TrimEnd('\n'), hce);
+        var spv3exe = System.IO.Path.Combine(System.IO.File.ReadAllText(Paths.Installation).TrimEnd('\n'), hce);
 
         if (System.IO.File.Exists(spv3exe))
           return (Executable) spv3exe;
@@ -242,7 +242,7 @@ namespace HXE.HCE
 
     public class ProfileOptions
     {
-      public string Path { get; set; } = Paths.Directories.HCE;
+      public string Path { get; set; } = Paths.HCE.Profiles;
     }
   }
 }

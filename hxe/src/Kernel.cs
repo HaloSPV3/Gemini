@@ -44,14 +44,14 @@ namespace HXE
      * Inic.txt can be located across multiple locations on the filesystem; however, HCE only deals with the one in
      * the working directory -- hence the name!
      */
-    private static readonly Initiation RootInitc = (Initiation) Combine(CurrentDirectory, Files.Initiation);
+    private static readonly Initiation RootInitc = (Initiation) Combine(CurrentDirectory, Paths.HCE.Initiation);
 
     /// <summary>
     ///   Invokes the HCE loading procedure.
     /// </summary>
     public static void Bootstrap(Executable executable)
     {
-      var configuration = (Configuration) Files.Configuration;
+      var configuration = (Configuration) Paths.Configuration;
 
       if (!configuration.Exists())
         configuration.Save(); /* gracefully create new configuration */
@@ -155,7 +155,7 @@ namespace HXE
        *            + ----------------------------------- Working directory
        */
 
-      var manifest = (Manifest) Combine(CurrentDirectory, Files.Manifest);
+      var manifest = (Manifest) Combine(CurrentDirectory, Paths.Manifest);
 
       /**
        * This shouldn't be an issue in conventional HCE installations; however, for existing/current SPV3 installations
@@ -218,7 +218,7 @@ namespace HXE
           Info("Executable -vidmode height - " + executable.Video.Height);
         }
 
-        var lastprof = (LastProfile) Combine(executable.Profile.Path, Files.LastProfile);
+        var lastprof = (LastProfile) Custom.LastProfile(executable.Profile.Path);
 
         if (!lastprof.Exists())
           return;
@@ -227,12 +227,7 @@ namespace HXE
 
         Info("Deserialised found lastprof file");
 
-        var profile = (Profile) Combine(
-          executable.Profile.Path,
-          Directories.Profiles,
-          lastprof.Profile,
-          Files.Profile
-        );
+        var profile = (Profile) Custom.Profile(executable.Profile.Path, lastprof.Profile);
 
         if (!profile.Exists())
           return;
@@ -291,7 +286,7 @@ namespace HXE
     {
       try
       {
-        var lastprof = (LastProfile) Combine(executable.Profile.Path, Files.LastProfile);
+        var lastprof = (LastProfile) Custom.LastProfile(executable.Profile.Path);
 
         if (!lastprof.Exists())
           return;
@@ -300,22 +295,17 @@ namespace HXE
 
         Info("Deserialised found lastprof file");
 
-        var playerDat = (Progress) Combine(
-          executable.Profile.Path,
-          Directories.Profiles,
-          lastprof.Profile,
-          Files.Progress
-        );
+        var progress = (Progress) Custom.Progress(executable.Profile.Path, lastprof.Profile);
 
-        if (!playerDat.Exists())
+        if (!progress.Exists())
           return;
 
-        playerDat.Load();
+        progress.Load();
 
         Info("Deserialised inferred progress binary");
 
-        RootInitc.Mission    = playerDat.Mission;
-        RootInitc.Difficulty = playerDat.Difficulty;
+        RootInitc.Mission    = progress.Mission;
+        RootInitc.Difficulty = progress.Difficulty;
 
         Info("Updated the initiation file with campaign progress");
 
@@ -323,8 +313,8 @@ namespace HXE
 
         Info("Saved campaign progress to the initiation file");
 
-        Debug("Resumed campaign mission    - " + playerDat.Mission);
-        Debug("Resumed campaign difficulty - " + playerDat.Difficulty);
+        Debug("Resumed campaign mission    - " + progress.Mission);
+        Debug("Resumed campaign difficulty - " + progress.Difficulty);
       }
       catch (UnauthorizedAccessException e)
       {

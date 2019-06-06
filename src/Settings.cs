@@ -54,8 +54,7 @@ namespace SPV3
 
   public class MainSettings : INotifyPropertyChanged
   {
-    private readonly Configuration _configuration =
-      (Configuration) HXE.Paths.Files.Configuration;
+    private readonly Configuration _configuration = (Configuration) HXE.Paths.Configuration;
 
     private ColorBlindModeOptions   _colorBlind;
     private DofOptions              _dof;
@@ -417,7 +416,7 @@ namespace SPV3
 
   public class OpenSauceSettings : INotifyPropertyChanged
   {
-    private readonly OpenSauce _openSauce = (OpenSauce) Paths.Files.OpenSauce;
+    private readonly OpenSauce _openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory);
     private          bool      _antiAliasing;
     private          bool      _bloom;
     private          bool      _checkForGameUpdates;

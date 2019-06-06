@@ -91,6 +91,10 @@ filesystem that SPV3.2 deals with:
                                         file, which is used for storing
                                         HCE profile information &
                                         configurations.
+
+  chimera.txt                           Documentation on the Chimera
+                                        configuration file, which is
+                                        used for persistent user data.
   ---------------------------------------------------------------------
 
 MISCELLANEOUS

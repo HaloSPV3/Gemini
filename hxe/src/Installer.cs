@@ -22,10 +22,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
-using HXE.Exceptions;
 using HXE.Properties;
 using static HXE.Console;
-using static HXE.Paths.Files;
 
 namespace HXE
 {
@@ -67,7 +65,7 @@ namespace HXE
 
       Info("Gracefully created target directory");
 
-      var manifest = (Manifest) Path.Combine(source, Paths.Files.Manifest);
+      var manifest = (Manifest) Path.Combine(source, Paths.Manifest);
 
       if (!manifest.Exists())
         throw new FileNotFoundException("Manifest file does not exist in the source directory.");
@@ -147,7 +145,7 @@ namespace HXE
 
       new File
       {
-        Path = Installation
+        Path = Paths.Installation
       }.WriteAllText(target);
 
       Info("Wrote the target path to the installation file");

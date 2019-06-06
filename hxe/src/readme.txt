@@ -191,6 +191,9 @@ File type:
   Manifest         Represents the manifest that contains metadata for
                    the compiled & installed assets. This permits HXE to
                    install packages and verify the files on loading.
+
+  Chimera          Represents the configuration binary for an old copy
+                   of Chimera. This is mainly used for SPV3.1 & 3.2.
   ---------------------------------------------------------------------
 
 Documentation on any of the aforementioned files can be found in the doc

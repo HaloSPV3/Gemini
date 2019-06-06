@@ -25,7 +25,6 @@ using System.Linq;
 using System.Text;
 using static System.IO.SearchOption;
 using static HXE.Console;
-using static HXE.Paths;
 
 namespace HXE.HCE
 {
@@ -313,22 +312,14 @@ namespace HXE.HCE
     /// </exception>
     public static Profile Detect()
     {
-      var lastprof = (LastProfile) System.IO.Path.Combine(
-        Directories.HCE,
-        Files.LastProfile
-      );
+      var lastprof = (LastProfile) Paths.HCE.LastProfile;
 
       if (!lastprof.Exists())
         throw new FileNotFoundException("Cannot detect profile - lastprof.txt does not exist.");
 
       lastprof.Load();
 
-      var profile = (Profile) System.IO.Path.Combine(
-        Directories.HCE,
-        Directories.Profiles,
-        lastprof.Profile,
-        Files.Profile
-      );
+      var profile = (Profile) Paths.HCE.Profile(lastprof.Profile);
 
       if (!profile.Exists())
         throw new FileNotFoundException("Cannot load detected profile - its blam.sav does not exist.");
@@ -375,7 +366,7 @@ namespace HXE.HCE
     /// </returns>
     public static List<Profile> List()
     {
-      return List(System.IO.Path.Combine(Directories.HCE, Directories.Profiles));
+      return List(Paths.HCE.Profiles);
     }
 
     /// <summary>

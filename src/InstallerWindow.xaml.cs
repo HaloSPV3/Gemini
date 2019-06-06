@@ -22,6 +22,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Forms;
+using HXE;
 using static System.Environment;
 using static System.IO.Path;
 using Exit = HXE.Exit;

@@ -20,7 +20,6 @@
 
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using HXE;
 using SPV3.Annotations;
@@ -74,10 +73,10 @@ namespace SPV3
        * Gracefully create directories and configuration data.
        */
 
-      CreateDirectory(Paths.Directories.Data);
-      CreateDirectory(HXE.Paths.Directories.HXE);
+      CreateDirectory(HXE.Paths.Directory);
+      CreateDirectory(Paths.Directory);
 
-      var configuration = (Configuration) HXE.Paths.Files.Configuration;
+      var configuration = (Configuration) HXE.Paths.Configuration;
 
       if (!configuration.Exists())
         configuration.Save();
@@ -111,8 +110,8 @@ namespace SPV3
     /// </summary>
     public void Start(string args = null)
     {
-      var configuration = (Configuration) HXE.Paths.Files.Configuration;
-      var openSauce     = (OpenSauce) Paths.Files.OpenSauce;
+      var configuration = (Configuration) HXE.Paths.Configuration;
+      var openSauce     = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory);
 
       if (configuration.Exists())
         configuration.Load();

@@ -19,7 +19,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -71,7 +70,7 @@ namespace HXE
     /// </param>
     private static void InvokeProgram(string[] args)
     {
-      Directory.CreateDirectory(Paths.Directories.HXE);
+      Directory.CreateDirectory(Paths.Directory);
 
       var hce = new Executable();
 
@@ -164,7 +163,7 @@ namespace HXE
         {
           Error(e.Message);
           System.Console.Error.WriteLine("\n\n" + e.StackTrace);
-          WriteAllText(Paths.Files.Exception, e.ToString());
+          WriteAllText(Paths.Exception, e.ToString());
           WithCode(Code.Exception);
         }
       }

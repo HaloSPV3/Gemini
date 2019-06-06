@@ -462,9 +462,7 @@ namespace SPV3.Annotations
     Access = 1,
 
     /// <summary>Indicates implicit assignment to a member.</summary>
-    Assign = 2,
-
-    /// <summary>
+    Assign = 2, /// <summary>
     ///   Indicates implicit instantiation of a type with fixed constructor signature.
     ///   That means any unused constructor parameters won't be reported as such.
     /// </summary>

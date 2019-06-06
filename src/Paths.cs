@@ -18,29 +18,17 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.IO;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
-using static System.IO.Path;
-using static HXE.Paths.Directories;
 
 namespace SPV3
 {
   /// <summary>
-  ///   Paths for the files and directories used by the SPV3 loader.
+  ///   Paths used by SPV3.
   /// </summary>
-  public static class Paths
+  public class Paths
   {
-    public static class Directories
-    {
-      public static readonly string Data      = Combine(GetFolderPath(ApplicationData), "SPV3");
-      public static readonly string OpenSauce = Combine(Data,                           "OpenSauce");
-      public static readonly string Profiles  = Combine(Data,                           "savegames");
-    }
-
-    public static class Files
-    {
-      public static readonly string OpenSauce   = Combine(Directories.OpenSauce, "OS_Settings.User.xml");
-      public static readonly string LastProfile = Combine(Directories.Data,      Profiles, HXE.Paths.Files.LastProfile);
-    }
+    public static readonly string Directory = Path.Combine(GetFolderPath(ApplicationData), "SPV3");
   }
 }

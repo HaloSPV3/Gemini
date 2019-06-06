@@ -79,7 +79,7 @@ namespace HXE
        * Given that the manifest is represented by 0x00, the subsequent packages should be represented by a >=1 ID. 
        */
 
-      var manifest    = (Manifest) Path.Combine(target, Paths.Files.Manifest);
+      var manifest    = (Manifest) Path.Combine(target, Paths.Manifest);
       var files       = new DirectoryInfo(source).GetFiles("*", SearchOption.AllDirectories);
       var i           = 0x01; /* 0x00 = manifest */
       var compression = Optimal;

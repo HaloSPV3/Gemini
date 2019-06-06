@@ -38,7 +38,7 @@ namespace HXE
 
     public void Save()
     {
-      using (var fs = new FileStream(Paths.Files.Configuration, OpenOrCreate, Write))
+      using (var fs = new FileStream(Paths.Configuration, OpenOrCreate, Write))
       using (var ms = new MemoryStream(256))
       using (var bw = new BinaryWriter(ms))
       {
@@ -103,7 +103,7 @@ namespace HXE
 
     public void Load()
     {
-      using (var fs = new FileStream(Paths.Files.Configuration, Open, Read))
+      using (var fs = new FileStream(Paths.Configuration, Open, Read))
       using (var ms = new MemoryStream(256))
       using (var br = new BinaryReader(ms))
       {

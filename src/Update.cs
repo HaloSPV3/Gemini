@@ -30,6 +30,7 @@ using System.Xml.Serialization;
 using SPV3.Annotations;
 using static System.Environment;
 using static System.IO.Path;
+using Exit = HXE.Exit;
 
 namespace SPV3
 {
@@ -174,13 +175,13 @@ namespace SPV3
 
         switch (Cli.Start($"-update \"{Address}\""))
         {
-          case HXE.Exit.Code.Success:
+          case Exit.Code.Success:
             Status = "SPV3 update routine has gracefully succeeded.";
             break;
-          case HXE.Exit.Code.Exception:
+          case Exit.Code.Exception:
             Status = "Exception has occurred. Review log file.";
             break;
-          case HXE.Exit.Code.InvalidInstall:
+          case Exit.Code.InvalidInstall:
             Status = "Could not detect a legal HCE installation.";
             break;
         }

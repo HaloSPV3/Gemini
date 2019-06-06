@@ -19,45 +19,75 @@
  */
 
 using static System.Environment;
+using static System.Environment.SpecialFolder;
 using static System.IO.Path;
 
 namespace HXE
 {
   /// <summary>
-  ///   Lists all of the files & directories on the filesystem that SPV3 deals with.
+  ///   Lists all of the files & directories on the filesystem that HCE/HXE deals with.
   /// </summary>
   public static class Paths
   {
-    /// <summary>
-    ///   Files on the filesystem that SPV3 reads/writes.
-    /// </summary>
-    public static class Files
-    {
-      public const string Executable  = "haloce.exe";
-      public const string Initiation  = "initc.txt";
-      public const string Progress    = "savegame.bin";
-      public const string Profile     = "blam.sav";
-      public const string LastProfile = "lastprof.txt";
+    public static readonly string Directory     = Combine(GetFolderPath(ApplicationData), "HXE");
+    public static readonly string Configuration = Combine(Directory,                      "loader.bin");
+    public static readonly string Exception     = Combine(Directory,                      "exception.log");
+    public static readonly string Installation  = Combine(Directory,                      "install.txt");
+    public static readonly string Manifest      = $"0x{0:X8}.bin"; /* 0x0000000.bin */
 
-      public static readonly string Manifest      = $"0x{0:X8}.bin"; /* 0x0000000.bin */
-      public static readonly string Installation  = Combine(Directories.HXE,       "install.txt");
-      public static readonly string Configuration = Combine(Directories.HXE,       "loader.bin");
-      public static readonly string Exception     = Combine(Directories.HXE,       "exception.log");
-      public static readonly string OpenSauce     = Combine(Directories.OpenSauce, "OS_Settings.User.xml");
+    public class HCE
+    {
+      public const           string Executable = "haloce.exe";
+      public const           string Initiation = "initc.txt";
+      public static readonly string Directory  = Combine(GetFolderPath(Personal), "My Games", "Halo CE");
+
+      public static readonly string Profiles    = Combine(Directory, "savegames");
+      public static readonly string LastProfile = Combine(Directory, "lastprof.txt");
+      public static readonly string Chimera     = Combine(Directory, "chimera.bin");
+      public static readonly string OpenSauce   = Combine(Directory, "OpenSauce", "OS_Settings.User.xml");
+
+      public static string Profile(string profile)
+      {
+        return Combine(Directory, Profiles, profile, "blam.sav");
+      }
+
+      public static string Progress(string profile)
+      {
+        return Combine(Directory, Profiles, profile, "savegame.bin");
+      }
     }
 
-    /// <summary>
-    ///   Directories on the filesystem that SPV3 accesses.
-    /// </summary>
-    public static class Directories
+    public class Custom
     {
-      public const string Profiles = "savegames";
+      public static string Profiles(string directory)
+      {
+        return Combine(directory, "savegames");
+      }
 
-      public static readonly  string HXE       = Combine(GetFolderPath(SpecialFolder.ApplicationData), "HXE");
-      private static readonly string Personal  = GetFolderPath(SpecialFolder.Personal);
-      private static readonly string Games     = Combine(Personal, "My Games");
-      public static readonly  string HCE       = Combine(Games,    "Halo CE");
-      public static readonly  string OpenSauce = Combine(HCE,      "OpenSauce");
+      public static string LastProfile(string directory)
+      {
+        return Combine(directory, "lastprof.txt");
+      }
+
+      public static string Chimera(string directory)
+      {
+        return Combine(directory, "chimera.bin");
+      }
+
+      public static string OpenSauce(string directory)
+      {
+        return Combine(directory, "OpenSauce", "OS_Settings.User.xml");
+      }
+
+      public static string Profile(string directory, string profile)
+      {
+        return Combine(directory, Profiles(directory), profile, "blam.sav");
+      }
+
+      public static string Progress(string directory, string profile)
+      {
+        return Combine(directory, Profiles(directory), profile, "savegame.bin");
+      }
     }
   }
 }

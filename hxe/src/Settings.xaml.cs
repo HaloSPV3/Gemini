@@ -23,11 +23,11 @@ using System.Windows;
 namespace HXE
 {
   /// <summary>
-  /// Interaction logic for Settings.xaml
+  ///   Interaction logic for Settings.xaml
   /// </summary>
   public partial class Settings
   {
-    private readonly Configuration _configuration = (Configuration) Paths.Files.Configuration;
+    private readonly Configuration _configuration = (Configuration) Paths.Configuration;
 
     public Settings()
     {
@@ -55,7 +55,7 @@ namespace HXE
     private void Save(object sender, RoutedEventArgs e)
     {
       Console.Info("Saving kernel settings ...");
-      
+
       _configuration.Kernel.EnableSpv3KernelMode = EnableSpv3KernelMode.IsChecked == true;
       _configuration.Kernel.EnableSpv3LegacyMode = EnableSpv3LegacyMode.IsChecked == true;
       _configuration.Kernel.SkipVerifyMainAssets = SkipVerifyMainAssets.IsChecked == true;

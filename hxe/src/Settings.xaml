@@ -46,7 +46,7 @@
                           Name="EnableSpv3LegacyMode" />
             </StackPanel>
         </GroupBox>
-        
+
         <GroupBox Header="Skip">
             <StackPanel>
                 <CheckBox Content="Skip: Verify Main Assets"
