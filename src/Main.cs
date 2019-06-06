@@ -119,11 +119,13 @@ namespace SPV3
 
       if (openSauce.Exists())
         openSauce.Load();
+      else
+        openSauce.Camera.CalculateFOV(); /* imposes initial fov  */
 
       configuration.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
       openSauce.HUD.ScaleHUD                    = true; /* fixes menu stretching  */
       openSauce.HUD.ShowHUD                     = true; /* fixes menu stretching  */
-      openSauce.Camera.CalculateFOV();                  /* imposes initial fov    */
+
       configuration.Save();
       openSauce.Save();
 
