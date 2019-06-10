@@ -128,6 +128,13 @@
                         Settings
                     </Button>
 
+                    <!-- Update SPV3 -->
+                    <Button x:Name="AssetsButton"
+                            Visibility="{Binding Assets.Visibility}"
+                            Click="Assets">
+                        Update
+                    </Button>
+
                     <!-- About -->
                     <Button Click="About">
                         About

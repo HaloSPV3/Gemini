@@ -19,8 +19,12 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using HXE;
+using SPV3.Annotations;
 using static System.IO.File;
 
 namespace SPV3
@@ -30,6 +34,7 @@ namespace SPV3
     public MainError   Error   { get; set; } = new MainError();   /* catches & shows exceptions   */
     public MainInstall Install { get; set; } = new MainInstall(); /* checks & allows installation */
     public MainLoad    Load    { get; set; } = new MainLoad();    /* checks & allows loading      */
+    public MainAssets  Assets  { get; set; } = new MainAssets();  /* permits SPV3 assets update   */
 
     /// <summary>
     ///   Wrapper for subclass initialisation methods.
@@ -53,6 +58,7 @@ namespace SPV3
       {
         case Context.Type.Load:
           Load.Visibility = Visibility.Visible;
+          Assets.Initialise();
           break;
         case Context.Type.Install:
           Install.Visibility = Visibility.Visible;
@@ -82,6 +88,21 @@ namespace SPV3
     }
 
     /// <summary>
+    ///   Wrapper for the asset update routine with UI support.
+    /// </summary>
+    public void Update()
+    {
+      try
+      {
+        Assets.Update();
+      }
+      catch (Exception e)
+      {
+        Exception(e, "Update error");
+      }
+    }
+
+    /// <summary>
     ///   Successfully exits the SPV3 loader.
     /// </summary>
     public void Quit()
@@ -95,6 +116,51 @@ namespace SPV3
 
       Error.Visibility = Visibility.Visible;
       Error.Content    = $"{description}: {e.Message.ToLower()}\n\nClick here for more information.";
+    }
+
+    public class MainAssets : INotifyPropertyChanged
+    {
+      private const    string Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe";
+      private readonly Update _update = new Update();
+
+      private Visibility _visibility;
+
+      public Visibility Visibility
+      {
+        get => _visibility;
+        set
+        {
+          if (value == _visibility) return;
+          _visibility = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public event PropertyChangedEventHandler PropertyChanged;
+
+      public void Initialise()
+      {
+        try
+        {
+          _update.Import(Address);
+          Visibility = Visibility.Visible;
+        }
+        catch (Exception)
+        {
+          Visibility = Visibility.Collapsed;
+        }
+      }
+
+      public void Update()
+      {
+        _update.Commit();
+      }
+
+      [NotifyPropertyChangedInvocator]
+      protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+      {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+      }
     }
   }
 }

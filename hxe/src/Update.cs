@@ -132,6 +132,20 @@ namespace HXE
 
       foreach (var asset in Assets)
       {
+        /**
+         * If the asset matches a file which exists at the target destination on the file system, then re-installing it
+         * would be pointless.
+         * 
+         * Using byte length for comparing file sizes is particularly naïve, but it does the job for now. Should use a
+         * hash later on!
+         */
+
+        var target = Combine(CurrentDirectory, asset.Path, asset.Name);
+
+        if (Exists(target))
+          if (new FileInfo(target).Length == asset.Size)
+            continue;
+
         asset.Request(); /* grab our package */
         asset.Install(); /* inflate its data */
         asset.CleanUp(); /* clean up package */
@@ -194,10 +208,6 @@ namespace HXE
         var backup    = target + "-" + Guid.NewGuid();
 
         Directory.CreateDirectory(directory);
-
-        if (Exists(target))
-          if (new FileInfo(target).Length == Size)
-            return;
 
         Info("Asset deemed suitable to update/install");
 
