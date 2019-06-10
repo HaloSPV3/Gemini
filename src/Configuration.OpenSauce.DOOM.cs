@@ -52,6 +52,16 @@ namespace SPV3
               K = 0
             }
           },
+          new PositionWeapon /* M7/Caseless SMG */
+          {
+            Name = "Picked up a M7/Caseless SMG",
+            Position = new WeaponPosition
+            {
+              I = 0, /* TODO! */
+              J = 0, /* TODO! */
+              K = 0  /* TODO! */
+            }
+          },
           new PositionWeapon /* M310 Grenade Launcher */
           {
             Name = "Picked up a M310 Grenade Launcher",
