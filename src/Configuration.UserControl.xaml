@@ -116,8 +116,12 @@
                        FontSize="16" />
 
                 <DockPanel>
-                    <Label Content="Dynamic Lens Flares:" />
-                    <CheckBox IsChecked="{Binding HXE.Shaders.DynamicLensFlares}" />
+                    <Label Content="HUDv5 Visor:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.HudVisor}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Film Grain:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.FilmGrain}" />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Volumetric Lighting:" />
@@ -128,24 +132,6 @@
                     <CheckBox IsChecked="{Binding HXE.Shaders.LensDirt}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="HUDv5 Visor:" />
-                    <CheckBox IsChecked="{Binding HXE.Shaders.HudVisor}" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Film Grain:" />
-                    <CheckBox IsChecked="{Binding HXE.Shaders.FilmGrain}" />
-                </DockPanel>
-
-                <DockPanel Margin="0,5,0,0">
-                    <Label Content="MXAO:" />
-                    <ComboBox SelectedIndex="{Binding HXE.Shaders.Mxao}">
-                        <ComboBoxItem Content="Off" />
-                        <ComboBoxItem Content="Low" />
-                        <ComboBoxItem Content="High" />
-                    </ComboBox>
-                </DockPanel>
-
-                <DockPanel>
                     <Label Content="Motion Blur:" />
                     <ComboBox SelectedIndex="{Binding HXE.Shaders.MotionBlur}">
                         <ComboBoxItem Content="Off" />
@@ -154,7 +140,6 @@
                         <ComboBoxItem Content="POMB High" />
                     </ComboBox>
                 </DockPanel>
-
                 <DockPanel>
                     <Label Content="DOF:" />
                     <ComboBox SelectedIndex="{Binding HXE.Shaders.Dof}">
@@ -162,6 +147,18 @@
                         <ComboBoxItem Content="Low" />
                         <ComboBoxItem Content="High" />
                     </ComboBox>
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="MXAO:" />
+                    <ComboBox SelectedIndex="{Binding HXE.Shaders.Mxao}">
+                        <ComboBoxItem Content="Off" />
+                        <ComboBoxItem Content="Low" />
+                        <ComboBoxItem Content="High" />
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Dynamic Lens Flares:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.DynamicLensFlares}" />
                 </DockPanel>
             </StackPanel>
 
