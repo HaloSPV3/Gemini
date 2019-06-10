@@ -72,6 +72,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Compile.cs" />
+    <Compile Include="Compile.UserControl.xaml.cs">
+      <DependentUpon>Compile.UserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configuration.cs" />
     <Compile Include="Configuration.HXE.cs" />
     <Compile Include="Configuration.HXE.Kernel.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Install.UserControl.xaml.cs">
       <DependentUpon>Install.UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Main.Compile.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Main.Error.cs" />
     <Compile Include="Main.Install.cs" />
@@ -110,6 +115,7 @@
     <Compile Include="Version.UserControl.xaml.cs">
       <DependentUpon>Version.UserControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Compile.UserControl.xaml" />
     <Page Include="Configuration.UserControl.xaml" />
     <Page Include="Install.UserControl.xaml" />
     <Page Include="Main.Window.xaml" />
@@ -165,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\background_settings.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\background_compile.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -41,6 +41,7 @@ namespace SPV3
       ConfigurationUserControl.Home += Main;
       ReportUserControl.Home        += Main;
       InstallUserControl.Home       += Main;
+      CompileUserControl.Home       += Main;
       VersionUserControl.Update     += Update;
     }
 
@@ -85,6 +86,11 @@ namespace SPV3
     private void Install(object sender, RoutedEventArgs e)
     {
       MainTabControl.SelectedItem = InstallTabItem;
+    }
+
+    private void Compile(object sender, RoutedEventArgs e)
+    {
+      MainTabControl.SelectedItem = CompileTabItem;
     }
 
     private void Settings(object sender, RoutedEventArgs e)

@@ -33,6 +33,7 @@ namespace SPV3
   {
     public MainError   Error   { get; set; } = new MainError();   /* catches & shows exceptions   */
     public MainInstall Install { get; set; } = new MainInstall(); /* checks & allows installation */
+    public MainCompile Compile { get; set; } = new MainCompile(); /* checks & allows compilation  */
     public MainLoad    Load    { get; set; } = new MainLoad();    /* checks & allows loading      */
     public MainAssets  Assets  { get; set; } = new MainAssets();  /* permits SPV3 assets update   */
 
@@ -70,6 +71,9 @@ namespace SPV3
         default:
           throw new ArgumentOutOfRangeException();
       }
+
+      if (Exists(Paths.Compile))
+        Compile.Visibility = Visibility.Visible;
     }
 
     /// <summary>

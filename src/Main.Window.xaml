@@ -117,6 +117,12 @@
                         Load SPV3
                     </Button>
 
+                    <!-- Compile SPV3 -->
+                    <Button Visibility="{Binding Compile.Visibility}"
+                            Click="Compile">
+                        Compile SPV3
+                    </Button>
+
                     <!-- Install SPV3 -->
                     <Button Visibility="{Binding Install.Visibility}"
                             Click="Install">
@@ -191,6 +197,11 @@
         <!-- Install -->
         <TabItem x:Name="InstallTabItem">
             <spv3:Install_UserControl x:Name="InstallUserControl" />
+        </TabItem>
+
+        <!-- Compile -->
+        <TabItem x:Name="CompileTabItem">
+            <spv3:Compile_UserControl x:Name="CompileUserControl" />
         </TabItem>
 
         <!-- Update -->
