@@ -65,11 +65,6 @@ namespace HXE.SPV3
         }
       }
 
-      /**
-       * Encodes formal permutations to an integer. The permutations and values are specified in the doc/shaders.txt
-       * documentation.
-       */
-
       var difficulty = GetDifficulty();
       var mission    = (int) Mission;
       var autoaim    = PlayerAutoaim ? 1 : 0;
@@ -82,6 +77,10 @@ namespace HXE.SPV3
       output.AppendLine($"player_autoaim {autoaim}");
       output.AppendLine($"player_magnetism {magnetism}");
       output.AppendLine($"game_difficulty_set {difficulty}");
+
+      /**
+       * Encodes post-processing settings to the initc file. Refer to doc/shaders.txt for further information.
+       */
 
       switch (PostProcessing.MotionBlur)
       {
@@ -135,10 +134,10 @@ namespace HXE.SPV3
         output.AppendLine("set display_precache_progress false");
 
       if (!PostProcessing.LensDirt)
-        output.AppendLine("set use_super_remote_players_action_update false");
+        output.AppendLine("set use_super_remote_players_action_update true");
 
       if (!PostProcessing.FilmGrain)
-        output.AppendLine("set use_new_vehicle_update_scheme false");
+        output.AppendLine("set use_new_vehicle_update_scheme true");
 
       if (!PostProcessing.HudVisor)
         output.AppendLine("set multiplayer_draw_teammates_names true");

@@ -69,10 +69,10 @@ variables:
     set display_precache_progress false
 
     ;;turn off lens dirt 
-    set use_super_remote_players_action_update false
+    set use_super_remote_players_action_update true
 
     ;;turn off film grain
-    set use_new_vehicle_update_scheme false
+    set use_new_vehicle_update_scheme true
 
     ;;turn off hud visor effects
     set multiplayer_draw_teammates_names true
