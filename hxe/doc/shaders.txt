@@ -36,8 +36,7 @@ user with the following characteristics:
   Volumetric Lighting   off, on
   Lens Dirt             off, on
   HUDv5 Visor           off, on
-  3D                    off, anaglyph, interleaving, side-by-side
-  Color Blind Mode      off, protanopia, deuteranopes, tritanopes
+  Film Grain            off, on
 
 CONFIGURATION
 -------------
@@ -50,28 +49,33 @@ loader. This section covers both scenarios.
 
 INITC
 
-The post-processing configuration is stored as an integer in initc.txt,
-using the f1 variable. Due to SPV3's current quirks and limits, the
-loader currently saves various permutations of the post-processing
-settings. The following table formally specifies the supported
-permutations:
+The post-processing configuration is stored using varaible combinations
+in initc.txt. The following table formally specifies the supported
+variables:
 
-  INDEX   MXAO   DOF    MOTION\_BLUR   LENS\_FLARES   VOLUMETRICS   LENSDIRT
-  ------- ------ ------ -------------- -------------- ------------- ----------
-  0       OFF    OFF    OFF            OFF            OFF           ON
-  1       OFF    OFF    OFF            OFF            ON            ON
-  2       OFF    LOW    BUILT-IN       OFF            ON            ON
-  3       LOW    LOW    BUILT-IN       OFF            ON            ON
-  4       LOW    LOW    LOW            ON             ON            ON
-  5       LOW    HIGH   LOW            ON             ON            ON
-  6       HIGH   HIGH   LOW            ON             ON            ON
-  7       HIGH   HIGH   HIGH           ON             ON            ON
-  8       OFF    OFF    OFF            OFF            OFF           OFF
+    ;;put motion blur on high (valid numbers are 1.1 for OS motion blur, 1.2 for low, 1.3 for high)
+    set multiplayer_hit_sound_volume 1.3
 
-For disabling the HUD Visor, the following command is used in the initc
-file:
+    ;;set MXAO to high (valid numbers are 3 for low, 4 for high)
+    cl_remote_player_action_queue_limit 4
 
-    set multiplayer_draw_teammates_names 1
+    ;;set DOF to high (7 for low, 8 for high)
+    cl_remote_player_action_queue_tick_limit 8
+
+    ;;turn on volumetrics
+    set rasterizer_soft_filter true
+
+    ;;turn on lens flares
+    set display_precache_progress false
+
+    ;;turn off lens dirt 
+    set use_super_remote_players_action_update false
+
+    ;;turn off film grain
+    set use_new_vehicle_update_scheme false
+
+    ;;turn off hud visor effects
+    set multiplayer_draw_teammates_names true
 
 BINARY
 

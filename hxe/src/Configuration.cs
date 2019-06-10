@@ -83,6 +83,7 @@ namespace HXE
           bw.Write(PostProcessing.Volumetrics);
           bw.Write(PostProcessing.AntiAliasing);
           bw.Write(PostProcessing.HudVisor);
+          bw.Write(PostProcessing.FilmGrain);
 
           bw.Write((byte) PostProcessing.MotionBlur);
           bw.Write((byte) PostProcessing.Mxao);
@@ -144,6 +145,7 @@ namespace HXE
           PostProcessing.Volumetrics       = br.ReadBoolean();
           PostProcessing.AntiAliasing      = br.ReadBoolean();
           PostProcessing.HudVisor          = br.ReadBoolean();
+          PostProcessing.FilmGrain         = br.ReadBoolean();
 
           PostProcessing.MotionBlur                    = (MotionBlurOptions) br.ReadByte();
           PostProcessing.Mxao                          = (MxaoOptions) br.ReadByte();

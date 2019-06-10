@@ -82,8 +82,9 @@ POST-PROCESSING
   0x47     Toggle: Volumetrics
   0x48     Toggle: Anti Aliasing
   0x49     Toggle: HUD Visor
-  0x4A     Set: Motion Blur
-  0x4B     Set: MXAO
-  0x4C     Set: DOF
-  0x4D     Set: Three Dimensional
-  0x4E     Set: Colour Blind Mode
+  0x4A     Toggle: Film Grain
+  0x4B     Set: Motion Blur
+  0x4C     Set: MXAO
+  0x4D     Set: DOF
+  0x4E     Set: Three Dimensional
+  0x4F     Set: Colour Blind Mode

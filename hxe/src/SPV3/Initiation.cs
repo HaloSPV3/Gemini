@@ -70,63 +70,6 @@ namespace HXE.SPV3
        * documentation.
        */
 
-      int GetPostProcessing()
-      {
-        var mxao = PostProcessing.Mxao;
-        var dof  = PostProcessing.Dof;
-        var mb   = PostProcessing.MotionBlur;
-        var lf   = PostProcessing.DynamicLensFlares;
-        var vol  = PostProcessing.Volumetrics;
-        var ld   = PostProcessing.LensDirt;
-
-        if (mxao  == PostProcessing.MxaoOptions.Off && dof == PostProcessing.DofOptions.Off &&
-            mb    == PostProcessing.MotionBlurOptions.Off
-            && lf == false && vol == false && ld)
-          return 0;
-
-        if (mxao  == PostProcessing.MxaoOptions.Off && dof == PostProcessing.DofOptions.Off &&
-            mb    == PostProcessing.MotionBlurOptions.Off
-            && lf == false && vol && ld)
-          return 1;
-
-        if (mxao  == PostProcessing.MxaoOptions.Off && dof == PostProcessing.DofOptions.Low &&
-            mb    == PostProcessing.MotionBlurOptions.BuiltIn
-            && lf == false && vol && ld)
-          return 2;
-
-        if (mxao  == PostProcessing.MxaoOptions.Low && dof == PostProcessing.DofOptions.Low &&
-            mb    == PostProcessing.MotionBlurOptions.BuiltIn
-            && lf == false && vol && ld)
-          return 3;
-
-        if (mxao == PostProcessing.MxaoOptions.Low && dof == PostProcessing.DofOptions.Low &&
-            mb   == PostProcessing.MotionBlurOptions.PombLow
-            && lf && vol && ld)
-          return 4;
-
-        if (mxao == PostProcessing.MxaoOptions.Low && dof == PostProcessing.DofOptions.High &&
-            mb   == PostProcessing.MotionBlurOptions.PombLow
-            && lf && vol && ld)
-          return 5;
-
-        if (mxao == PostProcessing.MxaoOptions.High && dof == PostProcessing.DofOptions.High &&
-            mb   == PostProcessing.MotionBlurOptions.PombLow
-            && lf && vol && ld)
-          return 6;
-
-        if (mxao == PostProcessing.MxaoOptions.High && dof == PostProcessing.DofOptions.High &&
-            mb   == PostProcessing.MotionBlurOptions.PombHigh
-            && lf && vol && ld)
-          return 7;
-
-        if (mxao  == PostProcessing.MxaoOptions.Off && dof == PostProcessing.DofOptions.Off &&
-            mb    == PostProcessing.MotionBlurOptions.Off
-            && lf == false && vol == false && ld == false)
-          return 8;
-
-        return 0;
-      }
-
       var difficulty = GetDifficulty();
       var mission    = (int) Mission;
       var autoaim    = PlayerAutoaim ? 1 : 0;
@@ -134,15 +77,71 @@ namespace HXE.SPV3
       var cinematic  = CinematicBars ? 1 : 0;
 
       var output = new StringBuilder();
-      output.AppendLine($"set f1 {(Unlock ? 8 : GetPostProcessing())}");
-      output.AppendLine($"set f3 {mission}");
+      output.AppendLine($"set f3 {mission}"); /*  */
       output.AppendLine($"set loud_dialog_hack {cinematic}");
       output.AppendLine($"player_autoaim {autoaim}");
       output.AppendLine($"player_magnetism {magnetism}");
       output.AppendLine($"game_difficulty_set {difficulty}");
 
+      switch (PostProcessing.MotionBlur)
+      {
+        case PostProcessing.MotionBlurOptions.Off:
+          break;
+        case PostProcessing.MotionBlurOptions.BuiltIn:
+          output.AppendLine("set multiplayer_hit_sound_volume 1.1");
+          break;
+        case PostProcessing.MotionBlurOptions.PombLow:
+          output.AppendLine("set multiplayer_hit_sound_volume 1.2");
+          break;
+        case PostProcessing.MotionBlurOptions.PombHigh:
+          output.AppendLine("set multiplayer_hit_sound_volume 1.3");
+          break;
+        default:
+          throw new ArgumentOutOfRangeException();
+      }
+
+      switch (PostProcessing.Mxao)
+      {
+        case PostProcessing.MxaoOptions.Off:
+          break;
+        case PostProcessing.MxaoOptions.Low:
+          output.AppendLine("set cl_remote_player_action_queue_limit 3");
+          break;
+        case PostProcessing.MxaoOptions.High:
+          output.AppendLine("set cl_remote_player_action_queue_limit 4");
+          break;
+        default:
+          throw new ArgumentOutOfRangeException();
+      }
+
+      switch (PostProcessing.Dof)
+      {
+        case PostProcessing.DofOptions.Off:
+          break;
+        case PostProcessing.DofOptions.Low:
+          output.AppendLine("set cl_remote_player_action_queue_tick_limit 7");
+          break;
+        case PostProcessing.DofOptions.High:
+          output.AppendLine("set cl_remote_player_action_queue_tick_limit 8");
+          break;
+        default:
+          throw new ArgumentOutOfRangeException();
+      }
+
+      if (PostProcessing.Volumetrics)
+        output.AppendLine("set rasterizer_soft_filter true");
+
+      if (PostProcessing.DynamicLensFlares)
+        output.AppendLine("set display_precache_progress false");
+
+      if (!PostProcessing.LensDirt)
+        output.AppendLine("set use_super_remote_players_action_update false");
+
+      if (!PostProcessing.FilmGrain)
+        output.AppendLine("set use_new_vehicle_update_scheme false");
+
       if (!PostProcessing.HudVisor)
-        output.AppendLine("set multiplayer_draw_teammates_names 1");
+        output.AppendLine("set multiplayer_draw_teammates_names true");
 
       Console.Info("Saving initiation data to the initc.txt file");
       WriteAllText(output.ToString());

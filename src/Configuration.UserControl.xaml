@@ -1,0 +1,278 @@
+<!--
+ Copyright (c) 2019 Emilian Roman
+ 
+ This software is provided 'as-is', without any express or implied
+ warranty. In no event will the authors be held liable for any damages
+ arising from the use of this software.
+ 
+ Permission is granted to anyone to use this software for any purpose,
+ including commercial applications, and to alter it and redistribute it
+ freely, subject to the following restrictions:
+ 
+ 1. The origin of this software must not be misrepresented; you must not
+    claim that you wrote the original software. If you use this software
+    in a product, an acknowledgment in the product documentation would be
+    appreciated but is not required.
+ 2. Altered source versions must be plainly marked as such, and must not be
+    misrepresented as being the original software.
+ 3. This notice may not be removed or altered from any source distribution.
+-->
+
+<UserControl x:Class="SPV3.Configuration_UserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SPV3"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <local:Configuration />
+    </UserControl.DataContext>
+    <Grid Width="960"
+          Height="540">
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/background_settings.jpg" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Settings -->
+        <Grid Grid.Row="0"
+              Width="960">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Foreground" Value="White" />
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                </Style>
+                <Style TargetType="{x:Type DockPanel}">
+                    <Setter Property="Margin" Value="0,1,0,0" />
+                </Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Height" Value="320" />
+                </Style>
+            </Grid.Resources>
+
+            <!-- SPV3 Loader -->
+            <StackPanel Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Width" Value="75" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="SPV3 Loader"
+                       HorizontalAlignment="Center"
+                       Width="Auto"
+                       FontSize="16" />
+
+                <DockPanel>
+                    <Label Content="Width:" />
+                    <TextBox Text="{Binding Loader.Width}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Height:" />
+                    <TextBox Text="{Binding Loader.Height}" />
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <Label Content="Window:" />
+                    <CheckBox IsChecked="{Binding Loader.Window}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Gamma:" />
+                    <CheckBox IsChecked="{Binding Loader.Gamma}" />
+                </DockPanel>
+            </StackPanel>
+
+            <!-- Shaders -->
+            <StackPanel Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Width" Value="140" />
+                    </Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="Width" Value="75" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="SPV3 Shaders"
+                       HorizontalAlignment="Center"
+                       Width="Auto"
+                       FontSize="16" />
+
+                <DockPanel>
+                    <Label Content="Dynamic Lens Flares:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.DynamicLensFlares}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Volumetric Lighting:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.Volumetrics}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Lens Dirt:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.LensDirt}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="HUDv5 Visor:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.HudVisor}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Film Grain:" />
+                    <CheckBox IsChecked="{Binding HXE.Shaders.FilmGrain}" />
+                </DockPanel>
+
+                <DockPanel Margin="0,5,0,0">
+                    <Label Content="MXAO:" />
+                    <ComboBox SelectedIndex="{Binding HXE.Shaders.Mxao}">
+                        <ComboBoxItem Content="Off" />
+                        <ComboBoxItem Content="Low" />
+                        <ComboBoxItem Content="High" />
+                    </ComboBox>
+                </DockPanel>
+
+                <DockPanel>
+                    <Label Content="Motion Blur:" />
+                    <ComboBox SelectedIndex="{Binding HXE.Shaders.MotionBlur}">
+                        <ComboBoxItem Content="Off" />
+                        <ComboBoxItem Content="Built-in" />
+                        <ComboBoxItem Content="POMB Low" />
+                        <ComboBoxItem Content="POMB High" />
+                    </ComboBox>
+                </DockPanel>
+
+                <DockPanel>
+                    <Label Content="DOF:" />
+                    <ComboBox SelectedIndex="{Binding HXE.Shaders.Dof}">
+                        <ComboBoxItem Content="Off" />
+                        <ComboBoxItem Content="Low" />
+                        <ComboBoxItem Content="High" />
+                    </ComboBox>
+                </DockPanel>
+            </StackPanel>
+
+            <!-- OpenSauce -->
+            <StackPanel Grid.Column="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Width" Value="125" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="OpenSauce"
+                       HorizontalAlignment="Center"
+                       Width="Auto"
+                       FontSize="16" />
+
+                <DockPanel>
+                    <Label Content="Normal Maps:" />
+                    <CheckBox IsChecked="{Binding OpenSauce.NormalMaps}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Detailed Maps:" />
+                    <CheckBox IsChecked="{Binding OpenSauce.DetailedMaps}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Specular Maps:" />
+                    <CheckBox IsChecked="{Binding OpenSauce.SpecularMaps}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Specular Lighting:" />
+                    <CheckBox IsChecked="{Binding OpenSauce.SpecularLighting}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Bloom:" />
+                    <CheckBox IsChecked="{Binding OpenSauce.Bloom}" />
+                </DockPanel>
+                <StackPanel>
+                    <DockPanel>
+                        <Label Content="Field of View:" />
+                        <TextBox Text="{Binding OpenSauce.FieldOfView}" />
+                    </DockPanel>
+                    <Button Margin="0,2,0,0"
+                            Content="Calculate FOV"
+                            Click="CalculateFOV" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- HXE Kernel -->
+            <StackPanel Grid.Column="3"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Width" Value="175" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="HXE Kernel"
+                       HorizontalAlignment="Center"
+                       Width="Auto"
+                       FontSize="16" />
+
+                <DockPanel>
+                    <Label Content="Enable: SPV3 Kernel Mode:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3KernelMode}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Enable: SPV3 Legacy Mode:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3LegacyMode}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Verify Main Assets:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipVerifyMainAssets}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Invoke Core Tweaks:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipInvokeCoreTweaks}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Resume Checkpoint:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipResumeCheckpoint}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Set Shaders Config:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipSetShadersConfig}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Invoke Executable:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipInvokeExecutable}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Patch LAA:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipPatchLargeAAware}" />
+                </DockPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- Save -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    Height="30"
+                    Margin="25">
+            <Button Content="Save"
+                    Click="Save"
+                    Width="100" />
+            <Button Content="Cancel"
+                    Click="Cancel"
+                    Width="100"
+                    Margin="1,0,0,0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

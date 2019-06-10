@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2019 Emilian Roman
  * 
  * This software is provided 'as-is', without any express or implied
@@ -18,50 +18,37 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System.Reflection;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using SPV3.Annotations;
 
 namespace SPV3
 {
-  /// <summary>
-  ///   Interaction logic for MainWindow.xaml
-  /// </summary>
-  public partial class MainWindow
+  public partial class Main
   {
-    private readonly Main _main;
-
-    public MainWindow()
+    public class MainInstall : INotifyPropertyChanged
     {
-      InitializeComponent();
-      _main = (Main) DataContext;
-      _main.Initialise();
+      private Visibility _visibility = Visibility.Collapsed;
 
-      Version.Content = $"build-{Assembly.GetEntryAssembly().GetName().Version.Major:D4}";
-    }
+      public Visibility Visibility
+      {
+        get => _visibility;
+        set
+        {
+          if (value == _visibility) return;
+          _visibility = value;
+          OnPropertyChanged();
+        }
+      }
 
-    private void Load(object sender, RoutedEventArgs e)
-    {
-      _main.Start();
-    }
+      public event PropertyChangedEventHandler PropertyChanged;
 
-    private void LoadWindow(object sender, RoutedEventArgs e)
-    {
-      _main.StartWindow();
-    }
-
-    private void Settings(object sender, RoutedEventArgs e)
-    {
-      new SettingsWindow().Show();
-    }
-
-    private void Installer(object sender, RoutedEventArgs e)
-    {
-      new InstallerWindow().Show();
-    }
-
-    private void Compiler(object sender, RoutedEventArgs e)
-    {
-      new CompilerWindow().Show();
+      [NotifyPropertyChangedInvocator]
+      protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+      {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+      }
     }
   }
 }

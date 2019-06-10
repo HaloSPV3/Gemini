@@ -18,41 +18,46 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using static System.Windows.MessageBox;
-using static System.Windows.MessageBoxButton;
+using System.Windows.Forms;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace SPV3
 {
-  public partial class UpdateUserControl : UserControl
+  public partial class Install_UserControl : UserControl
   {
-    private readonly Update _update;
+    private readonly Install _install;
 
-    public UpdateUserControl()
+    public Install_UserControl()
     {
       InitializeComponent();
-      _update = (Update) DataContext;
-      UpdateLoader();
+      _install = (Install) DataContext;
+      _install.Initialise();
     }
 
-    private void UpdateAssets(object sender, RoutedEventArgs e)
+    public event EventHandler Home;
+
+    private async void Install(object sender, RoutedEventArgs e)
     {
-      _update.Assets.Commit();
+      InstallButton.Content = "Installing...";
+      await Task.Run(() => _install.Commit());
+      InstallButton.Content = "Install";
     }
 
-    private async void UpdateLoader()
+    private void Back(object sender, RoutedEventArgs e)
     {
-      await Task.Run(() => { _update.Initialise(); });
+      Home?.Invoke(sender, e);
+    }
 
-      if (!_update.Loader.Available) return;
-
-      var update = Show($"SPV3 Loader update is available: build-{_update.Loader.Version:D4}\n\n" +
-                        "Would you like to download the update?", "Update", YesNo);
-
-      if (update == MessageBoxResult.Yes)
-        _update.Loader.Commit();
+    private void Browse(object sender, RoutedEventArgs e)
+    {
+      using (var dialog = new FolderBrowserDialog())
+      {
+        if (dialog.ShowDialog() == DialogResult.OK)
+          _install.Target = dialog.SelectedPath;
+      }
     }
   }
 }

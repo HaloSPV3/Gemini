@@ -37,7 +37,7 @@ namespace HXE.SPV3
     /// </summary>
     public void Save()
     {
-      using (var fs = new FileStream(Path, FileMode.Open, FileAccess.Write))
+      using (var fs = new FileStream(Path, FileMode.Open, FileAccess.ReadWrite))
       using (var ms = new MemoryStream((int) new FileInfo(Path).Length))
       using (var bw = new BinaryWriter(ms))
       {

@@ -18,29 +18,40 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System;
-using System.Diagnostics;
-using HXE;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
+using SPV3.Annotations;
 
 namespace SPV3
 {
-  /// <summary>
-  ///   Helper class for invoking the CLI executable.
-  /// </summary>
-  public static class Cli
+  public class Report : INotifyPropertyChanged
   {
-    private const string Executable = "hxe.exe";
+    private string _stack;
 
-    public static Exit.Code Start(string args)
+    public string Stack
     {
-      args += $" -path \"{Paths.Directory}\" -console -devmode -screenshot";
-      var process = Process.Start(Executable, args);
+      get => _stack;
+      set
+      {
+        if (value == _stack) return;
+        _stack = value;
+        OnPropertyChanged();
+      }
+    }
 
-      if (process == null)
-        throw new NullReferenceException("Could not construct CLI process.");
+    public event PropertyChangedEventHandler PropertyChanged;
 
-      process.WaitForExit();
-      return (Exit.Code) process.ExitCode;
+    public void Initialise()
+    {
+      if (File.Exists(Paths.Exception))
+        Stack = File.ReadAllText(Paths.Exception);
+    }
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
   }
 }

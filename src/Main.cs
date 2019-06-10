@@ -19,151 +19,82 @@
  */
 
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using HXE;
-using HXE.SPV3;
-using SPV3.Annotations;
-using static System.Environment;
-using static System.IO.Directory;
+using System.IO;
+using System.Windows;
 using static System.IO.File;
-using static System.IO.Path;
-using Exit = HXE.Exit;
-using File = System.IO.File;
 
 namespace SPV3
 {
-  /// <summary>
-  ///   Main loader code.
-  /// </summary>
-  public class Main : INotifyPropertyChanged
+  public partial class Main
   {
-    private bool   _canLoad;
-    private string _status = "Awaiting user input ...";
-
-    public string Status
-    {
-      get => _status;
-      set
-      {
-        if (value == _status) return;
-        _status = value;
-        OnPropertyChanged();
-      }
-    }
-
-    public bool CanLoad
-    {
-      get => _canLoad;
-      set
-      {
-        if (value == _canLoad) return;
-        _canLoad = value;
-        OnPropertyChanged();
-      }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
+    public MainError   Error   { get; set; } = new MainError();   /* catches & shows exceptions   */
+    public MainInstall Install { get; set; } = new MainInstall(); /* checks & allows installation */
+    public MainLoad    Load    { get; set; } = new MainLoad();    /* checks & allows loading      */
 
     /// <summary>
-    ///   Initialises the loader
+    ///   Wrapper for subclass initialisation methods.
     /// </summary>
     public void Initialise()
     {
-      /**
-       * Gracefully create directories and configuration data.
-       */
-
-      CreateDirectory(HXE.Paths.Directory);
-      CreateDirectory(Paths.Directory);
-
-      var configuration = (Configuration) HXE.Paths.Configuration;
-
-      if (!configuration.Exists())
-        configuration.Save();
+      Directory.CreateDirectory(Paths.Directory);     /* create data directory */
+      Directory.CreateDirectory(HXE.Paths.Directory); /* create hxe directory  */
 
       /**
-       * Test if the working directory is read-only. If a simple file cannot be written or deleted, then any loading or
-       * updating routines will likely fail. As such, we will prevent updating or loading in such circumstances.
+       * We determine installation or initiation mode:
+       * 
+       * -   initiation: The HCE executable exists, thus SPV3 is ready to be loaded.
+       * -   installation: The manifest exists, thus SPV3 is ready to be installed.
+       *
+       * If neither of the above apply in this scenario, then we prohibit loading or installing; instead, we prompt the
+       * user to place the loader in the current directory.
        */
 
-      try
+      switch (Context.Infer())
       {
-        var test = Combine(CurrentDirectory, "io.bin");
-
-        WriteAllBytes(test, new byte[8]);
-        File.Delete(test);
-
-        CanLoad = true;
-      }
-      catch (Exception)
-      {
-        Status = "You are in a read-only folder. If you are running from the ISO file, please install SPV3 to a "    +
-                 "normal folder outside of Program Files. Otherwise, try running as admin!\n\nYour current folder: " +
-                 CurrentDirectory;
-
-        CanLoad = false;
+        case Context.Type.Load:
+          Load.Visibility = Visibility.Visible;
+          break;
+        case Context.Type.Install:
+          Install.Visibility = Visibility.Visible;
+          break;
+        case Context.Type.Invalid:
+          Error.Visibility = Visibility.Visible;
+          Error.Content    = "Please ensure this loader is in the appropriate SPV3 folder.";
+          break;
+        default:
+          throw new ArgumentOutOfRangeException();
       }
     }
 
     /// <summary>
-    ///   Invokes SPV3 through the HXE loader.
+    ///   Wrapper for the load routine with UI support.
     /// </summary>
-    public void Start(string args = null)
+    public void Invoke()
     {
-      var configuration = (Configuration) HXE.Paths.Configuration;
-      var openSauce     = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory);
-      var chimera       = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);
-
-      if (configuration.Exists())
-        configuration.Load();
-
-      if (openSauce.Exists())
-        openSauce.Load();
-      else
-        openSauce.Camera.CalculateFOV(); /* imposes initial fov  */
-
-      if (chimera.Exists())
+      try
       {
-        chimera.Load();
-        chimera.Interpolation        = 9;    /* enhancements */
-        chimera.AnisotropicFiltering = true; /* enhancements */
-        chimera.UncapCinematic       = true; /* enhancements */
-        chimera.BlockLOD             = true; /* enhancements */
+        Load.Invoke();
       }
-
-      configuration.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
-      openSauce.HUD.ScaleHUD                    = true; /* fixes menu stretching  */
-      openSauce.HUD.ShowHUD                     = true; /* fixes menu stretching  */
-
-      configuration.Save();
-      openSauce.Save();
-
-      Status = "Installing SPV3 ...";
-
-      switch (Cli.Start(args))
+      catch (Exception e)
       {
-        case Exit.Code.Success:
-          Status = "SPV3 loading routine has gracefully succeeded.";
-          break;
-        case Exit.Code.Exception:
-          Status = "Exception has occurred. Review log file.";
-          break;
-        case Exit.Code.InvalidInstall:
-          Status = "Could not detect a legal HCE installation.";
-          break;
+        Exception(e, "Loading error");
       }
     }
 
-    public void StartWindow()
+    /// <summary>
+    ///   Successfully exits the SPV3 loader.
+    /// </summary>
+    public void Quit()
     {
-      Start("-window");
+      Environment.Exit(0);
     }
 
-    [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void Exception(Exception e, string description)
     {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+      WriteAllText(Paths.Exception, e.ToString());
+
+      Error.Visibility = Visibility.Visible;
+      Error.Content    = $"{description}: {e.Message.ToLower()}\n\nClick here for more information.";
     }
   }
 }
