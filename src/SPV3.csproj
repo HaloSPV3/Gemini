@@ -78,6 +78,7 @@
     <Compile Include="Configuration.HXE.Shaders.cs" />
     <Compile Include="Configuration.Loader.cs" />
     <Compile Include="Configuration.OpenSauce.cs" />
+    <Compile Include="Configuration.OpenSauce.DOOM.cs" />
     <Compile Include="Configuration.UserControl.xaml.cs">
       <DependentUpon>Configuration.UserControl.xaml</DependentUpon>
     </Compile>
