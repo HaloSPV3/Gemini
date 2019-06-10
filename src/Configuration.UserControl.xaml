@@ -209,6 +209,10 @@
                             Margin="0,2,0,0"
                             Content="Apply DOOM Mode"
                             Click="ApplyDOOM" />
+                    <Button x:Name="ApplyBlindButton"
+                            Margin="0,2,0,0"
+                            Content="Apply Blind Mode"
+                            Click="ApplyBlind" />
                 </StackPanel>
             </StackPanel>
 
