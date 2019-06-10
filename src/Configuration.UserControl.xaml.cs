@@ -52,5 +52,12 @@ namespace SPV3
     {
       _configuration.OpenSauce.CalculateFOV();
     }
+
+    private void ApplyDOOM(object sender, RoutedEventArgs e)
+    {
+      _configuration.OpenSauce.ApplyDOOM();
+      ApplyDOOMButton.Content   = "Done!";
+      ApplyDOOMButton.IsEnabled = false;
+    }
   }
 }

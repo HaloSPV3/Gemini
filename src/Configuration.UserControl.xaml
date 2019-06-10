@@ -205,6 +205,10 @@
                     <Button Margin="0,2,0,0"
                             Content="Calculate FOV"
                             Click="CalculateFOV" />
+                    <Button x:Name="ApplyDOOMButton"
+                            Margin="0,2,0,0"
+                            Content="Apply DOOM Mode"
+                            Click="ApplyDOOM" />
                 </StackPanel>
             </StackPanel>
 

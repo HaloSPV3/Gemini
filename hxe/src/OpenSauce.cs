@@ -269,24 +269,19 @@ namespace HXE
 
       public class ObjectsWeapon
       {
-        public WeaponPositions Positions { get; set; } = new WeaponPositions();
+        public List<PositionWeapon> Positions { get; set; } = new List<PositionWeapon>();
 
-        public class WeaponPositions
+        [XmlType("Weapon")]
+        public class PositionWeapon
         {
-          public List<PositionWeapon> Weapon { get; set; } = new List<PositionWeapon>();
+          public string         Name     { get; set; } = string.Empty;
+          public WeaponPosition Position { get; set; } = new WeaponPosition();
 
-          [XmlType("Weapon")]
-          public class PositionWeapon
+          public class WeaponPosition
           {
-            public string         Name     { get; set; } = string.Empty;
-            public WeaponPosition Position { get; set; } = new WeaponPosition();
-
-            public class WeaponPosition
-            {
-              public long I { get; set; } = 0;
-              public long J { get; set; } = 0;
-              public long K { get; set; } = 0;
-            }
+            public double I { get; set; } = 0;
+            public double J { get; set; } = 0;
+            public double K { get; set; } = 0;
           }
         }
       }
@@ -300,8 +295,8 @@ namespace HXE
 
       public class HUDHUDScale
       {
-        public long X { get; set; } = 0;
-        public long Y { get; set; } = 0;
+        public double X { get; set; } = 0;
+        public double Y { get; set; } = 0;
       }
     }
   }
