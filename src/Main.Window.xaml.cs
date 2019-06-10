@@ -58,7 +58,7 @@ namespace SPV3
       AssetsButton.IsEnabled = false;
       AssetsButton.Content   = "Updating...";
       await Task.Run(() => { _main.Update(); });
-      AssetsButton.Content   = "Update";
+      AssetsButton.Content   = "You are up to date!";
       AssetsButton.IsEnabled = true;
       LoadButton.IsEnabled   = true;
     }
