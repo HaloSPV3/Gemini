@@ -54,6 +54,8 @@ namespace SPV3
         Thread.Sleep(2500);
         Process.Start(_version.Upstream.Address);
       });
+
+      Process.Start(Environment.CurrentDirectory);
     }
   }
 }
