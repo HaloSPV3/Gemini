@@ -22,7 +22,6 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using HXE;
 using SPV3.Annotations;
@@ -120,40 +119,18 @@ namespace SPV3
       CanInstall = false;
     }
 
-    public void Commit()
+    public async void Commit()
     {
       try
       {
         CanInstall = false;
 
-        var task = new Task(() => { Installer.Install(_source, _target); });
+        var progress = new Progress<Status>();
+        progress.ProgressChanged +=
+          (o, s) => Status =
+            $"Installing SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}.";
 
-        task.Start();
-
-        var dots = 0;
-        var body = "Installing SPV3. Please wait until this is finished!";
-
-        while (!task.IsCompleted)
-        {
-          Status = $"{body} {new string('.', dots)}";
-          Thread.Sleep(1000);
-
-          switch (dots)
-          {
-            case 0:
-              dots = 1;
-              break;
-            case 1:
-              dots = 2;
-              break;
-            case 2:
-              dots = 3;
-              break;
-            case 3:
-              dots = 0;
-              break;
-          }
-        }
+        await Task.Run(() => { Installer.Install(_source, _target, progress); });
 
         Status     = "Installation has successfully finished!";
         CanInstall = true;

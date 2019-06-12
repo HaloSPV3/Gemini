@@ -18,6 +18,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
@@ -48,7 +49,10 @@ namespace HXE
     /// <param name="target">
     ///   Target directory, which is expected to be distributed to the end-user.
     /// </param>
-    public static void Compile(string source, string target)
+    /// <param name="progress">
+    ///   Optional IProgress object for calling GUI clients.
+    /// </param>
+    public static void Compile(string source, string target, IProgress<Status> progress = null)
     {
       /**
        * Normalisation of the paths will preserve our sanity later on! ;-)
@@ -173,10 +177,17 @@ namespace HXE
       }
 
       var c = 1;                       /* current package */
-      var t = manifest.Packages.Count; /* total progress */
+      var t = manifest.Packages.Count; /* total progress  */
 
       foreach (var package in manifest.Packages)
       {
+        progress?.Report(new Status
+        {
+          Current     = c,
+          Total       = t,
+          Description = $"Compiling: {package.Name} - {package.Entry.Name}"
+        });
+
         var packagePath = Combine(target, package.Name);
 
         if (System.IO.File.Exists(packagePath))

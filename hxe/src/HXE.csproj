@@ -80,6 +80,7 @@
     <Compile Include="SPV3\Initiation.cs" />
     <Compile Include="SPV3\PostProcessing.cs" />
     <Compile Include="SPV3\Progress.cs" />
+    <Compile Include="Status.cs" />
     <Compile Include="Update.cs" />
   </ItemGroup>
   <ItemGroup>

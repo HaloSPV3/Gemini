@@ -21,7 +21,6 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using HXE;
 using SPV3.Annotations;
@@ -72,7 +71,9 @@ namespace SPV3
       }
     }
 
-    public void Commit()
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public async void Commit()
     {
       try
       {
@@ -97,34 +98,12 @@ namespace SPV3
          * And now... we lift off!
          */
 
-        var task = new Task(() => { Compiler.Compile(CurrentDirectory, Combine(_target, "data")); });
+        var progress = new Progress<Status>();
+        progress.ProgressChanged +=
+          (o, s) => Status =
+            $"Compiling SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}.";
 
-        task.Start();
-
-        var dots = 0;
-        var body = "Compiling SPV3. Please wait until this is finished!";
-
-        while (!task.IsCompleted)
-        {
-          Status = $"{body} {new string('.', dots)}";
-          Thread.Sleep(1000);
-
-          switch (dots)
-          {
-            case 0:
-              dots = 1;
-              break;
-            case 1:
-              dots = 2;
-              break;
-            case 2:
-              dots = 3;
-              break;
-            case 3:
-              dots = 0;
-              break;
-          }
-        }
+        await Task.Run(() => { Compiler.Compile(CurrentDirectory, Combine(_target, "data"), progress); });
 
         /**
          * Copy data... 
@@ -149,8 +128,6 @@ namespace SPV3
         CanCompile = true;
       }
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     [NotifyPropertyChangedInvocator]
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

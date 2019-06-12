@@ -18,6 +18,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
@@ -43,7 +44,10 @@ namespace HXE
     /// <param name="target">
     ///   Target directory to install the data from the packages to.
     /// </param>
-    public static void Install(string source, string target)
+    /// <param name="progress">
+    ///   Optional IProgress object for calling GUI clients.
+    /// </param>
+    public static void Install(string source, string target, IProgress<Status> progress = null)
     {
       /**
        * Normalisation of the paths will preserve our sanity later on! ;-)
@@ -99,10 +103,17 @@ namespace HXE
       }
 
       var c = 1;                       /* current package */
-      var t = manifest.Packages.Count; /* total progress */
+      var t = manifest.Packages.Count; /* total progress  */
 
       foreach (var package in manifest.Packages)
       {
+        progress?.Report(new Status
+        {
+          Current     = c,
+          Total       = t,
+          Description = $"Installing: {package.Name} - {package.Entry.Name}"
+        });
+
         var archive   = Combine(source,    package.Name);
         var directory = Combine(target,    package.Entry.Path);
         var file      = Combine(directory, package.Entry.Name);
