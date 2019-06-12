@@ -41,11 +41,13 @@ namespace SPV3
       /* keeps compatibility with the hackish post-processing configuration system */
       OpenSauce.Configuration.Rasterizer.PostProcessing.MotionBlur.Enabled = HXE.Shaders.MotionBlur == 1;
 
-      if (Loader.DOOM)
+      if (Loader.DOOM && !Loader.Blind)
         OpenSauce.Configuration.ApplyDOOM();
-      else if (Loader.Blind)
+
+      if (Loader.Blind && !Loader.DOOM)
         OpenSauce.Configuration.ApplyBlind();
-      else
+
+      if (!Loader.DOOM && !Loader.Blind)
         OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
 
       HXE.Save();
