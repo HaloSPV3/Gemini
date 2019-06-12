@@ -101,7 +101,7 @@ namespace SPV3
         var progress = new Progress<Status>();
         progress.ProgressChanged +=
           (o, s) => Status =
-            $"Compiling SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}.";
+            $"Compiling SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
 
         await Task.Run(() => { Compiler.Compile(CurrentDirectory, Combine(_target, "data"), progress); });
 

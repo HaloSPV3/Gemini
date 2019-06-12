@@ -128,7 +128,7 @@ namespace SPV3
         var progress = new Progress<Status>();
         progress.ProgressChanged +=
           (o, s) => Status =
-            $"Installing SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}.";
+            $"Installing SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
 
         await Task.Run(() => { Installer.Install(_source, _target, progress); });
 
