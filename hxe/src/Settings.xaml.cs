@@ -66,6 +66,7 @@ namespace HXE
       _configuration.Kernel.SkipPatchLargeAAware = SkipPatchLargeAAware.IsChecked == true;
 
       _configuration.Save();
+      _configuration.Load();
 
       PrintConfiguration();
 

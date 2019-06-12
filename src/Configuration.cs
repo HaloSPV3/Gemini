@@ -19,7 +19,9 @@
  */
 
 using System.Collections.Generic;
+using static System.IO.File;
 using static HXE.OpenSauce.OpenSauceObjects.ObjectsWeapon;
+using static SPV3.Paths;
 
 namespace SPV3
 {
@@ -42,10 +44,16 @@ namespace SPV3
       OpenSauce.Configuration.Rasterizer.PostProcessing.MotionBlur.Enabled = HXE.Shaders.MotionBlur == 1;
 
       if (Loader.DOOM && !Loader.Blind)
-        OpenSauce.Configuration.ApplyDOOM();
+        if (Exists(DOOM))
+          OpenSauce.Configuration.Objects.Weapon.Load(DOOM);
+        else
+          OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
 
       if (Loader.Blind && !Loader.DOOM)
-        OpenSauce.Configuration.ApplyBlind();
+        if (Exists(Blind))
+          OpenSauce.Configuration.Objects.Weapon.Load(Blind);
+        else
+          OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
 
       if (!Loader.DOOM && !Loader.Blind)
         OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();

@@ -63,6 +63,9 @@
     <Compile Include="HCE\Profile.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="Kernel.cs" />
+    <Compile Include="Positions.xaml.cs">
+      <DependentUpon>Positions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,6 +89,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\banner.txt" />
     <Content Include="Assets\icon.ico" />
+    <Page Include="Positions.xaml" />
     <Page Include="Settings.xaml" />
   </ItemGroup>
   <ItemGroup>

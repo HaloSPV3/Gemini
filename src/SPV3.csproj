@@ -173,6 +173,16 @@
   <ItemGroup>
     <Resource Include="Assets\background_compile.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Positions\Blind.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>blind.bin</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="Positions\DOOM.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>doom.bin</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

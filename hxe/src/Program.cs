@@ -95,6 +95,12 @@ namespace HXE
             Exit(0);
           }
         )
+        .Add("positions", "Opens positions GUI",
+          s =>
+          {
+            new Application().Run(new Positions());
+            Exit(0);
+          })
         .Add("load", "Initiates HCE/SPV3",
           s => Run(() => { Kernel.Bootstrap(hce); }))
         .Add("install=", "Installs HCE/SPV3 to destination",
