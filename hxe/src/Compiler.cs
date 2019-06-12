@@ -27,7 +27,10 @@ using static System.Diagnostics.Process;
 using static System.IO.Compression.CompressionLevel;
 using static System.IO.Compression.ZipArchiveMode;
 using static System.IO.Compression.ZipFile;
+using static System.IO.Path;
 using static HXE.Console;
+using static HXE.Manifest;
+using static HXE.Manifest.Package;
 
 namespace HXE
 {
@@ -51,8 +54,8 @@ namespace HXE
        * Normalisation of the paths will preserve our sanity later on! ;-)
        */
 
-      source = Path.GetFullPath(source); /* normalise source path */
-      target = Path.GetFullPath(target); /* normalise target path */
+      source = GetFullPath(source); /* normalise source path */
+      target = GetFullPath(target); /* normalise target path */
 
       Info("Normalised inbound source and target paths");
 
@@ -79,7 +82,7 @@ namespace HXE
        * Given that the manifest is represented by 0x00, the subsequent packages should be represented by a >=1 ID. 
        */
 
-      var manifest    = (Manifest) Path.Combine(target, Paths.Manifest);
+      var manifest    = (Manifest) Combine(target, Paths.Manifest);
       var files       = new DirectoryInfo(source).GetFiles("*", SearchOption.AllDirectories);
       var i           = 0x01; /* 0x00 = manifest */
       var compression = Optimal;
@@ -88,7 +91,7 @@ namespace HXE
        * Yare yare daze, watashi wa aserimasu.
        */
 
-      if (System.IO.File.Exists(Path.Combine(source, "speedwagon")))
+      if (System.IO.File.Exists(Combine(source, "speedwagon")))
       {
         compression = NoCompression;
         Info("No compression will be applied!");
@@ -117,7 +120,7 @@ namespace HXE
       foreach (var file in files)
       {
         var packageName = $"0x{i:X8}.bin";
-        var packagePath = Path.Combine(target, packageName);
+        var packagePath = Combine(target, packageName);
         var fileName    = file.Name;
 
         if (System.IO.File.Exists(packagePath))
@@ -135,10 +138,10 @@ namespace HXE
          * as the prefix, just like the manifest file.
          */
 
-        manifest.Packages.Add(new Manifest.Package
+        manifest.Packages.Add(new Package
         {
           Name = packageName,
-          Entry = new Manifest.Package.PackageEntry
+          Entry = new PackageEntry
           {
             Name = fileName,
             Size = file.Length,
@@ -174,7 +177,7 @@ namespace HXE
 
       foreach (var package in manifest.Packages)
       {
-        var packagePath = Path.Combine(target, package.Name);
+        var packagePath = Combine(target, package.Name);
 
         if (System.IO.File.Exists(packagePath))
         {
@@ -186,7 +189,7 @@ namespace HXE
         {
           var task = new Task(() =>
           {
-            var entryPath = Path.Combine(source, package.Entry.Path, package.Entry.Name);
+            var entryPath = Combine(source, package.Entry.Path, package.Entry.Name);
             archive.CreateEntryFromFile(entryPath, package.Entry.Name, compression);
           });
 

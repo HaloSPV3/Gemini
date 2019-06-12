@@ -70,7 +70,7 @@
                         VerticalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="75" />
+                        <Setter Property="Width" Value="90" />
                     </Style>
                 </StackPanel.Resources>
 
@@ -95,6 +95,21 @@
                     <Label Content="Gamma:" />
                     <CheckBox IsChecked="{Binding Loader.Gamma}" />
                 </DockPanel>
+                <DockPanel>
+                    <Label Content="DOOM Mode:" />
+                    <CheckBox IsChecked="{Binding Loader.DOOM}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Blind Mode:" />
+                    <CheckBox IsChecked="{Binding Loader.Blind}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Field of View:" />
+                    <TextBox Text="{Binding OpenSauce.FieldOfView}" />
+                </DockPanel>
+                <Button Margin="0,2,0,0"
+                        Content="Calculate FOV"
+                        Click="CalculateFOV" />
             </StackPanel>
 
             <!-- Shaders -->
@@ -197,23 +212,6 @@
                     <Label Content="Bloom:" />
                     <CheckBox IsChecked="{Binding OpenSauce.Bloom}" />
                 </DockPanel>
-                <StackPanel>
-                    <DockPanel>
-                        <Label Content="Field of View:" />
-                        <TextBox Text="{Binding OpenSauce.FieldOfView}" />
-                    </DockPanel>
-                    <Button Margin="0,2,0,0"
-                            Content="Calculate FOV"
-                            Click="CalculateFOV" />
-                    <Button x:Name="ApplyDOOMButton"
-                            Margin="0,2,0,0"
-                            Content="Apply DOOM Mode"
-                            Click="ApplyDOOM" />
-                    <Button x:Name="ApplyBlindButton"
-                            Margin="0,2,0,0"
-                            Content="Apply Blind Mode"
-                            Click="ApplyBlind" />
-                </StackPanel>
             </StackPanel>
 
             <!-- HXE Kernel -->

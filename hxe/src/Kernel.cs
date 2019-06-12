@@ -131,7 +131,11 @@ namespace HXE
         ".cfg",
         ".ini",
         ".xml",
-        ".m"
+        ".m",
+        ".pdb",
+        ".sav",
+        ".dll",
+        ".ico"
       };
 
       /**
@@ -316,7 +320,7 @@ namespace HXE
         Debug("Resumed campaign mission    - " + progress.Mission);
         Debug("Resumed campaign difficulty - " + progress.Difficulty);
       }
-      catch (UnauthorizedAccessException e)
+      catch (Exception e)
       {
         Error(e.Message + " -- CAMPAIGN WILL NOT RESUME");
       }
@@ -337,9 +341,9 @@ namespace HXE
 
         Info("Saved unlocking code to the initiation file");
       }
-      catch (UnauthorizedAccessException e)
+      catch (Exception e)
       {
-        Error(e.Message + " -- PLEASE RUN AS ADMINISTRATOR");
+        Error(e.Message + " -- 3.1 MODE WILL NOT BE APPLIED");
       }
     }
 
@@ -365,7 +369,7 @@ namespace HXE
         Debug("Applied PP settings for Volumetrics - " + RootInitc.PostProcessing.Volumetrics);
         Debug("Applied PP settings for Lens Dirt   - " + RootInitc.PostProcessing.LensDirt);
       }
-      catch (UnauthorizedAccessException e)
+      catch (Exception  e)
       {
         Error(e.Message + " -- POST PROCESSING WILL NOT BE APPLIED");
       }

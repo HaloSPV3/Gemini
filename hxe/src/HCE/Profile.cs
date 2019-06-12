@@ -25,6 +25,10 @@ using System.Linq;
 using System.Text;
 using static System.IO.SearchOption;
 using static HXE.Console;
+using static HXE.HCE.Profile.ProfileAudio;
+using static HXE.HCE.Profile.ProfileDetails;
+using static HXE.HCE.Profile.ProfileNetwork;
+using static HXE.HCE.Profile.ProfileVideo;
 
 namespace HXE.HCE
 {
@@ -266,14 +270,14 @@ namespace HXE.HCE
 
         Details.Name = Encoding.Unicode.GetString(GetBytes(Offset.ProfileName, 22)).TrimEnd('\0');
 
-        Details.Colour               = (ProfileDetails.ColourOptions) GetByte(Offset.ProfileColour);
-        Video.FrameRate              = (ProfileVideo.VideoFrameRate) GetByte(Offset.VideoFrameRate);
-        Video.Particles              = (ProfileVideo.VideoParticles) GetByte(Offset.VideoQualityParticles);
-        Video.Quality                = (ProfileVideo.VideoQuality) GetByte(Offset.VideoQualityTextures);
-        Audio.Variety                = (ProfileAudio.AudioVariety) GetByte(Offset.AudioVariety);
-        Network.Connection           = (ProfileNetwork.NetworkConnection) GetByte(Offset.NetworkConnectionType);
-        Audio.Quality                = (ProfileAudio.AudioQuality) GetByte(Offset.AudioQuality);
-        Audio.Variety                = (ProfileAudio.AudioVariety) GetByte(Offset.AudioVariety);
+        Details.Colour               = (ColourOptions) GetByte(Offset.ProfileColour);
+        Video.FrameRate              = (VideoFrameRate) GetByte(Offset.VideoFrameRate);
+        Video.Particles              = (VideoParticles) GetByte(Offset.VideoQualityParticles);
+        Video.Quality                = (VideoQuality) GetByte(Offset.VideoQualityTextures);
+        Audio.Variety                = (AudioVariety) GetByte(Offset.AudioVariety);
+        Network.Connection           = (NetworkConnection) GetByte(Offset.NetworkConnectionType);
+        Audio.Quality                = (AudioQuality) GetByte(Offset.AudioQuality);
+        Audio.Variety                = (AudioVariety) GetByte(Offset.AudioVariety);
         Mouse.Sensitivity.Horizontal = GetByte(Offset.MouseSensitivityHorizontal);
         Mouse.Sensitivity.Vertical   = GetByte(Offset.MouseSensitivityVertical);
         Video.Resolution.Width       = GetShort(Offset.VideoResolutionWidth);
@@ -293,7 +297,7 @@ namespace HXE.HCE
         Audio.HWA                    = GetBoolean(Offset.AudioHWA);
 
         if ((int) Details.Colour == 0xFF)
-          Details.Colour = ProfileDetails.ColourOptions.White;
+          Details.Colour = ColourOptions.White;
 
         Info("Profile deserialisation routine is complete");
       }

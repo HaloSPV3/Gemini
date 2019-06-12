@@ -22,12 +22,13 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using HXE;
 using SPV3.Annotations;
+using static HXE.Paths.Custom;
 
 namespace SPV3
 {
   public partial class Configuration
   {
-    public partial class ConfigurationOpenSauce : INotifyPropertyChanged
+    public class ConfigurationOpenSauce : INotifyPropertyChanged
     {
       private bool   _bloom;
       private bool   _detailedMaps;
@@ -36,7 +37,7 @@ namespace SPV3
       private bool   _specularLighting;
       private bool   _specularMaps;
 
-      public OpenSauce Configuration { get; } = (OpenSauce) global::HXE.Paths.Custom.OpenSauce(Paths.Directory);
+      public OpenSauce Configuration { get; } = (OpenSauce) OpenSauce(Paths.Directory);
 
       public bool NormalMaps
       {
@@ -134,12 +135,6 @@ namespace SPV3
       protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
       {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-      }
-
-      public void CalculateFOV()
-      {
-        Configuration.Camera.CalculateFOV();
-        FieldOfView = Configuration.Camera.FieldOfView;
       }
     }
   }

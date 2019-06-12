@@ -50,27 +50,7 @@ namespace SPV3
 
     private void CalculateFOV(object sender, RoutedEventArgs e)
     {
-      _configuration.OpenSauce.CalculateFOV();
-    }
-
-    private void ApplyDOOM(object sender, RoutedEventArgs e)
-    {
-      _configuration.OpenSauce.ApplyDOOM();
-      ApplyDOOMButton.Content   = "Done!";
-      ApplyDOOMButton.IsEnabled = false;
-
-      ApplyBlindButton.Content   = "Apply Blind Mode";
-      ApplyBlindButton.IsEnabled = true;
-    }
-
-    private void ApplyBlind(object sender, RoutedEventArgs e)
-    {
-      _configuration.OpenSauce.ApplyBlind();
-      ApplyBlindButton.Content   = "Done!";
-      ApplyBlindButton.IsEnabled = false;
-
-      ApplyDOOMButton.Content   = "Apply DOOM Mode";
-      ApplyDOOMButton.IsEnabled = true;
+      _configuration.CalculateFOV();
     }
   }
 }

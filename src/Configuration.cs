@@ -18,6 +18,9 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.Collections.Generic;
+using static HXE.OpenSauce.OpenSauceObjects.ObjectsWeapon;
+
 namespace SPV3
 {
   public partial class Configuration
@@ -38,9 +41,21 @@ namespace SPV3
       /* keeps compatibility with the hackish post-processing configuration system */
       OpenSauce.Configuration.Rasterizer.PostProcessing.MotionBlur.Enabled = HXE.Shaders.MotionBlur == 1;
 
+      if (Loader.DOOM)
+        OpenSauce.Configuration.ApplyDOOM();
+      else if (Loader.Blind)
+        OpenSauce.Configuration.ApplyBlind();
+      else
+        OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
+
       HXE.Save();
       Loader.Save();
       OpenSauce.Save();
+    }
+
+    public void CalculateFOV()
+    {
+      OpenSauce.FieldOfView = OpenSauce.Configuration.Camera.CalculateFOV(Loader.Width, Loader.Height);
     }
   }
 }

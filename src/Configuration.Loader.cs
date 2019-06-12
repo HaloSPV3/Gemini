@@ -31,6 +31,8 @@ namespace SPV3
   {
     public class ConfigurationLoader : INotifyPropertyChanged
     {
+      private bool   _blind;
+      private bool   _doom;
       private bool   _gamma;
       private ushort _height = (ushort) Screen.PrimaryScreen.Bounds.Height;
       private ushort _width  = (ushort) Screen.PrimaryScreen.Bounds.Width;
@@ -80,6 +82,28 @@ namespace SPV3
         }
       }
 
+      public bool DOOM
+      {
+        get => _doom;
+        set
+        {
+          if (value == _doom) return;
+          _doom = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public bool Blind
+      {
+        get => _blind;
+        set
+        {
+          if (value == _blind) return;
+          _blind = value;
+          OnPropertyChanged();
+        }
+      }
+
       public event PropertyChangedEventHandler PropertyChanged;
 
       public void Save()
@@ -104,6 +128,8 @@ namespace SPV3
             bw.Write(Height);
             bw.Write(Window);
             bw.Write(Gamma);
+            bw.Write(DOOM);
+            bw.Write(Blind);
           }
 
           /* padding */
@@ -139,6 +165,8 @@ namespace SPV3
             Height = br.ReadUInt16();
             Window = br.ReadBoolean();
             Gamma  = br.ReadBoolean();
+            DOOM   = br.ReadBoolean();
+            Blind  = br.ReadBoolean();
           }
         }
       }

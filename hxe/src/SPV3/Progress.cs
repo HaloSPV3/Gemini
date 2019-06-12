@@ -20,6 +20,7 @@
 
 using System.IO;
 using System.Text;
+using static HXE.SPV3.Campaign;
 
 namespace HXE.SPV3
 {
@@ -29,8 +30,8 @@ namespace HXE.SPV3
   /// </summary>
   public class Progress : File
   {
-    public Campaign.Mission    Mission    { get; set; } = Campaign.Mission.Spv3A10;
-    public Campaign.Difficulty Difficulty { get; set; } = Campaign.Difficulty.Heroic;
+    public Mission    Mission    { get; set; } = Mission.Spv3A10;
+    public Difficulty Difficulty { get; set; } = Difficulty.Heroic;
 
     /// <summary>
     ///   Loads object state from the inbound file.
@@ -41,22 +42,22 @@ namespace HXE.SPV3
        * Infers the difficulty and returns the Campaign.Difficulty representation.
        */
 
-      Campaign.Difficulty GetDifficulty(BinaryReader reader)
+      Difficulty GetDifficulty(BinaryReader reader)
       {
         reader.BaseStream.Seek(0x1E2, SeekOrigin.Begin);
 
         switch (reader.ReadByte())
         {
           case 0x0:
-            return Campaign.Difficulty.Noble;
+            return Difficulty.Noble;
           case 0x1:
-            return Campaign.Difficulty.Normal;
+            return Difficulty.Normal;
           case 0x2:
-            return Campaign.Difficulty.Heroic;
+            return Difficulty.Heroic;
           case 0x3:
-            return Campaign.Difficulty.Legendary;
+            return Difficulty.Legendary;
           default:
-            return Campaign.Difficulty.Normal;
+            return Difficulty.Normal;
         }
       }
 
@@ -64,7 +65,7 @@ namespace HXE.SPV3
        * Infers the difficulty and returns the Campaign.Difficulty mission.
        */
 
-      Campaign.Mission GetMission(BinaryReader reader)
+      Mission GetMission(BinaryReader reader)
       {
         var bytes = new byte[32];
 
@@ -74,41 +75,41 @@ namespace HXE.SPV3
         switch (Encoding.UTF8.GetString(bytes).TrimEnd('\0'))
         {
           case "spv3a10":
-            return Campaign.Mission.Spv3A10;
+            return Mission.Spv3A10;
           case "spv3a30":
-            return Campaign.Mission.Spv3A30;
+            return Mission.Spv3A30;
           case "spv3a50":
-            return Campaign.Mission.Spv3A50;
+            return Mission.Spv3A50;
           case "spv3b30":
-            return Campaign.Mission.Spv3B30;
+            return Mission.Spv3B30;
           case "spv3b30_evolved":
-            return Campaign.Mission.Spv3B30Evolved;
+            return Mission.Spv3B30Evolved;
           case "spv3b40":
-            return Campaign.Mission.Spv3B40;
+            return Mission.Spv3B40;
           case "spv3c10":
-            return Campaign.Mission.Spv3C10;
+            return Mission.Spv3C10;
           case "spv3c20":
-            return Campaign.Mission.Spv3C20;
+            return Mission.Spv3C20;
           case "spv3c40":
-            return Campaign.Mission.Spv3C40;
+            return Mission.Spv3C40;
           case "spv3d20":
-            return Campaign.Mission.Spv3D20;
+            return Mission.Spv3D20;
           case "spv3d25":
-            return Campaign.Mission.Spv3D25;
+            return Mission.Spv3D25;
           case "spv3d30":
-            return Campaign.Mission.Spv3D30;
+            return Mission.Spv3D30;
           case "spv3d30_evolved":
-            return Campaign.Mission.Spv3D30Evolved;
+            return Mission.Spv3D30Evolved;
           case "spv3d40":
-            return Campaign.Mission.Spv3D40;
+            return Mission.Spv3D40;
           case "spv3_lumoria_a":
-            return Campaign.Mission.LumoriaA;
+            return Mission.LumoriaA;
           case "spv3_lumoria_b":
-            return Campaign.Mission.LumoriaB;
+            return Mission.LumoriaB;
           case "spv3_lumoria_cd":
-            return Campaign.Mission.LumoriaCd;
+            return Mission.LumoriaCd;
           default:
-            return Campaign.Mission.Spv3A10;
+            return Mission.Spv3A10;
         }
       }
 

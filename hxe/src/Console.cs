@@ -20,6 +20,7 @@
 
 using System;
 using static System.Console;
+using static System.ConsoleColor;
 
 namespace HXE
 {
@@ -29,48 +30,48 @@ namespace HXE
     {
       var decoration = new string('*', value.Length);
 
-      Output("!!!!", ConsoleColor.Red, decoration);
-      Output("!!!!", ConsoleColor.Red, value);
-      Output("!!!!", ConsoleColor.Red, decoration);
+      Output("!!!!", Red, decoration);
+      Output("!!!!", Red, value);
+      Output("!!!!", Red, decoration);
     }
 
     public static void Debug(string value)
     {
-      Output("DBUG", ConsoleColor.Green, value, ConsoleColor.White);
+      Output("DBUG", Green, value, White);
     }
 
     public static void Info(string value)
     {
-      Output("INFO", ConsoleColor.Cyan, value, ConsoleColor.White);
+      Output("INFO", Cyan, value, White);
     }
 
     public static void Wait(string value)
     {
-      Output("WAIT", ConsoleColor.Yellow, value, ConsoleColor.White);
+      Output("WAIT", Yellow, value, White);
     }
 
     public static void Help(string value)
     {
-      Output("HELP", ConsoleColor.Green, value, ConsoleColor.White);
+      Output("HELP", Green, value, White);
     }
 
     public static void Done(string value)
     {
-      Output("DONE", ConsoleColor.Green, value, ConsoleColor.White);
+      Output("DONE", Green, value, White);
     }
 
     public static void Logs(string value)
     {
-      Output("LOGS", ConsoleColor.Magenta, value);
+      Output("LOGS", Magenta, value);
     }
 
     public static void Warn(string value)
     {
       var decoration = new string('-', value.Length);
 
-      Output("WARN", ConsoleColor.Yellow, decoration);
-      Output("WARN", ConsoleColor.Yellow, value);
-      Output("WARN", ConsoleColor.Yellow, decoration);
+      Output("WARN", Yellow, decoration);
+      Output("WARN", Yellow, value);
+      Output("WARN", Yellow, decoration);
     }
 
     private static void Output(string prefix, ConsoleColor color, string message)
@@ -88,13 +89,13 @@ namespace HXE
       if (writeLine)
         WriteLine();
 
-      ForegroundColor = ConsoleColor.Gray;
+      ForegroundColor = Gray;
       Write("> [ ");
 
       ForegroundColor = color;
       Write(prefix);
 
-      ForegroundColor = ConsoleColor.Gray;
+      ForegroundColor = Gray;
       Write(" ] - ");
 
       ForegroundColor = messageColor;

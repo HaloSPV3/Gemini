@@ -20,6 +20,8 @@
 
 using System;
 using System.Text;
+using static HXE.Console;
+using static HXE.SPV3.PostProcessing;
 
 namespace HXE.SPV3
 {
@@ -84,15 +86,15 @@ namespace HXE.SPV3
 
       switch (PostProcessing.MotionBlur)
       {
-        case PostProcessing.MotionBlurOptions.Off:
+        case MotionBlurOptions.Off:
           break;
-        case PostProcessing.MotionBlurOptions.BuiltIn:
+        case MotionBlurOptions.BuiltIn:
           output.AppendLine("set multiplayer_hit_sound_volume 1.1");
           break;
-        case PostProcessing.MotionBlurOptions.PombLow:
+        case MotionBlurOptions.PombLow:
           output.AppendLine("set multiplayer_hit_sound_volume 1.2");
           break;
-        case PostProcessing.MotionBlurOptions.PombHigh:
+        case MotionBlurOptions.PombHigh:
           output.AppendLine("set multiplayer_hit_sound_volume 1.3");
           break;
         default:
@@ -101,12 +103,12 @@ namespace HXE.SPV3
 
       switch (PostProcessing.Mxao)
       {
-        case PostProcessing.MxaoOptions.Off:
+        case MxaoOptions.Off:
           break;
-        case PostProcessing.MxaoOptions.Low:
+        case MxaoOptions.Low:
           output.AppendLine("set cl_remote_player_action_queue_limit 3");
           break;
-        case PostProcessing.MxaoOptions.High:
+        case MxaoOptions.High:
           output.AppendLine("set cl_remote_player_action_queue_limit 4");
           break;
         default:
@@ -115,12 +117,12 @@ namespace HXE.SPV3
 
       switch (PostProcessing.Dof)
       {
-        case PostProcessing.DofOptions.Off:
+        case DofOptions.Off:
           break;
-        case PostProcessing.DofOptions.Low:
+        case DofOptions.Low:
           output.AppendLine("set cl_remote_player_action_queue_tick_limit 7");
           break;
-        case PostProcessing.DofOptions.High:
+        case DofOptions.High:
           output.AppendLine("set cl_remote_player_action_queue_tick_limit 8");
           break;
         default:
@@ -133,8 +135,8 @@ namespace HXE.SPV3
       if (PostProcessing.DynamicLensFlares)
         output.AppendLine("set display_precache_progress false");
 
-      if (!PostProcessing.LensDirt)
-        output.AppendLine("set use_super_remote_players_action_update true");
+      if (PostProcessing.LensDirt)
+        output.AppendLine("set use_super_remote_players_action_update false");
 
       if (!PostProcessing.FilmGrain)
         output.AppendLine("set use_new_vehicle_update_scheme true");
@@ -142,10 +144,10 @@ namespace HXE.SPV3
       if (!PostProcessing.HudVisor)
         output.AppendLine("set multiplayer_draw_teammates_names true");
 
-      Console.Info("Saving initiation data to the initc.txt file");
+      Info("Saving initiation data to the initc.txt file");
       WriteAllText(output.ToString());
-      Console.Info("Successfully applied initc.txt configurations");
-      Console.Debug("Initiation data: \n\n" + ReadAllText());
+      Info("Successfully applied initc.txt configurations");
+      Debug("Initiation data: \n\n" + ReadAllText());
     }
 
     /// <summary>

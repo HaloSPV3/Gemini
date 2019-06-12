@@ -23,6 +23,8 @@ using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using HXE.Properties;
+using static System.IO.File;
+using static System.IO.Path;
 using static HXE.Console;
 
 namespace HXE
@@ -47,8 +49,8 @@ namespace HXE
        * Normalisation of the paths will preserve our sanity later on! ;-)
        */
 
-      source = Path.GetFullPath(source);
-      target = Path.GetFullPath(target);
+      source = GetFullPath(source);
+      target = GetFullPath(target);
 
       Info("Normalised inbound source and target paths");
 
@@ -65,7 +67,7 @@ namespace HXE
 
       Info("Gracefully created target directory");
 
-      var manifest = (Manifest) Path.Combine(source, Paths.Manifest);
+      var manifest = (Manifest) Combine(source, Paths.Manifest);
 
       if (!manifest.Exists())
         throw new FileNotFoundException("Manifest file does not exist in the source directory.");
@@ -88,9 +90,9 @@ namespace HXE
          * infer the package's path by combining the source with the aforementioned name.
          */
 
-        var archive = Path.Combine(source, package.Name);
+        var archive = Combine(source, package.Name);
 
-        if (!System.IO.File.Exists(archive))
+        if (!Exists(archive))
           throw new FileNotFoundException("Package does not exist in the source directory - " + package.Name);
 
         Info("Package exists - " + package.Name);
@@ -101,13 +103,13 @@ namespace HXE
 
       foreach (var package in manifest.Packages)
       {
-        var archive   = Path.Combine(source,    package.Name);
-        var directory = Path.Combine(target,    package.Entry.Path);
-        var file      = Path.Combine(directory, package.Entry.Name);
+        var archive   = Combine(source,    package.Name);
+        var directory = Combine(target,    package.Entry.Path);
+        var file      = Combine(directory, package.Entry.Name);
 
-        if (System.IO.File.Exists(file))
+        if (Exists(file))
         {
-          System.IO.File.Delete(file);
+          Delete(file);
           Info("Deleted existing file - " + file);
         }
 
