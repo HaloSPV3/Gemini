@@ -74,7 +74,7 @@ namespace HXE.SPV3
       var cinematic  = CinematicBars ? 1 : 0;
 
       var output = new StringBuilder();
-      output.AppendLine($"set f3 {mission}"); /*  */
+      output.AppendLine($"set f3 {mission}");
       output.AppendLine($"set loud_dialog_hack {cinematic}");
       output.AppendLine($"player_autoaim {autoaim}");
       output.AppendLine($"player_magnetism {magnetism}");
@@ -84,65 +84,89 @@ namespace HXE.SPV3
        * Encodes post-processing settings to the initc file. Refer to doc/shaders.txt for further information.
        */
 
-      switch (PostProcessing.MotionBlur)
+      var mb   = PostProcessing.MotionBlur;
+      var mxao = PostProcessing.Mxao;
+      var dof  = PostProcessing.Dof;
+      var vl   = PostProcessing.Volumetrics;
+      var df   = PostProcessing.DynamicLensFlares;
+      var ld   = PostProcessing.LensDirt;
+      var fg   = PostProcessing.FilmGrain;
+      var hv   = PostProcessing.HudVisor;
+
+      /* motion blur */
       {
-        case MotionBlurOptions.Off:
-          break;
-        case MotionBlurOptions.BuiltIn:
-          output.AppendLine("set multiplayer_hit_sound_volume 1.1");
-          break;
-        case MotionBlurOptions.PombLow:
-          output.AppendLine("set multiplayer_hit_sound_volume 1.2");
-          break;
-        case MotionBlurOptions.PombHigh:
-          output.AppendLine("set multiplayer_hit_sound_volume 1.3");
-          break;
-        default:
-          throw new ArgumentOutOfRangeException();
+        string option;
+
+        switch (mb)
+        {
+          case MotionBlurOptions.Off:
+            option = "0.2";
+            break;
+          case MotionBlurOptions.BuiltIn:
+            option = "1.1";
+            break;
+          case MotionBlurOptions.PombLow:
+            option = "1.2";
+            break;
+          case MotionBlurOptions.PombHigh:
+            option = "1.3";
+            break;
+          default:
+            throw new ArgumentOutOfRangeException();
+        }
+
+        output.AppendLine($"set multiplayer_hit_sound_volume {option}");
       }
 
-      switch (PostProcessing.Mxao)
+      /* mxao */
       {
-        case MxaoOptions.Off:
-          break;
-        case MxaoOptions.Low:
-          output.AppendLine("set cl_remote_player_action_queue_limit 3");
-          break;
-        case MxaoOptions.High:
-          output.AppendLine("set cl_remote_player_action_queue_limit 4");
-          break;
-        default:
-          throw new ArgumentOutOfRangeException();
+        string option;
+
+        switch (mxao)
+        {
+          case MxaoOptions.Off:
+            option = "2";
+            break;
+          case MxaoOptions.Low:
+            option = "3";
+            break;
+          case MxaoOptions.High:
+            option = "4";
+            break;
+          default:
+            throw new ArgumentOutOfRangeException();
+        }
+
+        output.AppendLine($"set cl_remote_player_action_queue_limit {option}");
       }
 
-      switch (PostProcessing.Dof)
+      /* depth of field */
       {
-        case DofOptions.Off:
-          break;
-        case DofOptions.Low:
-          output.AppendLine("set cl_remote_player_action_queue_tick_limit 7");
-          break;
-        case DofOptions.High:
-          output.AppendLine("set cl_remote_player_action_queue_tick_limit 8");
-          break;
-        default:
-          throw new ArgumentOutOfRangeException();
+        string option;
+
+        switch (dof)
+        {
+          case DofOptions.Off:
+            option = "6";
+            break;
+          case DofOptions.Low:
+            option = "7";
+            break;
+          case DofOptions.High:
+            option = "8";
+            break;
+          default:
+            throw new ArgumentOutOfRangeException();
+        }
+
+        output.AppendLine($"set cl_remote_player_action_queue_tick_limit {option}");
       }
 
-      if (PostProcessing.Volumetrics)
-        output.AppendLine("set rasterizer_soft_filter true");
-
-      if (PostProcessing.DynamicLensFlares)
-        output.AppendLine("set display_precache_progress false");
-
-      if (PostProcessing.LensDirt)
-        output.AppendLine("set use_super_remote_players_action_update false");
-
-      if (!PostProcessing.FilmGrain)
-        output.AppendLine("set use_new_vehicle_update_scheme true");
-
-      if (!PostProcessing.HudVisor)
-        output.AppendLine("set multiplayer_draw_teammates_names true");
+      output.AppendLine("set rasterizer_soft_filter "                 + (vl ? "true" : "false")); /* volumetrics    */
+      output.AppendLine("set display_precache_progress "              + (df ? "false" : "true")); /* dynamic flares */
+      output.AppendLine("set use_super_remote_players_action_update " + (ld ? "false" : "true")); /* lens dirt      */
+      output.AppendLine("set use_new_vehicle_update_scheme "          + (fg ? "false" : "true")); /* film grain     */
+      output.AppendLine("set multiplayer_draw_teammates_names false"  + (hv ? "false" : "true")); /* hud visor      */
 
       Info("Saving initiation data to the initc.txt file");
       WriteAllText(output.ToString());
