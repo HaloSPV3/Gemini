@@ -72,11 +72,17 @@
                                           Margin="25" />
 
                 <!-- Social -->
-                <spv3:Social_UserControl Grid.Column="1"
-                                         Grid.Row="0"
-                                         HorizontalAlignment="Right"
-                                         VerticalAlignment="Top"
-                                         Margin="25" />
+                <StackPanel Grid.Column="1"
+                            Grid.Row="0"
+                            Margin="25"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top">
+                    <spv3:Social_UserControl HorizontalAlignment="Right"
+                                             VerticalAlignment="Top" />
+                    <spv3:News_UserControl HorizontalAlignment="Right"
+                                           VerticalAlignment="Top"
+                                           Margin="0,10,5,0" />
+                </StackPanel>
 
                 <!-- Main -->
                 <StackPanel Grid.Column="0"

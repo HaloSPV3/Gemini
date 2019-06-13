@@ -99,6 +99,10 @@
     <Compile Include="Main.Window.xaml.cs">
       <DependentUpon>Main.Window.xaml</DependentUpon>
     </Compile>
+    <Compile Include="News.cs" />
+    <Compile Include="News.UserControl.xaml.cs">
+      <DependentUpon>News.UserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Report.cs" />
@@ -122,6 +126,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="News.UserControl.xaml" />
     <Page Include="Report.UserControl.xaml" />
     <Page Include="Social.UserControl.xaml" />
     <Page Include="Version.UserControl.xaml" />
