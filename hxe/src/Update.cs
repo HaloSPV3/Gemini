@@ -126,12 +126,25 @@ namespace HXE
     /// <summary>
     ///   Conducts the update mechanism on each asset.
     /// </summary>
-    public void Commit()
+    /// <param name="progress">
+    ///   Optional IProgress object for calling GUI clients.
+    /// </param>
+    public void Commit(IProgress<Status> progress = null)
     {
       Info("Started asset update routine - " + Assets.Count + " assets");
 
+      var c = 1;
+      var t = Assets.Count;
+
       foreach (var asset in Assets)
       {
+        progress?.Report(new Status
+        {
+          Current     = c - 1,
+          Total       = t,
+          Description = $"Updating: {asset.Path}/{asset.Name}"
+        });
+
         /**
          * If the asset matches a file which exists at the target destination on the file system, then re-installing it
          * would be pointless.
@@ -149,6 +162,8 @@ namespace HXE
         asset.Request(); /* grab our package */
         asset.Install(); /* inflate its data */
         asset.CleanUp(); /* clean up package */
+
+        c++;
       }
 
       Done("Finished asset update routine - " + Assets.Count + " assets");

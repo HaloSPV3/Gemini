@@ -183,7 +183,7 @@ namespace HXE
       {
         progress?.Report(new Status
         {
-          Current     = c,
+          Current     = c - 1,
           Total       = t,
           Description = $"Compiling: {package.Name} - {package.Entry.Name}"
         });

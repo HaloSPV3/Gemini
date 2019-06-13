@@ -90,6 +90,7 @@
     <Compile Include="Install.UserControl.xaml.cs">
       <DependentUpon>Install.UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Main.Assets.cs" />
     <Compile Include="Main.Compile.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Main.Error.cs" />

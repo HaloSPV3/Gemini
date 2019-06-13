@@ -19,12 +19,8 @@
  */
 
 using System;
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using HXE;
-using SPV3.Annotations;
 using static System.IO.File;
 
 namespace SPV3
@@ -120,51 +116,6 @@ namespace SPV3
 
       Error.Visibility = Visibility.Visible;
       Error.Content    = $"{description}: {e.Message.ToLower()}\n\nClick here for more information.";
-    }
-
-    public class MainAssets : INotifyPropertyChanged
-    {
-      private const    string Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe";
-      private readonly Update _update = new Update();
-
-      private Visibility _visibility;
-
-      public Visibility Visibility
-      {
-        get => _visibility;
-        set
-        {
-          if (value == _visibility) return;
-          _visibility = value;
-          OnPropertyChanged();
-        }
-      }
-
-      public event PropertyChangedEventHandler PropertyChanged;
-
-      public void Initialise()
-      {
-        try
-        {
-          _update.Import(Address);
-          Visibility = Visibility.Visible;
-        }
-        catch (Exception)
-        {
-          Visibility = Visibility.Collapsed;
-        }
-      }
-
-      public void Update()
-      {
-        _update.Commit();
-      }
-
-      [NotifyPropertyChangedInvocator]
-      protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-      {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-      }
     }
   }
 }

@@ -135,11 +135,9 @@
                     </Button>
 
                     <!-- Update SPV3 -->
-                    <Button x:Name="AssetsButton"
-                            Visibility="{Binding Assets.Visibility}"
-                            Click="Assets">
-                        Update
-                    </Button>
+                    <Button Visibility="{Binding Assets.Visibility}"
+                            Click="Assets"
+                            Content="{Binding Assets.Status}" />
 
                     <!-- About -->
                     <Button Click="About">
