@@ -83,6 +83,7 @@ namespace SPV3
           hxe.Load();
 
         hxe.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
+        hxe.Kernel.SkipVerifyMainAssets = true; /* skips verifying assets */
         hxe.Save();                             /* saves to %APPDATA%\HXE */
 
         spv3.Load();
