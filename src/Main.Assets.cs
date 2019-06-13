@@ -21,6 +21,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using HXE;
 using SPV3.Annotations;
@@ -31,11 +32,10 @@ namespace SPV3
   {
     public class MainAssets : INotifyPropertyChanged
     {
-      private const    string Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe";
-      private          string _status = "Update";
-      private readonly Update _update = new Update();
-
-      private Visibility _visibility;
+      private const    string     Address     = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe";
+      private          Visibility _visibility = Visibility.Collapsed;
+      private          string     _status     = "Update";
+      private readonly Update     _update     = new Update();
 
       public Visibility Visibility
       {
@@ -81,7 +81,7 @@ namespace SPV3
 
         _update.Commit(progress);
 
-        Status = "Your are up to date!";
+        Status = "You are up to date!";
       }
 
       [NotifyPropertyChangedInvocator]

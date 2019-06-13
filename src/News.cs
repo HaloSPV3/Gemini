@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
 using SPV3.Annotations;
@@ -31,8 +32,8 @@ namespace SPV3
 {
   public class News : INotifyPropertyChanged
   {
-    private const string     Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/latest.xml";
-    private       Visibility _visibility;
+    private const string     Address     = "https://raw.githubusercontent.com/yumiris/SPV3/meta/latest.xml";
+    private       Visibility _visibility = Visibility.Collapsed;
     private       string     _content;
     private       string     _link;
 
@@ -81,8 +82,9 @@ namespace SPV3
           using (var reader = new StringReader(sr.ReadToEnd()))
           {
             var news = (News) new XmlSerializer(typeof(News)).Deserialize(reader);
-            Content = news.Content;
-            Link    = news.Link;
+            Content    = news.Content;
+            Link       = news.Link;
+            Visibility = Visibility.Visible;
           }
         }
       }

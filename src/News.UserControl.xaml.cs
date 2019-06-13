@@ -19,6 +19,7 @@
  */
 
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -32,7 +33,7 @@ namespace SPV3
     {
       InitializeComponent();
       _news = (News) DataContext;
-      _news.Initialise();
+      Task.Run(() => { _news.Initialise(); });
     }
 
     private void Visit(object sender, MouseButtonEventArgs e)

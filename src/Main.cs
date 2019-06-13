@@ -20,6 +20,7 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using static System.IO.File;
 
@@ -55,7 +56,7 @@ namespace SPV3
       {
         case Context.Type.Load:
           Load.Visibility = Visibility.Visible;
-          Assets.Initialise();
+          Task.Run(() => { Assets.Initialise(); });
           break;
         case Context.Type.Install:
           Install.Visibility = Visibility.Visible;
@@ -94,7 +95,7 @@ namespace SPV3
     {
       try
       {
-        Assets.Update();
+        Task.Run(() => { Assets.Update(); });
       }
       catch (Exception e)
       {
