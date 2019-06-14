@@ -40,7 +40,8 @@
 
         <!-- Settings -->
         <Grid Grid.Row="0"
-              Width="960">
+              Width="960"
+              Background="#E5FFFFFF">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -48,11 +49,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.Resources>
-                <Style TargetType="{x:Type Label}">
-                    <Setter Property="Foreground" Value="White" />
-                </Style>
                 <Style TargetType="{x:Type TextBox}">
-                    <Setter Property="BorderThickness" Value="0" />
                     <Setter Property="Width" Value="100" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                 </Style>
@@ -77,7 +74,8 @@
                 <Label Content="SPV3 Loader"
                        HorizontalAlignment="Center"
                        Width="Auto"
-                       FontSize="16" />
+                       FontSize="16"
+                       Margin="0,0,0,10" />
 
                 <DockPanel>
                     <Label Content="Width:" />
@@ -128,7 +126,8 @@
                 <Label Content="SPV3 Shaders"
                        HorizontalAlignment="Center"
                        Width="Auto"
-                       FontSize="16" />
+                       FontSize="16"
+                       Margin="0,0,0,10" />
 
                 <DockPanel>
                     <Label Content="HUDv5 Visor:" />
@@ -190,7 +189,8 @@
                 <Label Content="OpenSauce"
                        HorizontalAlignment="Center"
                        Width="Auto"
-                       FontSize="16" />
+                       FontSize="16"
+                       Margin="0,0,0,10" />
 
                 <DockPanel>
                     <Label Content="Normal Maps:" />
@@ -227,7 +227,8 @@
                 <Label Content="HXE Kernel"
                        HorizontalAlignment="Center"
                        Width="Auto"
-                       FontSize="16" />
+                       FontSize="16"
+                       Margin="0,0,0,10" />
 
                 <DockPanel>
                     <Label Content="Enable: SPV3 Kernel Mode:" />
