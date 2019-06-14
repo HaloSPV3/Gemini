@@ -38,10 +38,6 @@ purpose:
   -------------------------------------------------------------------------
   Variable             Description
   -------------------- ----------------------------------------------------
-  f1                   Post-processing settings for SPV3.2. Refer to
-                       shaders.txt for the relevant values. In 3.1, it's
-                       used for unlocking maps, by setting its value to 8
-
   f3                   Stores the integer identifier of the last played
                        mission (see MISSIONS)
 

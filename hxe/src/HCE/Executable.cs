@@ -173,6 +173,18 @@ namespace HXE.HCE
         return args.ToString();
       }
 
+      Console.Info("Killing existing HCE processes");
+
+      try
+      {
+        foreach (var process in Process.GetProcessesByName("haloce"))
+          process.Kill();
+      }
+      catch (Exception e)
+      {
+        Console.Info(e.Message);
+      }
+
       Console.Info("Starting process for HCE executable");
 
       Process.Start(new ProcessStartInfo
