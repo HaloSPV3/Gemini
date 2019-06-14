@@ -71,7 +71,7 @@ namespace HXE.SPV3
       var mission    = (int) Mission;
       var autoaim    = PlayerAutoaim ? 1 : 0;
       var magnetism  = PlayerMagnetism ? 1 : 0;
-      var cinematic  = CinematicBars ? 1 : 0;
+      var cinematic  = CinematicBars ? 0 : 1;
 
       var output = new StringBuilder();
       output.AppendLine($"set f3 {mission}");

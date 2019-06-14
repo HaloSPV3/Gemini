@@ -45,7 +45,7 @@ namespace HXE
       SkipVerifyMainAssets.IsChecked = _configuration.Kernel.SkipVerifyMainAssets;
       SkipInvokeCoreTweaks.IsChecked = _configuration.Kernel.SkipInvokeCoreTweaks;
       SkipResumeCheckpoint.IsChecked = _configuration.Kernel.SkipResumeCheckpoint;
-      SkipSetShadersConfig.IsChecked = _configuration.Kernel.SkipSetShadersConfig;
+      SkipSetShadersConfig.IsChecked = _configuration.Kernel.SkipSetInitcContents;
       SkipInvokeExecutable.IsChecked = _configuration.Kernel.SkipInvokeExecutable;
       SkipPatchLargeAAware.IsChecked = _configuration.Kernel.SkipPatchLargeAAware;
 
@@ -61,7 +61,7 @@ namespace HXE
       _configuration.Kernel.SkipVerifyMainAssets = SkipVerifyMainAssets.IsChecked == true;
       _configuration.Kernel.SkipInvokeCoreTweaks = SkipInvokeCoreTweaks.IsChecked == true;
       _configuration.Kernel.SkipResumeCheckpoint = SkipResumeCheckpoint.IsChecked == true;
-      _configuration.Kernel.SkipSetShadersConfig = SkipSetShadersConfig.IsChecked == true;
+      _configuration.Kernel.SkipSetInitcContents = SkipSetShadersConfig.IsChecked == true;
       _configuration.Kernel.SkipInvokeExecutable = SkipInvokeExecutable.IsChecked == true;
       _configuration.Kernel.SkipPatchLargeAAware = SkipPatchLargeAAware.IsChecked == true;
 
@@ -80,7 +80,7 @@ namespace HXE
       Console.Debug("Kernel.SkipVerifyMainAssets - " + _configuration.Kernel.SkipVerifyMainAssets);
       Console.Debug("Kernel.SkipInvokeCoreTweaks - " + _configuration.Kernel.SkipInvokeCoreTweaks);
       Console.Debug("Kernel.SkipResumeCheckpoint - " + _configuration.Kernel.SkipResumeCheckpoint);
-      Console.Debug("Kernel.SkipSetShadersConfig - " + _configuration.Kernel.SkipSetShadersConfig);
+      Console.Debug("Kernel.SkipSetShadersConfig - " + _configuration.Kernel.SkipSetInitcContents);
       Console.Debug("Kernel.SkipInvokeExecutable - " + _configuration.Kernel.SkipInvokeExecutable);
       Console.Debug("Kernel.SkipPatchLargeAAware - " + _configuration.Kernel.SkipPatchLargeAAware);
     }

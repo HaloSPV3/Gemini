@@ -38,11 +38,12 @@ namespace SPV3
           Configuration.Kernel.SkipVerifyMainAssets = Kernel.SkipVerifyMainAssets;
           Configuration.Kernel.SkipInvokeCoreTweaks = Kernel.SkipInvokeCoreTweaks;
           Configuration.Kernel.SkipResumeCheckpoint = Kernel.SkipResumeCheckpoint;
-          Configuration.Kernel.SkipSetShadersConfig = Kernel.SkipSetShadersConfig;
+          Configuration.Kernel.SkipSetInitcContents = Kernel.SkipSetInitcContents;
           Configuration.Kernel.SkipInvokeExecutable = Kernel.SkipInvokeExecutable;
           Configuration.Kernel.SkipPatchLargeAAware = Kernel.SkipPatchLargeAAware;
           Configuration.Kernel.EnableSpv3KernelMode = Kernel.EnableSpv3KernelMode;
           Configuration.Kernel.EnableSpv3LegacyMode = Kernel.EnableSpv3LegacyMode;
+          Configuration.Kernel.SkipEnableCinematics = Kernel.SkipEnableCinematics;
         }
 
         /* shaders */
@@ -110,11 +111,12 @@ namespace SPV3
           Kernel.SkipVerifyMainAssets = Configuration.Kernel.SkipVerifyMainAssets;
           Kernel.SkipInvokeCoreTweaks = Configuration.Kernel.SkipInvokeCoreTweaks;
           Kernel.SkipResumeCheckpoint = Configuration.Kernel.SkipResumeCheckpoint;
-          Kernel.SkipSetShadersConfig = Configuration.Kernel.SkipSetShadersConfig;
+          Kernel.SkipSetInitcContents = Configuration.Kernel.SkipSetInitcContents;
           Kernel.SkipInvokeExecutable = Configuration.Kernel.SkipInvokeExecutable;
           Kernel.SkipPatchLargeAAware = Configuration.Kernel.SkipPatchLargeAAware;
           Kernel.EnableSpv3KernelMode = Configuration.Kernel.EnableSpv3KernelMode;
           Kernel.EnableSpv3LegacyMode = Configuration.Kernel.EnableSpv3LegacyMode;
+          Kernel.SkipEnableCinematics = Configuration.Kernel.SkipEnableCinematics;
         }
 
         /* shaders */

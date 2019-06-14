@@ -61,19 +61,19 @@ namespace HXE
       if (!configuration.Kernel.SkipVerifyMainAssets)
         VerifyMainAssets();
       else
-        Info("Skipped Kernel.VerifyMainAssets");
+        Info("Skipped VerifyMainAssets");
 
       if (configuration.Kernel.EnableSpv3KernelMode)
       {
         if (!configuration.Kernel.SkipInvokeCoreTweaks)
           InvokeCoreTweaks(executable);
         else
-          Info("Skipped Kernel.InvokeCoreTweaks");
+          Info("Skipped InvokeCoreTweaks");
 
         if (!configuration.Kernel.SkipResumeCheckpoint)
           ResumeCheckpoint(executable);
         else
-          Info("Skipped Kernel.ResumeCheckpoint");
+          Info("Skipped ResumeCheckpoint");
         if (configuration.Kernel.EnableSpv3LegacyMode)
         {
           SetSpv31InitMode(configuration);
@@ -81,26 +81,26 @@ namespace HXE
         }
         else
         {
-          if (!configuration.Kernel.SkipSetShadersConfig)
-            SetShadersConfig(configuration);
+          if (!configuration.Kernel.SkipSetInitcContents)
+            SetInitcContents(configuration);
           else
-            Info("Skipped Kernel.SkipSetShadersConfig");
+            Info("Skipped SetInitcContents");
         }
       }
       else
       {
-        Info("Skipped Kernel.EnableSpv3KernelMode");
+        Info("Skipped EnableSpv3KernelMode");
       }
 
       if (!configuration.Kernel.SkipPatchLargeAAware)
         PatchLargeAAware(executable);
       else
-        Info("Skipped Kernel.SkipPatchLargeAAware");
+        Info("Skipped PatchLargeAAware");
 
       if (!configuration.Kernel.SkipInvokeExecutable)
         InvokeExecutable(executable);
       else
-        Info("Skipped Kernel.InvokeExecutable");
+        Info("Skipped InvokeExecutable");
     }
 
     /// <summary>
@@ -342,19 +342,20 @@ namespace HXE
     }
 
     /// <summary>
-    ///   Applies the post-processing settings.
+    ///   Applies the initc.txt contents.
     /// </summary>
-    private static void SetShadersConfig(Configuration configuration)
+    private static void SetInitcContents(Configuration configuration)
     {
       try
       {
         RootInitc.PostProcessing = configuration.PostProcessing;
+        RootInitc.CinematicBars  = !configuration.Kernel.SkipEnableCinematics; /* flip */
 
-        Info("Updated the initiation file with the post-processing settings");
+        Info("Updated the initiation file with the new settings");
 
         RootInitc.Save();
 
-        Info("Saved post-processing settings to the initiation file");
+        Info("Saved settings to the initiation file");
 
         Debug("Applied PP settings for MXAO        - " + RootInitc.PostProcessing.Mxao);
         Debug("Applied PP settings for DOF         - " + RootInitc.PostProcessing.Dof);
@@ -362,10 +363,11 @@ namespace HXE
         Debug("Applied PP settings for Lens Flares - " + RootInitc.PostProcessing.DynamicLensFlares);
         Debug("Applied PP settings for Volumetrics - " + RootInitc.PostProcessing.Volumetrics);
         Debug("Applied PP settings for Lens Dirt   - " + RootInitc.PostProcessing.LensDirt);
+        Debug("Applied cinematic bars setting      - " + RootInitc.CinematicBars);
       }
-      catch (Exception  e)
+      catch (Exception e)
       {
-        Error(e.Message + " -- POST PROCESSING WILL NOT BE APPLIED");
+        Error(e.Message + " -- INITC SETTINGS WILL NOT BE APPLIED");
       }
     }
 

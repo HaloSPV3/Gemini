@@ -61,17 +61,17 @@
                 </Style>
             </Grid.Resources>
 
-            <!-- SPV3 Loader -->
+            <!-- General -->
             <StackPanel Grid.Column="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="90" />
+                        <Setter Property="Width" Value="95" />
                     </Style>
                 </StackPanel.Resources>
 
-                <Label Content="SPV3 Loader"
+                <Label Content="General Settings"
                        HorizontalAlignment="Center"
                        Width="Auto"
                        FontSize="16"
@@ -94,6 +94,10 @@
                     <CheckBox IsChecked="{Binding Loader.Gamma}" />
                 </DockPanel>
                 <DockPanel>
+                    <Label Content="Cinematic Bars:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipEnableCinematics}" />
+                </DockPanel>
+                <DockPanel>
                     <Label Content="DOOM Mode:" />
                     <CheckBox IsChecked="{Binding Loader.DOOM}" />
                 </DockPanel>
@@ -110,7 +114,7 @@
                         Click="CalculateFOV" />
             </StackPanel>
 
-            <!-- Shaders -->
+            <!-- Post-Processing -->
             <StackPanel Grid.Column="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
@@ -123,7 +127,7 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <Label Content="SPV3 Shaders"
+                <Label Content="Post-Processing"
                        HorizontalAlignment="Center"
                        Width="Auto"
                        FontSize="16"
@@ -251,8 +255,8 @@
                     <CheckBox IsChecked="{Binding HXE.Kernel.SkipResumeCheckpoint}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Skip: Set Shaders Config:" />
-                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipSetShadersConfig}" />
+                    <Label Content="Skip: Set Initc Contents:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipSetInitcContents}" />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Skip: Invoke Executable:" />
@@ -261,6 +265,10 @@
                 <DockPanel>
                     <Label Content="Skip: Patch LAA:" />
                     <CheckBox IsChecked="{Binding HXE.Kernel.SkipPatchLargeAAware}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Set Cinematic Bars:" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipEnableCinematics}" />
                 </DockPanel>
             </StackPanel>
         </Grid>

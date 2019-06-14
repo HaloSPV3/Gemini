@@ -66,6 +66,7 @@ KERNEL
   0x15     Skip: Patch Large Address Aware
   0x16     Set: SPV3.2 Loading Mode
   0x17     Set: SPV3.1 Legacy Mode
+  0x18     Skip: Enable Cinematics
 
 POST-PROCESSING
 ---------------

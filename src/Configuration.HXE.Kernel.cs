@@ -36,8 +36,9 @@ namespace SPV3
         private bool _skipInvokeExecutable;
         private bool _skipPatchLargeAAware;
         private bool _skipResumeCheckpoint;
-        private bool _skipSetShadersConfig;
+        private bool _skipSetInitcContents;
         private bool _skipVerifyMainAssets;
+        private bool _skipEnableCinematics;
 
         public bool SkipVerifyMainAssets
         {
@@ -72,13 +73,13 @@ namespace SPV3
           }
         }
 
-        public bool SkipSetShadersConfig
+        public bool SkipSetInitcContents
         {
-          get => _skipSetShadersConfig;
+          get => _skipSetInitcContents;
           set
           {
-            if (value == _skipSetShadersConfig) return;
-            _skipSetShadersConfig = value;
+            if (value == _skipSetInitcContents) return;
+            _skipSetInitcContents = value;
             OnPropertyChanged();
           }
         }
@@ -123,6 +124,17 @@ namespace SPV3
           {
             if (value == _enableSpv3LegacyMode) return;
             _enableSpv3LegacyMode = value;
+            OnPropertyChanged();
+          }
+        }
+
+        public bool SkipEnableCinematics
+        {
+          get => _skipEnableCinematics;
+          set
+          {
+            if (value == _skipEnableCinematics) return;
+            _skipEnableCinematics = value;
             OnPropertyChanged();
           }
         }

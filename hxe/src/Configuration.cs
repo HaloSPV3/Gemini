@@ -59,11 +59,12 @@ namespace HXE
           bw.Write(Kernel.SkipVerifyMainAssets);
           bw.Write(Kernel.SkipInvokeCoreTweaks);
           bw.Write(Kernel.SkipResumeCheckpoint);
-          bw.Write(Kernel.SkipSetShadersConfig);
+          bw.Write(Kernel.SkipSetInitcContents);
           bw.Write(Kernel.SkipInvokeExecutable);
           bw.Write(Kernel.SkipPatchLargeAAware);
           bw.Write(Kernel.EnableSpv3KernelMode);
           bw.Write(Kernel.EnableSpv3LegacyMode);
+          bw.Write(Kernel.SkipEnableCinematics);
         }
 
         /* padding */
@@ -121,11 +122,12 @@ namespace HXE
           Kernel.SkipVerifyMainAssets = br.ReadBoolean();
           Kernel.SkipInvokeCoreTweaks = br.ReadBoolean();
           Kernel.SkipResumeCheckpoint = br.ReadBoolean();
-          Kernel.SkipSetShadersConfig = br.ReadBoolean();
+          Kernel.SkipSetInitcContents = br.ReadBoolean();
           Kernel.SkipInvokeExecutable = br.ReadBoolean();
           Kernel.SkipPatchLargeAAware = br.ReadBoolean();
           Kernel.EnableSpv3KernelMode = br.ReadBoolean();
           Kernel.EnableSpv3LegacyMode = br.ReadBoolean();
+          Kernel.SkipEnableCinematics = br.ReadBoolean();
         }
 
         /* padding */
@@ -196,11 +198,12 @@ namespace HXE
       public bool SkipVerifyMainAssets { get; set; }
       public bool SkipInvokeCoreTweaks { get; set; }
       public bool SkipResumeCheckpoint { get; set; }
-      public bool SkipSetShadersConfig { get; set; }
+      public bool SkipSetInitcContents { get; set; }
       public bool SkipInvokeExecutable { get; set; }
       public bool SkipPatchLargeAAware { get; set; }
       public bool EnableSpv3KernelMode { get; set; }
       public bool EnableSpv3LegacyMode { get; set; }
+      public bool SkipEnableCinematics { get; set; }
     }
   }
 }
