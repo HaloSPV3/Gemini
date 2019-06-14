@@ -13,5 +13,7 @@ namespace SPV3
     public static readonly string Configuration = Combine(Directory,                      "loader.bin");
     public static readonly string DOOM          = Combine(CurrentDirectory,               "doom.bin");
     public static readonly string Blind         = Combine(CurrentDirectory,               "blind.bin");
+
+    public static string Packages(string target) => Combine(target, "data");
   }
 }

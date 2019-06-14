@@ -19,6 +19,7 @@
  */
 
 using System.IO;
+using System.Windows.Forms;
 using static System.Environment;
 using static System.IO.File;
 using static HXE.Paths;
@@ -49,10 +50,10 @@ namespace SPV3
     /// </returns>
     public static Type Infer()
     {
-      if (Exists(Path.Combine(CurrentDirectory, Executable)))
+      if (Exists(Path.Combine(CurrentDirectory, HCE.Executable)))
         return Type.Load;
 
-      if (Exists(Path.Combine(CurrentDirectory, "data", Manifest)))
+      if (Exists(Path.Combine(Paths.Packages(CurrentDirectory), Manifest)))
         return Type.Install;
 
       return Type.Invalid;

@@ -103,7 +103,7 @@ namespace SPV3
           (o, s) => Status =
             $"Compiling SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
 
-        await Task.Run(() => { Compiler.Compile(CurrentDirectory, Combine(_target, "data"), progress); });
+        await Task.Run(() => { Compiler.Compile(CurrentDirectory, Paths.Packages(Target), progress); });
 
         /**
          * Copy data... 
@@ -118,6 +118,11 @@ namespace SPV3
 
         if (Exists(backupCompileFile))
           Move(backupCompileFile, sourceCompileFile);
+
+        var redundantHxeExecutable = Combine(Paths.Packages(Target), HXE.Paths.Executable);
+
+        if (Exists(redundantHxeExecutable))
+          Delete(redundantHxeExecutable);
 
         Status     = "Compilation has successfully finished!";
         CanCompile = true;
