@@ -67,7 +67,7 @@
                         VerticalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="95" />
+                        <Setter Property="Width" Value="110" />
                     </Style>
                 </StackPanel.Resources>
 
@@ -92,10 +92,6 @@
                 <DockPanel>
                     <Label Content="Gamma:" />
                     <CheckBox IsChecked="{Binding Loader.Gamma}" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Cinematic Bars:" />
-                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipEnableCinematics}" />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="DOOM Mode:" />
@@ -218,7 +214,7 @@
                     <CheckBox IsChecked="{Binding OpenSauce.Bloom}" />
                 </DockPanel>
 
-                <Separator Margin="15,15,15,10" />
+                <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
 
                 <!-- Chimera -->
                 <Label Content="Chimera"
@@ -263,6 +259,7 @@
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
                         <Setter Property="Width" Value="175" />
+                        <Setter Property="Foreground" Value="DarkGray" />
                     </Style>
                 </StackPanel.Resources>
 
@@ -273,12 +270,19 @@
                        Margin="0,0,0,10" />
 
                 <DockPanel>
-                    <Label Content="Enable: SPV3 Kernel Mode:" />
+                    <Label Content="Enable: SPV3 Kernel Mode:"
+                           Foreground="Black" />
                     <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3KernelMode}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Enable: SPV3 Legacy Mode:" />
+                    <Label Content="Enable: SPV3 Legacy Mode:"
+                           Foreground="Black" />
                     <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3LegacyMode}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Skip: Set Cinematic Bars:"
+                           Foreground="Black" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipEnableCinematics}" />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Skip: Verify Main Assets:" />
@@ -303,10 +307,6 @@
                 <DockPanel>
                     <Label Content="Skip: Patch LAA:" />
                     <CheckBox IsChecked="{Binding HXE.Kernel.SkipPatchLargeAAware}" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Skip: Set Cinematic Bars:" />
-                    <CheckBox IsChecked="{Binding HXE.Kernel.SkipEnableCinematics}" />
                 </DockPanel>
             </StackPanel>
         </Grid>

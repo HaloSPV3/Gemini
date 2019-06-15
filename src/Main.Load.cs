@@ -52,7 +52,6 @@ namespace SPV3
       public void Invoke()
       {
         var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes    */
-        var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for enhancements  */
         var hxe       = (HXE.Configuration) HXE.Paths.Configuration;             /* for compatibility */
         var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration */
 
@@ -64,20 +63,6 @@ namespace SPV3
         openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
         openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */
         openSauce.Save();                                              /* saves to %APPDATA%\SPV3 */
-
-        /**
-         * Since we don't fully support the Chimera binary configuration, we'll manipulate it only when it's available. 
-         */
-
-        if (chimera.Exists())
-        {
-          chimera.Load();
-          chimera.Interpolation        = 9;    /* enhancements            */
-          chimera.AnisotropicFiltering = true; /* enhancements            */
-          chimera.UncapCinematic       = true; /* enhancements            */
-          chimera.BlockLOD             = true; /* enhancements            */
-          chimera.Save();                      /* saves to %APPDATA%\SPV3 */
-        }
 
         if (hxe.Exists())
           hxe.Load();
