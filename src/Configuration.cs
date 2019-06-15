@@ -30,12 +30,14 @@ namespace SPV3
     public ConfigurationLoader    Loader    { get; set; } = new ConfigurationLoader();
     public ConfigurationHXE       HXE       { get; set; } = new ConfigurationHXE();
     public ConfigurationOpenSauce OpenSauce { get; set; } = new ConfigurationOpenSauce();
+    public ConfigurationChimera   Chimera   { get; set; } = new ConfigurationChimera();
 
     public void Load()
     {
       HXE.Load();
       Loader.Load();
       OpenSauce.Load();
+      Chimera.Load();
     }
 
     public void Save()
@@ -61,6 +63,7 @@ namespace SPV3
       HXE.Save();
       Loader.Save();
       OpenSauce.Save();
+      Chimera.Save();
     }
 
     public void CalculateFOV()

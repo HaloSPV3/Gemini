@@ -76,6 +76,7 @@
     <Compile Include="Compile.UserControl.xaml.cs">
       <DependentUpon>Compile.UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configuration.Chimera.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Configuration.HXE.cs" />
     <Compile Include="Configuration.HXE.Kernel.cs" />

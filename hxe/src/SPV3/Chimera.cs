@@ -27,6 +27,8 @@ namespace HXE.SPV3
   /// </summary>
   public class Chimera : File
   {
+    private const int Length = 2056;
+
     public byte Interpolation        { get; set; } = 9;
     public bool AnisotropicFiltering { get; set; } = true;
     public bool UncapCinematic       { get; set; } = true;
@@ -37,13 +39,11 @@ namespace HXE.SPV3
     /// </summary>
     public void Save()
     {
-      using (var fs = new FileStream(Path, FileMode.Open, FileAccess.ReadWrite))
-      using (var ms = new MemoryStream((int) new FileInfo(Path).Length))
+      using (var fs = new FileStream(Path, FileMode.Create, FileAccess.Write))
+      using (var ms = new MemoryStream(Length)) /* chimera.bin size */
       using (var bw = new BinaryWriter(ms))
       {
-        fs.Position = 0;
         ms.Position = 0;
-        fs.CopyTo(ms);
 
         ms.Position = 0x0F;
         bw.Write(Interpolation);
@@ -57,7 +57,8 @@ namespace HXE.SPV3
         ms.Position = 0x1F;
         bw.Write(BlockLOD ? (byte) 1 : (byte) 0);
 
-        fs.Position = 0;
+        bw.Write(new byte[Length - ms.Position]); /* padding */
+
         ms.Position = 0;
         ms.CopyTo(fs);
       }
@@ -72,8 +73,6 @@ namespace HXE.SPV3
       using (var ms = new MemoryStream((int) new FileInfo(Path).Length))
       using (var br = new BinaryReader(ms))
       {
-        fs.Position = 0;
-        ms.Position = 0;
         fs.CopyTo(ms);
 
         ms.Position          = 0x0F;

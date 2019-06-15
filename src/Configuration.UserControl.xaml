@@ -57,7 +57,7 @@
                     <Setter Property="Margin" Value="0,1,0,0" />
                 </Style>
                 <Style TargetType="{x:Type StackPanel}">
-                    <Setter Property="Height" Value="320" />
+                    <Setter Property="Height" Value="360" />
                 </Style>
             </Grid.Resources>
 
@@ -180,7 +180,7 @@
                 </DockPanel>
             </StackPanel>
 
-            <!-- OpenSauce -->
+            <!-- OpenSauce & OpenSauce -->
             <StackPanel Grid.Column="2"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
@@ -190,6 +190,7 @@
                     </Style>
                 </StackPanel.Resources>
 
+                <!-- OpenSauce -->
                 <Label Content="OpenSauce"
                        HorizontalAlignment="Center"
                        Width="Auto"
@@ -215,6 +216,43 @@
                 <DockPanel>
                     <Label Content="Bloom:" />
                     <CheckBox IsChecked="{Binding OpenSauce.Bloom}" />
+                </DockPanel>
+
+                <Separator Margin="15,15,15,10" />
+
+                <!-- Chimera -->
+                <Label Content="Chimera"
+                       HorizontalAlignment="Center"
+                       Width="Auto"
+                       FontSize="16"
+                       Margin="0,0,0,10" />
+
+                <DockPanel>
+                    <Label Content="Interpolation Level:" />
+                    <ComboBox SelectedIndex="{Binding Chimera.Interpolation}">
+                        <ComboBoxItem Content="0" />
+                        <ComboBoxItem Content="1" />
+                        <ComboBoxItem Content="2" />
+                        <ComboBoxItem Content="3" />
+                        <ComboBoxItem Content="4" />
+                        <ComboBoxItem Content="5" />
+                        <ComboBoxItem Content="6" />
+                        <ComboBoxItem Content="7" />
+                        <ComboBoxItem Content="8" />
+                        <ComboBoxItem Content="9" />
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Anisotropic Filtering:" />
+                    <CheckBox IsChecked="{Binding Chimera.AnisotropicFiltering}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Uncap Cinematic:" />
+                    <CheckBox IsChecked="{Binding Chimera.UncapCinematic}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Block LOD:" />
+                    <CheckBox IsChecked="{Binding Chimera.BlockLOD}" />
                 </DockPanel>
             </StackPanel>
 
