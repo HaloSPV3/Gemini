@@ -31,6 +31,8 @@ namespace SPV3
   {
     public class ConfigurationLoader : INotifyPropertyChanged
     {
+      private const int Length = 256;
+
       private bool   _blind;
       private bool   _doom;
       private bool   _gamma;
@@ -109,9 +111,11 @@ namespace SPV3
       public void Save()
       {
         using (var fs = new FileStream(Paths.Configuration, FileMode.Create, FileAccess.Write))
-        using (var ms = new MemoryStream(256))
+        using (var ms = new MemoryStream(Length))
         using (var bw = new BinaryWriter(ms))
         {
+          ms.Position = 0;
+
           /* signature */
           {
             bw.Write(Encoding.Unicode.GetBytes("~yumiris"));
@@ -148,7 +152,7 @@ namespace SPV3
           return;
 
         using (var fs = new FileStream(Paths.Configuration, FileMode.Open, FileAccess.Read))
-        using (var ms = new MemoryStream(256))
+        using (var ms = new MemoryStream(Length))
         using (var br = new BinaryReader(ms))
         {
           fs.CopyTo(ms);
