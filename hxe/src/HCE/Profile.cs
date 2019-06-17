@@ -29,6 +29,8 @@ using static HXE.HCE.Profile.ProfileAudio;
 using static HXE.HCE.Profile.ProfileDetails;
 using static HXE.HCE.Profile.ProfileNetwork;
 using static HXE.HCE.Profile.ProfileVideo;
+using static HXE.HCE.Profile.ProfileInput;
+using static HXE.Paths;
 
 namespace HXE.HCE
 {
@@ -43,6 +45,7 @@ namespace HXE.HCE
     public ProfileAudio   Audio   { get; set; } = new ProfileAudio();   /* volumes, qualities, varieties & eax/hw */
     public ProfileVideo   Video   { get; set; } = new ProfileVideo();   /* resolutions, rates, effects & qualities */
     public ProfileNetwork Network { get; set; } = new ProfileNetwork(); /* connection types & server/client ports */
+    public ProfileInput   Input   { get; set; } = new ProfileInput();   /* input-action mapping */
 
     /// <summary>
     ///   Saves object state to the inbound file.
@@ -130,6 +133,29 @@ namespace HXE.HCE
         WriteBoolean(Offset.AudioHWA,                Audio.HWA);
 
         /**
+         * Mapping is conducted by writing values at offsets, where values = actions and offsets = inputs.
+         */
+
+        foreach (var offset in Enum.GetValues(typeof(Button)))
+        {
+          Debug("Nulling input - " + offset);
+
+          ms.Position = (int) offset;
+          bw.Write(0x7F);
+        }
+
+        foreach (var mapping in Input.Mapping)
+        {
+          var offset = (int) mapping.Key;    /* button */
+          var value  = (byte) mapping.Value; /* action */
+
+          Debug("Assigning action to input - " + mapping.Key + " -> " + mapping.Value);
+
+          ms.Position = offset;
+          bw.Write(value);
+        }
+
+        /**
          * The layout of the blam.sav is, in a nutshell:
          *
          * [0x0000 - 0x1005] [0x1FFC - 0x2000]
@@ -146,11 +172,11 @@ namespace HXE.HCE
          * ... we can write the contents to filesystem and expect HCE to accept both the data and the new hash.
          */
 
-        Info("Truncating CRC32 checksum from memory stream");
+        Debug("Truncating CRC32 checksum from memory stream");
 
         ms.SetLength(ms.Length - 4);
 
-        Info("Calculating new CRC32 checksum");
+        Debug("Calculating new CRC32 checksum");
 
         var hash = GetHash(ms.ToArray());
 
@@ -160,11 +186,11 @@ namespace HXE.HCE
         ms.Position = (int) Offset.BinaryCrc32Hash;
         bw.Write(hash);
 
-        Info("Clearing contents of the profile filesystem binary");
+        Debug("Clearing contents of the profile filesystem binary");
 
         fs.SetLength(0);
 
-        Info("Copying profile data in memory to the binary file");
+        Debug("Copying profile data in memory to the binary file");
 
         ms.Position = 0;
         ms.CopyTo(fs);
@@ -296,6 +322,14 @@ namespace HXE.HCE
         Audio.EAX                    = GetBoolean(Offset.AudioEAX);
         Audio.HWA                    = GetBoolean(Offset.AudioHWA);
 
+        Input.Mapping = new Dictionary<Button, ProfileInput.Action>();
+
+        foreach (var button in Enum.GetValues(typeof(Button)))
+        {
+          reader.BaseStream.Seek((int) button, SeekOrigin.Begin);
+          Input.Mapping.Add((Button) button, (ProfileInput.Action) reader.ReadByte());
+        }
+
         if ((int) Details.Colour == 0xFF)
           Details.Colour = ColourOptions.White;
 
@@ -347,12 +381,12 @@ namespace HXE.HCE
     /// </exception>
     public static List<Profile> List(string directory)
     {
-      if (!Directory.Exists(directory))
+      if (!System.IO.Directory.Exists(directory))
         throw new DirectoryNotFoundException("Provided profiles directory does not exist.");
 
       var profiles = new List<Profile>();
 
-      foreach (var current in Directory.GetFiles(directory, "blam.sav", AllDirectories))
+      foreach (var current in System.IO.Directory.GetFiles(directory, "blam.sav", AllDirectories))
       {
         var profile = (Profile) current;
         profile.Load();
@@ -510,10 +544,6 @@ namespace HXE.HCE
       }
     }
 
-    /**
-     * TODO: Environmental Sound & Hardware Acceleration!
-     */
-
     public class ProfileAudio
     {
       public enum AudioQuality
@@ -543,10 +573,6 @@ namespace HXE.HCE
         public byte Music   { get; set; } = 6;  /* default value */
       }
     }
-
-    /**
-     * TODO: Controller configuration!
-     */
 
     public class ProfileMouse
     {
@@ -579,6 +605,71 @@ namespace HXE.HCE
         public ushort Server { get; set; } = 2302; /* default value */
         public ushort Client { get; set; } = 2303; /* default value */
       }
+    }
+
+    public class ProfileInput
+    {
+      public enum Action
+      {
+        MoveForward     = 0x13, /* movement */
+        MoveBackward    = 0x14, /* movement */
+        MoveLeft        = 0x15, /* movement */
+        MoveRight       = 0x16, /* movement */
+        LookUp          = 0x17, /* movement */
+        LookDown        = 0x18, /* movement */
+        LookLeft        = 0x19, /* movement */
+        LookRight       = 0x1A, /* movement */
+        FireWeapon      = 0x07, /* combat   */
+        ThrowGrenade    = 0x06, /* combat   */
+        SwitchGrenade   = 0x01, /* combat   */
+        SwitchWeapon    = 0x03, /* combat   */
+        Reload          = 0x0D, /* combat   */
+        MeleeAttack     = 0x04, /* combat   */
+        ExchangeWeapon  = 0x0E, /* combat   */
+        Jump            = 0x00, /* actions  */
+        Crouch          = 0x0A, /* actions  */
+        Flashlight      = 0x05, /* actions  */
+        ScopeZoom       = 0x0B, /* actions  */
+        Action          = 0x02, /* actions  */
+        MenuAccept      = 0xFF, /* misc.    */
+        MenuBack        = 0xFF, /* misc.    */
+        Say             = 0x0F, /* misc.    */
+        SayToTeam       = 0x10, /* misc.    */
+        SayToVehicle    = 0x11, /* misc.    */
+        ShowScores      = 0x0C, /* misc.    */
+        ShowRules       = 0x1B, /* misc.    */
+        ShowPlayerNames = 0x1C  /* misc.    */
+      }
+
+      public enum Button
+      {
+        DPU   = 0x53A, /* directional - up                */
+        DPD   = 0x542, /* directional - down              */
+        DPL   = 0x546, /* directional - left              */
+        DPR   = 0x53E, /* directional - right             */
+        LSU   = 0x33C, /* analogue - left stick - up      */
+        LSD   = 0x33A, /* analogue - left stick - down    */
+        LSL   = 0x340, /* analogue - left stick - left    */
+        LSR   = 0x33E, /* analogue - left stick - right   */
+        LSM   = 0x23A, /* analogue - left stick - middle  */
+        RSU   = 0x344, /* analogue - right stick - up     */
+        RSD   = 0x342, /* analogue - right stick - down   */
+        RSL   = 0x348, /* analogue - right stick - left   */
+        RSR   = 0x346, /* analogue - right stick - right  */
+        RSM   = 0x23C, /* analogue - right stick - middle */
+        LB    = 0x232, /* shoulder - bumper - left        */
+        RB    = 0x234, /* shoulder - bumper - right       */
+        LT    = 0x34A, /* shoulder - trigger - left       */
+        RT    = 0x34C, /* shoulder - trigger - right      */
+        A     = 0x22A, /* face - button a                 */
+        B     = 0x22C, /* face - button b                 */
+        X     = 0x22E, /* face - button x                 */
+        Y     = 0x230, /* face - button y                 */
+        Start = 0x238, /* home - start                    */
+        Back  = 0x236  /* home - back                     */
+      }
+
+      public Dictionary<Button, Action> Mapping = new Dictionary<Button, Action>();
     }
   }
 }
