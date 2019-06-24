@@ -33,13 +33,15 @@ namespace HXE
   /// </summary>
   public class Configuration : File
   {
+    private const int Length = 256;
+
     public KernelConfiguration Kernel         { get; set; } = new KernelConfiguration();
     public PostProcessing      PostProcessing { get; set; } = new PostProcessing();
 
     public void Save()
     {
       using (var fs = new FileStream(Paths.Configuration, OpenOrCreate, Write))
-      using (var ms = new MemoryStream(256))
+      using (var ms = new MemoryStream(Length))
       using (var bw = new BinaryWriter(ms))
       {
         ms.Position = 0;
@@ -95,7 +97,7 @@ namespace HXE
 
         /* padding */
         {
-          bw.Write(new byte[256 - ms.Position]);
+          bw.Write(new byte[Length - ms.Position]);
         }
 
         ms.Position = 0;
@@ -106,7 +108,7 @@ namespace HXE
     public void Load()
     {
       using (var fs = new FileStream(Paths.Configuration, Open, Read))
-      using (var ms = new MemoryStream(256))
+      using (var ms = new MemoryStream(Length))
       using (var br = new BinaryReader(ms))
       {
         fs.CopyTo(ms);

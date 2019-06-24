@@ -163,7 +163,7 @@ namespace HXE.SPV3
       }
 
       output.AppendLine("set rasterizer_soft_filter "                 + (vl ? "true" : "false")); /* volumetrics    */
-      output.AppendLine("set display_precache_progress "              + (df ? "false" : "true")); /* dynamic flares */
+      output.AppendLine("set display_precache_progress "              + (df ? "true" : "false")); /* dynamic flares */
       output.AppendLine("set use_super_remote_players_action_update " + (ld ? "false" : "true")); /* lens dirt      */
       output.AppendLine("set use_new_vehicle_update_scheme "          + (fg ? "false" : "true")); /* film grain     */
       output.AppendLine("set multiplayer_draw_teammates_names "       + (hv ? "false" : "true")); /* hud visor      */

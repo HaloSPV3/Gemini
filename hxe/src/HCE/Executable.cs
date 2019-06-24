@@ -22,6 +22,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using HXE.Properties;
 using Microsoft.Win32;
 
 namespace HXE.HCE
@@ -184,6 +185,11 @@ namespace HXE.HCE
       {
         Console.Info(e.Message);
       }
+
+      Console.Wait("Waiting for existing HCE process to end ");
+
+      while (Process.GetProcessesByName("haloce").Length > 0)
+        System.Console.Write(Resources.Progress);
 
       Console.Info("Starting process for HCE executable");
 

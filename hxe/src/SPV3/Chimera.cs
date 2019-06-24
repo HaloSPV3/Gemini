@@ -70,7 +70,7 @@ namespace HXE.SPV3
     public void Load()
     {
       using (var fs = new FileStream(Path, FileMode.Open, FileAccess.Read))
-      using (var ms = new MemoryStream((int) new FileInfo(Path).Length))
+      using (var ms = new MemoryStream(Length))
       using (var br = new BinaryReader(ms))
       {
         fs.CopyTo(ms);
