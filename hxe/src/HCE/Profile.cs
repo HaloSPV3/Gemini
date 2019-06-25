@@ -146,10 +146,10 @@ namespace HXE.HCE
 
         foreach (var mapping in Input.Mapping)
         {
-          var offset = (int) mapping.Key;    /* button */
-          var value  = (byte) mapping.Value; /* action */
+          var value  = (byte) mapping.Key;  /* action */
+          var offset = (int) mapping.Value; /* button */
 
-          Debug("Assigning action to input - " + mapping.Key + " -> " + mapping.Value);
+          Debug("Assigning input to action - " + mapping.Key + " -> " + mapping.Value);
 
           ms.Position = offset;
           bw.Write(value);
@@ -322,12 +322,12 @@ namespace HXE.HCE
         Audio.EAX                    = GetBoolean(Offset.AudioEAX);
         Audio.HWA                    = GetBoolean(Offset.AudioHWA);
 
-        Input.Mapping = new Dictionary<Button, ProfileInput.Action>();
+        Input.Mapping = new Dictionary<ProfileInput.Action, Button>();
 
         foreach (var button in Enum.GetValues(typeof(Button)))
         {
           reader.BaseStream.Seek((int) button, SeekOrigin.Begin);
-          Input.Mapping.Add((Button) button, (ProfileInput.Action) reader.ReadByte());
+          Input.Mapping.Add((ProfileInput.Action) reader.ReadByte(), (Button) button);
         }
 
         if ((int) Details.Colour == 0xFF)
@@ -669,7 +669,7 @@ namespace HXE.HCE
         Back  = 0x236  /* home - back                     */
       }
 
-      public Dictionary<Button, Action> Mapping = new Dictionary<Button, Action>();
+      public Dictionary<Action, Button> Mapping = new Dictionary<Action, Button>();
     }
   }
 }
