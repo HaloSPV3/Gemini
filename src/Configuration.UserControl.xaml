@@ -57,7 +57,7 @@
                     <Setter Property="Margin" Value="0,1,0,0" />
                 </Style>
                 <Style TargetType="{x:Type StackPanel}">
-                    <Setter Property="Height" Value="360" />
+                    <Setter Property="Height" Value="400" />
                 </Style>
             </Grid.Resources>
 
@@ -213,6 +213,10 @@
                     <Label Content="Bloom:" />
                     <CheckBox IsChecked="{Binding OpenSauce.Bloom}" />
                 </DockPanel>
+
+                <Button Click="InstallOpenSauce">
+                    Install OpenSauce
+                </Button>
 
                 <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
 

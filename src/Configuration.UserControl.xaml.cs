@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -51,6 +52,11 @@ namespace SPV3
     private void CalculateFOV(object sender, RoutedEventArgs e)
     {
       _configuration.CalculateFOV();
+    }
+
+    private void InstallOpenSauce(object sender, RoutedEventArgs e)
+    {
+      Process.Start("https://github.com/yumiris/SPV3/releases/latest");
     }
   }
 }
