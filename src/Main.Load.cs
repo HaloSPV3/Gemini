@@ -58,6 +58,8 @@ namespace SPV3
         if (openSauce.Exists())
           openSauce.Load();
 
+        if (!spv3.Blind)
+          openSauce.HUD.ShowHUD = true;                                /* forcefully enable hud   */
         openSauce.HUD.ScaleHUD                                 = true; /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
