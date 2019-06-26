@@ -55,6 +55,8 @@ namespace SPV3
         var hxe       = (HXE.Configuration) HXE.Paths.Configuration;             /* for compatibility */
         var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration */
 
+        spv3.Load();
+
         if (openSauce.Exists())
           openSauce.Load();
 
@@ -72,8 +74,6 @@ namespace SPV3
         hxe.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
         hxe.Kernel.SkipVerifyMainAssets = true; /* skips verifying assets */
         hxe.Save();                             /* saves to %APPDATA%\HXE */
-
-        spv3.Load();
 
         Kernel.Bootstrap(new Executable
         {
