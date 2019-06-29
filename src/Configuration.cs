@@ -53,9 +53,15 @@ namespace SPV3
 
       if (Loader.Blind && !Loader.DOOM)
         if (Exists(Blind))
+        {
           OpenSauce.Configuration.Objects.Weapon.Load(Blind);
+          OpenSauce.Configuration.HUD.ShowHUD = false;
+        }
         else
+        {
           OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
+          OpenSauce.Configuration.HUD.ShowHUD              = true;
+        }
 
       if (!Loader.DOOM && !Loader.Blind)
         OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
