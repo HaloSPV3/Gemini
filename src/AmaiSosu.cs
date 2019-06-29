@@ -40,9 +40,14 @@ namespace SPV3
     /// </summary>
     public string Path { get; set; } = Combine(CurrentDirectory, Paths.AmaiSosu);
 
+    public bool Exists()
+    {
+      return File.Exists(Path);
+    }
+
     public void Execute()
     {
-      Process.Start(File.Exists(Path) ? Path : Address);
+      Process.Start(Exists() ? Path : Address);
     }
 
     /// <summary>

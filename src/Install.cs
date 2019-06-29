@@ -137,13 +137,11 @@ namespace SPV3
         Status     = "Installation has successfully finished!";
         CanInstall = true;
 
-        if (Exists(Paths.AmaiSosu))
-        {
-          MessageBox.Show("Installation has been successful! " +
-                          "Please install OpenSauce to the SPV3 folder using AmaiSosu. " +
-                          "Click OK to continue ...");
-          Process.Start(Paths.AmaiSosu);
-        }
+        MessageBox.Show(
+          "Installation has been successful! " +
+          "Please install OpenSauce to the SPV3 folder using AmaiSosu. Click OK to continue ...");
+
+        new AmaiSosu {Path = Path.Combine(Target, Paths.AmaiSosu)}.Execute();
       }
       catch (Exception e)
       {
