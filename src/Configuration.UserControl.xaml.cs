@@ -19,7 +19,7 @@
  */
 
 using System;
-using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -56,7 +56,17 @@ namespace SPV3
 
     private void InstallOpenSauce(object sender, RoutedEventArgs e)
     {
-      Process.Start("https://github.com/yumiris/SPV3/releases/latest");
+      try
+      {
+        new AmaiSosu
+        {
+          Path = Path.Combine(Environment.CurrentDirectory, Paths.AmaiSosu)
+        }.Execute();
+      }
+      catch (Exception exception)
+      {
+        MessageBox.Show(exception.Message);
+      }
     }
   }
 }
