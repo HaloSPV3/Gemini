@@ -20,12 +20,12 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using HXE;
+using HXE.HCE;
 using SPV3.Annotations;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
@@ -114,10 +114,17 @@ namespace SPV3
       {
         Status     = "Waiting for user to install SPV3.";
         CanInstall = true;
+      }
+      else
+      {
+        Status     = "Could not find manifest in the data directory.";
+        CanInstall = false;
         return;
       }
 
-      Status     = "Could not find manifest in the data directory.";
+      if (Executable.GetRegistry() != null) return;
+
+      Status     = "Please install a legal copy of HCE before installing SPV3.";
       CanInstall = false;
     }
 
