@@ -25,7 +25,9 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HXE;
 using HXE.HCE;
+using HXE.SPV3;
 using SPV3.Annotations;
+using static HXE.SPV3.PostProcessing.MotionBlurOptions;
 using File = System.IO.File;
 
 namespace SPV3
@@ -86,6 +88,8 @@ namespace SPV3
         if (spv3.Bare)
           openSauce.Rasterizer.GBuffer.Enabled = false;
 
+        /* This is used for maintaining compatibility between the OpenSauce & SPV3 Post-Processing systems! */
+        openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled = hxe.PostProcessing.MotionBlur == BuiltIn;
         openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
         openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */

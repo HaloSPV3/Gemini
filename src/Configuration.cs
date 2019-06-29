@@ -37,9 +37,6 @@ namespace SPV3
 
     public void Save()
     {
-      /* keeps compatibility with the hackish post-processing configuration system */
-      OpenSauce.Configuration.Rasterizer.PostProcessing.MotionBlur.Enabled = HXE.Shaders.MotionBlur == 1;
-
       HXE.Save();
       Loader.Save();
       OpenSauce.Save();
