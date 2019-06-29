@@ -20,9 +20,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using HXE;
 using SPV3.Annotations;
 using static System.Environment;
@@ -134,6 +136,14 @@ namespace SPV3
 
         Status     = "Installation has successfully finished!";
         CanInstall = true;
+
+        if (Exists(Paths.AmaiSosu))
+        {
+          MessageBox.Show("Installation has been successful! " +
+                          "Please install OpenSauce to the SPV3 folder using AmaiSosu. " +
+                          "Click OK to continue ...");
+          Process.Start(Paths.AmaiSosu);
+        }
       }
       catch (Exception e)
       {
