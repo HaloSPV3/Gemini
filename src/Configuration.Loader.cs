@@ -160,7 +160,7 @@ namespace SPV3
 
       public void Load()
       {
-        if (!File.Exists(Paths.Configuration))
+        if (!Exists())
           return;
 
         using (var fs = new FileStream(Paths.Configuration, FileMode.Open, FileAccess.Read))
@@ -186,6 +186,11 @@ namespace SPV3
             Bare   = br.ReadBoolean();
           }
         }
+      }
+
+      public bool Exists()
+      {
+        return File.Exists(Paths.Configuration);
       }
 
       [NotifyPropertyChangedInvocator]

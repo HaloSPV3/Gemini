@@ -25,7 +25,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HXE;
 using HXE.HCE;
-using HXE.SPV3;
 using SPV3.Annotations;
 using static HXE.SPV3.PostProcessing.MotionBlurOptions;
 using File = System.IO.File;
@@ -53,11 +52,15 @@ namespace SPV3
 
       public void Invoke()
       {
-        var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes    */
-        var hxe       = (HXE.Configuration) HXE.Paths.Configuration;             /* for compatibility */
-        var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration */
+        var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration          */
+        var hxe       = (HXE.Configuration) HXE.Paths.Configuration;             /* for compatibility          */
+        var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
 
-        spv3.Load();
+        if (spv3.Exists())
+          spv3.Load();
+
+        if (hxe.Exists())
+          hxe.Load();
 
         if (openSauce.Exists())
           openSauce.Load();
@@ -93,14 +96,13 @@ namespace SPV3
         openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
         openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */
-        openSauce.Save();                                              /* saves to %APPDATA%\SPV3 */
-
-        if (hxe.Exists())
-          hxe.Load();
 
         hxe.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
         hxe.Kernel.SkipVerifyMainAssets = true; /* skips verifying assets */
-        hxe.Save();                             /* saves to %APPDATA%\HXE */
+
+        spv3.Save();      /* saves to %APPDATA%\SPV3 */
+        openSauce.Save(); /* saves to %APPDATA%\SPV3 */
+        hxe.Save();       /* saves to %APPDATA%\HXE  */
 
         Kernel.Bootstrap(new Executable
         {
