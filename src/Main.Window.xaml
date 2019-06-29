@@ -146,16 +146,6 @@
                             Name="AssetsButton"
                             Content="{Binding Assets.Status}" />
 
-                    <!-- About -->
-                    <Button Click="About">
-                        About
-                    </Button>
-
-                    <!-- Help -->
-                    <Button Click="Help">
-                        Help
-                    </Button>
-
                     <!-- Exit -->
                     <Button Click="Quit">
                         Exit

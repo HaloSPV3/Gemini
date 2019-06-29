@@ -94,18 +94,5 @@ namespace SPV3
     {
       MainTabControl.SelectedItem = ConfigurationTabItem;
     }
-
-    private void About(object sender, RoutedEventArgs e)
-    {
-      MessageBox.Show("Waiting for Masterz's credits list...");
-    }
-
-    private void Help(object sender, RoutedEventArgs e)
-    {
-      MessageBox.Show("Ensure you use the latest loader. Don't install to program files. "      +
-                      "Have OpenSauce installed. Set scaling to 100%. Delete %APPDATA%\\SPV3. " +
-                      "Check if it's your antivirus. "                                          +
-                      "Mmm, yes.");
-    }
   }
 }
