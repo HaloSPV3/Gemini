@@ -23,7 +23,7 @@ namespace HXE
   public class Status
   {
     public string Description { get; set; }
-    public int    Current     { get; set; }
-    public int    Total       { get; set; }
+    public long   Current     { get; set; }
+    public long   Total       { get; set; }
   }
 }
