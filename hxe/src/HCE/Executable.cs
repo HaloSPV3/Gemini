@@ -24,6 +24,7 @@ using System.IO;
 using System.Text;
 using HXE.Properties;
 using Microsoft.Win32;
+using static HXE.Console;
 
 namespace HXE.HCE
 {
@@ -37,78 +38,104 @@ namespace HXE.HCE
     public DebugOptions   Debug   { get; set; } = new DebugOptions();
     public ProfileOptions Profile { get; set; } = new ProfileOptions();
 
+    /// <summary>
+    ///   Attempt to detect executable on the file-system at the following locations:
+    ///   -   current directory; then
+    ///   -   default installation paths; then
+    ///   -   windows registry; then
+    ///   -   hxe installation path
+    /// </summary>
+    /// <returns>
+    ///   Executable object if found.
+    /// </returns>
+    /// <exception cref="FileNotFoundException">
+    ///   Executable has not been found on the file-system.
+    /// </exception>
     public static Executable Detect()
     {
       const string hce = Paths.HCE.Executable;
+
+      return GetInCurrentDir() ??
+             GetProgramFiles() ??
+             GetRegistryKeys() ??
+             GetInHxeInstall() ??
+             throw new FileNotFoundException("Could not detect executable on the filesystem.");
 
       /**
        * Detect based on the current directory.
        */
 
+      Executable GetInCurrentDir()
       {
         var currentPath = System.IO.Path.Combine(Environment.CurrentDirectory, hce);
 
         if (System.IO.File.Exists(currentPath))
+        {
+          Info("Detected executable in current directory");
+          Debug(currentPath);
           return (Executable) currentPath;
+        }
+
+        return null;
       }
 
       /**
        * Detect based on the default installation path.
        */
 
+      Executable GetProgramFiles()
       {
         const string directory64   = @"C:\Program Files (x86)\Microsoft Games\Halo Custom Edition";
         var          defaultPath64 = System.IO.Path.Combine(directory64, hce);
 
         if (System.IO.File.Exists(defaultPath64))
+        {
+          Info("Detected executable in Program Files (64-bit)");
+          Debug(defaultPath64);
           return (Executable) defaultPath64;
+        }
 
         const string directory32   = @"C:\Program Files\Microsoft Games\Halo Custom Edition";
         var          defaultPath32 = System.IO.Path.Combine(directory32, hce);
 
         if (System.IO.File.Exists(defaultPath32))
+        {
+          Info("Detected executable in Program Files (32-bit)");
+          Debug(defaultPath32);
           return (Executable) defaultPath32;
+        }
+
+        return null;
       }
 
       /**
        * Detect based on registry key values.
        */
 
+      Executable GetRegistryKeys()
       {
-        const string registryLocation = @"SOFTWARE\Microsoft\Microsoft Games\Halo CE";
-        const string registryIdentity = @"EXE Path";
+        var registry = GetRegistry();
 
-        using (var view = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
-        using (var key = view.OpenSubKey(registryLocation))
+        if (registry != null)
         {
-          var path = key?.GetValue(registryIdentity);
-          if (path != null)
-          {
-            var registryExe64 = $@"{path}\{hce}";
+          var path = $@"{registry}\{hce}";
 
-            if (System.IO.File.Exists(registryExe64))
-              return (Executable) registryExe64;
+          if (System.IO.File.Exists(path))
+          {
+            Info("Detected executable in the registry");
+            Debug(path);
+            return (Executable) path;
           }
         }
 
-        using (var view = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32))
-        using (var key = view.OpenSubKey(registryLocation))
-        {
-          var path = key?.GetValue(registryIdentity);
-          if (path != null)
-          {
-            var registryExe32 = $@"{path}\{hce}";
-
-            if (System.IO.File.Exists(registryExe32))
-              return (Executable) registryExe32;
-          }
-        }
+        return null;
       }
 
       /**
        * Detect based on installation path of a HXE packaged mod.
        */
 
+      Executable GetInHxeInstall()
       {
         if (!System.IO.File.Exists(Paths.Installation))
           throw new FileNotFoundException("Could not detect executable on the filesystem.");
@@ -116,10 +143,37 @@ namespace HXE.HCE
         var spv3exe = System.IO.Path.Combine(System.IO.File.ReadAllText(Paths.Installation).TrimEnd('\n'), hce);
 
         if (System.IO.File.Exists(spv3exe))
+        {
+          Info("Detected executable in HXE installation");
+          Debug(spv3exe);
           return (Executable) spv3exe;
+        }
+
+        return null;
+      }
+    }
+
+    /// <summary>
+    ///   Gets installation path declared in the registry.
+    /// </summary>
+    /// <returns>
+    ///   Installation path declared in the registry. If it does not exist, null will be returned.
+    /// </returns>
+    public static object GetRegistry()
+    {
+      object GetValue(RegistryView registryView)
+      {
+        const string registryLocation = @"SOFTWARE\Microsoft\Microsoft Games\Halo CE";
+        const string registryIdentity = @"EXE Path";
+
+        using (var view = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
+        using (var key = view.OpenSubKey(registryLocation))
+        {
+          return key?.GetValue(registryIdentity);
+        }
       }
 
-      throw new FileNotFoundException("Could not detect executable on the filesystem.");
+      return GetValue(RegistryView.Registry32) ?? GetValue(RegistryView.Registry64);
     }
 
     /// <summary>
@@ -174,7 +228,7 @@ namespace HXE.HCE
         return args.ToString();
       }
 
-      Console.Info("Killing existing HCE processes");
+      Info("Killing existing HCE processes");
 
       try
       {
@@ -183,15 +237,15 @@ namespace HXE.HCE
       }
       catch (Exception e)
       {
-        Console.Info(e.Message);
+        Info(e.Message);
       }
 
-      Console.Wait("Waiting for existing HCE process to end ");
+      Wait("Waiting for existing HCE process to end ");
 
       while (Process.GetProcessesByName("haloce").Length > 0)
         System.Console.Write(Resources.Progress);
 
-      Console.Info("Starting process for HCE executable");
+      Info("Starting process for HCE executable");
 
       Process.Start(new ProcessStartInfo
       {
@@ -201,13 +255,13 @@ namespace HXE.HCE
         Arguments = GetArguments()
       });
 
-      Console.Info("Successfully started HCE executable");
+      Info("Successfully started HCE executable");
     }
 
     private static void ApplyArgument(StringBuilder args, string arg)
     {
       args.Append(arg);
-      Console.Debug("Appending argument: " + arg);
+      Debug("Appending argument: " + arg);
     }
 
     /// <summary>
