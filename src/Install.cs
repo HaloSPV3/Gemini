@@ -190,7 +190,14 @@ namespace SPV3
 
     public void InstallHce()
     {
-      Process.Start(Exists(Paths.Setup) ? Paths.Setup : "http://hce.halomaps.org/?fid=410");
+      try
+      {
+        Process.Start(Exists(Paths.Setup) ? Paths.Setup : "http://hce.halomaps.org/?fid=410");
+      }
+      catch (Exception e)
+      {
+        Status = e.Message;
+      }
     }
 
     [NotifyPropertyChangedInvocator]
