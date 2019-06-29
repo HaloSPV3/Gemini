@@ -59,6 +59,8 @@ namespace SPV3
 
         if (openSauce.Exists())
           openSauce.Load();
+        else
+          openSauce.Camera.CalculateFOV(); /* apply native field of view */
 
         if (!spv3.Blind)
           openSauce.HUD.ShowHUD = true;                                /* forcefully enable hud   */
