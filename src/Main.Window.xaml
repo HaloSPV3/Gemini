@@ -143,6 +143,7 @@
                     <!-- Update SPV3 -->
                     <Button Visibility="{Binding Assets.Visibility}"
                             Click="Assets"
+                            Name="AssetsButton"
                             Content="{Binding Assets.Status}" />
 
                     <!-- About -->

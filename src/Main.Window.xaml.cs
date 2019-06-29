@@ -54,7 +54,9 @@ namespace SPV3
 
     private async void Assets(object sender, RoutedEventArgs e)
     {
+      AssetsButton.IsEnabled = false;
       await Task.Run(() => { _main.Update(); });
+      AssetsButton.IsEnabled = true;
     }
 
     private void Quit(object sender, RoutedEventArgs e)
