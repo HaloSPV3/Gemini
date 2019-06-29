@@ -77,7 +77,7 @@ namespace SPV3
       public void Update()
       {
         var progress = new Progress<Status>();
-        progress.ProgressChanged += (sender, status) => Status = $"{(decimal) status.Current / status.Total:P}";
+        progress.ProgressChanged += (sender, status) => Status = status.Description;
 
         _update.Commit(progress);
 
