@@ -126,7 +126,11 @@ namespace SPV3
         using (var ms = new MemoryStream(Length))
         using (var bw = new BinaryWriter(ms))
         {
-          ms.Position = 0;
+          /* padding */
+          {
+            bw.Write(new byte[Length]);
+            ms.Position = 0;
+          }
 
           /* signature */
           {
@@ -147,11 +151,6 @@ namespace SPV3
             bw.Write(DOOM);
             bw.Write(Blind);
             bw.Write(Bare);
-          }
-
-          /* padding */
-          {
-            bw.Write(new byte[256 - ms.Position]);
           }
 
           ms.Position = 0;
