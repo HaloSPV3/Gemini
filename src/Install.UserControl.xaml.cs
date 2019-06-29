@@ -59,5 +59,20 @@ namespace SPV3
           _install.Target = dialog.SelectedPath;
       }
     }
+
+    private void InstallHce(object sender, RoutedEventArgs e)
+    {
+      _install.InstallHce();
+    }
+
+    private void VerifyHce(object sender, RoutedEventArgs e)
+    {
+      _install.Initialise();
+    }
+
+    private void Quit(object sender, RoutedEventArgs e)
+    {
+      Environment.Exit(0);
+    }
   }
 }

@@ -20,6 +20,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -35,10 +36,12 @@ namespace SPV3
 {
   public class Install : INotifyPropertyChanged
   {
-    private readonly string _source = Path.Combine(CurrentDirectory, "data");
-    private          bool   _canInstall;
-    private          string _status = "Awaiting user input...";
-    private          string _target = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
+    private readonly string     _source = Path.Combine(CurrentDirectory, "data");
+    private          bool       _canInstall;
+    private          Visibility _hce    = Visibility.Collapsed;
+    private          Visibility _main   = Visibility.Visible;
+    private          string     _status = "Awaiting user input...";
+    private          string     _target = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
 
     public bool CanInstall
     {
@@ -100,10 +103,35 @@ namespace SPV3
       }
     }
 
+    public Visibility Main
+    {
+      get => _main;
+      set
+      {
+        if (value == _main) return;
+        _main = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public Visibility Hce
+    {
+      get => _hce;
+      set
+      {
+        if (value == _hce) return;
+        _hce = value;
+        OnPropertyChanged();
+      }
+    }
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     public void Initialise()
     {
+      Main = Visibility.Visible;
+      Hce  = Visibility.Collapsed;
+
       /**
        * Determine if the current environment fulfils the installation requirements.
        */
@@ -126,6 +154,9 @@ namespace SPV3
 
       Status     = "Please install a legal copy of HCE before installing SPV3.";
       CanInstall = false;
+
+      Main = Visibility.Collapsed;
+      Hce  = Visibility.Visible;
     }
 
     public async void Commit()
@@ -155,6 +186,11 @@ namespace SPV3
         Status     = e.Message;
         CanInstall = true;
       }
+    }
+
+    public void InstallHce()
+    {
+      Process.Start(Exists(Paths.Setup) ? Paths.Setup : "http://hce.halomaps.org/?fid=410");
     }
 
     [NotifyPropertyChangedInvocator]

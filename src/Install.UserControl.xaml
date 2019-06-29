@@ -63,7 +63,8 @@
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="640">
+                    Width="640"
+                    Visibility="{Binding Main}">
             <Label Content="Location:"
                    Foreground="White" />
             <DockPanel>
@@ -87,6 +88,49 @@
                         Content="Install"
                         IsEnabled="{Binding CanInstall}" />
             </DockPanel>
+        </StackPanel>
+
+        <!-- HCE -->
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="960"
+                    Background="#80DC143C"
+                    Visibility="{Binding Hce}">
+            <TextBlock Foreground="White"
+                       TextWrapping="WrapWithOverflow"
+                       Margin="0,10"
+                       TextAlignment="Center">
+                A legal copy of Halo: Custom Edition has not been found on your system.
+                <LineBreak />
+                Please install it, then click on "Verify HCE" to check if the installation succeeded.
+            </TextBlock>
+            <Grid Margin="0,1,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Margin="0,0,0.5,0"
+                        Click="Back">
+                    Go back...
+                </Button>
+                <Button Grid.Column="1"
+                        Margin="0.5,0"
+                        Click="InstallHce"
+                        Content="Step 1: Install HCE" />
+                <Button Grid.Column="2"
+                        Margin="0.5,0,0.5,0"
+                        Click="VerifyHce"
+                        Content="Step 2: Verify HCE" />
+                <Button Grid.Column="3"
+                        Margin="0.5,0,0,0"
+                        Click="Quit">
+                    Exit
+                </Button>
+            </Grid>
         </StackPanel>
 
         <!-- Status -->
