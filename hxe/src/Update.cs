@@ -241,15 +241,18 @@ namespace HXE
 
           while (!task.IsCompleted)
           {
-            var c = new FileInfo(Combine(directory, Name)).Length;
-            var t = Size;
-
-            progress?.Report(new Status
+            if (Exists(target))
             {
-              Current     = new FileInfo(Combine(directory, Name)).Length,
-              Total       = Size,
-              Description = $"Installing: {Name} ({(decimal) c / t:P})"
-            });
+              var c = new FileInfo(target).Length;
+              var t = Size;
+
+              progress?.Report(new Status
+              {
+                Current     = c,
+                Total       = t,
+                Description = $"Installing: {Name} ({(decimal) c / t:P})"
+              });
+            }
 
             System.Console.Write(Resources.Progress);
             Thread.Sleep(1000);
