@@ -33,6 +33,7 @@ namespace SPV3
     {
       private const int Length = 256;
 
+      private bool   _bare;
       private bool   _blind;
       private bool   _doom;
       private bool   _gamma;
@@ -106,6 +107,17 @@ namespace SPV3
         }
       }
 
+      public bool Bare
+      {
+        get => _bare;
+        set
+        {
+          if (value == _bare) return;
+          _bare = value;
+          OnPropertyChanged();
+        }
+      }
+
       public event PropertyChangedEventHandler PropertyChanged;
 
       public void Save()
@@ -134,6 +146,7 @@ namespace SPV3
             bw.Write(Gamma);
             bw.Write(DOOM);
             bw.Write(Blind);
+            bw.Write(Bare);
           }
 
           /* padding */
@@ -171,6 +184,7 @@ namespace SPV3
             Gamma  = br.ReadBoolean();
             DOOM   = br.ReadBoolean();
             Blind  = br.ReadBoolean();
+            Bare   = br.ReadBoolean();
           }
         }
       }

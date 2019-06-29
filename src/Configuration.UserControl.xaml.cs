@@ -68,5 +68,11 @@ namespace SPV3
         MessageBox.Show(exception.Message);
       }
     }
+
+    private void BareChecked(object sender, RoutedEventArgs e)
+    {
+      MessageBox.Show("WARNING: VISR and Thermal Vision will not work. " +
+                      "This should only be used on low-end computers as a last resort.");
+    }
   }
 }

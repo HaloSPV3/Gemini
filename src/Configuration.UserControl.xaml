@@ -102,6 +102,11 @@
                     <CheckBox IsChecked="{Binding Loader.Blind}" />
                 </DockPanel>
                 <DockPanel>
+                    <Label Content="Bare Mode:" />
+                    <CheckBox IsChecked="{Binding Loader.Bare}"
+                              Checked="BareChecked"/>
+                </DockPanel>
+                <DockPanel>
                     <Label Content="Field of View:" />
                     <TextBox Text="{Binding OpenSauce.FieldOfView}" />
                 </DockPanel>

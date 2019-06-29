@@ -83,6 +83,9 @@ namespace SPV3
           openSauce.HUD.ScaleHUD = true; /* fixes user interface    */
         }
 
+        if (spv3.Bare)
+          openSauce.Rasterizer.GBuffer.Enabled = false;
+
         openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
         openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */
