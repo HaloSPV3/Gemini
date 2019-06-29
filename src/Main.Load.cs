@@ -25,8 +25,8 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HXE;
 using HXE.HCE;
-using HXE.SPV3;
 using SPV3.Annotations;
+using File = System.IO.File;
 
 namespace SPV3
 {
@@ -62,9 +62,27 @@ namespace SPV3
         else
           openSauce.Camera.CalculateFOV(); /* apply native field of view */
 
-        if (!spv3.Blind)
-          openSauce.HUD.ShowHUD = true;                                /* forcefully enable hud   */
-        openSauce.HUD.ScaleHUD                                 = true; /* fixes user interface    */
+        if (spv3.DOOM && !spv3.Blind)
+          if (File.Exists(Paths.DOOM))
+          {
+            openSauce.Objects.Weapon.Load(Paths.DOOM);
+            openSauce.HUD.ShowHUD = false;
+          }
+
+        if (spv3.Blind && !spv3.DOOM)
+        {
+          if (File.Exists(Paths.Blind))
+          {
+            openSauce.Objects.Weapon.Load(Paths.Blind);
+            openSauce.HUD.ShowHUD = false;
+          }
+        }
+        else
+        {
+          openSauce.HUD.ShowHUD  = true; /* forcefully enable hud   */
+          openSauce.HUD.ScaleHUD = true; /* fixes user interface    */
+        }
+
         openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
         openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */

@@ -18,11 +18,6 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System.Collections.Generic;
-using static System.IO.File;
-using static HXE.OpenSauce.OpenSauceObjects.ObjectsWeapon;
-using static SPV3.Paths;
-
 namespace SPV3
 {
   public partial class Configuration
@@ -44,27 +39,6 @@ namespace SPV3
     {
       /* keeps compatibility with the hackish post-processing configuration system */
       OpenSauce.Configuration.Rasterizer.PostProcessing.MotionBlur.Enabled = HXE.Shaders.MotionBlur == 1;
-
-      if (Loader.DOOM && !Loader.Blind)
-        if (Exists(DOOM))
-          OpenSauce.Configuration.Objects.Weapon.Load(DOOM);
-        else
-          OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
-
-      if (Loader.Blind && !Loader.DOOM)
-        if (Exists(Blind))
-        {
-          OpenSauce.Configuration.Objects.Weapon.Load(Blind);
-          OpenSauce.Configuration.HUD.ShowHUD = false;
-        }
-        else
-        {
-          OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
-          OpenSauce.Configuration.HUD.ShowHUD              = true;
-        }
-
-      if (!Loader.DOOM && !Loader.Blind)
-        OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
 
       HXE.Save();
       Loader.Save();
