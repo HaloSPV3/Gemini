@@ -133,18 +133,8 @@ namespace HXE
     {
       Info("Started asset update routine - " + Assets.Count + " assets");
 
-      var c = 1;
-      var t = Assets.Count;
-
       foreach (var asset in Assets)
       {
-        progress?.Report(new Status
-        {
-          Current     = c - 1,
-          Total       = t,
-          Description = $"Updating: {asset.Path}/{asset.Name}"
-        });
-
         /**
          * If the asset matches a file which exists at the target destination on the file system, then re-installing it
          * would be pointless.
@@ -159,11 +149,9 @@ namespace HXE
           if (new FileInfo(target).Length == asset.Size)
             continue;
 
-        asset.Request(); /* grab our package */
-        asset.Install(); /* inflate its data */
-        asset.CleanUp(); /* clean up package */
-
-        c++;
+        asset.Request(progress); /* grab our package */
+        asset.Install(progress); /* inflate its data */
+        asset.CleanUp();         /* clean up package */
       }
 
       Done("Finished asset update routine - " + Assets.Count + " assets");
@@ -181,7 +169,7 @@ namespace HXE
       /// <summary>
       ///   Downloads the asset's package to the filesystem for subsequent installation.
       /// </summary>
-      public void Request()
+      public void Request(IProgress<Status> progress = null)
       {
         /**
          * Let's just hope that this isn't invoked from a read-only directory.
@@ -189,6 +177,16 @@ namespace HXE
 
         using (var client = new WebClient())
         {
+          client.DownloadProgressChanged += (s, e) =>
+          {
+            progress?.Report(new Status
+            {
+              Current     = e.BytesReceived,
+              Total       = e.TotalBytesToReceive,
+              Description = $"Requesting: {Name} ({(decimal) e.BytesReceived / e.TotalBytesToReceive:P})"
+            });
+          };
+
           var task = new Task(() => { client.DownloadFile(URL, File); });
 
           task.Start();
@@ -211,7 +209,7 @@ namespace HXE
       /// <exception cref="AssetException">
       ///   Package does not exist. It should be downloaded!
       /// </exception>
-      public void Install()
+      public void Install(IProgress<Status> progress = null)
       {
         if (!Exists(File))
           throw new AssetException("Package not found for asset - " + Name);
@@ -243,6 +241,16 @@ namespace HXE
 
           while (!task.IsCompleted)
           {
+            var c = new FileInfo(Combine(directory, Name)).Length;
+            var t = Size;
+
+            progress?.Report(new Status
+            {
+              Current     = new FileInfo(Combine(directory, Name)).Length,
+              Total       = Size,
+              Description = $"Installing: {Name} ({(decimal) c / t:P})"
+            });
+
             System.Console.Write(Resources.Progress);
             Thread.Sleep(1000);
           }
