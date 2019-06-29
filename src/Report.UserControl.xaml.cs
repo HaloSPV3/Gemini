@@ -30,6 +30,8 @@ namespace SPV3
   {
     private readonly Report _report;
 
+    public Report Report => _report;
+
     public Report_UserControl()
     {
       InitializeComponent();

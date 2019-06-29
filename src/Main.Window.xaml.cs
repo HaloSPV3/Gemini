@@ -67,6 +67,7 @@ namespace SPV3
     private void Report(object sender, MouseButtonEventArgs e)
     {
       MainTabControl.SelectedItem = ReportTabItem;
+      ReportUserControl.Report.Initialise();
     }
 
     private void Main(object sender, EventArgs e)
