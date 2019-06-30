@@ -88,14 +88,13 @@ namespace SPV3
           openSauce.HUD.ScaleHUD = true; /* fixes user interface    */
         }
 
-        if (spv3.Bare)
-          openSauce.Rasterizer.GBuffer.Enabled = false;
 
         /* This is used for maintaining compatibility between the OpenSauce & SPV3 Post-Processing systems! */
         openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled = hxe.PostProcessing.MotionBlur == BuiltIn;
-        openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
-        openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
-        openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */
+        openSauce.Camera.IgnoreFOVChangeInCinematics           = true;       /* fixes user interface    */
+        openSauce.Camera.IgnoreFOVChangeInMainMenu             = true;       /* fixes user interface    */
+        openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true;       /* shader optimisations    */
+        openSauce.Rasterizer.GBuffer.Enabled                   = !spv3.Bare; /* low-end graphics mode   */
 
         hxe.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
         hxe.Kernel.SkipVerifyMainAssets = true; /* skips verifying assets */
