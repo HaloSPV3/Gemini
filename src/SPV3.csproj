@@ -111,6 +111,7 @@
     <Compile Include="Report.UserControl.xaml.cs">
       <DependentUpon>Report.UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Setup.cs" />
     <Compile Include="Social.UserControl.xaml.cs">
       <DependentUpon>Social.UserControl.xaml</DependentUpon>
     </Compile>

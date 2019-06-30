@@ -20,7 +20,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -192,7 +191,7 @@ namespace SPV3
     {
       try
       {
-        Process.Start(Exists(Paths.Setup) ? Paths.Setup : "http://hce.halomaps.org/?fid=410");
+        new Setup {Path = Path.Combine(Paths.Setup)}.Execute();
       }
       catch (Exception e)
       {
