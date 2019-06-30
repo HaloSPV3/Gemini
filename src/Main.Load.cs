@@ -26,6 +26,7 @@ using System.Windows;
 using HXE;
 using HXE.HCE;
 using SPV3.Annotations;
+using static HXE.SPV3.PostProcessing;
 using static HXE.SPV3.PostProcessing.MotionBlurOptions;
 using File = System.IO.File;
 
@@ -60,7 +61,26 @@ namespace SPV3
           spv3.Load();
 
         if (hxe.Exists())
+        {
           hxe.Load();
+        }
+        else
+        {
+          hxe.PostProcessing.Internal          = true;
+          hxe.PostProcessing.External          = true;
+          hxe.PostProcessing.GBuffer           = true;
+          hxe.PostProcessing.DepthFade         = true;
+          hxe.PostProcessing.Bloom             = true;
+          hxe.PostProcessing.LensDirt          = true;
+          hxe.PostProcessing.DynamicLensFlares = true;
+          hxe.PostProcessing.Volumetrics       = true;
+          hxe.PostProcessing.AntiAliasing      = true;
+          hxe.PostProcessing.HudVisor          = true;
+          hxe.PostProcessing.FilmGrain         = true;
+          hxe.PostProcessing.MotionBlur        = PombHigh;
+          hxe.PostProcessing.Mxao              = MxaoOptions.High;
+          hxe.PostProcessing.Dof               = DofOptions.High;
+        }
 
         if (openSauce.Exists())
           openSauce.Load();
