@@ -33,7 +33,7 @@ namespace SPV3
     public static readonly string Exception     = Combine(Directory,                      "exception.log");
     public static readonly string Configuration = Combine(Directory,                      "loader.bin");
     public static readonly string DOOM          = Combine(CurrentDirectory,               "doom.bin");
-    public static readonly string Blind         = Combine(CurrentDirectory,               "blind.bin");
+    public static readonly string Photo         = Combine(CurrentDirectory,               "photo.bin");
     public static readonly string Setup         = Combine(CurrentDirectory,               "setup.exe");
 
     public static string Packages(string target)

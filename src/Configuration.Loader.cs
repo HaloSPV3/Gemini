@@ -34,7 +34,7 @@ namespace SPV3
       private const int Length = 256;
 
       private bool   _bare;
-      private bool   _blind;
+      private bool   _photo;
       private bool   _doom;
       private bool   _gamma;
       private ushort _height = (ushort) Screen.PrimaryScreen.Bounds.Height;
@@ -96,13 +96,13 @@ namespace SPV3
         }
       }
 
-      public bool Blind
+      public bool Photo
       {
-        get => _blind;
+        get => _photo;
         set
         {
-          if (value == _blind) return;
-          _blind = value;
+          if (value == _photo) return;
+          _photo = value;
           OnPropertyChanged();
         }
       }
@@ -149,7 +149,7 @@ namespace SPV3
             bw.Write(Window);
             bw.Write(Gamma);
             bw.Write(DOOM);
-            bw.Write(Blind);
+            bw.Write(Photo);
             bw.Write(Bare);
           }
 
@@ -182,7 +182,7 @@ namespace SPV3
             Window = br.ReadBoolean();
             Gamma  = br.ReadBoolean();
             DOOM   = br.ReadBoolean();
-            Blind  = br.ReadBoolean();
+            Photo  = br.ReadBoolean();
             Bare   = br.ReadBoolean();
           }
         }

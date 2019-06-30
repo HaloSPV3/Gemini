@@ -30,7 +30,7 @@ Features
 -   Apply custom video resolution
 -   Tweak OpenSauce post-processing
 -   Tweak Chimera interpolation
--   DOOM & Blind modes
+-   DOOM & Photo modes
 -   Backwards compatibility with SPV3.1
     -   Campaign resume
     -   Maps unlocking

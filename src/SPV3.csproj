@@ -183,9 +183,9 @@
     <Resource Include="Assets\background_compile.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ContentWithTargetPath Include="Positions\Blind.bin">
+    <ContentWithTargetPath Include="Positions\Photo.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>blind.bin</TargetPath>
+      <TargetPath>photo.bin</TargetPath>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="Positions\DOOM.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

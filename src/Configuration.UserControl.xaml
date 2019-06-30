@@ -98,8 +98,8 @@
                     <CheckBox IsChecked="{Binding Loader.DOOM}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Blind Mode:" />
-                    <CheckBox IsChecked="{Binding Loader.Blind}" />
+                    <Label Content="Photo Mode:" />
+                    <CheckBox IsChecked="{Binding Loader.Photo}" />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Bare Mode:" />

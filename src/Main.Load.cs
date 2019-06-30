@@ -68,18 +68,18 @@ namespace SPV3
         else
           openSauce.Camera.CalculateFOV(); /* apply native field of view */
 
-        if (spv3.DOOM && !spv3.Blind)
+        if (spv3.DOOM && !spv3.Photo)
           if (File.Exists(Paths.DOOM))
           {
             openSauce.Objects.Weapon.Load(Paths.DOOM);
             openSauce.HUD.ShowHUD = true;
           }
 
-        if (spv3.Blind && !spv3.DOOM)
+        if (spv3.Photo && !spv3.DOOM)
         {
-          if (File.Exists(Paths.Blind))
+          if (File.Exists(Paths.Photo))
           {
-            openSauce.Objects.Weapon.Load(Paths.Blind);
+            openSauce.Objects.Weapon.Load(Paths.Photo);
             openSauce.HUD.ShowHUD = false;
           }
         }
