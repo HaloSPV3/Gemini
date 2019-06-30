@@ -72,7 +72,7 @@ namespace SPV3
           if (File.Exists(Paths.DOOM))
           {
             openSauce.Objects.Weapon.Load(Paths.DOOM);
-            openSauce.HUD.ShowHUD = false;
+            openSauce.HUD.ShowHUD = true;
           }
 
         if (spv3.Blind && !spv3.DOOM)
