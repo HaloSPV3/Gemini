@@ -327,7 +327,12 @@ namespace HXE.HCE
         foreach (var button in Enum.GetValues(typeof(Button)))
         {
           reader.BaseStream.Seek((int) button, SeekOrigin.Begin);
-          Input.Mapping.Add((ProfileInput.Action) reader.ReadByte(), (Button) button);
+
+          var key   = (ProfileInput.Action) reader.ReadByte();
+          var value = (Button) button;
+
+          if (!Input.Mapping.ContainsKey(key))
+            Input.Mapping.Add(key, value);
         }
 
         if ((int) Details.Colour == 0xFF)
