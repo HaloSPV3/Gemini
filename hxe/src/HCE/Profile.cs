@@ -373,7 +373,7 @@ namespace HXE.HCE
 
       lastprof.Load();
 
-      var profile = (Profile) Paths.HCE.Profile(lastprof.Profile);
+      var profile = (Profile) Custom.Profile(directory, lastprof.Profile);
 
       if (!profile.Exists())
         throw new FileNotFoundException("Cannot load detected profile - its blam.sav does not exist.");
