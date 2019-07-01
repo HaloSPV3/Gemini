@@ -350,7 +350,23 @@ namespace HXE.HCE
     /// </exception>
     public static Profile Detect()
     {
-      var lastprof = (LastProfile) Paths.HCE.LastProfile;
+      return Detect(Paths.HCE.Directory);
+    }
+
+    /// <summary>
+    ///   Returns object representing the HCE profile detected on the filesystem.
+    /// </summary>
+    /// <returns>
+    ///   Object representing the HCE profile detected on the filesystem.
+    /// </returns>
+    /// <exception cref="FileNotFoundException">
+    ///   lastprof.txt does not exist.
+    ///   - or -
+    ///   blam.sav does not exist.
+    /// </exception>
+    public static Profile Detect(string directory)
+    {
+      var lastprof = (LastProfile) Custom.LastProfile(directory);
 
       if (!lastprof.Exists())
         throw new FileNotFoundException("Cannot detect profile - lastprof.txt does not exist.");
