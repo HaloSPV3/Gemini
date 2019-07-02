@@ -26,6 +26,7 @@ using HXE.Exceptions;
 using HXE.HCE;
 using HXE.SPV3;
 using static System.Environment;
+using static System.IO.File;
 using static System.IO.Path;
 using static System.Windows.Forms.Screen;
 using static HXE.Console;
@@ -176,7 +177,7 @@ namespace HXE
         var file = Combine(CurrentDirectory, package.Entry.Path, package.Entry.Name);
         var size = package.Entry.Size;
 
-        if (!System.IO.File.Exists(file))
+        if (!Exists(file))
           throw new FileNotFoundException("File does not currently exist - " + package.Entry.Name);
 
         Info("Inferred file on the filesystem - " + package.Entry.Name);
@@ -252,6 +253,17 @@ namespace HXE
 
         profile.Audio.Quality = AudioQuality.High;
         profile.Audio.Variety = AudioVariety.High;
+
+        if (Exists(DSOAL) && Exists(DSOUND) && Exists(ALSoft))
+        {
+          profile.Audio.HWA = true;
+          profile.Audio.EAX = true;
+        }
+        else
+        {
+          profile.Audio.HWA = false;
+          profile.Audio.EAX = false;
+        }
 
         Info("Applied profile audio patches");
 

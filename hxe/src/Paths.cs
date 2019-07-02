@@ -37,6 +37,9 @@ namespace HXE
     public static readonly string Exception     = Combine(Directory,                      "exception.log");
     public static readonly string Installation  = Combine(Directory,                      "install.txt");
     public static readonly string Positions     = Combine(CurrentDirectory,               "positions.bin");
+    public static readonly string DSOAL         = Combine(CurrentDirectory,               "dsoal-aldrv.dll");
+    public static readonly string DSOUND        = Combine(CurrentDirectory,               "dsound.dll");
+    public static readonly string ALSoft        = Combine(CurrentDirectory,               "alsoft.ini");
 
     public class HCE
     {
