@@ -119,6 +119,8 @@ namespace SPV3
             NoGamma = !spv3.Gamma /* flip boolean */
           }
         });
+
+        File.WriteAllText(Paths.Installation, Environment.CurrentDirectory);
       }
 
       [NotifyPropertyChangedInvocator]

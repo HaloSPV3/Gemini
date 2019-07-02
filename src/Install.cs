@@ -171,6 +171,9 @@ namespace SPV3
 
         await Task.Run(() => { Installer.Install(_source, _target, progress); });
 
+        /* for potential subsequent referencing */
+        Copy(HXE.Paths.Installation, Paths.Installation);
+
         Status     = "Installation has successfully finished!";
         CanInstall = true;
 
