@@ -35,6 +35,7 @@ namespace SPV3
     public static readonly string DOOM          = Combine(CurrentDirectory,               "doom.bin");
     public static readonly string Photo         = Combine(CurrentDirectory,               "photo.bin");
     public static readonly string Setup         = Combine(CurrentDirectory,               "setup.exe");
+    public static readonly string HXE           = Combine(CurrentDirectory,               "hxe.exe");
 
     public static string Packages(string target)
     {

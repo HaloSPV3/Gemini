@@ -20,8 +20,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using HXE;
 using SPV3.Annotations;
@@ -33,9 +33,9 @@ namespace SPV3
     public class MainAssets : INotifyPropertyChanged
     {
       private const    string     Address     = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe";
-      private          Visibility _visibility = Visibility.Collapsed;
-      private          string     _status     = "Update";
       private readonly Update     _update     = new Update();
+      private          string     _status     = "Update";
+      private          Visibility _visibility = Visibility.Collapsed;
 
       public Visibility Visibility
       {
@@ -76,12 +76,24 @@ namespace SPV3
 
       public void Update()
       {
-        var progress = new Progress<Status>();
-        progress.ProgressChanged += (sender, status) => Status = status.Description;
+        try
+        {
+          Status = "Updating ...";
 
-        _update.Commit(progress);
+          Process.Start(new ProcessStartInfo
+          {
+            FileName         = Paths.HXE,
+            Arguments        = "-update " + Address,
+            WorkingDirectory = Environment.CurrentDirectory
+          })?.WaitForExit();
 
-        Status = "You are up to date!";
+          Status = "You are up to date!";
+        }
+        catch (Exception)
+        {
+          Status = "Update";
+          throw;
+        }
       }
 
       [NotifyPropertyChangedInvocator]

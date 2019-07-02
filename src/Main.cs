@@ -95,7 +95,7 @@ namespace SPV3
     {
       try
       {
-        Task.Run(() => { Assets.Update(); });
+        Assets.Update();
       }
       catch (Exception e)
       {
