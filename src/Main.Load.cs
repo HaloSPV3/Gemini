@@ -26,7 +26,6 @@ using System.Windows;
 using HXE;
 using HXE.HCE;
 using SPV3.Annotations;
-using static HXE.SPV3.PostProcessing;
 using static HXE.SPV3.PostProcessing.MotionBlurOptions;
 using File = System.IO.File;
 
@@ -68,6 +67,8 @@ namespace SPV3
         else
           openSauce.Camera.CalculateFOV(); /* apply native field of view */
 
+        openSauce.HUD.ShowHUD = true; /* forcefully enable hud */
+
         if (spv3.DOOM && !spv3.Photo)
           if (File.Exists(Paths.DOOM))
           {
@@ -76,22 +77,15 @@ namespace SPV3
           }
 
         if (spv3.Photo && !spv3.DOOM)
-        {
           if (File.Exists(Paths.Photo))
           {
             openSauce.Objects.Weapon.Load(Paths.Photo);
             openSauce.HUD.ShowHUD = false;
           }
-        }
-        else
-        {
-          openSauce.HUD.ShowHUD  = true; /* forcefully enable hud   */
-          openSauce.HUD.ScaleHUD = true; /* fixes user interface    */
-        }
-
 
         /* This is used for maintaining compatibility between the OpenSauce & SPV3 Post-Processing systems! */
         openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled = hxe.PostProcessing.MotionBlur == BuiltIn;
+        openSauce.HUD.ScaleHUD                                 = true;       /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInCinematics           = true;       /* fixes user interface    */
         openSauce.Camera.IgnoreFOVChangeInMainMenu             = true;       /* fixes user interface    */
         openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true;       /* shader optimisations    */
