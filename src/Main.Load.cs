@@ -25,6 +25,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HXE;
 using HXE.HCE;
+using HXE.SPV3;
 using SPV3.Annotations;
 using static HXE.SPV3.PostProcessing.MotionBlurOptions;
 using File = System.IO.File;
@@ -55,12 +56,23 @@ namespace SPV3
         var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration          */
         var hxe       = (HXE.Configuration) HXE.Paths.Configuration;             /* for compatibility          */
         var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
+        var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
 
         if (spv3.Exists())
           spv3.Load();
 
         if (hxe.Exists())
           hxe.Load();
+
+        if (chimera.Exists())
+          chimera.Load();
+        else
+        {
+          chimera.Interpolation        = 9;
+          chimera.AnisotropicFiltering = true;
+          chimera.UncapCinematic       = true;
+          chimera.BlockLOD             = true;
+        }
 
         if (openSauce.Exists())
           openSauce.Load();
@@ -96,6 +108,7 @@ namespace SPV3
 
         spv3.Save();      /* saves to %APPDATA%\SPV3 */
         openSauce.Save(); /* saves to %APPDATA%\SPV3 */
+        chimera.Save();   /* saves to %APPDATA%\SPV3 */
         hxe.Save();       /* saves to %APPDATA%\HXE  */
 
         Kernel.Bootstrap(new Executable
