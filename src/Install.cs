@@ -99,6 +99,33 @@ namespace SPV3
           Status     = "Installation not possible at selected path: " + e.Message.ToLower();
           CanInstall = false;
         }
+
+        /**
+         * Check available disk space. This will NOT work on UNC paths!
+         */
+
+        try
+        {
+          var targetDrive = Path.GetPathRoot(Target);
+
+          foreach (var drive in DriveInfo.GetDrives())
+          {
+            if (!drive.IsReady || drive.Name != targetDrive) continue;
+
+            if (drive.TotalFreeSpace > 17179869184)
+              CanInstall = true;
+            else
+            {
+              Status     = "Not enough disk space (16GB required) at selected path: " + Target;
+              CanInstall = false;
+            }
+          }
+        }
+        catch (Exception e)
+        {
+          Status     = "Failed to get drive space: " + e.Message.ToLower();
+          CanInstall = false;
+        }
       }
     }
 
