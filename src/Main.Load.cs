@@ -146,8 +146,8 @@ namespace SPV3
             {Profile.ProfileInput.Action.Flashlight, Profile.ProfileInput.Button.LT},
             {Profile.ProfileInput.Action.MeleeAttack, Profile.ProfileInput.Button.RB},
             {Profile.ProfileInput.Action.FireWeapon, Profile.ProfileInput.Button.RT},
-            {Profile.ProfileInput.Action.MenuAccept, Profile.ProfileInput.Button.A},
-            {Profile.ProfileInput.Action.MenuBack, Profile.ProfileInput.Button.B}
+            {Profile.ProfileInput.Action.MenuAccept, Profile.ProfileInput.Button.Start},
+            {Profile.ProfileInput.Action.MenuBack, Profile.ProfileInput.Button.Back}
           };
 
           profile.Save();
