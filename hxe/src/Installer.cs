@@ -145,7 +145,10 @@ namespace HXE
           Thread.Sleep(1000);
         }
 
-        Info("Entry size - " + new FileInfo(file).Length);
+        if (Exists(file))
+          Info("Entry size - " + new FileInfo(file).Length);
+        else
+          Error("Could not get entry size - " + package.Entry.Name);
 
         Info("Successfully finished package inflation");
 
