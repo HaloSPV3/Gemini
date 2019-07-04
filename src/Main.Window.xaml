@@ -77,8 +77,14 @@
                             Margin="25"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top">
-                    <spv3:Social_UserControl HorizontalAlignment="Right"
-                                             VerticalAlignment="Top" />
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top">
+                        <spv3:Social_UserControl />
+                        <Label Foreground="#25FFFFFF">|</Label>
+                        <spv3:Information_UserControl />
+                    </StackPanel>
+
                     <spv3:News_UserControl HorizontalAlignment="Right"
                                            VerticalAlignment="Top"
                                            Margin="0,15,5,0" />

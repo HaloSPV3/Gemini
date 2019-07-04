@@ -88,6 +88,9 @@
       <DependentUpon>Configuration.UserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Context.cs" />
+    <Compile Include="Information.UserControl.xaml.cs">
+      <DependentUpon>Information.UserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Install.cs" />
     <Compile Include="Install.UserControl.xaml.cs">
       <DependentUpon>Install.UserControl.xaml</DependentUpon>
@@ -123,6 +126,7 @@
     </Compile>
     <Page Include="Compile.UserControl.xaml" />
     <Page Include="Configuration.UserControl.xaml" />
+    <Page Include="Information.UserControl.xaml" />
     <Page Include="Install.UserControl.xaml" />
     <Page Include="Main.Window.xaml" />
     <Compile Include="App.xaml.cs">

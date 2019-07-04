@@ -37,6 +37,9 @@ namespace SPV3
     public static readonly string Photo         = Combine(CurrentDirectory,               "photo.bin");
     public static readonly string Setup         = Combine(CurrentDirectory,               "setup.exe");
     public static readonly string HXE           = Combine(CurrentDirectory,               "hxe.exe");
+    public static readonly string Readme        = Combine(CurrentDirectory,               "readme.pdf");
+    public static readonly string Changelog     = Combine(CurrentDirectory,               "changelog.pdf");
+    public static readonly string Credits       = Combine(CurrentDirectory,               "credits.pdf");
 
     public static string Packages(string target)
     {
