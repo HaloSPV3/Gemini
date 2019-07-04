@@ -32,7 +32,9 @@ namespace SPV3
   {
     public class MainAssets : INotifyPropertyChanged
     {
-      private const    string     Address     = "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe";
+      private static readonly string Address =
+        "https://raw.githubusercontent.com/yumiris/SPV3/meta/update.hxe?" + Guid.NewGuid();
+
       private readonly Update     _update     = new Update();
       private          string     _status     = "Update";
       private          Visibility _visibility = Visibility.Collapsed;
