@@ -30,14 +30,14 @@ namespace SPV3
     {
       public class ConfigurationHXEShaders : INotifyPropertyChanged
       {
-        private int  _dof;
-        private bool _dynamicLensFlares;
-        private bool _filmGrain;
-        private bool _hudVisor;
-        private bool _lensDirt;
-        private int  _motionBlur;
-        private int  _mxao;
-        private bool _volumetrics;
+        private int  _dof               = 2;
+        private bool _dynamicLensFlares = true;
+        private bool _filmGrain         = true;
+        private bool _hudVisor          = true;
+        private bool _lensDirt          = true;
+        private int  _motionBlur        = 3;
+        private int  _mxao              = 2;
+        private bool _volumetrics       = true;
 
         public bool DynamicLensFlares
         {
