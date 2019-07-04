@@ -28,10 +28,10 @@ namespace SPV3
 {
   public class ConfigurationChimera : INotifyPropertyChanged
   {
-    private int  _interpolation;
-    private bool _anisotropicFiltering;
-    private bool _uncapCinematic;
-    private bool _blockLOD;
+    private int  _interpolation        = 8;
+    private bool _anisotropicFiltering = true;
+    private bool _uncapCinematic       = true;
+    private bool _blockLOD             = true;
 
     public Chimera Configuration { get; } = (Chimera) Chimera(Paths.Directory);
 

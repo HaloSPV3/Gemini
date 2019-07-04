@@ -30,12 +30,12 @@ namespace SPV3
   {
     public class ConfigurationOpenSauce : INotifyPropertyChanged
     {
-      private bool   _bloom;
-      private bool   _detailedMaps;
+      private bool   _bloom            = true;
+      private bool   _detailedMaps     = true;
+      private bool   _normalMaps       = true;
+      private bool   _specularLighting = true;
+      private bool   _specularMaps     = true;
       private double _fieldOfView;
-      private bool   _normalMaps;
-      private bool   _specularLighting;
-      private bool   _specularMaps;
 
       public OpenSauce Configuration { get; } = (OpenSauce) OpenSauce(Paths.Directory);
 
