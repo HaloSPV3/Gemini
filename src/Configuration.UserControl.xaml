@@ -117,6 +117,9 @@
                 <Button Margin="0,2,0,0"
                         Content="Calculate FOV"
                         Click="CalculateFOV" />
+                <Button Margin="0,2,0,0"
+                        Content="Reset Weapon Positions"
+                        Click="ResetWeaponPositions" />
             </StackPanel>
 
             <!-- Post-Processing -->

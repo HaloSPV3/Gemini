@@ -54,6 +54,11 @@ namespace SPV3
       _configuration.CalculateFOV();
     }
 
+    private void ResetWeaponPositions(object sender, RoutedEventArgs e)
+    {
+      _configuration.ResetWeaponPositions();
+    }
+
     private void InstallOpenSauce(object sender, RoutedEventArgs e)
     {
       try

@@ -18,6 +18,9 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.Collections.Generic;
+using static HXE.OpenSauce.OpenSauceObjects.ObjectsWeapon;
+
 namespace SPV3
 {
   public partial class Configuration
@@ -46,6 +49,11 @@ namespace SPV3
     public void CalculateFOV()
     {
       OpenSauce.FieldOfView = OpenSauce.Configuration.Camera.CalculateFOV(Loader.Width, Loader.Height);
+    }
+
+    public void ResetWeaponPositions()
+    {
+      OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
     }
   }
 }
