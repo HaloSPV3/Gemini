@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -65,7 +66,9 @@ namespace SPV3
           hxe.Load();
 
         if (chimera.Exists())
+        {
           chimera.Load();
+        }
         else
         {
           chimera.Interpolation        = 8;
@@ -111,23 +114,64 @@ namespace SPV3
         chimera.Save();   /* saves to %APPDATA%\SPV3 */
         hxe.Save();       /* saves to %APPDATA%\HXE  */
 
-        Kernel.Bootstrap(new Executable
+        try
         {
-          Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
-          Profile = new Executable.ProfileOptions
-          {
-            Path = Paths.Directory
-          },
-          Video = new Executable.VideoOptions
-          {
-            Width   = spv3.Width,
-            Height  = spv3.Height,
-            Window  = spv3.Window,
-            NoGamma = !spv3.Gamma /* flip boolean */
-          }
-        });
+          if (!spv3.Preset) return;
 
-        File.WriteAllText(Paths.Installation, Environment.CurrentDirectory);
+          var profile = Profile.Detect(Paths.Directory);
+
+          if (profile.Exists())
+            profile.Load();
+
+          profile.Input.Mapping = new Dictionary<Profile.ProfileInput.Action, Profile.ProfileInput.Button>
+          {
+            {Profile.ProfileInput.Action.MoveForward, Profile.ProfileInput.Button.LSU},
+            {Profile.ProfileInput.Action.MoveBackward, Profile.ProfileInput.Button.LSD},
+            {Profile.ProfileInput.Action.MoveLeft, Profile.ProfileInput.Button.LSL},
+            {Profile.ProfileInput.Action.MoveRight, Profile.ProfileInput.Button.LSR},
+            {Profile.ProfileInput.Action.Crouch, Profile.ProfileInput.Button.LSM},
+            {Profile.ProfileInput.Action.Reload, Profile.ProfileInput.Button.DPU},
+            {Profile.ProfileInput.Action.Jump, Profile.ProfileInput.Button.A},
+            {Profile.ProfileInput.Action.SwitchGrenade, Profile.ProfileInput.Button.B},
+            {Profile.ProfileInput.Action.Action, Profile.ProfileInput.Button.X},
+            {Profile.ProfileInput.Action.SwitchWeapon, Profile.ProfileInput.Button.Y},
+            {Profile.ProfileInput.Action.LookUp, Profile.ProfileInput.Button.RSU},
+            {Profile.ProfileInput.Action.LookDown, Profile.ProfileInput.Button.RSD},
+            {Profile.ProfileInput.Action.LookLeft, Profile.ProfileInput.Button.RSL},
+            {Profile.ProfileInput.Action.LookRight, Profile.ProfileInput.Button.RSR},
+            {Profile.ProfileInput.Action.ScopeZoom, Profile.ProfileInput.Button.RSM},
+            {Profile.ProfileInput.Action.ThrowGrenade, Profile.ProfileInput.Button.LB},
+            {Profile.ProfileInput.Action.Flashlight, Profile.ProfileInput.Button.LT},
+            {Profile.ProfileInput.Action.MeleeAttack, Profile.ProfileInput.Button.RB},
+            {Profile.ProfileInput.Action.FireWeapon, Profile.ProfileInput.Button.RT}
+          };
+
+          profile.Save();
+        }
+        catch (Exception)
+        {
+          // ignored
+        }
+        finally
+        {
+          Kernel.Bootstrap(new Executable
+          {
+            Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
+            Profile = new Executable.ProfileOptions
+            {
+              Path = Paths.Directory
+            },
+            Video = new Executable.VideoOptions
+            {
+              Width   = spv3.Width,
+              Height  = spv3.Height,
+              Window  = spv3.Window,
+              NoGamma = !spv3.Gamma /* flip boolean */
+            }
+          });
+
+          File.WriteAllText(Paths.Installation, Environment.CurrentDirectory);
+        }
       }
 
       [NotifyPropertyChangedInvocator]
