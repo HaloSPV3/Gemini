@@ -61,6 +61,8 @@ namespace SPV3
 
         if (spv3.Exists())
           spv3.Load();
+        else
+          spv3.Preset = true;
 
         if (hxe.Exists())
           hxe.Load();
