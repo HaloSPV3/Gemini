@@ -107,7 +107,7 @@
                               Checked="BareChecked" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Use SPV3 Controller Preset:" />
+                    <Label Content="SPV3 Input Preset:" />
                     <CheckBox IsChecked="{Binding Loader.Preset}" />
                 </DockPanel>
                 <DockPanel>
