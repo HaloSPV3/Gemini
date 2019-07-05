@@ -84,7 +84,8 @@ namespace SPV3
         else
           openSauce.Camera.CalculateFOV(); /* apply native field of view */
 
-        openSauce.HUD.ShowHUD = true; /* forcefully enable hud */
+        openSauce.HUD.ShowHUD           = true;  /* forcefully enable hud           */
+        hxe.Kernel.SkipRastMotionSensor = false; /* forcefully enable motion sensor */
 
         if (spv3.DOOM && !spv3.Photo)
           if (File.Exists(Paths.DOOM))
@@ -97,7 +98,8 @@ namespace SPV3
           if (File.Exists(Paths.Photo))
           {
             openSauce.Objects.Weapon.Load(Paths.Photo);
-            openSauce.HUD.ShowHUD = false;
+            openSauce.HUD.ShowHUD           = false;
+            hxe.Kernel.SkipRastMotionSensor = true;
           }
 
         /* This is used for maintaining compatibility between the OpenSauce & SPV3 Post-Processing systems! */
