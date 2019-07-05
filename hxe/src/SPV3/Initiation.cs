@@ -35,6 +35,7 @@ namespace HXE.SPV3
     public bool                CinematicBars     { get; set; } = true;
     public bool                PlayerAutoaim     { get; set; } = true;
     public bool                PlayerMagnetism   { get; set; } = true;
+    public bool                MotionSensor      { get; set; } = true;
     public bool                MouseAcceleration { get; set; } = false;
     public Campaign.Mission    Mission           { get; set; } = Campaign.Mission.Spv3A10;
     public Campaign.Difficulty Difficulty        { get; set; } = Campaign.Difficulty.Normal;
@@ -74,6 +75,7 @@ namespace HXE.SPV3
       var autoaim      = PlayerAutoaim ? 1 : 0;
       var magnetism    = PlayerMagnetism ? 1 : 0;
       var cinematic    = CinematicBars ? 0 : 1;
+      var motionSensor = MotionSensor ? 1 : 0;
       var acceleration = MouseAcceleration ? 1 : 0;
 
       var output = new StringBuilder();
@@ -83,6 +85,7 @@ namespace HXE.SPV3
       output.AppendLine($"player_magnetism {magnetism}");
       output.AppendLine($"game_difficulty_set {difficulty}");
       output.AppendLine($"mouse_acceleration {acceleration}");
+      output.AppendLine($"set rasterizer_hud_motion_sensor {motionSensor}");
 
       /**
        * Encodes post-processing settings to the initc file. Refer to doc/shaders.txt for further information.
