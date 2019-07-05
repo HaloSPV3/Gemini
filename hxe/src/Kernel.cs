@@ -362,6 +362,7 @@ namespace HXE
       {
         RootInitc.PostProcessing = configuration.PostProcessing;
         RootInitc.CinematicBars  = !configuration.Kernel.SkipEnableCinematics; /* flip */
+        RootInitc.MotionSensor   = !configuration.Kernel.SkipRastMotionSensor; /* flip */
 
         Info("Updated the initiation file with the new settings");
 
@@ -376,6 +377,7 @@ namespace HXE
         Debug("Applied PP settings for Volumetrics - " + RootInitc.PostProcessing.Volumetrics);
         Debug("Applied PP settings for Lens Dirt   - " + RootInitc.PostProcessing.LensDirt);
         Debug("Applied cinematic bars setting      - " + RootInitc.CinematicBars);
+        Debug("Applied HUD motion sensor           - " + RootInitc.MotionSensor);
       }
       catch (Exception e)
       {

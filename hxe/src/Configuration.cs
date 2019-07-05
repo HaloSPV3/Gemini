@@ -67,6 +67,7 @@ namespace HXE
           bw.Write(Kernel.EnableSpv3KernelMode);
           bw.Write(Kernel.EnableSpv3LegacyMode);
           bw.Write(Kernel.SkipEnableCinematics);
+          bw.Write(Kernel.SkipRastMotionSensor);
         }
 
         /* padding */
@@ -130,6 +131,7 @@ namespace HXE
           Kernel.EnableSpv3KernelMode = br.ReadBoolean();
           Kernel.EnableSpv3LegacyMode = br.ReadBoolean();
           Kernel.SkipEnableCinematics = br.ReadBoolean();
+          Kernel.SkipRastMotionSensor = br.ReadBoolean();
         }
 
         /* padding */
@@ -206,6 +208,7 @@ namespace HXE
       public bool EnableSpv3KernelMode { get; set; }
       public bool EnableSpv3LegacyMode { get; set; }
       public bool SkipEnableCinematics { get; set; }
+      public bool SkipRastMotionSensor { get; set; }
     }
   }
 }
