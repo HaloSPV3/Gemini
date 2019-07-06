@@ -25,6 +25,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using HXE;
+using HXE.Exceptions;
 using HXE.HCE;
 using HXE.SPV3;
 using SPV3.Annotations;
@@ -158,31 +159,29 @@ namespace SPV3
         {
           // ignored
         }
-        finally
-        {
-          Kernel.Bootstrap(new Executable
-          {
-            Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
-            Profile = new Executable.ProfileOptions
-            {
-              Path = Paths.Directory
-            },
-            Video = new Executable.VideoOptions
-            {
-              Width   = spv3.Width,
-              Height  = spv3.Height,
-              Window  = spv3.Window,
-              NoGamma = !spv3.Gamma /* flip boolean */
-            },
-            Debug = new Executable.DebugOptions
-            {
-              Console   = true,
-              Developer = true
-            }
-          });
 
-          File.WriteAllText(Paths.Installation, Environment.CurrentDirectory);
-        }
+        Kernel.Bootstrap(new Executable
+        {
+          Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
+          Profile = new Executable.ProfileOptions
+          {
+            Path = Paths.Directory
+          },
+          Video = new Executable.VideoOptions
+          {
+            Width   = spv3.Width,
+            Height  = spv3.Height,
+            Window  = spv3.Window,
+            NoGamma = !spv3.Gamma /* flip boolean */
+          },
+          Debug = new Executable.DebugOptions
+          {
+            Console   = true,
+            Developer = true
+          }
+        });
+
+        File.WriteAllText(Paths.Installation, Environment.CurrentDirectory);
       }
 
       [NotifyPropertyChangedInvocator]
