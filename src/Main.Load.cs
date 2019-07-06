@@ -110,8 +110,8 @@ namespace SPV3
         openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true;       /* shader optimisations    */
         openSauce.Rasterizer.GBuffer.Enabled                   = !spv3.Bare; /* low-end graphics mode   */
 
-        hxe.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
-        hxe.Kernel.SkipVerifyMainAssets = true; /* skips verifying assets */
+        hxe.Kernel.EnableSpv3KernelMode = true;  /* hxe spv3 compatibility  */
+        hxe.Kernel.SkipVerifyMainAssets = false; /* forces verifying assets */
 
         spv3.Save();      /* saves to %APPDATA%\SPV3 */
         openSauce.Save(); /* saves to %APPDATA%\SPV3 */
