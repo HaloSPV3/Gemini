@@ -206,7 +206,7 @@ namespace SPV3
 
         MessageBox.Show(
           "Installation has been successful! " +
-          "Please install OpenSauce to the SPV3 folder using AmaiSosu. Click OK to continue ...");
+          "Please install OpenSauce to the SPV3 folder OR Halo CE folder using AmaiSosu. Click OK to continue ...");
 
         new AmaiSosu {Path = Path.Combine(Target, Paths.AmaiSosu)}.Execute();
       }
