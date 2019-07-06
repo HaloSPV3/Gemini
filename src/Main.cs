@@ -62,8 +62,21 @@ namespace SPV3
           Install.Visibility = Visibility.Visible;
           break;
         case Context.Type.Invalid:
-          Error.Visibility = Visibility.Visible;
-          Error.Content    = "Please ensure this loader is in the appropriate SPV3 folder.";
+          if (Exists(Paths.Installation))
+          {
+            var path = ReadAllText(Paths.Installation);
+            if (Directory.Exists(path))
+            {
+              Error.Visibility = Visibility.Visible;
+              Error.Content    = "Please move spv3.exe to: " + path;
+            }
+          }
+          else
+          {
+            Error.Visibility = Visibility.Visible;
+            Error.Content    = "Please ensure this loader is in the appropriate SPV3 folder.";
+          }
+
           break;
         default:
           throw new ArgumentOutOfRangeException();
