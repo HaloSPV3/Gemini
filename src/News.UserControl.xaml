@@ -31,12 +31,14 @@
     <StackPanel Orientation="Horizontal"
                 Visibility="{Binding Visibility}">
         <Label Foreground="SteelBlue"
-               Background="WhiteSmoke">
+               Background="WhiteSmoke"
+               VerticalContentAlignment="Center">
             NEWS
         </Label>
 
         <Label Content="{Binding Content}"
-               MouseLeftButtonUp="Visit">
+               MouseLeftButtonUp="Visit"
+               VerticalContentAlignment="Center">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Foreground" Value="#BFFFFFFF" />
