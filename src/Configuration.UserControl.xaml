@@ -286,6 +286,16 @@
                        Margin="0,0,0,10" />
 
                 <DockPanel>
+                    <Label Content="Enable: SPV3 Kernel Mode:"
+                           Foreground="Black" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3KernelMode}" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Enable: SPV3 Legacy Mode:"
+                           Foreground="Black" />
+                    <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3LegacyMode}" />
+                </DockPanel>
+                <DockPanel>
                     <Label Content="Skip: Set Cinematic Bars:"
                            Foreground="Black" />
                     <CheckBox IsChecked="{Binding HXE.Kernel.SkipEnableCinematics}" />
