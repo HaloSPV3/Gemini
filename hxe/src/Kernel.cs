@@ -175,6 +175,11 @@ namespace HXE
 
       foreach (var package in manifest.Packages)
       {
+        var lowercaseName = package.Entry.Name.ToLower();
+
+        if (blacklist.Any(lowercaseName.Contains)) /* skip verification if current file isn't in the whitelist */
+          continue;
+
         var file = Combine(CurrentDirectory, package.Entry.Path, package.Entry.Name);
         var size = package.Entry.Size;
 
@@ -182,11 +187,6 @@ namespace HXE
           throw new FileNotFoundException("File does not currently exist - " + package.Entry.Name);
 
         Info("Inferred file on the filesystem - " + package.Entry.Name);
-
-        var lowercaseName = package.Entry.Name.ToLower();
-
-        if (blacklist.Any(lowercaseName.Contains)) /* skip verification if current file isn't in the whitelist */
-          continue;
 
         Info("File is not whitelisted - " + package.Entry.Name);
 
