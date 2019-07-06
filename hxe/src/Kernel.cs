@@ -190,7 +190,7 @@ namespace HXE
         Info("File is not whitelisted - " + package.Entry.Name);
 
         if (size != new FileInfo(file).Length)
-          throw new AssetException("Asset size mismatch - " + package.Entry.Name);
+          Error("Asset size mismatch - " + package.Entry.Name);
 
         Info("File matches its manifest metadata - " + package.Entry.Name);
       }
