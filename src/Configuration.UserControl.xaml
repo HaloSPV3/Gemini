@@ -286,12 +286,7 @@
                        Margin="0,0,0,10" />
 
                 <DockPanel>
-                    <Label Content="Enable: SPV3 Kernel Mode:"
-                           Foreground="Black" />
-                    <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3KernelMode}" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Enable: SPV3 Legacy Mode:"
+                    <Label Content="Enable: SPV3.1 Compatibility:"
                            Foreground="Black" />
                     <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3LegacyMode}" />
                 </DockPanel>
