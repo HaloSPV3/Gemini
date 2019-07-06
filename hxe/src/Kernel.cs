@@ -130,7 +130,8 @@ namespace HXE
         ".pdb",
         ".sav",
         ".dll",
-        ".ico"
+        ".ico",
+        ".bin"
       };
 
       /**
