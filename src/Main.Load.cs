@@ -173,6 +173,11 @@ namespace SPV3
               Height  = spv3.Height,
               Window  = spv3.Window,
               NoGamma = !spv3.Gamma /* flip boolean */
+            },
+            Debug = new Executable.DebugOptions
+            {
+              Console   = true,
+              Developer = true
             }
           });
 
