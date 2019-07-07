@@ -126,6 +126,24 @@ namespace SPV3
           Status     = "Failed to get drive space: " + e.Message.ToLower();
           CanInstall = false;
         }
+        
+        /*
+         * Prohibit installations to known problematic folders.
+         */
+
+        if (Target.Contains("Program Files"))
+        {
+          Status     = "Installation to the Program Files is not recommended. Please choose a different location.";
+          CanInstall = false;
+        }
+
+        if (Exists(Path.Combine(Target,    HXE.Paths.HCE.Executable))
+            || Exists(Path.Combine(Target, HXE.Paths.Executable))
+            || Exists(Path.Combine(Target, Paths.Executable)))
+        {
+          Status     = "Selected folder contains existing HCE or SPV3 data. Please choose a different location.";
+          CanInstall = false;
+        }
       }
     }
 
