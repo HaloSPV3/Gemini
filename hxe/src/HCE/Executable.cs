@@ -243,10 +243,17 @@ namespace HXE.HCE
         Info(e.Message);
       }
 
+      var tries = 0;
       Wait("Waiting for existing HCE process to end ");
 
-      while (Process.GetProcessesByName("haloce").Length > 0)
+      while (Process.GetProcessesByName("haloce").Length > 0 && tries <= 25)
+      {
         System.Console.Write(Resources.Progress);
+        tries++;
+      }
+
+      if (tries == 25)
+        Error("Could not kill HCE process. Process initiation errors may occur.");
 
       Info("Starting process for HCE executable");
 
