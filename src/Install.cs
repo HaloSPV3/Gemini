@@ -201,6 +201,21 @@ namespace SPV3
         /* for potential subsequent referencing */
         Copy(HXE.Paths.Installation, Paths.Installation, true);
 
+        /* shortcuts */
+        var shortcut       = Path.Combine(GetFolderPath(DesktopDirectory), "SPV3.url");
+        var shortcutTarget = Path.Combine(Target,                          Paths.Executable);
+
+        using (var writer = new StreamWriter(shortcut))
+        {
+          var app = System.Reflection.Assembly.GetExecutingAssembly().Location;
+          writer.WriteLine("[InternetShortcut]");
+          writer.WriteLine("URL=file:///" + shortcutTarget);
+          writer.WriteLine("IconIndex=0");
+          var icon = app.Replace('\\', '/');
+          writer.WriteLine("IconFile=" + icon);
+          writer.Flush();
+        }
+
         Status     = "Installation has successfully finished!";
         CanInstall = true;
 
