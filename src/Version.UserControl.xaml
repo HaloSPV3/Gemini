@@ -29,23 +29,39 @@
         <local:Version />
     </UserControl.DataContext>
     <StackPanel Orientation="Vertical">
-        <StackPanel.Resources>
-            <Style TargetType="{x:Type Label}">
-                <Setter Property="Foreground" Value="#3FFFFFFF" />
-
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="#6FFFFFFF" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </StackPanel.Resources>
-
         <Label Visibility="{Binding Assembly.Visibility}"
                Content="{Binding Assembly.Content}"
-               MouseLeftButtonUp="Assembly" />
+               MouseLeftButtonUp="Assembly">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Foreground" Value="#3FFFFFFF" />
+                    <Setter Property="Width" Value="175" />
+
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#6FFFFFFF" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+
         <Label Visibility="{Binding Upstream.Visibility}"
                Content="{Binding Upstream.Content}"
-               MouseLeftButtonUp="Upstream" />
+               MouseLeftButtonUp="Upstream">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Foreground" Value="SteelBlue" />
+                    <Setter Property="Background" Value="#F2F5F5F5" />
+                    <Setter Property="Width" Value="175" />
+
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
     </StackPanel>
 </UserControl>
