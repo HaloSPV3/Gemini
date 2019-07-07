@@ -133,6 +133,18 @@
             </Grid>
         </StackPanel>
 
+        <!-- Load -->
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="640"
+                    Visibility="{Binding Load}">
+
+            <Button Margin="1,0,0,0"
+                    Click="InvokeSpv3"
+                    Content="Load SPV3" />
+        </StackPanel>
+
         <!-- Status -->
         <Label Grid.Row="2"
                Content="{Binding Status}"

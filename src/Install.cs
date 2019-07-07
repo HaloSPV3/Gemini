@@ -20,7 +20,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,6 +40,7 @@ namespace SPV3
     private readonly string     _source = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
     private          Visibility _hce    = Visibility.Collapsed;
+    private          Visibility _load   = Visibility.Collapsed;
     private          Visibility _main   = Visibility.Visible;
     private          string     _status = "Awaiting user input...";
     private          string     _target = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
@@ -113,7 +116,9 @@ namespace SPV3
             if (!drive.IsReady || drive.Name != targetDrive) continue;
 
             if (drive.TotalFreeSpace > 17179869184)
+            {
               CanInstall = true;
+            }
             else
             {
               Status     = "Not enough disk space (16GB required) at selected path: " + Target;
@@ -126,7 +131,7 @@ namespace SPV3
           Status     = "Failed to get drive space: " + e.Message.ToLower();
           CanInstall = false;
         }
-        
+
         /*
          * Prohibit installations to known problematic folders.
          */
@@ -165,6 +170,17 @@ namespace SPV3
       {
         if (value == _hce) return;
         _hce = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public Visibility Load
+    {
+      get => _load;
+      set
+      {
+        if (value == _load) return;
+        _load = value;
         OnPropertyChanged();
       }
     }
@@ -225,7 +241,7 @@ namespace SPV3
 
         using (var writer = new StreamWriter(shortcut))
         {
-          var app = System.Reflection.Assembly.GetExecutingAssembly().Location;
+          var app = Assembly.GetExecutingAssembly().Location;
           writer.WriteLine("[InternetShortcut]");
           writer.WriteLine("URL=file:///" + shortcutTarget);
           writer.WriteLine("IconIndex=0");
@@ -234,14 +250,36 @@ namespace SPV3
           writer.Flush();
         }
 
-        Status     = "Installation has successfully finished!";
-        CanInstall = true;
-
         MessageBox.Show(
           "Installation has been successful! " +
           "Please install OpenSauce to the SPV3 folder OR Halo CE folder using AmaiSosu. Click OK to continue ...");
 
-        new AmaiSosu {Path = Path.Combine(Target, Paths.AmaiSosu)}.Execute();
+        try
+        {
+          new AmaiSosu {Path = Path.Combine(Target, Paths.AmaiSosu)}.Execute();
+        }
+        catch (Exception e)
+        {
+          Status = e.Message;
+        }
+        finally
+        {
+          Status = "Installation of SPV3.2 has successfully finished! " +
+                   "Enjoy SPV3.2, and join our Discord and Reddit communities!";
+
+          CanInstall = true;
+
+          if (Exists(shortcutTarget))
+          {
+            Main = Visibility.Collapsed;
+            Hce  = Visibility.Collapsed;
+            Load = Visibility.Visible;
+          }
+          else
+          {
+            Status = "SPV3 loader could not be found in the target directory. Please load manually.";
+          }
+        }
       }
       catch (Exception e)
       {
@@ -260,6 +298,16 @@ namespace SPV3
       {
         Status = e.Message;
       }
+    }
+
+    public void InvokeSpv3()
+    {
+      Process.Start(new ProcessStartInfo
+      {
+        FileName         = Path.Combine(Target, Paths.Executable),
+        WorkingDirectory = Target
+      });
+      Exit(0);
     }
 
     [NotifyPropertyChangedInvocator]

@@ -65,6 +65,11 @@ namespace SPV3
       _install.InstallHce();
     }
 
+    private void InvokeSpv3(object sender, RoutedEventArgs e)
+    {
+      _install.InvokeSpv3();
+    }
+
     private void VerifyHce(object sender, RoutedEventArgs e)
     {
       _install.Initialise();
