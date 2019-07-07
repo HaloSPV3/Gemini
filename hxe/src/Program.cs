@@ -135,6 +135,7 @@ namespace HXE
 
             if (a.Length < 2) return;
 
+            hce.Video.Mode   = true;
             hce.Video.Width  = ushort.Parse(a[0]);
             hce.Video.Height = ushort.Parse(a[1]);
 
