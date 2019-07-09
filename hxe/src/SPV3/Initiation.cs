@@ -38,6 +38,7 @@ namespace HXE.SPV3
     public bool                MotionSensor      { get; set; } = true;
     public bool                MouseAcceleration { get; set; } = false;
     public int                 Gamma             { get; set; } = 0;
+    public int                 Speed             { get; set; } = 1;
     public Campaign.Mission    Mission           { get; set; } = Campaign.Mission.Spv3A10;
     public Campaign.Difficulty Difficulty        { get; set; } = Campaign.Difficulty.Normal;
     public bool                Unlock            { get; set; }
@@ -79,6 +80,7 @@ namespace HXE.SPV3
       var motionSensor = MotionSensor ? 1 : 0;
       var acceleration = MouseAcceleration ? 1 : 0;
       var gamma        = Gamma;
+      var speed        = Speed;
 
       var output = new StringBuilder();
       output.AppendLine($"set f3 {mission}");
@@ -91,6 +93,9 @@ namespace HXE.SPV3
 
       if (Gamma > 0)
         output.AppendLine($"set_gamma {gamma}");
+
+      if (Speed > 1)
+        output.AppendLine($"game_speed {speed}");
 
       /**
        * Encodes post-processing settings to the initc file. Refer to doc/shaders.txt for further information.
