@@ -68,7 +68,9 @@ namespace SPV3
         try
         {
           _update.Import(Address);
-          Visibility = Visibility.Visible;
+
+          if (_update.Available())
+            Visibility = Visibility.Visible;
         }
         catch (Exception)
         {
