@@ -122,7 +122,7 @@
                               Unchecked="ResetWeaponPositions" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Bare Mode:"
+                    <Label Content="Ultra Low GFX:"
                            ToolTip="Runs SPV3.2 in the lowest quality mode possible." />
                     <CheckBox IsChecked="{Binding Loader.Bare}"
                               Checked="BareChecked" />
