@@ -57,9 +57,23 @@
                     <Setter Property="Margin" Value="0,1,0,0" />
                 </Style>
                 <Style TargetType="{x:Type StackPanel}">
-                    <Setter Property="Height" Value="400" />
+                    <Setter Property="Height" Value="430" />
                 </Style>
             </Grid.Resources>
+
+            <!-- Hint -->
+            <DockPanel HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Grid.ColumnSpan="4"
+                       Margin="15">
+                <Label Background="SteelBlue"
+                       Foreground="WhiteSmoke">
+                    HINT
+                </Label>
+                <Label Background="WhiteSmoke">
+                    Hover over options for more information! Also, if you have performance problems: turn down MXAO, Motion Blur and DOF, and untick Block LOD.
+                </Label>
+            </DockPanel>
 
             <!-- General -->
             <StackPanel Grid.Column="0"
@@ -86,28 +100,34 @@
                     <TextBox Text="{Binding Loader.Height}" />
                 </DockPanel>
                 <DockPanel Margin="0,5,0,0">
-                    <Label Content="Window:" />
+                    <Label Content="Window:"
+                           ToolTip="Runs SPV3.2 in windowed mode." />
                     <CheckBox IsChecked="{Binding Loader.Window}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Gamma:" />
+                    <Label Content="Gamma:"
+                           ToolTip="Enables gamma mode and configuration." />
                     <CheckBox IsChecked="{Binding Loader.Gamma}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="DOOM Mode:" />
+                    <Label Content="DOOM Mode:"
+                           ToolTip="Centers your weapons a la DOOM." />
                     <CheckBox IsChecked="{Binding Loader.DOOM}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Photo Mode:" />
+                    <Label Content="Photo Mode:"
+                           ToolTip="Disables HUD and weapons - useful for taking photographs." />
                     <CheckBox IsChecked="{Binding Loader.Photo}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Bare Mode:" />
+                    <Label Content="Bare Mode:"
+                           ToolTip="Runs SPV3.2 in the lowest quality mode possible." />
                     <CheckBox IsChecked="{Binding Loader.Bare}"
                               Checked="BareChecked" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="SPV3 Input Preset:" />
+                    <Label Content="SPV3 Input Preset:"
+                           ToolTip="Forces SPV3.2 controller mapping. Disable this if you want custom mapping." />
                     <CheckBox IsChecked="{Binding Loader.Preset}" />
                 </DockPanel>
                 <DockPanel>
@@ -146,11 +166,13 @@
                     <CheckBox IsChecked="{Binding HXE.Shaders.HudVisor}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Film Grain:" />
+                    <Label Content="Film Grain:"
+                           ToolTip="Enables Film Grain effects. Subjectively pleasant." />
                     <CheckBox IsChecked="{Binding HXE.Shaders.FilmGrain}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Volumetric Lighting:" />
+                    <Label Content="Volumetric Lighting:"
+                           ToolTip="Enhances lighting and bright objects." />
                     <CheckBox IsChecked="{Binding HXE.Shaders.Volumetrics}" />
                 </DockPanel>
                 <DockPanel>
@@ -158,7 +180,8 @@
                     <CheckBox IsChecked="{Binding HXE.Shaders.LensDirt}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Motion Blur:" />
+                    <Label Content="Motion Blur:"
+                           ToolTip="Sets the Motion Blur level." />
                     <ComboBox SelectedIndex="{Binding HXE.Shaders.MotionBlur}">
                         <ComboBoxItem Content="Off" />
                         <ComboBoxItem Content="Built-in" />
@@ -167,7 +190,8 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="DOF:" />
+                    <Label Content="DOF:"
+                           ToolTip="Enables Depth of Field effects. Turn this down for performance gains." />
                     <ComboBox SelectedIndex="{Binding HXE.Shaders.Dof}">
                         <ComboBoxItem Content="Off" />
                         <ComboBoxItem Content="Low" />
@@ -175,7 +199,8 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="MXAO:" />
+                    <Label Content="MXAO:"
+                           ToolTip="Sets Ambient Occlusion level. Turn this down for performance gains." />
                     <ComboBox SelectedIndex="{Binding HXE.Shaders.Mxao}">
                         <ComboBoxItem Content="Off" />
                         <ComboBoxItem Content="Low" />
@@ -183,7 +208,8 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Dynamic Lens Flares:" />
+                    <Label Content="Dynamic Lens Flares:"
+                           ToolTip="Enables Dynamic Lens Flares effects." />
                     <CheckBox IsChecked="{Binding HXE.Shaders.DynamicLensFlares}" />
                 </DockPanel>
             </StackPanel>
@@ -206,23 +232,28 @@
                        Margin="0,0,0,10" />
 
                 <DockPanel>
-                    <Label Content="Normal Maps:" />
+                    <Label Content="Normal Maps:"
+                           ToolTip="Adds more visual depth to models." />
                     <CheckBox IsChecked="{Binding OpenSauce.NormalMaps}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Detailed Maps:" />
+                    <Label Content="Detailed Maps:"
+                           ToolTip="Adds more small visual depth to models." />
                     <CheckBox IsChecked="{Binding OpenSauce.DetailedMaps}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Specular Maps:" />
+                    <Label Content="Specular Maps:"
+                           ToolTip="Adds additional lighting effects to models." />
                     <CheckBox IsChecked="{Binding OpenSauce.SpecularMaps}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Specular Lighting:" />
+                    <Label Content="Specular Lighting:"
+                           ToolTip="Makes the lighting effects on models more accurate." />
                     <CheckBox IsChecked="{Binding OpenSauce.SpecularLighting}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Bloom:" />
+                    <Label Content="Bloom:"
+                           ToolTip="Adds glowy highlights to visual bright spots." />
                     <CheckBox IsChecked="{Binding OpenSauce.Bloom}" />
                 </DockPanel>
 
@@ -240,7 +271,8 @@
                        Margin="0,0,0,10" />
 
                 <DockPanel>
-                    <Label Content="Interpolation Level:" />
+                    <Label Content="Interpolation Level:"
+                           ToolTip="Sets smoothness rate. A higher value is much more fluid, albeit more demanding." />
                     <ComboBox SelectedIndex="{Binding Chimera.Interpolation}">
                         <ComboBoxItem Content="0" />
                         <ComboBoxItem Content="1" />
@@ -287,7 +319,8 @@
 
                 <DockPanel>
                     <Label Content="Enable: SPV3.1 Compatibility:"
-                           Foreground="Black" />
+                           Foreground="Black"
+                           ToolTip="Permits the loader to work on SPV3.1." />
                     <CheckBox IsChecked="{Binding HXE.Kernel.EnableSpv3LegacyMode}" />
                 </DockPanel>
                 <DockPanel>
