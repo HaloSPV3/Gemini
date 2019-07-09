@@ -104,14 +104,21 @@ namespace SPV3
 
         /* This is used for maintaining compatibility between the OpenSauce & SPV3 Post-Processing systems! */
         openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled = hxe.PostProcessing.MotionBlur == BuiltIn;
-        openSauce.HUD.ScaleHUD                                 = true;       /* fixes user interface    */
-        openSauce.Camera.IgnoreFOVChangeInCinematics           = true;       /* fixes user interface    */
-        openSauce.Camera.IgnoreFOVChangeInMainMenu             = true;       /* fixes user interface    */
-        openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true;       /* shader optimisations    */
-        openSauce.Rasterizer.GBuffer.Enabled                   = !spv3.Bare; /* low-end graphics mode   */
+        openSauce.HUD.ScaleHUD                                 = true; /* fixes user interface    */
+        openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
+        openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
+        openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */
 
         hxe.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
         hxe.Kernel.SkipVerifyMainAssets = true; /* skips verifying assets */
+
+        if (spv3.Bare)
+        {
+          openSauce.Rasterizer.GBuffer.Enabled = false;
+          hxe.PostProcessing.Mxao              = PostProcessing.MxaoOptions.Off;
+          hxe.PostProcessing.Dof               = PostProcessing.DofOptions.Off;
+          hxe.PostProcessing.MotionBlur        = Off; /* PostProcessing.MotionBlur.Off */
+        }
 
         spv3.Save();      /* saves to %APPDATA%\SPV3 */
         openSauce.Save(); /* saves to %APPDATA%\SPV3 */
