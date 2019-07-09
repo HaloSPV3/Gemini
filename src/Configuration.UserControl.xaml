@@ -112,12 +112,14 @@
                 <DockPanel>
                     <Label Content="DOOM Mode:"
                            ToolTip="Centers your weapons a la DOOM." />
-                    <CheckBox IsChecked="{Binding Loader.DOOM}" />
+                    <CheckBox IsChecked="{Binding Loader.DOOM}"
+                              Unchecked="ResetWeaponPositions" />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Photo Mode:"
                            ToolTip="Disables HUD and weapons - useful for taking photographs." />
-                    <CheckBox IsChecked="{Binding Loader.Photo}" />
+                    <CheckBox IsChecked="{Binding Loader.Photo}"
+                              Unchecked="ResetWeaponPositions" />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Bare Mode:"
