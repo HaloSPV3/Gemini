@@ -109,6 +109,30 @@ namespace HXE
     }
 
     /// <summary>
+    ///   Checks if update exists based on the current environment state.
+    /// </summary>
+    /// <returns>
+    ///   True on updating being possible, otherwise false.
+    /// </returns>
+    public bool Available()
+    {
+      foreach (var asset in Assets)
+      {
+        var path = Combine(CurrentDirectory, asset.Path, asset.Name);
+
+        if (!Exists(path))
+          return true;
+
+        var length = new FileInfo(path).Length;
+
+        if (length != asset.Size)
+          return true;
+      }
+
+      return false;
+    }
+
+    /// <summary>
     ///   Serialises object state to an inbound file on the filesystem.
     /// </summary>
     /// <param name="uri">
