@@ -38,9 +38,10 @@ namespace SPV3
       private bool   _gamma;
       private ushort _height = (ushort) Screen.PrimaryScreen.Bounds.Height;
       private bool   _photo;
-      private ushort _width = (ushort) Screen.PrimaryScreen.Bounds.Width;
+      private bool   _preset    = true;
+      private bool   _videoMode = true;
+      private ushort _width     = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
-      private bool   _preset = true;
 
       public bool Window
       {
@@ -130,6 +131,17 @@ namespace SPV3
         }
       }
 
+      public bool VideoMode
+      {
+        get => _videoMode;
+        set
+        {
+          if (value == _videoMode) return;
+          _videoMode = value;
+          OnPropertyChanged();
+        }
+      }
+
       public event PropertyChangedEventHandler PropertyChanged;
 
       public void Save()
@@ -164,6 +176,7 @@ namespace SPV3
             bw.Write(Photo);
             bw.Write(Bare);
             bw.Write(Preset);
+            bw.Write(VideoMode);
           }
 
           ms.Position = 0;
@@ -190,14 +203,15 @@ namespace SPV3
 
           /* video */
           {
-            Width  = br.ReadUInt16();
-            Height = br.ReadUInt16();
-            Window = br.ReadBoolean();
-            Gamma  = br.ReadBoolean();
-            DOOM   = br.ReadBoolean();
-            Photo  = br.ReadBoolean();
-            Bare   = br.ReadBoolean();
-            Preset = br.ReadBoolean();
+            Width     = br.ReadUInt16();
+            Height    = br.ReadUInt16();
+            Window    = br.ReadBoolean();
+            Gamma     = br.ReadBoolean();
+            DOOM      = br.ReadBoolean();
+            Photo     = br.ReadBoolean();
+            Bare      = br.ReadBoolean();
+            Preset    = br.ReadBoolean();
+            VideoMode = br.ReadBoolean();
           }
         }
       }

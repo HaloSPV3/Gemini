@@ -176,6 +176,7 @@ namespace SPV3
             },
             Video = new Executable.VideoOptions
             {
+              Mode    = spv3.VideoMode,
               Width   = spv3.Width,
               Height  = spv3.Height,
               Window  = spv3.Window,

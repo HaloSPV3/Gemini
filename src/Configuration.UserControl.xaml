@@ -128,6 +128,11 @@
                               Checked="BareChecked" />
                 </DockPanel>
                 <DockPanel>
+                    <Label Content="HCE Video Mode:"
+                           ToolTip="Runs using the HCE video mode. This forces 60FPS, but improves stability." />
+                    <CheckBox IsChecked="{Binding Loader.VideoMode}" />
+                </DockPanel>
+                <DockPanel>
                     <Label Content="SPV3 Input Preset:"
                            ToolTip="Forces SPV3.2 controller mapping. Disable this if you want custom mapping." />
                     <CheckBox IsChecked="{Binding Loader.Preset}" />
