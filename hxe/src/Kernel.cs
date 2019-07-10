@@ -218,6 +218,13 @@ namespace HXE
           Info("Executable -vidmode height - " + executable.Video.Height);
         }
 
+        if (executable.Video.Width  > (ushort) PrimaryScreen.Bounds.Width ||
+            executable.Video.Height > (ushort) PrimaryScreen.Bounds.Height)
+        {
+          executable.Video.Width  = (ushort) PrimaryScreen.Bounds.Width;
+          executable.Video.Height = (ushort) PrimaryScreen.Bounds.Height;
+        }
+
         var lastprof = (LastProfile) Custom.LastProfile(executable.Profile.Path);
 
         if (!lastprof.Exists())
