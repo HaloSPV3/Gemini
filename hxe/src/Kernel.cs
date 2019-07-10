@@ -214,8 +214,8 @@ namespace HXE
           executable.Video.Height = (ushort) PrimaryScreen.Bounds.Height;
 
           Info("Dimensions not specified - applied native resolution");
-          Info("Executable -vidmode width  - " + executable.Video.Width);
-          Info("Executable -vidmode height - " + executable.Video.Height);
+          Info("Resolution WIDTH  - " + executable.Video.Width);
+          Info("Resolution HEIGHT - " + executable.Video.Height);
         }
 
         if (executable.Video.Width  > (ushort) PrimaryScreen.Bounds.Width ||

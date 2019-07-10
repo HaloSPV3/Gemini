@@ -210,13 +210,16 @@ namespace HXE.HCE
         if (Video.NoGamma)
           ApplyArgument(args, "-nogamma ");
 
-        if (Video.Width > 0 && Video.Height > 0 && Video.Refresh > 0) /* optional refresh rate */
-          ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height},{Video.Refresh} ");
-        else if (Video.Width > 0 && Video.Height > 0)
-          ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height} ");
+        if (Video.Mode)
+        {
+          if (Video.Width > 0 && Video.Height > 0 && Video.Refresh > 0) /* optional refresh rate */
+            ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height},{Video.Refresh} ");
+          else if (Video.Width > 0 && Video.Height > 0)
+            ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height} ");
 
-        if (Video.Adapter > 1)
-          ApplyArgument(args, $"-adapter {Video.Adapter} ");
+          if (Video.Adapter > 1)
+            ApplyArgument(args, $"-adapter {Video.Adapter} ");
+        }
 
         /**
          * Argument for custom profile path.
@@ -311,6 +314,7 @@ namespace HXE.HCE
 
     public class VideoOptions
     {
+      public bool   Mode    { get; set; }
       public bool   Window  { get; set; }
       public ushort Width   { get; set; }
       public ushort Height  { get; set; }
