@@ -184,8 +184,9 @@ namespace SPV3
             },
             Debug = new Executable.DebugOptions
             {
-              Console   = true,
-              Developer = true
+              Console    = true,
+              Developer  = true,
+              Screenshot = true
             }
           });
 
