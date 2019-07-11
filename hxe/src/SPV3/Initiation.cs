@@ -117,7 +117,7 @@ namespace HXE.SPV3
         switch (mb)
         {
           case MotionBlurOptions.Off:
-            option = "0.2";
+            option = "1.0";
             break;
           case MotionBlurOptions.BuiltIn:
             option = "1.1";
