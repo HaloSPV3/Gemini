@@ -53,7 +53,7 @@ namespace SPV3
       public void Invoke()
       {
         var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration          */
-        var hxe       = new Kernel.Configuration();                              /* for compatibility & tweaks */
+        var hxe       = new Kernel.Configuration(Paths.Kernel);                  /* for compatibility & tweaks */
         var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
         var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
 
