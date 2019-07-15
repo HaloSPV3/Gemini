@@ -98,10 +98,10 @@ The following table outlines the available options:
                       Patch                 bool     0x21
                       Start                 bool     0x22
                       Resume                bool     0x23
-  Video Patches       Resolution            bool     0x24
-                      Uncap                 bool     0x30
-                      Quality               bool     0x31
-                      Gamma                 byte     0x32
+  Video Patches       Resolution            bool     0x30
+                      Uncap                 bool     0x31
+                      Quality               bool     0x32
+                      Gamma                 byte     0x33
   Audio Patches       Quality               bool     0x40
                       Enhancements          bool     0x41
   Input Patches       Override              bool     0x50
