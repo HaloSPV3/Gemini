@@ -85,6 +85,7 @@ namespace SPV3
         hxe.Tweaks.Sensor      = true; /* forcefully enable motion sensor   */
         hxe.Tweaks.Speed       = 1;    /* apply native game execution speed */
         hxe.Mode               = Kernel.Configuration.ConfigurationMode.SPV32;
+        hxe.Video.Resolution   = true;
         hxe.Video.Uncap        = spv3.Preference == 1;
         hxe.Video.Gamma        = spv3.Gamma;
         hxe.Audio.Enhancements = spv3.EAX;
