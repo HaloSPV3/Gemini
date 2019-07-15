@@ -45,5 +45,10 @@ namespace SPV3
     {
       Process.Start("https://discord.gg/Cdh5b8z");
     }
+
+    private void Wikia(object sender, MouseButtonEventArgs e)
+    {
+      Process.Start("https://halo-spv3.fandom.com");
+    }
   }
 }

@@ -18,8 +18,10 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
@@ -33,14 +35,17 @@ namespace SPV3
     {
       private const int Length = 256;
 
-      private bool   _bare;
+      private byte   _adapter;
       private bool   _doom;
-      private bool   _gamma;
-      private ushort _height = (ushort) Screen.PrimaryScreen.Bounds.Height;
+      private bool   _eax;
+      private byte   _framerate = 60;
+      private byte   _gamma     = 150;
+      private ushort _height    = (ushort) Screen.PrimaryScreen.Bounds.Height;
       private bool   _photo;
-      private bool   _preset    = true;
-      private bool   _videoMode = true;
-      private ushort _width     = (ushort) Screen.PrimaryScreen.Bounds.Width;
+      private byte   _preference = 1;
+      private bool   _preset     = true;
+      private bool   _shaders;
+      private ushort _width = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
 
       public bool Window
@@ -76,17 +81,6 @@ namespace SPV3
         }
       }
 
-      public bool Gamma
-      {
-        get => _gamma;
-        set
-        {
-          if (value == _gamma) return;
-          _gamma = value;
-          OnPropertyChanged();
-        }
-      }
-
       public bool DOOM
       {
         get => _doom;
@@ -109,17 +103,6 @@ namespace SPV3
         }
       }
 
-      public bool Bare
-      {
-        get => _bare;
-        set
-        {
-          if (value == _bare) return;
-          _bare = value;
-          OnPropertyChanged();
-        }
-      }
-
       public bool Preset
       {
         get => _preset;
@@ -131,16 +114,79 @@ namespace SPV3
         }
       }
 
-      public bool VideoMode
+      public bool Shaders
       {
-        get => _videoMode;
+        get => _shaders;
         set
         {
-          if (value == _videoMode) return;
-          _videoMode = value;
+          if (value == _shaders) return;
+          _shaders = value;
           OnPropertyChanged();
         }
       }
+
+      public byte Framerate
+      {
+        get => _framerate;
+        set
+        {
+          if (value == _framerate) return;
+          _framerate = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public byte Preference
+      {
+        get => _preference;
+        set
+        {
+          if (value == _preference) return;
+          _preference = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public bool EAX
+      {
+        get => _eax;
+        set
+        {
+          if (value == _eax) return;
+          _eax = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public byte Gamma
+      {
+        get => _gamma;
+        set
+        {
+          if (value == _gamma) return;
+          _gamma = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public byte Adapter
+      {
+        get => _adapter;
+        set
+        {
+          if (value == _adapter) return;
+          _adapter = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public List<string> Adapters => Screen.AllScreens
+        .Select
+        (
+          screen => screen.DeviceName
+            .Substring(4)
+            .Replace("DISPLAY", "Display ")
+        ).ToList();
 
       public event PropertyChangedEventHandler PropertyChanged;
 
@@ -168,15 +214,26 @@ namespace SPV3
 
           /* video */
           {
+            bw.Write(Shaders);
+            bw.Write(Window);
             bw.Write(Width);
             bw.Write(Height);
-            bw.Write(Window);
+            bw.Write(Framerate);
+            bw.Write(Preference);
             bw.Write(Gamma);
+            bw.Write(Adapter);
+          }
+
+          /* modes */
+          {
             bw.Write(DOOM);
             bw.Write(Photo);
-            bw.Write(Bare);
+          }
+
+          /* tweaks */
+          {
+            bw.Write(EAX);
             bw.Write(Preset);
-            bw.Write(VideoMode);
           }
 
           ms.Position = 0;
@@ -203,15 +260,26 @@ namespace SPV3
 
           /* video */
           {
-            Width     = br.ReadUInt16();
-            Height    = br.ReadUInt16();
-            Window    = br.ReadBoolean();
-            Gamma     = br.ReadBoolean();
-            DOOM      = br.ReadBoolean();
-            Photo     = br.ReadBoolean();
-            Bare      = br.ReadBoolean();
-            Preset    = br.ReadBoolean();
-            VideoMode = br.ReadBoolean();
+            Shaders    = br.ReadBoolean();
+            Window     = br.ReadBoolean();
+            Width      = br.ReadUInt16();
+            Height     = br.ReadUInt16();
+            Framerate  = br.ReadByte();
+            Preference = br.ReadByte();
+            Gamma      = br.ReadByte();
+            Adapter    = br.ReadByte();
+          }
+
+          /* modes */
+          {
+            DOOM  = br.ReadBoolean();
+            Photo = br.ReadBoolean();
+          }
+
+          /* tweaks */
+          {
+            EAX    = br.ReadBoolean();
+            Preset = br.ReadBoolean();
           }
         }
       }

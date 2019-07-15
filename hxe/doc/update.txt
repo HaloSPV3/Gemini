@@ -4,9 +4,13 @@ UPDATE
 HXE has a built-in updater which allows assets in a specified manifest
 to be updated.
 
+Assets are conditionally updated by comparing file sizes. If the size of
+the asset found on the file system matches the one declared in the
+asset's entry in the manifest, then it will be skipped.
+
 Manifest files can be imported from a filesystem or HTTP resource:
 
-    .\hxe.exe /update "http://domain.tld/manifest.xml" # or path to file
+    .\hxe.exe -update "http://domain.tld/manifest.xml" # or path to file
 
 An update manifest should conform to the following schema:
 

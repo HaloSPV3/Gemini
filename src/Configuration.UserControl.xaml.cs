@@ -79,5 +79,71 @@ namespace SPV3
       MessageBox.Show("WARNING: VISR and Thermal Vision will not work. " +
                       "This should only be used on low-end computers as a last resort.");
     }
+
+    private void PresetVeryLow(object sender, RoutedEventArgs e)
+    {
+      _configuration.Shaders.FilmGrain          = false;
+      _configuration.Shaders.VolumetricLighting = false;
+      _configuration.Shaders.LensDirt           = false;
+      _configuration.Shaders.DynamicLensFlares  = false;
+      _configuration.Shaders.MotionBlur         = 0;
+      _configuration.Shaders.DOF                = 0;
+      _configuration.Shaders.MXAO               = 0;
+    }
+
+    private void PresetLow(object sender, RoutedEventArgs e)
+    {
+      _configuration.Shaders.FilmGrain          = false;
+      _configuration.Shaders.VolumetricLighting = true;
+      _configuration.Shaders.LensDirt           = true;
+      _configuration.Shaders.DynamicLensFlares  = false;
+      _configuration.Shaders.MotionBlur         = 0;
+      _configuration.Shaders.DOF                = 0;
+      _configuration.Shaders.MXAO               = 0;
+    }
+
+    private void PresetMedium(object sender, RoutedEventArgs e)
+    {
+      _configuration.Shaders.FilmGrain          = false;
+      _configuration.Shaders.VolumetricLighting = true;
+      _configuration.Shaders.LensDirt           = true;
+      _configuration.Shaders.DynamicLensFlares  = false;
+      _configuration.Shaders.MotionBlur         = 1;
+      _configuration.Shaders.DOF                = 1;
+      _configuration.Shaders.MXAO               = 0;
+    }
+
+    private void PresetHigh(object sender, RoutedEventArgs e)
+    {
+      _configuration.Shaders.FilmGrain          = true;
+      _configuration.Shaders.VolumetricLighting = true;
+      _configuration.Shaders.LensDirt           = true;
+      _configuration.Shaders.DynamicLensFlares  = false;
+      _configuration.Shaders.MotionBlur         = 2;
+      _configuration.Shaders.DOF                = 1;
+      _configuration.Shaders.MXAO               = 1;
+    }
+
+    private void PresetVeryHigh(object sender, RoutedEventArgs e)
+    {
+      _configuration.Shaders.FilmGrain          = true;
+      _configuration.Shaders.VolumetricLighting = true;
+      _configuration.Shaders.LensDirt           = true;
+      _configuration.Shaders.DynamicLensFlares  = false;
+      _configuration.Shaders.MotionBlur         = 3;
+      _configuration.Shaders.DOF                = 2;
+      _configuration.Shaders.MXAO               = 2;
+    }
+
+    private void PresetUltra(object sender, RoutedEventArgs e)
+    {
+      _configuration.Shaders.FilmGrain          = true;
+      _configuration.Shaders.VolumetricLighting = true;
+      _configuration.Shaders.LensDirt           = true;
+      _configuration.Shaders.DynamicLensFlares  = true;
+      _configuration.Shaders.MotionBlur         = 3;
+      _configuration.Shaders.DOF                = 2;
+      _configuration.Shaders.MXAO               = 2;
+    }
   }
 }

@@ -20,7 +20,6 @@
 
 using System;
 using System.Text;
-using System.Windows.Input;
 using static HXE.Console;
 using static HXE.SPV3.PostProcessing;
 
@@ -38,7 +37,8 @@ namespace HXE.SPV3
     public bool                MotionSensor      { get; set; } = true;
     public bool                MouseAcceleration { get; set; } = false;
     public int                 Gamma             { get; set; } = 0;
-    public int                 Speed             { get; set; } = 1;
+    public double              Speed             { get; set; } = 1;
+    public bool                Unload            { get; set; } = false;
     public Campaign.Mission    Mission           { get; set; } = Campaign.Mission.Spv3A10;
     public Campaign.Difficulty Difficulty        { get; set; } = Campaign.Difficulty.Normal;
     public bool                Unlock            { get; set; }
@@ -91,20 +91,26 @@ namespace HXE.SPV3
       output.AppendLine($"mouse_acceleration {acceleration}");
       output.AppendLine($"set rasterizer_hud_motion_sensor {motionSensor}");
 
+      if (Unlock)
+        output.Append("set f1 8");
+
       if (Gamma > 0)
         output.AppendLine($"set_gamma {gamma}");
 
       if (Speed > 1)
         output.AppendLine($"game_speed {speed}");
 
+      if (Unload)
+        output.AppendLine("pp_unload");
+
       /**
        * Encodes post-processing settings to the initc file. Refer to doc/shaders.txt for further information.
        */
 
       var mb   = PostProcessing.MotionBlur;
-      var mxao = PostProcessing.Mxao;
-      var dof  = PostProcessing.Dof;
-      var vl   = PostProcessing.Volumetrics;
+      var mxao = PostProcessing.MXAO;
+      var dof  = PostProcessing.DOF;
+      var vl   = PostProcessing.VolumetricLighting;
       var df   = PostProcessing.DynamicLensFlares;
       var ld   = PostProcessing.LensDirt;
       var fg   = PostProcessing.FilmGrain;

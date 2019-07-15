@@ -30,12 +30,12 @@ namespace SPV3
   {
     public class ConfigurationOpenSauce : INotifyPropertyChanged
     {
-      private bool   _bloom            = true;
-      private bool   _detailedMaps     = true;
+      private bool   _bloom        = true;
+      private bool   _detailedMaps = true;
+      private double _fieldOfView;
       private bool   _normalMaps       = true;
       private bool   _specularLighting = true;
       private bool   _specularMaps     = true;
-      private double _fieldOfView;
 
       public OpenSauce Configuration { get; } = (OpenSauce) OpenSauce(Paths.Directory);
 
@@ -120,7 +120,11 @@ namespace SPV3
 
       public void Load()
       {
-        if (!Configuration.Exists()) return;
+        if (!Configuration.Exists())
+        {
+          FieldOfView = Configuration.Camera.CalculateFOV();
+          return;
+        }
 
         Configuration.Load();
         NormalMaps       = Configuration.Rasterizer.ShaderExtensions.Object.NormalMaps;

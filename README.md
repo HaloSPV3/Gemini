@@ -3,7 +3,8 @@
 <img src="https://user-images.githubusercontent.com/10241434/60400157-bf6b5380-9ba2-11e9-9c25-432e47b845b4.png">
 <p>
 <p align="center">
-<img src="https://user-images.githubusercontent.com/10241434/60400039-e4f75d80-9ba0-11e9-91bf-408969fef83e.png">
+<img src="https://user-images.githubusercontent.com/10241434/61204271-5a296d80-a71f-11e9-9957-4b846d78629c.png">
+<img src="https://user-images.githubusercontent.com/10241434/61204263-5564b980-a71f-11e9-8228-0d2f19c26d9e.png">
 <p>
 <p align="center">
 <a href="https://file.n2.network/f/c1c36919f366499793fc/?dl=1"> Download

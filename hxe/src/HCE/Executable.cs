@@ -22,7 +22,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using HXE.Properties;
 using Microsoft.Win32;
 using static HXE.Console;
 
@@ -216,10 +215,10 @@ namespace HXE.HCE
             ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height},{Video.Refresh} ");
           else if (Video.Width > 0 && Video.Height > 0)
             ApplyArgument(args, $"-vidmode {Video.Width},{Video.Height} ");
-
-          if (Video.Adapter > 1)
-            ApplyArgument(args, $"-adapter {Video.Adapter} ");
         }
+
+        if (Video.Adapter > 1)
+          ApplyArgument(args, $"-adapter {Video.Adapter} ");
 
         /**
          * Argument for custom profile path.
@@ -230,30 +229,6 @@ namespace HXE.HCE
 
         return args.ToString();
       }
-
-      Info("Killing existing HCE processes");
-
-      try
-      {
-        foreach (var process in Process.GetProcessesByName("haloce"))
-          process.Kill();
-      }
-      catch (Exception e)
-      {
-        Info(e.Message);
-      }
-
-      var tries = 0;
-      Wait("Waiting for existing HCE process to end ");
-
-      while (Process.GetProcessesByName("haloce").Length > 0 && tries <= 25)
-      {
-        System.Console.Write(Resources.Progress);
-        tries++;
-      }
-
-      if (tries == 25)
-        Error("Could not kill HCE process. Process initiation errors may occur.");
 
       Info("Starting process for HCE executable");
 
@@ -319,13 +294,13 @@ namespace HXE.HCE
       public ushort Width   { get; set; }
       public ushort Height  { get; set; }
       public ushort Refresh { get; set; }
-      public ushort Adapter { get; set; }
+      public byte   Adapter { get; set; }
       public bool   NoGamma { get; set; }
     }
 
     public class ProfileOptions
     {
-      public string Path { get; set; } = Paths.HCE.Profiles;
+      public string Path { get; set; } = Paths.HCE.Directory;
     }
   }
 }

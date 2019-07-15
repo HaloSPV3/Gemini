@@ -23,7 +23,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
 using SPV3.Annotations;
@@ -32,10 +31,10 @@ namespace SPV3
 {
   public class News : INotifyPropertyChanged
   {
-    private const string     Address     = "https://raw.githubusercontent.com/yumiris/SPV3/meta/latest.xml";
-    private       Visibility _visibility = Visibility.Collapsed;
+    private const string     Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/latest.xml";
     private       string     _content;
     private       string     _link;
+    private       Visibility _visibility = Visibility.Collapsed;
 
     [XmlIgnore]
     public Visibility Visibility
@@ -71,6 +70,8 @@ namespace SPV3
       }
     }
 
+    public event PropertyChangedEventHandler PropertyChanged;
+
     public void Initialise()
     {
       try
@@ -93,8 +94,6 @@ namespace SPV3
         Visibility = Visibility.Collapsed;
       }
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     [NotifyPropertyChangedInvocator]
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

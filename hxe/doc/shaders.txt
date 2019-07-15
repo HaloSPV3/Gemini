@@ -28,7 +28,7 @@ The table below outlines the shader effects that are configurable by the
 user with the following characteristics:
 
   Shader                Options
-  --------------------- -------------------------------------------
+  --------------------- --------------------------
   MXAO                  off, low, high
   DOF                   off, low, high
   Motion Blur           off, in-built, low, high
@@ -49,38 +49,73 @@ loader. This section covers both scenarios.
 
 INITC
 
-The post-processing configuration is stored using varaible combinations
-in initc.txt. The following table formally specifies the supported
-variables:
+The post-processing configuration is stored using command & variable
+combinations in initc.txt:
 
-    ;;put motion blur on high (valid numbers are 1.1 for OS motion blur, 1.2 for low, 1.3 for high)
-    set multiplayer_hit_sound_volume 1.3
+    ;;; MOTION BLUR
+    ;;; -----------
+    ;;; 1.0 - off
+    ;;; 1.1 - built-in
+    ;;; 1.2 - pomb low
+    ;;; 1.3 - pomb high
 
-    ;;set MXAO to high (valid numbers are 3 for low, 4 for high)
-    cl_remote_player_action_queue_limit 4
+    set multiplayer_hit_sound_volume <value>
 
-    ;;set DOF to high (7 for low, 8 for high)
-    cl_remote_player_action_queue_tick_limit 8
+    ;;; MXAO
+    ;;; ----
+    ;;; 2 - off
+    ;;; 3 - low
+    ;;; 4 - high
 
-    ;;turn on volumetrics
-    set rasterizer_soft_filter true
+    set cl_remote_player_action_queue_limit <value>
 
-    ;;turn on lens flares
-    set display_precache_progress false
+    ;;; DEPTH OF FIELD
+    ;;; --------------
+    ;;; 6 - off
+    ;;; 7 - low
+    ;;; 8 - high
 
-    ;;turn off lens dirt 
-    set use_super_remote_players_action_update true
+    set cl_remote_player_action_queue_tick_limit <value>
 
-    ;;turn off film grain
-    set use_new_vehicle_update_scheme true
+    ;;; VOLUMETRIC LIGHTING
+    ;;; --------------------
+    ;;; true  - on
+    ;;; false - off
 
-    ;;turn off hud visor effects
-    set multiplayer_draw_teammates_names true
+    set rasterizer_soft_filter  <value>
 
-BINARY
+    ;;; DYNAMIC FLARES
+    ;;; --------------
+    ;;; false - on
+    ;;; true  - off
 
-Refer to doc/configuration.txt for information on how the
-post-processing settings are stored.
+    set display_precache_progress <value>
+
+    ;;; LENS DIRT
+    ;;; ---------
+    ;;; false - on
+    ;;; true  - off
+
+    set use_super_remote_players_action_update <value>
+
+    ;;; FILM GRAIN
+    ;;; ----------
+    ;;; false - on
+    ;;; true  - off
+
+    set use_new_vehicle_update_scheme <value>
+
+    ;;; HUD VISOR
+    ;;; ---------
+    ;;; false - on
+    ;;; true  - off
+
+    set multiplayer_draw_teammates_names <value>
+
+KERNEL
+
+Refer to doc/kernel.txt for information on how the post-processing
+settings are stored.
 
 DEFINITIONS
 -----------

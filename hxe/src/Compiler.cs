@@ -24,7 +24,6 @@ using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using HXE.Properties;
-using static System.Diagnostics.Process;
 using static System.Guid;
 using static System.IO.Compression.CompressionLevel;
 using static System.IO.Compression.ZipArchiveMode;

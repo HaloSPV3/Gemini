@@ -19,7 +19,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -28,7 +27,6 @@ using HXE;
 using HXE.HCE;
 using HXE.SPV3;
 using SPV3.Annotations;
-using static HXE.SPV3.PostProcessing.MotionBlurOptions;
 using File = System.IO.File;
 
 namespace SPV3
@@ -55,7 +53,7 @@ namespace SPV3
       public void Invoke()
       {
         var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration          */
-        var hxe       = (HXE.Configuration) HXE.Paths.Configuration;             /* for compatibility          */
+        var hxe       = new Kernel.Configuration();                              /* for compatibility & tweaks */
         var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
         var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
 
@@ -64,8 +62,7 @@ namespace SPV3
         else
           spv3.Preset = true;
 
-        if (hxe.Exists())
-          hxe.Load();
+        hxe.Load();
 
         if (chimera.Exists())
         {
@@ -84,112 +81,62 @@ namespace SPV3
         else
           openSauce.Camera.CalculateFOV(); /* apply native field of view */
 
-        openSauce.HUD.ShowHUD           = true;  /* forcefully enable hud           */
-        hxe.Kernel.SkipRastMotionSensor = false; /* forcefully enable motion sensor */
+        openSauce.HUD.ShowHUD  = true; /* forcefully enable hud             */
+        hxe.Tweaks.Sensor      = true; /* forcefully enable motion sensor   */
+        hxe.Tweaks.Speed       = 1;    /* apply native game execution speed */
+        hxe.Mode               = Kernel.Configuration.ConfigurationMode.SPV32;
+        hxe.Video.Uncap        = spv3.Preference == 1;
+        hxe.Video.Gamma        = spv3.Gamma;
+        hxe.Audio.Enhancements = spv3.EAX;
+        hxe.Tweaks.Unload      = !spv3.Shaders;
 
         if (spv3.DOOM && !spv3.Photo)
           if (File.Exists(Paths.DOOM))
           {
             openSauce.Objects.Weapon.Load(Paths.DOOM);
             openSauce.HUD.ShowHUD = true;
+            hxe.Tweaks.Speed      = 1.5;
           }
 
         if (spv3.Photo && !spv3.DOOM)
           if (File.Exists(Paths.Photo))
           {
             openSauce.Objects.Weapon.Load(Paths.Photo);
-            openSauce.HUD.ShowHUD           = false;
-            hxe.Kernel.SkipRastMotionSensor = true;
+            openSauce.HUD.ShowHUD = false;
+            hxe.Tweaks.Sensor     = false;
           }
-
-        /* This is used for maintaining compatibility between the OpenSauce & SPV3 Post-Processing systems! */
-        openSauce.Rasterizer.PostProcessing.MotionBlur.Enabled = hxe.PostProcessing.MotionBlur == BuiltIn;
-        openSauce.HUD.ScaleHUD                                 = true; /* fixes user interface    */
-        openSauce.Camera.IgnoreFOVChangeInCinematics           = true; /* fixes user interface    */
-        openSauce.Camera.IgnoreFOVChangeInMainMenu             = true; /* fixes user interface    */
-        openSauce.Rasterizer.ShaderExtensions.Effect.DepthFade = true; /* shader optimisations    */
-
-        hxe.Kernel.EnableSpv3KernelMode = true; /* hxe spv3 compatibility */
-        hxe.Kernel.SkipVerifyMainAssets = true; /* skips verifying assets */
-
-        if (spv3.Bare)
-        {
-          openSauce.Rasterizer.GBuffer.Enabled = false;
-          hxe.PostProcessing.Mxao              = PostProcessing.MxaoOptions.Off;
-          hxe.PostProcessing.Dof               = PostProcessing.DofOptions.Off;
-          hxe.PostProcessing.MotionBlur        = Off; /* PostProcessing.MotionBlur.Off */
-        }
 
         spv3.Save();      /* saves to %APPDATA%\SPV3 */
         openSauce.Save(); /* saves to %APPDATA%\SPV3 */
         chimera.Save();   /* saves to %APPDATA%\SPV3 */
-        hxe.Save();       /* saves to %APPDATA%\HXE  */
+        hxe.Save();       /* saves to %APPDATA%\SPV3 */
 
-        try
+        Kernel.Invoke(new Executable
         {
-          if (!spv3.Preset) return;
-
-          var profile = Profile.Detect(Paths.Directory);
-
-          if (profile.Exists())
-            profile.Load();
-
-          profile.Input.Mapping = new Dictionary<Profile.ProfileInput.Action, Profile.ProfileInput.Button>
+          Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
+          Profile = new Executable.ProfileOptions
           {
-            {Profile.ProfileInput.Action.MoveForward, Profile.ProfileInput.Button.LSU},
-            {Profile.ProfileInput.Action.MoveBackward, Profile.ProfileInput.Button.LSD},
-            {Profile.ProfileInput.Action.MoveLeft, Profile.ProfileInput.Button.LSL},
-            {Profile.ProfileInput.Action.MoveRight, Profile.ProfileInput.Button.LSR},
-            {Profile.ProfileInput.Action.Crouch, Profile.ProfileInput.Button.LSM},
-            {Profile.ProfileInput.Action.Reload, Profile.ProfileInput.Button.DPU},
-            {Profile.ProfileInput.Action.Jump, Profile.ProfileInput.Button.A},
-            {Profile.ProfileInput.Action.SwitchGrenade, Profile.ProfileInput.Button.B},
-            {Profile.ProfileInput.Action.Action, Profile.ProfileInput.Button.X},
-            {Profile.ProfileInput.Action.SwitchWeapon, Profile.ProfileInput.Button.Y},
-            {Profile.ProfileInput.Action.LookUp, Profile.ProfileInput.Button.RSU},
-            {Profile.ProfileInput.Action.LookDown, Profile.ProfileInput.Button.RSD},
-            {Profile.ProfileInput.Action.LookLeft, Profile.ProfileInput.Button.RSL},
-            {Profile.ProfileInput.Action.LookRight, Profile.ProfileInput.Button.RSR},
-            {Profile.ProfileInput.Action.ScopeZoom, Profile.ProfileInput.Button.RSM},
-            {Profile.ProfileInput.Action.ThrowGrenade, Profile.ProfileInput.Button.LB},
-            {Profile.ProfileInput.Action.Flashlight, Profile.ProfileInput.Button.LT},
-            {Profile.ProfileInput.Action.MeleeAttack, Profile.ProfileInput.Button.RB},
-            {Profile.ProfileInput.Action.FireWeapon, Profile.ProfileInput.Button.RT}
-          };
-
-          profile.Save();
-        }
-        catch (Exception)
-        {
-          // ignored
-        }
-        finally
-        {
-          Kernel.Bootstrap(new Executable
+            Path = Paths.Directory
+          },
+          Video = new Executable.VideoOptions
           {
-            Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
-            Profile = new Executable.ProfileOptions
-            {
-              Path = Paths.Directory
-            },
-            Video = new Executable.VideoOptions
-            {
-              Mode    = spv3.VideoMode,
-              Width   = spv3.Width,
-              Height  = spv3.Height,
-              Window  = spv3.Window,
-              NoGamma = !spv3.Gamma /* flip boolean */
-            },
-            Debug = new Executable.DebugOptions
-            {
-              Console    = true,
-              Developer  = true,
-              Screenshot = true
-            }
-          });
+            Mode    = spv3.Preference == 1 && spv3.Framerate > 0,
+            Width   = spv3.Width,
+            Height  = spv3.Height,
+            Refresh = spv3.Framerate,
+            Window  = spv3.Window,
+            Adapter = (byte) (spv3.Adapter + 1),
+            NoGamma = hxe.Video.Gamma == 0
+          },
+          Debug = new Executable.DebugOptions
+          {
+            Console    = true,
+            Developer  = true,
+            Screenshot = true
+          }
+        }, hxe);
 
-          File.WriteAllText(Paths.Installation, Environment.CurrentDirectory);
-        }
+        File.WriteAllText(Paths.Installation, Environment.CurrentDirectory);
       }
 
       [NotifyPropertyChangedInvocator]

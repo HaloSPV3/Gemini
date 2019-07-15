@@ -29,7 +29,7 @@
         WindowStartupLocation="CenterScreen"
         SizeToContent="Height"
         ResizeMode="NoResize"
-        Width="240">
+        Width="250">
     <StackPanel Margin="10">
         <Label Content="HXE"
                HorizontalAlignment="Center"
@@ -38,31 +38,104 @@
                FontSize="32"
                Foreground="#8a80ad" />
 
-        <GroupBox Header="Enable">
-            <StackPanel>
-                <CheckBox Content="SPV3 Kernel Mode"
-                          Name="EnableSpv3KernelMode" />
-                <CheckBox Content="SPV3 Legacy Mode"
-                          Name="EnableSpv3LegacyMode" />
-            </StackPanel>
+        <GroupBox Header="Mode">
+            <ComboBox Name="Mode">
+                <ComboBoxItem Content="HCE" />
+                <ComboBoxItem Content="SPV3.1" />
+                <ComboBoxItem Content="SPV3.2" />
+            </ComboBox>
         </GroupBox>
 
-        <GroupBox Header="Skip">
-            <StackPanel>
-                <CheckBox Content="Skip: Verify Main Assets"
-                          Name="SkipVerifyMainAssets" />
-                <CheckBox Content="Skip: Invoke Core Tweaks"
-                          Name="SkipInvokeCoreTweaks" />
-                <CheckBox Content="Skip: Resume Checkpoint"
-                          Name="SkipResumeCheckpoint" />
-                <CheckBox Content="Skip: Set Shader Config"
-                          Name="SkipSetShadersConfig" />
-                <CheckBox Content="Skip: Invoke Executable"
-                          Name="SkipInvokeExecutable" />
-                <CheckBox Content="Skip: Patch Large Address Aware"
-                          Name="SkipPatchLargeAAware" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <GroupBox Header="Main">
+                    <StackPanel>
+                        <CheckBox Content="Reset"
+                                  Name="MainReset" />
+                        <CheckBox Content="Patch"
+                                  Name="MainPatch" />
+                        <CheckBox Content="Start"
+                                  Name="MainStart" />
+                        <CheckBox Content="Resume"
+                                  Name="MainResume" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Speed">
+                    <TextBox Name="TweaksSpeed" />
+                </GroupBox>
             </StackPanel>
+
+            <GroupBox Grid.Column="1"
+                      Header="Tweaks">
+                <StackPanel VerticalAlignment="Center">
+                    <CheckBox Content="Cinematic"
+                              Name="TweaksCinematic" />
+                    <CheckBox Content="Sensor"
+                              Name="TweaksSensor" />
+                    <CheckBox Content="Magnetism"
+                              Name="TweaksMagnetism" />
+                    <CheckBox Content="Auto Aim"
+                              Name="TweaksAutoAim" />
+                    <CheckBox Content="Acceleration"
+                              Name="TweaksAcceleration" />
+                    <CheckBox Content="PP Unload"
+                              Name="TweaksUnload" />
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+        <GroupBox Header="Video">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <CheckBox Content="Resolution"
+                              Name="VideoResolution" />
+                    <CheckBox Content="Uncap"
+                              Name="VideoUncap" />
+                    <CheckBox Content="Quality"
+                              Name="VideoQuality" />
+                </StackPanel>
+
+                <GroupBox Grid.Column="1"
+                          Header="Gamma">
+                    <TextBox Name="VideoGamma" />
+                </GroupBox>
+            </Grid>
         </GroupBox>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0"
+                      Header="Audio">
+                <StackPanel>
+                    <CheckBox Content="Quality"
+                              Name="AudioQuality" />
+                    <CheckBox Content="Enhancements"
+                              Name="AudioEnhancements" />
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1"
+                      Header="Input">
+                <StackPanel VerticalAlignment="Center">
+                    <CheckBox Content="Override"
+                              Name="InputOverride" />
+                </StackPanel>
+            </GroupBox>
+        </Grid>
 
         <Grid Margin="0,10,0,0">
             <Grid.ColumnDefinitions>

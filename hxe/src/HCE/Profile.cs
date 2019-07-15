@@ -31,6 +31,7 @@ using static HXE.HCE.Profile.ProfileNetwork;
 using static HXE.HCE.Profile.ProfileVideo;
 using static HXE.HCE.Profile.ProfileInput;
 using static HXE.Paths;
+using Directory = System.IO.Directory;
 
 namespace HXE.HCE
 {
@@ -402,12 +403,12 @@ namespace HXE.HCE
     /// </exception>
     public static List<Profile> List(string directory)
     {
-      if (!System.IO.Directory.Exists(directory))
+      if (!Directory.Exists(directory))
         throw new DirectoryNotFoundException("Provided profiles directory does not exist.");
 
       var profiles = new List<Profile>();
 
-      foreach (var current in System.IO.Directory.GetFiles(directory, "blam.sav", AllDirectories))
+      foreach (var current in Directory.GetFiles(directory, "blam.sav", AllDirectories))
       {
         var profile = (Profile) current;
         profile.Load();

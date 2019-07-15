@@ -28,10 +28,10 @@ namespace SPV3
 {
   public class ConfigurationChimera : INotifyPropertyChanged
   {
-    private int  _interpolation        = 8;
     private bool _anisotropicFiltering = true;
-    private bool _uncapCinematic       = true;
     private bool _blockLOD             = true;
+    private int  _interpolation        = 8;
+    private bool _uncapCinematic       = true;
 
     public Chimera Configuration { get; } = (Chimera) Chimera(Paths.Directory);
 
@@ -79,6 +79,8 @@ namespace SPV3
       }
     }
 
+    public event PropertyChangedEventHandler PropertyChanged;
+
     public void Load()
     {
       if (!Configuration.Exists()) return;
@@ -100,8 +102,6 @@ namespace SPV3
 
       Configuration.Save();
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     [NotifyPropertyChangedInvocator]
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

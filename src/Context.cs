@@ -19,11 +19,9 @@
  */
 
 using System.IO;
-using System.Windows.Forms;
 using static System.Environment;
 using static System.IO.File;
 using static HXE.Paths;
-using static HXE.Paths.HCE;
 
 namespace SPV3
 {

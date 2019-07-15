@@ -18,18 +18,29 @@
  3. This notice may not be removed or altered from any source distribution.
 -->
 
-UPDATING
-========
+AUDIO PATCHES
+=============
 
-In a nutshell, the assembly's version is compared to the one broadcasted
-by the remote server. If the latter is higher, then a download link will
-be provided.
+The HXE kernel is able to patch a detected profile's audio settings for
+high audio quality/variety & EAX enabling.
 
-This only occurs when the loader is present in a directory with a
-working SPV3 installation. The loader should ideally not be updated when
-it's used to install SPV3 packages, as subsequent updates may break
-compatibility.
+QUALITY
+-------
 
-For asset updates, the update will be available only if HXE determines
-that the working directory state is not up to date with the one declared
-in the remote manifest.
+The following audio qualities are set to their highest levels:
+
+-   Quality
+-   Variety
+
+ENHANCEMENTS
+------------
+
+The kernel, if configured, will enable Hardware Acceleration and
+Environmental Audio in the detected profile.
+
+Defensively, the kernel will refuse to enable HWA & EAX and explicitly
+disable them if the DSOAL library is not present in the executable's
+working directory.
+
+If the kernel is not configured to patch the audio enhancements, then it
+won't do anything, regardless of the presence of the DSOAL library.

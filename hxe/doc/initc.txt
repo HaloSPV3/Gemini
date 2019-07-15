@@ -29,6 +29,8 @@ values cannot be stored in other locations.
 This document outlines the anatomy of the initc.txt file, along with
 information on the global variables and commands.
 
+For shaders, please review the shaders.txt documentation.
+
 VARIABLES
 ---------
 

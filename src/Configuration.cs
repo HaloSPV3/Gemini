@@ -26,22 +26,22 @@ namespace SPV3
   public partial class Configuration
   {
     public ConfigurationLoader    Loader    { get; set; } = new ConfigurationLoader();
-    public ConfigurationHXE       HXE       { get; set; } = new ConfigurationHXE();
+    public ConfigurationShaders   Shaders   { get; set; } = new ConfigurationShaders();
     public ConfigurationOpenSauce OpenSauce { get; set; } = new ConfigurationOpenSauce();
     public ConfigurationChimera   Chimera   { get; set; } = new ConfigurationChimera();
 
     public void Load()
     {
-      HXE.Load();
       Loader.Load();
+      Shaders.Load();
       OpenSauce.Load();
       Chimera.Load();
     }
 
     public void Save()
     {
-      HXE.Save();
       Loader.Save();
+      Shaders.Save();
       OpenSauce.Save();
       Chimera.Save();
     }

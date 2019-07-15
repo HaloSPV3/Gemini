@@ -28,22 +28,20 @@ namespace SPV3
 {
   public partial class Report_UserControl : UserControl
   {
-    private readonly Report _report;
-
-    public Report Report => _report;
-
     public Report_UserControl()
     {
       InitializeComponent();
-      _report = (Report) DataContext;
-      _report.Initialise();
+      Report = (Report) DataContext;
+      Report.Initialise();
     }
+
+    public Report Report { get; }
 
     public event EventHandler Home;
 
     private async void Copy(object sender, RoutedEventArgs e)
     {
-      Clipboard.SetText(_report.Stack);
+      Clipboard.SetText(Report.Stack);
 
       CopyButton.Content = "Copied!";
 

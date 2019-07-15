@@ -102,7 +102,7 @@ namespace HXE
             Exit(0);
           })
         .Add("load", "Initiates HCE/SPV3",
-          s => Run(() => { Kernel.Bootstrap(hce); }))
+          s => Run(() => { Kernel.Invoke(hce); }))
         .Add("install=", "Installs HCE/SPV3 to destination",
           s => Run(() => { Installer.Install(CurrentDirectory, s); }))
         .Add("compile=", "Compiles HCE/SPV3 to destination",
@@ -125,7 +125,7 @@ namespace HXE
         .Add("nogamma", "Loads HCE without gamma overriding",
           s => hce.Video.NoGamma = true)
         .Add("adapter=", "Loads HCE on monitor X",
-          s => hce.Video.Adapter = ushort.Parse(s))
+          s => hce.Video.Adapter = byte.Parse(s))
         .Add("path=", "Loads HCE with custom profile path",
           s => hce.Profile.Path = s)
         .Add("vidmode=", "Loads HCE with video mode",
@@ -153,7 +153,7 @@ namespace HXE
           !input.Contains("install") &&
           !input.Contains("compile") &&
           !input.Contains("update"))
-        Run(() => { Kernel.Bootstrap(hce); });
+        Run(() => { Kernel.Invoke(hce); });
 
       /**
        * This method is used for running code asynchronously and catching exceptions at the highest level.

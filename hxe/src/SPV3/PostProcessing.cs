@@ -56,21 +56,21 @@ namespace HXE.SPV3
       High = 0x2
     }
 
-    public bool                       Internal          { get; set; } = true;
-    public bool                       External          { get; set; } = true;
-    public bool                       GBuffer           { get; set; } = true;
-    public bool                       DepthFade         { get; set; } = true;
-    public bool                       Bloom             { get; set; } = true;
-    public bool                       LensDirt          { get; set; } = true;
-    public bool                       DynamicLensFlares { get; set; } = true;
-    public bool                       Volumetrics       { get; set; } = true;
-    public bool                       AntiAliasing      { get; set; } = true;
-    public bool                       HudVisor          { get; set; } = true;
-    public bool                       FilmGrain         { get; set; } = true;
-    public MotionBlurOptions          MotionBlur        { get; set; } = MotionBlurOptions.PombHigh;
-    public MxaoOptions                Mxao              { get; set; } = MxaoOptions.High;
-    public DofOptions                 Dof               { get; set; } = DofOptions.High;
-    public ExperimentalPostProcessing Experimental      { get; set; } = new ExperimentalPostProcessing();
+    public bool                       Internal           { get; set; } = true;
+    public bool                       External           { get; set; } = true;
+    public bool                       GBuffer            { get; set; } = true;
+    public bool                       DepthFade          { get; set; } = true;
+    public bool                       Bloom              { get; set; } = true;
+    public bool                       LensDirt           { get; set; } = true;
+    public bool                       DynamicLensFlares  { get; set; } = true;
+    public bool                       VolumetricLighting { get; set; } = true;
+    public bool                       AntiAliasing       { get; set; } = true;
+    public bool                       HudVisor           { get; set; } = true;
+    public bool                       FilmGrain          { get; set; } = true;
+    public MotionBlurOptions          MotionBlur         { get; set; } = MotionBlurOptions.PombHigh;
+    public MxaoOptions                MXAO               { get; set; } = MxaoOptions.High;
+    public DofOptions                 DOF                { get; set; } = DofOptions.High;
+    public ExperimentalPostProcessing Experimental       { get; set; } = new ExperimentalPostProcessing();
 
     /// <summary>
     ///   Experimental overrides for HCE.

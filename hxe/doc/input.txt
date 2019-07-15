@@ -18,18 +18,32 @@
  3. This notice may not be removed or altered from any source distribution.
 -->
 
-UPDATING
-========
+INPUT PATCHES
+=============
 
-In a nutshell, the assembly's version is compared to the one broadcasted
-by the remote server. If the latter is higher, then a download link will
-be provided.
+The HXE kernel is able to patch a detected profile's input settings with
+SPV3's preset:
 
-This only occurs when the loader is present in a directory with a
-working SPV3 installation. The loader should ideally not be updated when
-it's used to install SPV3 packages, as subsequent updates may break
-compatibility.
+  Action           Input
+  ---------------- -------
+  Move Forward     LSU
+  Move Backward    LSD
+  Move Left        LSL
+  Move Right       LSR
+  Crouch           LSM
+  Reload           DPU
+  Jump             A
+  Switch Grenade   B
+  Action           X
+  Switch Weapon    Y
+  Look Up          RSU
+  Look Down        RSD
+  Look Left        RSL
+  Look Right       RSR
+  Scope Zoom       RSM
+  Throw Grenade    LB
+  Flashlight       LT
+  Melee Attack     RB
+  Fire Weapon      RT
 
-For asset updates, the update will be available only if HXE determines
-that the working directory state is not up to date with the one declared
-in the remote manifest.
+This will only work when SPV3.2 mode is enabled in the kernel settings.

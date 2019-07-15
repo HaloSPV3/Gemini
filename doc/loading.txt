@@ -42,10 +42,12 @@ ENHANCEMENTS
 Like HXE, the SPV3 loader conducts its own enhancements. Whereas HXE
 only focuses on profile enhancements, the SPV3 loader handles:
 
--   forcing hxe to use the spv3 compatibility mode;
--   fix hud & menu scaling in opensauce settings;
--   impose chimera enhancements (interpolation, aa, uncap cinematic, lod
-    block);
+-   forcing hxe to use the spv3 compatibility mode
+-   fix hud & menu scaling in opensauce settings
+-   specify video parameters and toggles to hxe
+-   enable/disable modes such as DOOM or Photo
+-   explicitly enabling console, developer mode & screenshotting
+-   impose chimera enhancements (interpolation, etc.)
 
 All of the enhancements are conducted *before* bootstrapping SPV3, of
 course. :-)

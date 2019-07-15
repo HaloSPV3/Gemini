@@ -46,5 +46,8 @@
         <Label MouseLeftButtonUp="Discord">
             Discord
         </Label>
+        <Label MouseLeftButtonUp="Wikia">
+            Wikia
+        </Label>
     </StackPanel>
 </UserControl>

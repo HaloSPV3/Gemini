@@ -26,6 +26,11 @@ namespace HXE
 {
   public static class Console
   {
+    public static void Core(string value)
+    {
+      Output("CORE", Magenta, value, White);
+    }
+
     public static void Error(string value)
     {
       var decoration = new string('*', value.Length);

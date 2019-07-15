@@ -23,89 +23,112 @@ LOADER KERNEL
 
 The kernel is the core component of HXE, which is responsible for:
 
-1.  verifying the main assets, e.g. maps & executables; and
-2.  determining the player's campaign progress for resuming; and
-3.  inferring the post-processing settings and encoding them; and
+1.  determining the player's campaign progress for resuming; and
+2.  inferring the post-processing settings and encoding them; and
+3.  applying video/audio/input enhancements and initiation tweaks; and
 4.  patching the HCE executable with Large Address Aware; and
 5.  loading SPV3 with user start-up parameters for HCE.
 
 The sections below elaborate upon the aforementioned steps.
 
-RESUMING
+ROUTINES
 --------
 
-Resuming in SPV3.2 is accomplished by determining the last played
-mission & difficulty, whose values are located in the savegame.bin
-binary in the respective player profile. The values inferred from the
-binary are converted and saved to the initc.txt file.
+The kernel routines are executed in the following order:
 
-Further documentation on the aforementioned files can be found in the
-initc.txt and savegame.txt documentations.
+-   INIT ........ initiation routines
+    -   RESUME .. spv3 campaign resuming
+    -   TWEAKS .. spv3/hce launch tweaks
+    -   SHADER .. spv3.2 post-processing
+    -   UNLOCK .. spv3.2 campaign unlock
+-   BLAM ........ profile tweaks routines
+    -   VIDEO ... video tweaks & custom resolution
+    -   AUDIO ... audio enhancements & eax/hw
+    -   INPUT ... controller input overriding
+-   EXEC ........ hce execution routines
+    -   RESET ... kill running hce processes
+    -   PATCH ... apply conditional laa patching
+    -   START ... start the hce executable
 
-With the above in mind, the loader must conduct the following steps to
-implement the resuming capability:
+All of the routines above can be reviewed in their respective
+documentation.
 
-1.  find the savegame.bin on the filesystem, by heuristically inferring
-    the player's profile location; and
-2.  read the mission & difficulty data from the savemgame.bin, and
-    convert the values to their initc.txt equivalents; and
-3.  save the converted data to the initc.txt file, which is officially
-    located in the SPV3 installation directory.
+CONFIGURATION
+-------------
 
-MISSIONS
---------
+Kernel and post-processing settings are by default at the following
+path:
 
-The following maps are dealt with by the loader for campaign resuming:
+    %APPDATA%\HXE\kernel.bin
 
--   SPV3 A10
--   SPV3 A30
--   SPV3 A50
--   SPV3 B30
--   SPV3 B30 Evolved
--   SPV3 B40
--   SPV3 C10
--   SPV3 C20
--   SPV3 C40
--   SPV3 D20
--   SPV3 D25
--   SPV3 D30
--   SPV3 D30 Evolved
--   SPV3 D40
--   Lumoria A
--   Lumoria B
--   Lumoria C & D
+The configuration can be changed from the CLI using:
 
-To see how missions are stored in the savegame.bin and initc.txt, please
-refer to the savegame.txt and initc.txt documentation, respectively.
+    .\hxe.exe -config
 
-DIFFICULTIES
-------------
+Currently, the binary stores the following categories:
 
-The difficulties are stored represented by different values in each
-relevant location. We must keep in mind that SPV3 makes a slight
-semantic alteration to the difficulty system: the HCE EASY difficulty is
-used for the SPV3 NOBLE difficulty.
+  Offset   Property
+  -------- -------------------
+  0x00     Vanity Signature
+  0x10     HXE Kernel Mode
+  0x20     Main Execution
+  0x30     Video Patches
+  0x40     Audio Patches
+  0x50     Input Patches
+  0x60     Initiation Tweaks
+  0xA0     SPV3.2 Shaders
 
-On a fundamentally technical level, nothing is changed; however, it is
-important to keep that distinction in mind in the SPV3 domain's context:
+KERNEL MODE
 
-  SPV3        HCE
-  ----------- -----------
-  Noble       Easy
-  Normal      Normal
-  Heroic      Heroic
-  Legendary   Legendary
+The routines the kernel carries out depend on its selected mode:
 
-To see how difficulties are stored in the savegame.bin and initc.txt,
-please refer to the savegame.txt and initc.txt documentation,
-respectively.
+  Mode     Summary
+  -------- --------------------------------------------------------------
+  HCE      Video, audio, input enhancements and initiation tweaks
+  SPV3.2   HCE mode, but with post-processing & SPV3.2 compatibility
+  SPV3.1   HCE mode, no SPV3.2 mode, but with SPV3.1 campaing unlocking
 
-PATCHING
---------
+AVAILABLE OPTIONS
 
-On kernel invocation, the HCE executable will be patched with Large
-Address Aware:
+The following table outlines the available options:
 
-  Offset   Value
-  -------- -------
-  0x136    0x2F
+  Section             Property              Type     Offset
+  ------------------- --------------------- -------- --------
+  Main Execution      Reset                 bool     0x20
+                      Patch                 bool     0x21
+                      Start                 bool     0x22
+                      Resume                bool     0x23
+  Video Patches       Resolution            bool     0x24
+                      Uncap                 bool     0x30
+                      Quality               bool     0x31
+                      Gamma                 byte     0x32
+  Audio Patches       Quality               bool     0x40
+                      Enhancements          bool     0x41
+  Input Patches       Override              bool     0x50
+  Initiation Tweaks   Cinematic             bool     0x60
+                      Sensor                bool     0x60
+                      Magnetism             bool     0x60
+                      Auto Aim              bool     0x60
+                      Acceleration          bool     0x60
+                      Unload                bool     0x60
+                      Speed                 double   0x60
+  SPV3.2 Shaders      Internal              bool     0xA0
+                      External              bool     0xA1
+                      G-Buffer              bool     0xA2
+                      Depth Fade            bool     0xA3
+                      Bloom                 bool     0xA4
+                      LensDirt              bool     0xA5
+                      Dynamic Lens Flares   bool     0xA6
+                      Volumetric Lighting   bool     0xA7
+                      Anti Aliasing         bool     0xA8
+                      HUD Visor             bool     0xA9
+                      Film Grain            bool     0xAA
+                      Motion Blur           byte     0xAB
+                      MXAO                  byte     0xAC
+                      DOF                   byte     0xAD
+
+Implicitly speaking, the aforementioned properties are:
+
+-   representative of what the kernel does;
+-   configurable by the end-user;
+-   stored in the kernel configuration.
