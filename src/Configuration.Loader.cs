@@ -44,8 +44,8 @@ namespace SPV3
       private bool   _photo;
       private byte   _preference = 1;
       private bool   _preset     = true;
-      private bool   _shaders;
-      private ushort _width = (ushort) Screen.PrimaryScreen.Bounds.Width;
+      private bool   _shaders    = true;
+      private ushort _width      = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
 
       public bool Window
