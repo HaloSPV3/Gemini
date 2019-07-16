@@ -58,5 +58,10 @@ namespace SPV3
 
       Environment.Exit(0);
     }
+
+    private void Changelog(object sender, MouseButtonEventArgs e)
+    {
+      _version.Changelog();
+    }
   }
 }

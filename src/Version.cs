@@ -18,6 +18,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace SPV3
@@ -33,6 +34,12 @@ namespace SPV3
 
       if (Context.Infer() == Context.Type.Load)
         Task.Run(() => { Upstream.Initialise(); });
+    }
+
+    public void Changelog()
+    {
+      Process.Start(@"https://cgit.n2.network/spv3/log/?showmsg=1&qt=range&q=" +
+                    $"build-{Assembly.Version:D4}..build-{Upstream.Version:D4}");
     }
   }
 }

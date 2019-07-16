@@ -31,6 +31,7 @@ namespace SPV3
     {
       private string _address;
       private string _content;
+      private int    _version;
 
       private Visibility _visibility = Visibility.Collapsed;
 
@@ -67,6 +68,17 @@ namespace SPV3
         }
       }
 
+      public int Version
+      {
+        get => _version;
+        set
+        {
+          if (value == _version) return;
+          _version = value;
+          OnPropertyChanged();
+        }
+      }
+
       public event PropertyChangedEventHandler PropertyChanged;
 
       public void Initialise()
@@ -77,6 +89,7 @@ namespace SPV3
 
         var current = (int) versionMajor;
 
+        Version    = current;
         Content    = $"Version {current:D4}";
         Address    = $"https://github.com/yumiris/SPV3/tree/build-{current:D4}";
         Visibility = Visibility.Visible;

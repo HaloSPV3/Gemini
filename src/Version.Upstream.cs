@@ -35,6 +35,7 @@ namespace SPV3
       private const string Header = "https://dist.n2.network/spv3/HEADER.txt";
       private       string _address;
       private       string _content;
+      private       int    _version;
 
       private Visibility _visibility = Visibility.Collapsed;
 
@@ -71,6 +72,17 @@ namespace SPV3
         }
       }
 
+      public int Version
+      {
+        get => _version;
+        set
+        {
+          if (value == _version) return;
+          _version = value;
+          OnPropertyChanged();
+        }
+      }
+
       public event PropertyChangedEventHandler PropertyChanged;
 
       public void Initialise()
@@ -87,6 +99,7 @@ namespace SPV3
 
             var clientVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Major;
 
+            Version    = serverVersion;
             Content    = $"Latest - {serverVersion:D4} (download here)";
             Visibility = serverVersion > clientVersion ? Visibility.Visible : Visibility.Collapsed;
             Address    = sr.ReadLine()?.TrimEnd() ?? throw new Exception("Could not infer update ZIP.");
