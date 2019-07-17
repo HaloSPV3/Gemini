@@ -32,7 +32,7 @@ namespace HXE.SPV3
     public byte Interpolation        { get; set; } = 9;
     public bool AnisotropicFiltering { get; set; } = true;
     public bool UncapCinematic       { get; set; } = true;
-    public bool BlockLOD             { get; set; } = true;
+    public bool BlockLOD             { get; set; }
 
     /// <summary>
     ///   Saves object state to the inbound file.
