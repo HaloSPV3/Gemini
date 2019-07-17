@@ -31,6 +31,7 @@
     <StackPanel Orientation="Vertical">
         <Label Visibility="{Binding Assembly.Visibility}"
                Content="{Binding Assembly.Content}"
+               HorizontalContentAlignment="Center"
                MouseLeftButtonUp="Assembly">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
@@ -49,6 +50,7 @@
         <Label Margin="0,10,0,0"
                Visibility="{Binding Upstream.Visibility}"
                Content="{Binding Upstream.Content}"
+               HorizontalContentAlignment="Center"
                MouseLeftButtonUp="Upstream">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
@@ -67,7 +69,8 @@
 
         <Label Margin="0,1,0,0"
                Visibility="{Binding Upstream.Visibility}"
-               Content="Click to view latest changelog"
+               Content="View latest change log"
+               HorizontalContentAlignment="Center"
                MouseLeftButtonUp="Changelog">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">

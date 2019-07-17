@@ -99,8 +99,8 @@ namespace SPV3
 
             var clientVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Major;
 
-            Version    = serverVersion;
-            Content    = $"Latest - {serverVersion:D4} (download here)";
+            Version = serverVersion;
+            Content    = $"Update loader to {serverVersion:D4}";
             Visibility = serverVersion > clientVersion ? Visibility.Visible : Visibility.Collapsed;
             Address    = sr.ReadLine()?.TrimEnd() ?? throw new Exception("Could not infer update ZIP.");
           }
