@@ -74,7 +74,7 @@ namespace SPV3
       }
     }
 
-    private void BareChecked(object sender, RoutedEventArgs e)
+    private void GBufferUnchecked(object sender, RoutedEventArgs e)
     {
       MessageBox.Show("WARNING: VISR and Thermal Vision will not work. " +
                       "This should only be used on low-end computers as a last resort.");
@@ -82,6 +82,7 @@ namespace SPV3
 
     private void PresetVeryLow(object sender, RoutedEventArgs e)
     {
+      _configuration.OpenSauce.GBuffer          = false;
       _configuration.Shaders.FilmGrain          = false;
       _configuration.Shaders.VolumetricLighting = false;
       _configuration.Shaders.LensDirt           = false;
@@ -93,6 +94,7 @@ namespace SPV3
 
     private void PresetLow(object sender, RoutedEventArgs e)
     {
+      _configuration.OpenSauce.GBuffer          = true;
       _configuration.Shaders.FilmGrain          = false;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt           = true;
@@ -104,6 +106,7 @@ namespace SPV3
 
     private void PresetMedium(object sender, RoutedEventArgs e)
     {
+      _configuration.OpenSauce.GBuffer          = true;
       _configuration.Shaders.FilmGrain          = false;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt           = true;
@@ -115,6 +118,7 @@ namespace SPV3
 
     private void PresetHigh(object sender, RoutedEventArgs e)
     {
+      _configuration.OpenSauce.GBuffer          = true;
       _configuration.Shaders.FilmGrain          = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt           = true;
@@ -126,6 +130,7 @@ namespace SPV3
 
     private void PresetVeryHigh(object sender, RoutedEventArgs e)
     {
+      _configuration.OpenSauce.GBuffer          = true;
       _configuration.Shaders.FilmGrain          = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt           = true;
@@ -137,6 +142,7 @@ namespace SPV3
 
     private void PresetUltra(object sender, RoutedEventArgs e)
     {
+      _configuration.OpenSauce.GBuffer          = true;
       _configuration.Shaders.FilmGrain          = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt           = true;

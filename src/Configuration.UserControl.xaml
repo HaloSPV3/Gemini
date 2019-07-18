@@ -67,7 +67,7 @@
                     HINT
                 </Label>
                 <Label Background="WhiteSmoke">
-                    Hover over options for more information! Also, if you have performance problems: turn down MXAO, Motion Blur and DOF, and untick Block LOD.
+                    Hover over options for more information!
                 </Label>
             </DockPanel>
 
@@ -347,6 +347,12 @@
                        FontSize="16"
                        Margin="0,0,0,10" />
 
+                <DockPanel>
+                    <Label Content="G-Buffer:" />
+                    <CheckBox IsChecked="{Binding OpenSauce.GBuffer}"
+                              ToolTip="Disabling this will deactivate VISR and Thermal Vision."
+                              Unchecked="GBufferUnchecked" />
+                </DockPanel>
                 <DockPanel>
                     <Label Content="Normal Maps:" />
                     <CheckBox IsChecked="{Binding OpenSauce.NormalMaps}"

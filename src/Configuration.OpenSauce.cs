@@ -33,6 +33,7 @@ namespace SPV3
       private bool   _bloom        = true;
       private bool   _detailedMaps = true;
       private double _fieldOfView;
+      private bool   _gBuffer          = true;
       private bool   _normalMaps       = true;
       private bool   _specularLighting = true;
       private bool   _specularMaps     = true;
@@ -105,10 +106,22 @@ namespace SPV3
         }
       }
 
+      public bool GBuffer
+      {
+        get => _gBuffer;
+        set
+        {
+          if (value == _gBuffer) return;
+          _gBuffer = value;
+          OnPropertyChanged();
+        }
+      }
+
       public event PropertyChangedEventHandler PropertyChanged;
 
       public void Save()
       {
+        Configuration.Rasterizer.GBuffer.Enabled                          = GBuffer;
         Configuration.Rasterizer.ShaderExtensions.Object.NormalMaps       = NormalMaps;
         Configuration.Rasterizer.ShaderExtensions.Object.DetailNormalMaps = DetailedMaps;
         Configuration.Rasterizer.ShaderExtensions.Object.SpecularMaps     = SpecularMaps;
@@ -127,6 +140,7 @@ namespace SPV3
         }
 
         Configuration.Load();
+        GBuffer          = Configuration.Rasterizer.GBuffer.Enabled;
         NormalMaps       = Configuration.Rasterizer.ShaderExtensions.Object.NormalMaps;
         DetailedMaps     = Configuration.Rasterizer.ShaderExtensions.Object.DetailNormalMaps;
         SpecularMaps     = Configuration.Rasterizer.ShaderExtensions.Object.SpecularMaps;
