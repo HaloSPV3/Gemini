@@ -94,6 +94,7 @@ namespace SPV3
         hxe.Video.Gamma        = spv3.Gamma;
         hxe.Audio.Enhancements = spv3.EAX;
         hxe.Input.Override     = spv3.Preset;
+        hxe.Tweaks.Cinematic   = spv3.Cinematic;
         hxe.Tweaks.Unload      = !spv3.Shaders;
 
         if (spv3.DOOM && !spv3.Photo)

@@ -341,7 +341,7 @@
                 </StackPanel.Resources>
 
                 <!-- OpenSauce -->
-                <Label Content="OpenSauce"
+                <Label Content="OpenSauce &amp; Chimera"
                        HorizontalAlignment="Center"
                        Width="Auto"
                        FontSize="16"
@@ -387,12 +387,6 @@
                 <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
 
                 <!-- Chimera -->
-                <Label Content="Chimera"
-                       HorizontalAlignment="Center"
-                       Width="Auto"
-                       FontSize="16"
-                       Margin="0,0,0,10" />
-
                 <DockPanel>
                     <Label Content="Frame Smoothness:" />
                     <ComboBox SelectedIndex="{Binding Chimera.Interpolation}"
@@ -420,6 +414,13 @@
                 <DockPanel>
                     <Label Content="Block LOD:" />
                     <CheckBox IsChecked="{Binding Chimera.BlockLOD}" />
+                </DockPanel>
+
+                <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
+
+                <DockPanel>
+                    <Label Content="Cinematic Bars:" />
+                    <CheckBox IsChecked="{Binding Loader.Cinematic}" />
                 </DockPanel>
             </StackPanel>
         </Grid>

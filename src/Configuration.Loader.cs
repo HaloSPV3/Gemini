@@ -47,6 +47,7 @@ namespace SPV3
       private bool   _shaders    = true;
       private ushort _width      = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
+      private bool   _cinematic = true;
 
       public bool Window
       {
@@ -180,6 +181,17 @@ namespace SPV3
         }
       }
 
+      public bool Cinematic
+      {
+        get => _cinematic;
+        set
+        {
+          if (value == _cinematic) return;
+          _cinematic = value;
+          OnPropertyChanged();
+        }
+      }
+
       public List<string> Adapters => Screen.AllScreens
         .Select
         (
@@ -234,6 +246,7 @@ namespace SPV3
           {
             bw.Write(EAX);
             bw.Write(Preset);
+            bw.Write(Cinematic);
           }
 
           ms.Position = 0;
@@ -278,8 +291,9 @@ namespace SPV3
 
           /* tweaks */
           {
-            EAX    = br.ReadBoolean();
-            Preset = br.ReadBoolean();
+            EAX       = br.ReadBoolean();
+            Preset    = br.ReadBoolean();
+            Cinematic = br.ReadBoolean();
           }
         }
       }
