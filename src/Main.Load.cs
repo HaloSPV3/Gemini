@@ -85,10 +85,10 @@ namespace SPV3
         hxe.Tweaks.Sensor      = true; /* forcefully enable motion sensor   */
         hxe.Tweaks.Speed       = 1;    /* apply native game execution speed */
         hxe.Mode               = Kernel.Configuration.ConfigurationMode.SPV32;
-//        hxe.Main.Reset         = true; /* improve loading stability         */
-//        hxe.Main.Patch         = true; /* improve loading stability         */
-//        hxe.Main.Resume        = true; /* improve loading stability         */
-//        hxe.Main.Start         = true; /* improve loading stability         */
+        hxe.Main.Reset         = true; /* improve loading stability         */
+        hxe.Main.Patch         = true; /* improve loading stability         */
+        hxe.Main.Resume        = true; /* improve loading stability         */
+        hxe.Main.Start         = true; /* improve loading stability         */
         hxe.Video.Resolution   = true;
         hxe.Video.Uncap        = spv3.Preference == 1;
         hxe.Video.Gamma        = spv3.Gamma;
