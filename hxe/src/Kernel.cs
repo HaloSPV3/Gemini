@@ -26,7 +26,7 @@ using HXE.HCE;
 using HXE.Properties;
 using HXE.SPV3;
 using static System.Environment;
-using static System.IO.File;
+using static System.IO.Directory;
 using static System.IO.Path;
 using static System.Windows.Forms.Screen;
 using static HXE.Console;
@@ -374,7 +374,7 @@ namespace HXE
 
           if (configuration.Audio.Enhancements)
           {
-            if (Exists(DSOAL))
+            if (System.IO.File.Exists(DSOAL))
             {
               blam.Audio.HWA = true;
               blam.Audio.EAX = true;
@@ -625,6 +625,9 @@ namespace HXE
       /// </summary>
       public Configuration Save()
       {
+        CreateDirectory(GetDirectoryName(_path)
+                        ?? throw new ArgumentException("Configuration directory path is null."));
+
         using (var fs = new FileStream(_path, FileMode.Create, FileAccess.Write))
         using (var ms = new MemoryStream(Length))
         using (var bw = new BinaryWriter(ms))
@@ -724,7 +727,7 @@ namespace HXE
       /// </summary>
       public Configuration Load()
       {
-        if (!Exists(_path))
+        if (!System.IO.File.Exists(_path))
           Save();
 
         using (var fs = new FileStream(_path, FileMode.Open, FileAccess.Read))
