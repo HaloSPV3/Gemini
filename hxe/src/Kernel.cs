@@ -94,7 +94,7 @@ namespace HXE
 
       void Init()
       {
-        var init = (Initiation) Combine(CurrentDirectory, Paths.HCE.Initiation);
+        var init = (Initiation) GetFullPath(executable.Debug.Initiation);
 
         Resume(); /* spv3 campaign resume with ui.map compatibility */
         Tweaks(); /* hce/spv3 start-up miscellaneous tweaks         */

@@ -128,6 +128,8 @@ namespace HXE
           s => hce.Video.Adapter = byte.Parse(s))
         .Add("path=", "Loads HCE with custom profile path",
           s => hce.Profile.Path = s)
+        .Add("exec=", "Loads HCE with custom init file",
+          s => hce.Debug.Initiation = s)
         .Add("vidmode=", "Loads HCE with video mode",
           s =>
           {

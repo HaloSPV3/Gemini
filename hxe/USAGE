@@ -33,16 +33,17 @@ with these parameters.
 
 PARAMETERS
 
-  Parameter         Description
-  ----------------- ------------------------------------
-  -console          Loads HCE with console mode
-  -devmode          Loads HCE with developer mode
-  -screenshot       Loads HCE with screenshot ability
-  -window           Loads HCE in window mode
-  -nogamma          Loads HCE without gamma overriding
-  -adapter X        Loads HCE on monitor X
-  -vidmode W,H,R    Loads HCE with video mode
-  -path "C:\path"   Loads HCE with custom profile path
+  Parameter              Description
+  ---------------------- ------------------------------------
+  -console               Loads HCE with console mode
+  -devmode               Loads HCE with developer mode
+  -screenshot            Loads HCE with screenshot ability
+  -window                Loads HCE in window mode
+  -nogamma               Loads HCE without gamma overriding
+  -adapter X             Loads HCE on monitor X
+  -vidmode W,H,R         Loads HCE with video mode
+  -path "C:\path"        Loads HCE with custom profile path
+  -exec "C:\initc.txt"   Loads HCE with custom init file
 
 COMMANDS
 
