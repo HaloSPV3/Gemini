@@ -136,12 +136,6 @@ namespace SPV3
          * Prohibit installations to known problematic folders.
          */
 
-        if (Target.Contains("Program Files"))
-        {
-          Status     = "Installation to the Program Files is not recommended. Please choose a different location.";
-          CanInstall = false;
-        }
-
         if (Exists(Path.Combine(Target,    HXE.Paths.HCE.Executable))
             || Exists(Path.Combine(Target, HXE.Paths.Executable))
             || Exists(Path.Combine(Target, Paths.Executable)))
