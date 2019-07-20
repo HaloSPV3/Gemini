@@ -31,6 +31,7 @@ namespace SPV3
     public const string Executable = "spv3.exe";
 
     public static readonly string Directory     = Combine(GetFolderPath(ApplicationData), "SPV3");
+    public static readonly string Initiation    = Combine(Directory,                      "initc.txt");
     public static readonly string Exception     = Combine(Directory,                      "exception.log");
     public static readonly string Installation  = Combine(Directory,                      "install.txt");
     public static readonly string Configuration = Combine(Directory,                      "loader-0x01.bin");

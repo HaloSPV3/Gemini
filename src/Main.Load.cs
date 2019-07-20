@@ -139,7 +139,8 @@ namespace SPV3
           {
             Console    = true,
             Developer  = true,
-            Screenshot = true
+            Screenshot = true,
+            Initiation = Paths.Initiation
           }
         }, hxe);
 
