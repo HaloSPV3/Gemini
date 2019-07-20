@@ -18,6 +18,10 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
+using System.Linq;
+using System.Windows;
+
 namespace SPV3
 {
   /// <summary>
@@ -25,5 +29,15 @@ namespace SPV3
   /// </summary>
   public partial class App
   {
+    protected override void OnStartup(StartupEventArgs e)
+    {
+      if (e.Args.Any(arg => arg.Equals("-auto")))
+      {
+        new Main().Invoke();
+        Environment.Exit(0);
+      }
+
+      base.OnStartup(e);
+    }
   }
 }
