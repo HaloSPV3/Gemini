@@ -58,11 +58,31 @@ namespace SPV3
         var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
 
         if (spv3.Exists())
+        {
           spv3.Load();
+        }
         else
-          spv3.Preset = true;
+        {
+          spv3.Preset  = true;
+          spv3.Shaders = true;
+        }
 
         hxe.Load();
+        hxe.Mode               = Kernel.Configuration.ConfigurationMode.SPV32;
+        hxe.Tweaks.Sensor      = true;  /* forcefully enable motion sensor   */
+        hxe.Tweaks.Speed       = 1;     /* apply native game execution speed */
+        hxe.Main.Reset         = true;  /* improve loading stability         */
+        hxe.Main.Patch         = true;  /* improve loading stability         */
+        hxe.Main.Resume        = true;  /* improve loading stability         */
+        hxe.Main.Start         = true;  /* improve loading stability         */
+        hxe.Video.Resolution   = true;  /* permit custom resolution override */
+        hxe.Video.Quality      = false; /* permit in-game quality settings   */
+        hxe.Video.Uncap        = spv3.Preference == 1;
+        hxe.Video.Gamma        = spv3.Gamma;
+        hxe.Audio.Enhancements = spv3.EAX;
+        hxe.Input.Override     = spv3.Preset;
+        hxe.Tweaks.Cinematic   = spv3.Cinematic;
+        hxe.Tweaks.Unload      = !spv3.Shaders;
 
         if (chimera.Exists())
         {
@@ -79,24 +99,9 @@ namespace SPV3
         if (openSauce.Exists())
           openSauce.Load();
         else
-          openSauce.Camera.CalculateFOV(); /* apply native field of view */
+          openSauce.Camera.CalculateFOV();
 
-        openSauce.HUD.ShowHUD  = true; /* forcefully enable hud             */
-        hxe.Tweaks.Sensor      = true; /* forcefully enable motion sensor   */
-        hxe.Tweaks.Speed       = 1;    /* apply native game execution speed */
-        hxe.Mode               = Kernel.Configuration.ConfigurationMode.SPV32;
-        hxe.Main.Reset         = true;  /* improve loading stability         */
-        hxe.Main.Patch         = true;  /* improve loading stability         */
-        hxe.Main.Resume        = true;  /* improve loading stability         */
-        hxe.Main.Start         = true;  /* improve loading stability         */
-        hxe.Video.Resolution   = true;  /* permit custom resolution override */
-        hxe.Video.Quality      = false; /* permit in-game quality settings   */
-        hxe.Video.Uncap        = spv3.Preference == 1;
-        hxe.Video.Gamma        = spv3.Gamma;
-        hxe.Audio.Enhancements = spv3.EAX;
-        hxe.Input.Override     = spv3.Preset;
-        hxe.Tweaks.Cinematic   = spv3.Cinematic;
-        hxe.Tweaks.Unload      = !spv3.Shaders;
+        openSauce.HUD.ShowHUD = true;
 
         if (spv3.DOOM && !spv3.Photo)
           if (File.Exists(Paths.DOOM))
@@ -113,6 +118,9 @@ namespace SPV3
             openSauce.HUD.ShowHUD = false;
             hxe.Tweaks.Sensor     = false;
           }
+
+        if (openSauce.Camera.FieldOfView < 40 || openSauce.Camera.FieldOfView > 180)
+          openSauce.Camera.CalculateFOV();
 
         spv3.Save();      /* saves to %APPDATA%\SPV3 */
         openSauce.Save(); /* saves to %APPDATA%\SPV3 */
