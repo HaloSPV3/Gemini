@@ -79,6 +79,7 @@ namespace SPV3
         hxe.Video.Quality      = false; /* permit in-game quality settings   */
         hxe.Video.Uncap        = spv3.Preference == 1;
         hxe.Video.Gamma        = spv3.Gamma;
+        hxe.Video.Bless        = spv3.Borderless;
         hxe.Audio.Enhancements = spv3.EAX;
         hxe.Input.Override     = spv3.Preset;
         hxe.Tweaks.Cinematic   = spv3.Cinematic;

@@ -67,6 +67,7 @@ namespace HXE
       VideoResolution.IsChecked    = _configuration.Video.Resolution;
       VideoUncap.IsChecked         = _configuration.Video.Uncap;
       VideoQuality.IsChecked       = _configuration.Video.Quality;
+      VideoBless.IsChecked         = _configuration.Video.Bless;
       VideoGamma.Text              = _configuration.Video.Gamma.ToString();
       AudioQuality.IsChecked       = _configuration.Audio.Quality;
       AudioEnhancements.IsChecked  = _configuration.Audio.Enhancements;
@@ -107,6 +108,7 @@ namespace HXE
       _configuration.Video.Resolution    = VideoResolution.IsChecked    == true;
       _configuration.Video.Uncap         = VideoUncap.IsChecked         == true;
       _configuration.Video.Quality       = VideoQuality.IsChecked       == true;
+      _configuration.Video.Bless         = VideoBless.IsChecked         == true;
       _configuration.Audio.Quality       = AudioQuality.IsChecked       == true;
       _configuration.Audio.Enhancements  = AudioEnhancements.IsChecked  == true;
       _configuration.Input.Override      = InputOverride.IsChecked      == true;
@@ -154,6 +156,7 @@ namespace HXE
       Console.Debug("Video.Resolution    - " + _configuration.Video.Resolution);
       Console.Debug("Video.Uncap         - " + _configuration.Video.Uncap);
       Console.Debug("Video.Quality       - " + _configuration.Video.Quality);
+      Console.Debug("Video.Bless         - " + _configuration.Video.Bless);
       Console.Debug("Video.Gamma         - " + _configuration.Video.Gamma);
       Console.Debug("Audio.Quality       - " + _configuration.Audio.Quality);
       Console.Debug("Audio.Enhancements  - " + _configuration.Audio.Enhancements);

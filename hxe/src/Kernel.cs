@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
 using HXE.HCE;
 using HXE.Properties;
 using HXE.SPV3;
@@ -44,6 +46,12 @@ namespace HXE
   /// </summary>
   public static class Kernel
   {
+    [DllImport("USER32.DLL")]
+    private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+    [DllImport("USER32.DLL")]
+    private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
     /// <summary>
     ///   Loads HCE executable in the working directory.
     /// </summary>
@@ -324,6 +332,13 @@ namespace HXE
             Debug("BLAM.VIDEO.RESOLUTION: Height - " + blam.Video.Resolution.Height);
           }
 
+          if (configuration.Video.Bless)
+          {
+            executable.Video.Width  -= 10;
+            executable.Video.Height -= 10;
+            Core("BLAM.VIDEO.BLESS: Tweaked executable resolution for border-less support.");
+          }
+
           if (configuration.Video.Quality)
           {
             blam.Video.Effects.Specular = true;
@@ -480,6 +495,7 @@ namespace HXE
         Reset();
         Patch();
         Start();
+        Bless();
 
         Core("MAIN.EXEC: All HCE execution routines have been successfully resolved.");
 
@@ -584,6 +600,47 @@ namespace HXE
             Error(e.Message + " -- EXEC.START HALTED");
           }
         }
+
+        /**
+         * Bless for border-less!
+         */
+
+        void Bless()
+        {
+          if (!configuration.Video.Bless)
+            return;
+
+          const int GWL_STYLE      = -16;
+          const int WS_SYSMENU     = 0x00080000;
+          const int WS_MAXIMIZEBOX = 0x00010000;
+          const int WS_MINIMIZEBOX = 0x00020000;
+          const int WS_SIZEBOX     = 0x00040000;
+          const int WS_BORDER      = 0x00800000;
+          const int WS_DLGFRAME    = 0x00400000;
+          const int WS_CAPTION =
+            WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_BORDER | WS_DLGFRAME | WS_SIZEBOX;
+
+          Thread.Sleep(2500);
+
+          try
+          {
+            var processes = Process.GetProcesses();
+
+            foreach (var process in processes)
+            {
+              if (!process.ProcessName.StartsWith("haloce"))
+                continue;
+              var pFoundWindow = process.MainWindowHandle;
+              var style        = GetWindowLong(pFoundWindow, GWL_STYLE);
+              SetWindowLong(pFoundWindow, GWL_STYLE, style & ~WS_CAPTION);
+              Core("EXEC.BLESS: Applied border-less hack to the HCE process window.");
+            }
+          }
+          catch (Exception e)
+          {
+            Error(e.Message + " -- EXEC.BLESS HALTED");
+          }
+        }
       }
     }
 
@@ -666,6 +723,7 @@ namespace HXE
             bw.Write(Video.Uncap);
             bw.Write(Video.Quality);
             bw.Write(Video.Gamma);
+            bw.Write(Video.Bless);
           }
 
           /* audio */
@@ -762,6 +820,7 @@ namespace HXE
             Video.Uncap      = br.ReadBoolean();
             Video.Quality    = br.ReadBoolean();
             Video.Gamma      = br.ReadByte();
+            Video.Bless      = br.ReadBoolean();
           }
 
           /* audio */
@@ -839,6 +898,7 @@ namespace HXE
         public bool Uncap      { get; set; } = true; /* unlock framerate  */
         public bool Quality    { get; set; } = true; /* auto high quality */
         public byte Gamma      { get; set; }         /* game video gamma  */
+        public bool Bless      { get; set; } = true; /* border-less hack  */
       }
 
       public class ConfigurationAudio

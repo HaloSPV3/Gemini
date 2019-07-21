@@ -57,20 +57,6 @@
                 </Style>
             </Grid.Resources>
 
-            <!-- Hint -->
-            <DockPanel HorizontalAlignment="Left"
-                       VerticalAlignment="Bottom"
-                       Grid.ColumnSpan="3"
-                       Margin="50,15">
-                <Label Background="SteelBlue"
-                       Foreground="WhiteSmoke">
-                    HINT
-                </Label>
-                <Label Background="WhiteSmoke">
-                    Hover over options for more information!
-                </Label>
-            </DockPanel>
-
             <!-- General -->
             <StackPanel Grid.Column="0"
                         Margin="50,10,0,0"
@@ -153,6 +139,12 @@
                     <Label Content="Window:" />
                     <CheckBox IsChecked="{Binding Loader.Window}"
                               ToolTip="Runs SPV3.2 in windowed mode." />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Borderless:" />
+                    <CheckBox IsChecked="{Binding Loader.Borderless}"
+                              IsEnabled="{Binding Loader.Window}"
+                              ToolTip="Runs the game in borderless window mode." />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="DOOM Mode:" />

@@ -36,6 +36,8 @@ namespace SPV3
       private const int Length = 256;
 
       private byte   _adapter;
+      private bool   _borderless = true;
+      private bool   _cinematic  = true;
       private bool   _doom;
       private bool   _eax;
       private byte   _framerate = 60;
@@ -47,7 +49,6 @@ namespace SPV3
       private bool   _shaders    = true;
       private ushort _width      = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
-      private bool   _cinematic = true;
 
       public bool Window
       {
@@ -192,6 +193,17 @@ namespace SPV3
         }
       }
 
+      public bool Borderless
+      {
+        get => _borderless;
+        set
+        {
+          if (value == _borderless) return;
+          _borderless = value;
+          OnPropertyChanged();
+        }
+      }
+
       public List<string> Adapters => Screen.AllScreens
         .Select
         (
@@ -240,6 +252,7 @@ namespace SPV3
           {
             bw.Write(DOOM);
             bw.Write(Photo);
+            bw.Write(Borderless);
           }
 
           /* tweaks */
@@ -285,8 +298,9 @@ namespace SPV3
 
           /* modes */
           {
-            DOOM  = br.ReadBoolean();
-            Photo = br.ReadBoolean();
+            DOOM       = br.ReadBoolean();
+            Photo      = br.ReadBoolean();
+            Borderless = br.ReadBoolean();
           }
 
           /* tweaks */

@@ -75,6 +75,7 @@ LAYOUT
            Adapter index       byte
            DOOM Mode           bool
            Photo Mode          bool
+           Borderless          bool
            EAX Toggle          bool
            Preset Toggle       bool
 
