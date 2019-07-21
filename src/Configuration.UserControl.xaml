@@ -273,7 +273,14 @@
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Enables Dynamic Lens Flares effects." />
                 </DockPanel>
-                <Grid Margin="0,5,0,0">
+
+                <Label Content="Quality Presets"
+                       HorizontalAlignment="Center"
+                       Width="Auto"
+                       FontSize="16"
+                       Margin="0,7.5,0,10" />
+
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
