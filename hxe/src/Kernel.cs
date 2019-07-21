@@ -46,6 +46,12 @@ namespace HXE
   /// </summary>
   public static class Kernel
   {
+    [DllImport("USER32.DLL", EntryPoint = "SetWindowPos")]
+    public static extern IntPtr SetWindowPos
+    (
+      IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags
+    );
+
     [DllImport("USER32.DLL")]
     private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
@@ -611,6 +617,10 @@ namespace HXE
             return;
 
           const int GWL_STYLE      = -16;
+          const int SWP_NOMOVE     = 0X2;
+          const int SWP_NOSIZE     = 1;
+          const int SWP_NOZORDER   = 0X4;
+          const int SWP_SHOWWINDOW = 0x0040;
           const int WS_SYSMENU     = 0x00080000;
           const int WS_MAXIMIZEBOX = 0x00010000;
           const int WS_MINIMIZEBOX = 0x00020000;
@@ -618,7 +628,7 @@ namespace HXE
           const int WS_BORDER      = 0x00800000;
           const int WS_DLGFRAME    = 0x00400000;
           const int WS_CAPTION =
-            WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_BORDER | WS_DLGFRAME | WS_SIZEBOX;
+            SWP_NOMOVE | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_BORDER | WS_DLGFRAME | WS_SIZEBOX;
 
           Thread.Sleep(2500);
 
@@ -633,6 +643,7 @@ namespace HXE
               var pFoundWindow = process.MainWindowHandle;
               var style        = GetWindowLong(pFoundWindow, GWL_STYLE);
               SetWindowLong(pFoundWindow, GWL_STYLE, style & ~WS_CAPTION);
+              SetWindowPos(pFoundWindow, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
               Core("EXEC.BLESS: Applied border-less hack to the HCE process window.");
             }
           }

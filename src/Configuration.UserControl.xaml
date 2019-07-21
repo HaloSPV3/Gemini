@@ -143,7 +143,6 @@
                 <DockPanel>
                     <Label Content="Borderless:" />
                     <CheckBox IsChecked="{Binding Loader.Borderless}"
-                              IsEnabled="{Binding Loader.Window}"
                               ToolTip="Runs the game in borderless window mode." />
                 </DockPanel>
                 <DockPanel>

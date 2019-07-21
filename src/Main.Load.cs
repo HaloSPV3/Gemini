@@ -141,7 +141,7 @@ namespace SPV3
             Width   = spv3.Width,
             Height  = spv3.Height,
             Refresh = spv3.Framerate,
-            Window  = spv3.Window,
+            Window  = spv3.Window || spv3.Borderless,
             Adapter = (byte) (spv3.Adapter + 1),
             NoGamma = hxe.Video.Gamma == 0
           },
