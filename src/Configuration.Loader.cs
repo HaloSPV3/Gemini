@@ -36,7 +36,7 @@ namespace SPV3
       private const int Length = 256;
 
       private byte   _adapter;
-      private bool   _borderless = true;
+      private bool   _borderless;
       private bool   _cinematic  = true;
       private bool   _doom;
       private bool   _eax;
