@@ -37,7 +37,8 @@ namespace SPV3
 
       private byte   _adapter;
       private bool   _borderless;
-      private bool   _cinematic  = true;
+      private bool   _borderlessEnabled;
+      private bool   _cinematic = true;
       private bool   _doom;
       private bool   _eax;
       private byte   _framerate = 60;
@@ -58,6 +59,7 @@ namespace SPV3
           if (value == _window) return;
           _window = value;
           OnPropertyChanged();
+          UpdateBorderlessEnabled();
         }
       }
 
@@ -146,6 +148,7 @@ namespace SPV3
           if (value == _preference) return;
           _preference = value;
           OnPropertyChanged();
+          UpdateBorderlessEnabled();
         }
       }
 
@@ -204,6 +207,17 @@ namespace SPV3
         }
       }
 
+      public bool BorderlessEnabled
+      {
+        get => _borderlessEnabled;
+        set
+        {
+          if (value == _borderlessEnabled) return;
+          _borderlessEnabled = value;
+          OnPropertyChanged();
+        }
+      }
+
       public List<string> Adapters => Screen.AllScreens
         .Select
         (
@@ -213,6 +227,11 @@ namespace SPV3
         ).ToList();
 
       public event PropertyChangedEventHandler PropertyChanged;
+
+      public void UpdateBorderlessEnabled()
+      {
+        BorderlessEnabled = Window && Preference == 1;
+      }
 
       public void Save()
       {

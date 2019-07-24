@@ -630,7 +630,7 @@ namespace HXE
           const int WS_CAPTION =
             SWP_NOMOVE | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_BORDER | WS_DLGFRAME | WS_SIZEBOX;
 
-          Thread.Sleep(2500);
+          Thread.Sleep(5000);
 
           try
           {
@@ -640,6 +640,7 @@ namespace HXE
             {
               if (!process.ProcessName.StartsWith("haloce"))
                 continue;
+              process.WaitForInputIdle();
               var pFoundWindow = process.MainWindowHandle;
               var style        = GetWindowLong(pFoundWindow, GWL_STYLE);
               SetWindowLong(pFoundWindow, GWL_STYLE, style & ~WS_CAPTION);
