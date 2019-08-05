@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -31,6 +32,17 @@ namespace SPV3
   {
     protected override void OnStartup(StartupEventArgs e)
     {
+      try
+      {
+        Environment.CurrentDirectory = File.Exists(Paths.Installation)
+          ? File.ReadAllText(Paths.Installation)
+          : Environment.CurrentDirectory;
+      }
+      catch (Exception)
+      {
+        Environment.CurrentDirectory = Environment.CurrentDirectory;
+      }
+
       if (e.Args.Any(arg => arg.Equals("-auto")))
       {
         new Main().Invoke();
