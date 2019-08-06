@@ -35,9 +35,10 @@ namespace HXE.HCE
   /// </summary>
   public class Executable : File
   {
-    public VideoOptions   Video   { get; set; } = new VideoOptions();
-    public DebugOptions   Debug   { get; set; } = new DebugOptions();
-    public ProfileOptions Profile { get; set; } = new ProfileOptions();
+    public VideoOptions         Video         { get; set; } = new VideoOptions();
+    public DebugOptions         Debug         { get; set; } = new DebugOptions();
+    public ProfileOptions       Profile       { get; set; } = new ProfileOptions();
+    public MiscellaneousOptions Miscellaneous { get; set; } = new MiscellaneousOptions();
 
     /// <summary>
     ///   Attempt to detect executable on the file-system at the following locations:
@@ -232,6 +233,13 @@ namespace HXE.HCE
         if (!string.IsNullOrWhiteSpace(Profile.Path))
           ApplyArgument(args, $"-path \"{GetFullPath(Profile.Path)}\" ");
 
+        /**
+         * Miscellaneous tweaks. 
+         */
+
+        if (Miscellaneous.NoVideo)
+          ApplyArgument(args, "-novideo ");
+
         return args.ToString();
       }
 
@@ -307,6 +315,11 @@ namespace HXE.HCE
     public class ProfileOptions
     {
       public string Path { get; set; } = Paths.HCE.Directory;
+    }
+
+    public class MiscellaneousOptions
+    {
+      public bool NoVideo { get; set; }
     }
   }
 }
