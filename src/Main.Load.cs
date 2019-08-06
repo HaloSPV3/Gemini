@@ -151,6 +151,10 @@ namespace SPV3
             Developer  = true,
             Screenshot = true,
             Initiation = Paths.Initiation
+          },
+          Miscellaneous = new Executable.MiscellaneousOptions
+          {
+            NoVideo = true
           }
         }, hxe);
 
