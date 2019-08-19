@@ -25,6 +25,7 @@ Features
 -   SPV3.2 loading, updating, installing
 -   SPV3.2/Lumoria campaign resuming
 -   Automatic video/audio enhancements
+-   Borderless HCE/SPV3 window mode
 -   News, social links, announcements
 -   Tweak SPV3.2 post-processing
 -   Automatic field of view
@@ -46,6 +47,11 @@ sources:
 
 -   https://cgit.n2.network/spv3 - upstream source code
 -   https://dist.n2.network/spv3 - compiled executables
+
+HXE Kernel
+----------
+
+The hxe tree contains the official source code for the HXE kernel.
 
 Licence
 -------
