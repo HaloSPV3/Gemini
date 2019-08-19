@@ -1,8 +1,27 @@
-HALO XE (HXE)
-=============
+HXE KERNEL
+==========
 
-This repository contains the source code & documentation for HXE, a
-versatile loader for SPV3 and wrapper for HCE.
+This tree contains the source code & documentation for HXE, a versatile
+loader for SPV3 and wrapper for HCE.
+
+FEATURES
+--------
+
+Here are some of the main features the kernel provides:
+
+-   Wrapper around the HCE executable
+-   Compatibility with HCE arguments (-window, -vidmode, etc.)
+-   Automatic video/audio enhancements
+    -   Custom native video resolution
+    -   Border-less HCE window mode
+-   Support for the SPV3 mod
+    -   SPV3.2 loading, updating, installing
+    -   SPV3.2/Lumoria campaign resuming
+    -   SPV3.2 post-processing tweaking
+    -   Backwards compatibility with SPV3.1
+        -   Campaign resume
+        -   Maps unlocking
+-   Automatic profile detection
 
 USAGE
 -----
@@ -15,15 +34,16 @@ The USAGE document goes into detail on how to use HXE. In a nutshell:
     # installs SPV3 to C:\SPV3
     .\hxe.exe -install "C:\SPV3"
 
-SOURCES
--------
+    # configure the kernel
+    .\hxe.exe -config
 
-Source code and binaries are officially provided at the following
-sources:
+SOURCE
+------
 
--   https://cgit.n2.network/hxe - upstream source code
--   https://dist.n2.network/hxe - compiled executables
--   https://github.com/yumiris/hxe - mirror repository
+The SPV3 repository contains the official HXE kernel source code, under
+the hxe tree:
+
+    https://cgit.n2.network/spv3/tree/hxe
 
 LICENCE
 -------
