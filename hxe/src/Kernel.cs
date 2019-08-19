@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
 using HXE.HCE;
 using HXE.Properties;
 using HXE.SPV3;
@@ -57,6 +56,15 @@ namespace HXE
 
     [DllImport("USER32.DLL")]
     private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+    [DllImport("KERNEL32.DLL")]
+    public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+    [DllImport("KERNEL32.DLL")]
+    public static extern bool ReadProcessMemory
+    (
+      int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead
+    );
 
     /// <summary>
     ///   Loads HCE executable in the working directory.
@@ -616,21 +624,21 @@ namespace HXE
           if (!configuration.Video.Bless)
             return;
 
-          const int GWL_STYLE      = -16;
-          const int SWP_NOMOVE     = 0X2;
-          const int SWP_NOSIZE     = 1;
-          const int SWP_NOZORDER   = 0X4;
-          const int SWP_SHOWWINDOW = 0x0040;
-          const int WS_SYSMENU     = 0x00080000;
-          const int WS_MAXIMIZEBOX = 0x00010000;
-          const int WS_MINIMIZEBOX = 0x00020000;
-          const int WS_SIZEBOX     = 0x00040000;
-          const int WS_BORDER      = 0x00800000;
-          const int WS_DLGFRAME    = 0x00400000;
+          const int LOADED_OFFSET   = 0x0064533B; /* 0x6B4051 could also be used, according to github.com/gbMichelle */
+          const int PROCESS_WM_READ = 0x0010;
+          const int GWL_STYLE       = -16;
+          const int SWP_NOMOVE      = 0X2;
+          const int SWP_NOSIZE      = 1;
+          const int SWP_NOZORDER    = 0X4;
+          const int SWP_SHOWWINDOW  = 0x0040;
+          const int WS_SYSMENU      = 0x00080000;
+          const int WS_MAXIMIZEBOX  = 0x00010000;
+          const int WS_MINIMIZEBOX  = 0x00020000;
+          const int WS_SIZEBOX      = 0x00040000;
+          const int WS_BORDER       = 0x00800000;
+          const int WS_DLGFRAME     = 0x00400000;
           const int WS_CAPTION =
             SWP_NOMOVE | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_BORDER | WS_DLGFRAME | WS_SIZEBOX;
-
-          Thread.Sleep(5000);
 
           try
           {
@@ -640,7 +648,36 @@ namespace HXE
             {
               if (!process.ProcessName.StartsWith("haloce"))
                 continue;
-              process.WaitForInputIdle();
+
+              /**
+               * The bless hack is applied only when HCE has been loaded. HXE deems HCE as loaded when the main menu has
+               * been initiated.
+               *
+               * This is determined by checking the value declared at LOADED_OFFSET. The value changes from 0 to 1 the
+               * moment HCE has loaded.
+               *
+               * The reason we apply the hack then is for robustness: the HCE window becomes responsive around that time
+               * after the loading sequence.
+               */
+
+              var processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+
+              var bytesRead = 0;
+              var buffer    = new byte[1];
+              var loaded    = false;
+
+              while (!loaded)
+              {
+                ReadProcessMemory((int) processHandle, LOADED_OFFSET, buffer, buffer.Length, ref bytesRead);
+                loaded = buffer[0] == 1;
+              }
+
+              /**
+               * The hack attempts to hide any window controls and also move the window to the top left of the current
+               * display. In most circumstances, this should work just fine. If people are applying border-less mode and
+               * use a resolution lower than their screen resolution, then, err... why?
+               */
+
               var pFoundWindow = process.MainWindowHandle;
               var style        = GetWindowLong(pFoundWindow, GWL_STYLE);
               SetWindowLong(pFoundWindow, GWL_STYLE, style & ~WS_CAPTION);
