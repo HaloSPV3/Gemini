@@ -37,7 +37,8 @@
                       BorderThickness="0"
                       Background="Black"
                       Width="960"
-                      Height="540">
+                      Height="540"
+                      MouseDown="Main_Window_OnMouseDown">
     <Window.DataContext>
         <spv3:Main />
     </Window.DataContext>

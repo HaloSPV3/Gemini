@@ -94,5 +94,11 @@ namespace SPV3
     {
       MainTabControl.SelectedItem = ConfigurationTabItem;
     }
+
+    private void Main_Window_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+      if (e.ChangedButton == MouseButton.Left)
+        DragMove();
+    }
   }
 }
