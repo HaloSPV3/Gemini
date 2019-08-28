@@ -57,6 +57,7 @@ namespace HXE
       MainPatch.IsChecked          = _configuration.Main.Patch;
       MainStart.IsChecked          = _configuration.Main.Start;
       MainResume.IsChecked         = _configuration.Main.Resume;
+      MainElevated.IsChecked       = _configuration.Main.Elevated;
       TweaksSpeed.Text             = _configuration.Tweaks.Speed.ToString();
       TweaksCinematic.IsChecked    = _configuration.Tweaks.Cinematic;
       TweaksSensor.IsChecked       = _configuration.Tweaks.Sensor;
@@ -99,6 +100,7 @@ namespace HXE
       _configuration.Main.Patch          = MainPatch.IsChecked          == true;
       _configuration.Main.Start          = MainStart.IsChecked          == true;
       _configuration.Main.Resume         = MainResume.IsChecked         == true;
+      _configuration.Main.Elevated       = MainElevated.IsChecked       == true;
       _configuration.Tweaks.Cinematic    = TweaksCinematic.IsChecked    == true;
       _configuration.Tweaks.Sensor       = TweaksSensor.IsChecked       == true;
       _configuration.Tweaks.Magnetism    = TweaksMagnetism.IsChecked    == true;

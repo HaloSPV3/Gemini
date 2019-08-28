@@ -63,6 +63,8 @@
                                   Name="MainStart" />
                         <CheckBox Content="Resume"
                                   Name="MainResume" />
+                        <CheckBox Content="Elevated"
+                                  Name="MainElevated" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Speed">

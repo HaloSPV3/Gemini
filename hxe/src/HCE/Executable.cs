@@ -178,10 +178,15 @@ namespace HXE.HCE
       return GetValue(RegistryView.Registry32) ?? GetValue(RegistryView.Registry64);
     }
 
+    public void Start()
+    {
+      Start(false);
+    }
+
     /// <summary>
     ///   Invokes the HCE executable with the arguments that represent this object's properties' states.
     /// </summary>
-    public void Start()
+    public void Start(bool elevated)
     {
       /**
        * Converts the properties to arguments which the HCE executable can be invoked with.
@@ -250,7 +255,9 @@ namespace HXE.HCE
         FileName = Path,
         WorkingDirectory = GetDirectoryName(Path) ??
                            throw new DirectoryNotFoundException("Failed to infer process working directory."),
-        Arguments = GetArguments()
+        Arguments       = GetArguments(),
+        UseShellExecute = true,
+        Verb            = elevated ? "runas" : string.Empty
       });
 
       Info("Successfully started HCE executable");

@@ -605,7 +605,7 @@ namespace HXE
         {
           try
           {
-            executable.Start();
+            executable.Start(configuration.Main.Elevated);
 
             Core("EXEC.START: Successfully started the inferred HCE executable.");
           }
@@ -763,6 +763,7 @@ namespace HXE
             bw.Write(Main.Patch);
             bw.Write(Main.Start);
             bw.Write(Main.Resume);
+            bw.Write(Main.Elevated);
           }
 
           /* video */
@@ -860,6 +861,7 @@ namespace HXE
             Main.Patch  = br.ReadBoolean();
             Main.Start  = br.ReadBoolean();
             Main.Resume = br.ReadBoolean();
+            Main.Elevated = br.ReadBoolean();
           }
 
           /* video */
@@ -935,10 +937,11 @@ namespace HXE
 
       public class ConfigurationMain
       {
-        public bool Reset  { get; set; } = true; /* kill HCE process   */
-        public bool Patch  { get; set; } = true; /* patch LAA flag     */
-        public bool Start  { get; set; } = true; /* invoke HCE process */
-        public bool Resume { get; set; } = true; /* resume mission     */
+        public bool Reset    { get; set; } = true;  /* kill HCE process   */
+        public bool Patch    { get; set; } = true;  /* patch LAA flag     */
+        public bool Start    { get; set; } = true;  /* invoke HCE process */
+        public bool Resume   { get; set; } = true;  /* resume mission     */
+        public bool Elevated { get; set; } = false; /* invoke as admin   */
       }
 
       public class ConfigurationVideo

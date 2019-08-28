@@ -99,6 +99,7 @@ The following table outlines the available options:
                       Patch                 bool     0x21
                       Start                 bool     0x22
                       Resume                bool     0x23
+                      Elevated              bool     0x24
   Video Patches       Resolution            bool     0x30
                       Uncap                 bool     0x31
                       Quality               bool     0x32
