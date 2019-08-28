@@ -141,7 +141,8 @@
                               ToolTip="Runs SPV3.2 in windowed mode." />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Borderless:" />
+                    <Label Content="Borderless:"
+                           IsEnabled="{Binding Loader.BorderlessEnabled}" />
                     <CheckBox IsChecked="{Binding Loader.Borderless}"
                               IsEnabled="{Binding Loader.BorderlessEnabled}"
                               ToolTip="Runs the game in borderless window mode." />
@@ -212,29 +213,34 @@
                               ToolTip="Enables SPV3.2's post-processing system." />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Visor Overlay:" />
+                    <Label Content="Visor Overlay:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <CheckBox IsChecked="{Binding Shaders.HudVisor}"
                               IsEnabled="{Binding Loader.Shaders}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Film Grain:" />
+                    <Label Content="Film Grain:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <CheckBox IsChecked="{Binding Shaders.FilmGrain}"
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Enables Film Grain effects. Subjectively pleasant." />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Volumetric Lighting:" />
+                    <Label Content="Volumetric Lighting:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <CheckBox IsChecked="{Binding Shaders.VolumetricLighting}"
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Enhances lighting and bright objects." />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Lens Dirt:" />
+                    <Label Content="Lens Dirt:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <CheckBox IsChecked="{Binding Shaders.LensDirt}"
                               IsEnabled="{Binding Loader.Shaders}" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Motion Blur:" />
+                    <Label Content="Motion Blur:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <ComboBox SelectedIndex="{Binding Shaders.MotionBlur}"
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Sets the Motion Blur level.">
@@ -245,7 +251,8 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Depth of Field:" />
+                    <Label Content="Depth of Field:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <ComboBox SelectedIndex="{Binding Shaders.DOF}"
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Enables DOF effects. Turn this down for performance gains.">
@@ -255,7 +262,8 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Ambient Occlusion:" />
+                    <Label Content="Ambient Occlusion:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <ComboBox SelectedIndex="{Binding Shaders.MXAO}"
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Sets MXAO level. Turn this down for performance gains.">
@@ -265,7 +273,8 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Dynamic Lens Flares:" />
+                    <Label Content="Dynamic Lens Flares:"
+                           IsEnabled="{Binding Loader.Shaders}" />
                     <CheckBox IsChecked="{Binding Shaders.DynamicLensFlares}"
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Enables Dynamic Lens Flares effects." />
