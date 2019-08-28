@@ -69,17 +69,18 @@ namespace SPV3
 
         hxe.Load();
         hxe.Mode               = Kernel.Configuration.ConfigurationMode.SPV32;
-        hxe.Tweaks.Sensor      = true;  /* forcefully enable motion sensor   */
-        hxe.Tweaks.Speed       = 1;     /* apply native game execution speed */
-        hxe.Main.Reset         = true;  /* improve loading stability         */
-        hxe.Main.Patch         = true;  /* improve loading stability         */
-        hxe.Main.Resume        = true;  /* improve loading stability         */
-        hxe.Main.Start         = true;  /* improve loading stability         */
-        hxe.Video.Resolution   = true;  /* permit custom resolution override */
-        hxe.Video.Quality      = false; /* permit in-game quality settings   */
+        hxe.Tweaks.Sensor      = true;          /* forcefully enable motion sensor   */
+        hxe.Tweaks.Speed       = 1;             /* apply native game execution speed */
+        hxe.Main.Reset         = true;          /* improve loading stability         */
+        hxe.Main.Patch         = true;          /* improve loading stability         */
+        hxe.Main.Resume        = true;          /* improve loading stability         */
+        hxe.Main.Start         = true;          /* improve loading stability         */
+        hxe.Main.Elevated      = spv3.Elevated; /* prevent certain crashes           */
+        hxe.Video.Resolution   = true;          /* permit custom resolution override */
+        hxe.Video.Quality      = false;         /* permit in-game quality settings   */
         hxe.Video.Uncap        = spv3.Preference == 1;
         hxe.Video.Gamma        = spv3.Gamma;
-        hxe.Video.Bless        = spv3.Borderless && spv3.Window && spv3.Preference == 1;
+        hxe.Video.Bless        = spv3.Borderless && spv3.Window && spv3.Preference == 1 && spv3.Elevated == false;
         hxe.Audio.Enhancements = spv3.EAX;
         hxe.Input.Override     = spv3.Preset;
         hxe.Tweaks.Cinematic   = spv3.Cinematic;

@@ -147,6 +147,11 @@
                               ToolTip="Runs the game in borderless window mode." />
                 </DockPanel>
                 <DockPanel>
+                    <Label Content="Elevated:" />
+                    <CheckBox IsChecked="{Binding Loader.Elevated}"
+                              ToolTip="Runs SPV3 as administrator, in hopes of preventing certain crashes." />
+                </DockPanel>
+                <DockPanel>
                     <Label Content="DOOM Mode:" />
                     <CheckBox IsChecked="{Binding Loader.DOOM}"
                               Unchecked="ResetWeaponPositions"

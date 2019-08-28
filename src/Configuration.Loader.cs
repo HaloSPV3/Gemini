@@ -50,6 +50,7 @@ namespace SPV3
       private bool   _shaders    = true;
       private ushort _width      = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
+      private bool   _elevated;
 
       public bool Window
       {
@@ -218,6 +219,18 @@ namespace SPV3
         }
       }
 
+      public bool Elevated
+      {
+        get => _elevated;
+        set
+        {
+          if (value == _elevated) return;
+          _elevated = value;
+          OnPropertyChanged();
+          UpdateBorderlessEnabled();
+        }
+      }
+
       public List<string> Adapters => Screen.AllScreens
         .Select
         (
@@ -230,7 +243,7 @@ namespace SPV3
 
       public void UpdateBorderlessEnabled()
       {
-        BorderlessEnabled = Window && Preference == 1;
+        BorderlessEnabled = Window && Preference == 1 && Elevated == false;
       }
 
       public void Save()
@@ -279,6 +292,7 @@ namespace SPV3
             bw.Write(EAX);
             bw.Write(Preset);
             bw.Write(Cinematic);
+            bw.Write(Elevated);
           }
 
           ms.Position = 0;
@@ -327,6 +341,7 @@ namespace SPV3
             EAX       = br.ReadBoolean();
             Preset    = br.ReadBoolean();
             Cinematic = br.ReadBoolean();
+            Elevated  = br.ReadBoolean();
           }
         }
       }

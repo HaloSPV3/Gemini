@@ -78,5 +78,7 @@ LAYOUT
            Borderless          bool
            EAX Toggle          bool
            Preset Toggle       bool
+           Cinematic Toggle    bool
+           Elevated Toggle     bool
 
 Binary length: 256
