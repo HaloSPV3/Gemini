@@ -231,23 +231,27 @@ namespace SPV3
         Copy(HXE.Paths.Installation, Paths.Installation, true);
 
         /* shortcuts */
-        //var shortcut       = Path.Combine(GetFolderPath(DesktopDirectory), "SPV3.url");
         var shortcut       = Path.Combine(GetFolderPath(DesktopDirectory), "SPV3.lnk");
+        string commonStartMenuPath = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\Users\\" +  Environment.GetEnvironmentVariable("USERNAME") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs";
+        string appStartMenuPath = Path.Combine(commonStartMenuPath, "Single Player Version 3");
+        if (!Directory.Exists(appStartMenuPath))
+            Directory.CreateDirectory(appStartMenuPath);
+        string shortcutLocationStartMenu = Path.Combine(appStartMenuPath, "SPV3" + ".lnk");
         var shortcutTarget = Path.Combine(Target,                          Paths.Executable);
-        /*
-        using (var writer = new StreamWriter(shortcut))
-        {
-          var app = Assembly.GetExecutingAssembly().Location;
-          writer.WriteLine("[InternetShortcut]");
-          writer.WriteLine("URL=file:///" + shortcutTarget);
-          writer.WriteLine("IconIndex=0");
-          var icon = app.Replace('\\', '/');
-          writer.WriteLine("IconFile=" + icon);
-          writer.Flush();
+ 
+        // Install shortcut to Desktop
+        try { 
+            install_shortcut("SPV3", shortcut, shortcutTarget, "Single Player Version 3");
+        } catch (Exception e) {
+            Status = "Shortcut error: " + shortcut + "|" + shortcutTarget + "|" + e.Message;
         }
-        */
-        var app = Assembly.GetExecutingAssembly().Location;
-        install_shortcut("SPV3", shortcut, shortcutTarget, "Single Player Version 3.3.0", app.Replace('\\', '/'));
+
+        // Install shortcut to Startmenu
+        try {
+            install_shortcut("SPV3", shortcutLocationStartMenu, shortcutTarget, "Single Player Version 3");
+        } catch (Exception e) { 
+            Status = "Shortcut error: " + shortcut + "|" + shortcutTarget + "|" + e.Message;
+        }
 
         MessageBox.Show(
           "Installation has been successful! " +
@@ -287,14 +291,12 @@ namespace SPV3
       }
     }
 
-    private void install_shortcut(string shortcutName, string shortcutPath, string targetFileLocation, string shortcutDescription, string shortcutIcon)
+    private void install_shortcut(string shortcutName, string shortcutPath, string targetFileLocation, string shortcutDescription)
     {
-        string shortcutLocation = System.IO.Path.Combine(shortcutPath, shortcutName + ".lnk");
         WshShell shell = new WshShell();
-        IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutLocation);
+        IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
 
         shortcut.Description = shortcutDescription;   // The description of the shortcut
-        shortcut.IconLocation = @shortcutIcon;        // The icon of the shortcut
         shortcut.TargetPath = targetFileLocation;     // The path of the file that will launch when the shortcut is run
         shortcut.Save();                              // Save the shortcut
     }
