@@ -232,7 +232,7 @@ namespace SPV3
 
         /* shortcuts */
         var shortcut       = Path.Combine(GetFolderPath(DesktopDirectory), "SPV3.lnk");
-        string commonStartMenuPath = Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\Users\\" +  Environment.GetEnvironmentVariable("USERNAME") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs";
+        string commonStartMenuPath = /*Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\Users\\" +  */Environment.GetEnvironmentVariable("APPDATA") + "\\Microsoft\\Windows\\Start Menu\\Programs";
         string appStartMenuPath = Path.Combine(commonStartMenuPath, "Single Player Version 3");
         if (!Directory.Exists(appStartMenuPath))
             Directory.CreateDirectory(appStartMenuPath);
