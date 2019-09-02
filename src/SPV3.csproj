@@ -186,6 +186,7 @@
     <Resource Include="Assets\background_compile.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Positions -->
     <ContentWithTargetPath Include="Positions\Photo.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>photo.bin</TargetPath>
@@ -193,6 +194,20 @@
     <ContentWithTargetPath Include="Positions\DOOM.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>doom.bin</TargetPath>
+    </ContentWithTargetPath>
+
+    <!-- Tile Support -->
+    <ContentWithTargetPath Include="Tile\spv3.visualelementsmanifest.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>spv3.visualelementsmanifest.xml</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="Tile\tile-small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>tile-small.png</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="Tile\tile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>tile.png</TargetPath>
     </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
