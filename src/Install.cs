@@ -231,26 +231,41 @@ namespace SPV3
         Copy(HXE.Paths.Installation, Paths.Installation, true);
 
         /* shortcuts */
-        var shortcut       = Path.Combine(GetFolderPath(DesktopDirectory), "SPV3.lnk");
-        string commonStartMenuPath = /*Environment.GetEnvironmentVariable("HOMEDRIVE") + "\\Users\\" +  */Environment.GetEnvironmentVariable("APPDATA") + "\\Microsoft\\Windows\\Start Menu\\Programs";
-        string appStartMenuPath = Path.Combine(commonStartMenuPath, "Single Player Version 3");
-        if (!Directory.Exists(appStartMenuPath))
-            Directory.CreateDirectory(appStartMenuPath);
-        string shortcutLocationStartMenu = Path.Combine(appStartMenuPath, "SPV3" + ".lnk");
-        var shortcutTarget = Path.Combine(Target,                          Paths.Executable);
- 
-        // Install shortcut to Desktop
-        try { 
-            install_shortcut("SPV3", shortcut, shortcutTarget, "Single Player Version 3");
-        } catch (Exception e) {
-            Status = "Shortcut error: " + shortcut + "|" + shortcutTarget + "|" + e.Message;
-        }
+        {
+          void Shortcut(string shortcutPath)
+          {
+            var targetFileLocation = Path.Combine(Target, Paths.Executable);
 
-        // Install shortcut to Startmenu
-        try {
-            install_shortcut("SPV3", shortcutLocationStartMenu, shortcutTarget, "Single Player Version 3");
-        } catch (Exception e) { 
-            Status = "Shortcut error: " + shortcut + "|" + shortcutTarget + "|" + e.Message;
+            try
+            {
+              var shell    = new WshShell();
+              var shortcut = (IWshShortcut) shell.CreateShortcut(Path.Combine(shortcutPath, "SPV3.lnk"));
+
+              shortcut.Description = "Single Player Version 3";
+              shortcut.TargetPath  = targetFileLocation;
+              shortcut.Save();
+            }
+            catch (Exception e)
+            {
+              Status = "Shortcut error: " + e.Message;
+            }
+          }
+
+          var appStartMenuPath = Path.Combine
+          (
+            GetFolderPath(ApplicationData),
+            "Microsoft",
+            "Windows",
+            "Start Menu",
+            "Programs",
+            "Single Player Version 3"
+          );
+
+          if (!Directory.Exists(appStartMenuPath))
+            Directory.CreateDirectory(appStartMenuPath);
+
+          Shortcut(GetFolderPath(DesktopDirectory));
+          Shortcut(appStartMenuPath);
         }
 
         MessageBox.Show(
@@ -272,7 +287,7 @@ namespace SPV3
 
           CanInstall = true;
 
-          if (Exists(shortcutTarget))
+          if (Exists(Path.Combine(Target, Paths.Executable)))
           {
             Main = Visibility.Collapsed;
             Hce  = Visibility.Collapsed;
@@ -289,16 +304,6 @@ namespace SPV3
         Status     = e.Message;
         CanInstall = true;
       }
-    }
-
-    private void install_shortcut(string shortcutName, string shortcutPath, string targetFileLocation, string shortcutDescription)
-    {
-        WshShell shell = new WshShell();
-        IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
-
-        shortcut.Description = shortcutDescription;   // The description of the shortcut
-        shortcut.TargetPath = targetFileLocation;     // The path of the file that will launch when the shortcut is run
-        shortcut.Save();                              // Save the shortcut
     }
 
     public void InstallHce()
