@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using HXE;
 using HXE.HCE;
+using IWshRuntimeLibrary;
 using SPV3.Annotations;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
@@ -230,18 +231,41 @@ namespace SPV3
         Copy(HXE.Paths.Installation, Paths.Installation, true);
 
         /* shortcuts */
-        var shortcut       = Path.Combine(GetFolderPath(DesktopDirectory), "SPV3.url");
-        var shortcutTarget = Path.Combine(Target,                          Paths.Executable);
-
-        using (var writer = new StreamWriter(shortcut))
         {
-          var app = Assembly.GetExecutingAssembly().Location;
-          writer.WriteLine("[InternetShortcut]");
-          writer.WriteLine("URL=file:///" + shortcutTarget);
-          writer.WriteLine("IconIndex=0");
-          var icon = app.Replace('\\', '/');
-          writer.WriteLine("IconFile=" + icon);
-          writer.Flush();
+          void Shortcut(string shortcutPath)
+          {
+            var targetFileLocation = Path.Combine(Target, Paths.Executable);
+
+            try
+            {
+              var shell    = new WshShell();
+              var shortcut = (IWshShortcut) shell.CreateShortcut(Path.Combine(shortcutPath, "SPV3.lnk"));
+
+              shortcut.Description = "Single Player Version 3";
+              shortcut.TargetPath  = targetFileLocation;
+              shortcut.Save();
+            }
+            catch (Exception e)
+            {
+              Status = "Shortcut error: " + e.Message;
+            }
+          }
+
+          var appStartMenuPath = Path.Combine
+          (
+            GetFolderPath(ApplicationData),
+            "Microsoft",
+            "Windows",
+            "Start Menu",
+            "Programs",
+            "Single Player Version 3"
+          );
+
+          if (!Directory.Exists(appStartMenuPath))
+            Directory.CreateDirectory(appStartMenuPath);
+
+          Shortcut(GetFolderPath(DesktopDirectory));
+          Shortcut(appStartMenuPath);
         }
 
         MessageBox.Show(
@@ -263,7 +287,7 @@ namespace SPV3
 
           CanInstall = true;
 
-          if (Exists(shortcutTarget))
+          if (Exists(Path.Combine(Target, Paths.Executable)))
           {
             Main = Visibility.Collapsed;
             Hce  = Visibility.Collapsed;
