@@ -199,7 +199,7 @@
     <!-- Presence Support -->
     <ContentWithTargetPath Include="Presence\DRP.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>controls\presence.dll</TargetPath>
+      <TargetPath>controls\haloce_presence.dll</TargetPath>
     </ContentWithTargetPath>
 
     <!-- Tile Support -->
