@@ -56,19 +56,25 @@
                 <GroupBox Header="Main">
                     <StackPanel>
                         <CheckBox Content="Reset"
-                                  Name="MainReset" />
+                                  Name="MainReset"
+                                  ToolTip="Attempts to kill any potentially running HCE processes before loading a new one." />
                         <CheckBox Content="Patch"
-                                  Name="MainPatch" />
+                                  Name="MainPatch"
+                                  ToolTip="Attempts to patch the inferred HCE executable with Large Address Aware flag." />
                         <CheckBox Content="Start"
-                                  Name="MainStart" />
+                                  Name="MainStart"
+                                  ToolTip="Attempts to invoke the HCE executable and create a new process." />
                         <CheckBox Content="Resume"
-                                  Name="MainResume" />
+                                  Name="MainResume"
+                                  ToolTip="Attempts to infer the SPV3 campaign progress and resume it." />
                         <CheckBox Content="Elevated"
-                                  Name="MainElevated" />
+                                  Name="MainElevated"
+                                  ToolTip="Invokes the HCE process with administrative privileges." />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Speed">
-                    <TextBox Name="TweaksSpeed" />
+                    <TextBox Name="TweaksSpeed"
+                             ToolTip="Declares the game execution speed. Suffice to say, this won't work." />
                 </GroupBox>
             </StackPanel>
 
@@ -76,17 +82,23 @@
                       Header="Tweaks">
                 <StackPanel VerticalAlignment="Center">
                     <CheckBox Content="Cinematic"
-                              Name="TweaksCinematic" />
+                              Name="TweaksCinematic"
+                              ToolTip="Toggles cinematic bars for SPV3.2 cut-scenes." />
                     <CheckBox Content="Sensor"
-                              Name="TweaksSensor" />
+                              Name="TweaksSensor"
+                              ToolTip="Toggles motion sensor for SPV3.2." />
                     <CheckBox Content="Magnetism"
-                              Name="TweaksMagnetism" />
+                              Name="TweaksMagnetism"
+                              ToolTip="Toggles SPV3.2 controller magnetism." />
                     <CheckBox Content="Auto Aim"
-                              Name="TweaksAutoAim" />
+                              Name="TweaksAutoAim"
+                              ToolTip="Toggles SPV3.2 controller auto-aim." />
                     <CheckBox Content="Acceleration"
-                              Name="TweaksAcceleration" />
+                              Name="TweaksAcceleration"
+                              ToolTip="Toggles HCE/SPV3 mouse acceleration." />
                     <CheckBox Content="PP Unload"
-                              Name="TweaksUnload" />
+                              Name="TweaksUnload"
+                              ToolTip="Unloads SPV3 post-processing/run SPV3 without shaders." />
                 </StackPanel>
             </GroupBox>
         </Grid>
@@ -100,18 +112,25 @@
 
                 <StackPanel Grid.Column="0">
                     <CheckBox Content="Resolution"
-                              Name="VideoResolution" />
+                              Name="VideoResolution"
+                              ToolTip="Declares the player profile &amp; HCE video resolution." />
                     <CheckBox Content="Uncap"
-                              Name="VideoUncap" />
+                              Name="VideoUncap"
+                              ToolTip="Runs HCE at the highest possible framerate/disables V-Sync." />
                     <CheckBox Content="Quality"
-                              Name="VideoQuality" />
+                              Name="VideoQuality"
+                              ToolTip="Sets HCE video quality and textures to the highest levels." />
                     <CheckBox Content="Bless"
-                              Name="VideoBless" />
+                              Name="VideoBless"
+                              ToolTip="Blesses you with border-less window mode." />
                 </StackPanel>
 
                 <GroupBox Grid.Column="1"
                           Header="Gamma">
-                    <TextBox Name="VideoGamma" />
+                    <TextBox Name="VideoGamma"
+                             VerticalContentAlignment="Center"
+                             HorizontalContentAlignment="Center"
+                             ToolTip="Saves you from looking into a void when playing SPV3's Maw." />
                 </GroupBox>
             </Grid>
         </GroupBox>
@@ -126,9 +145,11 @@
                       Header="Audio">
                 <StackPanel>
                     <CheckBox Content="Quality"
-                              Name="AudioQuality" />
+                              Name="AudioQuality"
+                              ToolTip="Sets HCE audio quality and textures to the highest levels." />
                     <CheckBox Content="Enhancements"
-                              Name="AudioEnhancements" />
+                              Name="AudioEnhancements"
+                              ToolTip="Enables audio HW. Accel. &amp; Environmental Sound if the DSOAL DLL is present." />
                 </StackPanel>
             </GroupBox>
 
@@ -136,7 +157,8 @@
                       Header="Input">
                 <StackPanel VerticalAlignment="Center">
                     <CheckBox Content="Override"
-                              Name="InputOverride" />
+                              Name="InputOverride"
+                              ToolTip="Forcefully applies the SPV3.2 controller preset." />
                 </StackPanel>
             </GroupBox>
         </Grid>

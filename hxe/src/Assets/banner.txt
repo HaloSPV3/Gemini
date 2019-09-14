@@ -3,13 +3,13 @@
 | |__| |\ V /| |__
 |  __  | > < |  __|
 | |  | |/ . \| |____
-|_|  |_/_/ \_\______| :: Halo XE
-================================
-A HCE wrapper and SPV3.2 loader.
---------------------------------
-src: https://cgit.n2.network/hxe
-bin: https://dist.n2.network/hxe
---------------------------------
+|_|  |_/_/ \_\______| .:. Halo XE
+=================================
+A HCE wrapper and kenerl for SPV3
+---------------------------------
+src: https://cgit.n2.network/spv3
+bin: https://dist.n2.network/spv3
+---------------------------------
 
 HXE can be invoked with the following arguments:
 

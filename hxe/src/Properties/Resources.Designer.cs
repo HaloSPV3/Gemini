@@ -77,8 +77,8 @@ namespace HXE.Properties {
         ///HXE can be invoked with the following arguments:
         ///
         ///      --config               Opens configuration GUI
-        ///      --load                 Initiates HCE/SPV3
-        ///      --i [rest of string was truncated]&quot;;.
+        ///      --positions            Opens positions GUI
+        ///      --load              [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Banner {
             get {
@@ -87,7 +87,7 @@ namespace HXE.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This binary has been compiled from build-{0}.
+        ///   Looks up a localized string similar to This binary has been compiled using build-{0}.
         /// </summary>
         internal static string BannerBuildNumber {
             get {
@@ -96,7 +96,7 @@ namespace HXE.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://cgit.n2.network/hxe/tag/?h=build-{0}.
+        ///   Looks up a localized string similar to https://cgit.n2.network/spv3/tag/?h=build-{0}.
         /// </summary>
         internal static string BannerBuildSource {
             get {

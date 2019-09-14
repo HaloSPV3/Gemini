@@ -72,7 +72,77 @@ namespace HXE
     {
       Directory.CreateDirectory(Paths.Directory);
 
+      var help       = false;        /* Displays commands list             */
+      var config     = false;        /* Opens configuration GUI            */
+      var positions  = false;        /* Opens configuration GUI            */
+      var install    = string.Empty; /* Initiates HCE/SPV3                 */
+      var compile    = string.Empty; /* Installs HCE/SPV3 to destination   */
+      var update     = string.Empty; /* Compiles HCE/SPV3 to destination   */
+      var console    = false;        /* Updates directory using manifest   */
+      var devmode    = false;        /* Loads HCE with console mode        */
+      var screenshot = false;        /* Loads HCE with developer mode      */
+      var window     = false;        /* Loads HCE with screenshot ability  */
+      var nogamma    = false;        /* Loads HCE in window mode           */
+      var adapter    = string.Empty; /* Loads HCE without gamma overriding */
+      var path       = string.Empty; /* Loads HCE on monitor X             */
+      var exec       = string.Empty; /* Loads HCE with custom profile path */
+      var vidmode    = string.Empty; /* Loads HCE with custom init file    */
+
+      var options = new OptionSet()
+        .Add("help",       "Displays commands list",             s => help = s      != null)  /* hxe command   */
+        .Add("config",     "Opens configuration GUI",            s => config = s    != null)  /* hxe command   */
+        .Add("positions",  "Opens positions GUI",                s => positions = s != null)  /* hxe command   */
+        .Add("install=",   "Installs HCE/SPV3 to destination",   s => install = s)            /* hxe parameter */
+        .Add("compile=",   "Compiles HCE/SPV3 to destination",   s => compile = s)            /* hxe parameter */
+        .Add("update=",    "Updates directory using manifest",   s => update = s)             /* hxe parameter */
+        .Add("console",    "Loads HCE with console mode",        s => console = s    != null) /* hce parameter */
+        .Add("devmode",    "Loads HCE with developer mode",      s => devmode = s    != null) /* hce parameter */
+        .Add("screenshot", "Loads HCE with screenshot ability",  s => screenshot = s != null) /* hce parameter */
+        .Add("window",     "Loads HCE in window mode",           s => window = s     != null) /* hce parameter */
+        .Add("nogamma",    "Loads HCE without gamma overriding", s => nogamma = s    != null) /* hce parameter */
+        .Add("adapter=",   "Loads HCE on monitor X",             s => adapter = s)            /* hce parameter */
+        .Add("path=",      "Loads HCE with custom profile path", s => path = s)               /* hce parameter */
+        .Add("exec=",      "Loads HCE with custom init file",    s => exec = s)               /* hce parameter */
+        .Add("vidmode=",   "Loads HCE with video mode",          s => vidmode = s);           /* hce parameter */
+
+      var input = options.Parse(args);
+
+      foreach (var i in input)
+        Info("Discovered CLI command: " + i);
+
       var hce = new Executable();
+
+      if (help)
+      {
+        options.WriteOptionDescriptions(Out);
+        Exit(0);
+      }
+
+      if (config)
+      {
+        new Application().Run(new Settings());
+        Exit(0);
+      }
+
+      if (positions)
+      {
+        new Application().Run(new Positions());
+        Exit(0);
+      }
+
+      if (!string.IsNullOrWhiteSpace(install))
+        Run(() => { Installer.Install(CurrentDirectory, Path.GetFullPath(install)); });
+
+      if (!string.IsNullOrWhiteSpace(compile))
+        Run(() => { Compiler.Compile(CurrentDirectory, Path.GetFullPath(compile)); });
+
+      if (!string.IsNullOrWhiteSpace(update))
+        Run(() =>
+        {
+          var updateModule = new Update();
+          updateModule.Import(update);
+          updateModule.Commit();
+        });
 
       /**
        * Implicit verification for legal HCE installations.
@@ -87,75 +157,49 @@ namespace HXE
         Error(e.Message + " -- Legal copy of HCE needs to be installed for loading!");
       }
 
-      var options = new OptionSet()
-        .Add("config", "Opens configuration GUI",
-          s =>
-          {
-            new Application().Run(new Settings());
-            Exit(0);
-          }
-        )
-        .Add("positions", "Opens positions GUI",
-          s =>
-          {
-            new Application().Run(new Positions());
-            Exit(0);
-          })
-        .Add("load", "Initiates HCE/SPV3",
-          s => Run(() => { Kernel.Invoke(hce); }))
-        .Add("install=", "Installs HCE/SPV3 to destination",
-          s => Run(() => { Installer.Install(CurrentDirectory, s); }))
-        .Add("compile=", "Compiles HCE/SPV3 to destination",
-          s => Run(() => { Compiler.Compile(CurrentDirectory, s); }))
-        .Add("update=", "Updates directory using manifest",
-          s => Run(() =>
-          {
-            var update = new Update();
-            update.Import(s);
-            update.Commit();
-          }))
-        .Add("console", "Loads HCE with console mode",
-          s => hce.Debug.Console = true)
-        .Add("devmode", "Loads HCE with developer mode",
-          s => hce.Debug.Developer = true)
-        .Add("screenshot", "Loads HCE with screenshot ability",
-          s => hce.Debug.Screenshot = true)
-        .Add("window", "Loads HCE in window mode",
-          s => hce.Video.Window = true)
-        .Add("nogamma", "Loads HCE without gamma overriding",
-          s => hce.Video.NoGamma = true)
-        .Add("adapter=", "Loads HCE on monitor X",
-          s => hce.Video.Adapter = byte.Parse(s))
-        .Add("path=", "Loads HCE with custom profile path",
-          s => hce.Profile.Path = s)
-        .Add("exec=", "Loads HCE with custom init file",
-          s => hce.Debug.Initiation = s)
-        .Add("vidmode=", "Loads HCE with video mode",
-          s =>
-          {
-            var a = s.Split(',');
+      if (console)
+        hce.Debug.Console = true;
 
-            if (a.Length < 2) return;
+      if (devmode)
+        hce.Debug.Developer = true;
 
-            hce.Video.Mode   = true;
-            hce.Video.Width  = ushort.Parse(a[0]);
-            hce.Video.Height = ushort.Parse(a[1]);
+      if (screenshot)
+        hce.Debug.Screenshot = true;
 
-            if (a.Length > 2) /* optional refresh rate */
-              hce.Video.Refresh = ushort.Parse(a[2]);
-          });
+      if (window)
+        hce.Video.Window = true;
 
-      var input = options.Parse(args);
+      if (nogamma)
+        hce.Video.NoGamma = true;
+
+      if (!string.IsNullOrWhiteSpace(adapter))
+        hce.Video.Adapter = byte.Parse(adapter);
+
+      if (!string.IsNullOrWhiteSpace(path))
+        hce.Profile.Path = path;
+
+      if (!string.IsNullOrWhiteSpace(exec))
+        hce.Debug.Initiation = exec;
+
+      if (!string.IsNullOrWhiteSpace(vidmode))
+      {
+        var a = vidmode.Split(',');
+
+        if (a.Length < 2) return;
+
+        hce.Video.Mode   = true;
+        hce.Video.Width  = ushort.Parse(a[0]);
+        hce.Video.Height = ushort.Parse(a[1]);
+
+        if (a.Length > 2) /* optional refresh rate */
+          hce.Video.Refresh = ushort.Parse(a[2]);
+      }
 
       /**
-       * Implicitly invoke the HXE kernel when no install/compile/load/update command is passed.
+       * Implicitly invoke the HXE kernel with the HCE loading procedure.
        */
 
-      if (!input.Contains("load")    &&
-          !input.Contains("install") &&
-          !input.Contains("compile") &&
-          !input.Contains("update"))
-        Run(() => { Kernel.Invoke(hce); });
+      Run(() => { Kernel.Invoke(hce); });
 
       /**
        * This method is used for running code asynchronously and catching exceptions at the highest level.
