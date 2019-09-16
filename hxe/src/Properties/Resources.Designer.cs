@@ -70,8 +70,8 @@ namespace HXE.Properties {
         ///================================
         ///A HCE wrapper and SPV3.2 loader.
         ///--------------------------------
-        ///src: https://cgit.n2.network/hxe
-        ///bin: https://dist.n2.network/hxe
+        ///src: https://source.n2.network/hxe
+        ///bin: https://builds.n2.network/hxe
         ///--------------------------------
         ///
         ///HXE can be invoked with the following arguments:
@@ -96,7 +96,7 @@ namespace HXE.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://cgit.n2.network/spv3/tag/?h=build-{0}.
+        ///   Looks up a localized string similar to https://source.n2.network/spv3/tag/?h=build-{0}.
         /// </summary>
         internal static string BannerBuildSource {
             get {

@@ -32,7 +32,7 @@ namespace SPV3
   {
     public class VersionUpstream : INotifyPropertyChanged
     {
-      private const string Header = "https://dist.n2.network/spv3/HEADER.txt";
+      private const string Header = "https://builds.n2.network/spv3/HEADER.txt";
       private       string _address;
       private       string _content;
       private       int    _version;

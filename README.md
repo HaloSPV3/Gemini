@@ -45,8 +45,8 @@ Sources
 Source code and binaries are officially provided at the following
 sources:
 
--   https://cgit.n2.network/spv3 - upstream source code
--   https://dist.n2.network/spv3 - compiled executables
+-   https://source.n2.network/spv3 - upstream source code
+-   https://builds.n2.network/spv3 - compiled executables
 
 HXE Kernel
 ----------

@@ -38,7 +38,7 @@ namespace SPV3
 
     public void Changelog()
     {
-      Process.Start(@"https://cgit.n2.network/spv3/log/?showmsg=1&qt=range&q=" +
+      Process.Start(@"https://source.n2.network/spv3/log/?showmsg=1&qt=range&q=" +
                     $"build-{Assembly.Version:D4}..build-{Upstream.Version:D4}");
     }
   }

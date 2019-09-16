@@ -125,7 +125,7 @@
     <value>This binary has been compiled using build-{0}</value>
   </data>
   <data name="BannerBuildSource" xml:space="preserve">
-    <value>https://cgit.n2.network/spv3/tag/?h=build-{0}</value>
+    <value>https://source.n2.network/spv3/tag/?h=build-{0}</value>
   </data>
   <data name="Progress" xml:space="preserve">
     <value>.</value>
