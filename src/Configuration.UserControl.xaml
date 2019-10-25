@@ -279,6 +279,12 @@
                               IsEnabled="{Binding Loader.Shaders}"
                               ToolTip="Enables Dynamic Lens Flares effects." />
                 </DockPanel>
+                <DockPanel>
+                    <Label Content="SSR:"
+                           IsEnabled="{Binding Loader.Shaders}" />
+                    <CheckBox IsChecked="{Binding Shaders.SSR}"
+                              IsEnabled="{Binding Loader.Shaders}" />
+                </DockPanel>
 
                 <Label Content="Quality Presets"
                        HorizontalAlignment="Center"

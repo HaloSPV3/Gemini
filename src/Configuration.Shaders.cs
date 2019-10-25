@@ -40,6 +40,7 @@ namespace SPV3
       private int  _motionBlur         = 3;
       private int  _mxao               = 2;
       private bool _volumetricLighting = true;
+      private bool _ssr                = true;
 
       public bool DynamicLensFlares
       {
@@ -129,7 +130,18 @@ namespace SPV3
         }
       }
 
-      public event PropertyChangedEventHandler PropertyChanged;
+      public bool SSR
+      {
+        get => _ssr;
+        set
+        {
+          if (value == _ssr) return;
+          _ssr = value;
+          OnPropertyChanged();
+        }
+      }
+
+            public event PropertyChangedEventHandler PropertyChanged;
 
       public void Save()
       {
@@ -141,6 +153,7 @@ namespace SPV3
         _configuration.Shaders.DOF                = (PostProcessing.DofOptions) DOF;
         _configuration.Shaders.MotionBlur         = (PostProcessing.MotionBlurOptions) MotionBlur;
         _configuration.Shaders.MXAO               = (PostProcessing.MxaoOptions) MXAO;
+        _configuration.Shaders.SSR                = SSR;
 
         _configuration.Save();
       }
@@ -157,6 +170,7 @@ namespace SPV3
         DOF                = (byte) _configuration.Shaders.DOF;
         MotionBlur         = (byte) _configuration.Shaders.MotionBlur;
         MXAO               = (byte) _configuration.Shaders.MXAO;
+        SSR                = _configuration.Shaders.SSR;
       }
 
       [NotifyPropertyChangedInvocator]
