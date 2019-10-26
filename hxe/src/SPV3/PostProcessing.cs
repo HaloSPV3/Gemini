@@ -71,6 +71,7 @@ namespace HXE.SPV3
     public MxaoOptions                MXAO               { get; set; } = MxaoOptions.High;
     public DofOptions                 DOF                { get; set; } = DofOptions.High;
     public ExperimentalPostProcessing Experimental       { get; set; } = new ExperimentalPostProcessing();
+    public bool                       SSR                { get; set; } = true;
 
     /// <summary>
     ///   Experimental overrides for HCE.

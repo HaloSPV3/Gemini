@@ -202,3 +202,10 @@ DEBANDING <STUB>
 Effect which eliminated banding artifacts (sort of band like anomalies
 that appear in otherwise smooth gradients of colors, due to small color
 space/bit depth)
+
+SSR
+
+> Technique used - Screen Space Ray Tracing
+
+SSR stands for screen space reflections. This effect uses screen space
+ray tracing to allow for realistic reflections universally.

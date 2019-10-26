@@ -242,6 +242,7 @@ namespace HXE
           init.PostProcessing.MotionBlur         = configuration.Shaders.MotionBlur;
           init.PostProcessing.MXAO               = configuration.Shaders.MXAO;
           init.PostProcessing.DOF                = configuration.Shaders.DOF;
+          init.PostProcessing.SSR                = configuration.Shaders.SSR;
 
           Core("INIT.SHADER: SPV3.2 post-processing effects have been assigned to the initiation file.");
 
@@ -259,6 +260,7 @@ namespace HXE
           Debug("INIT.SHADER: Motion Blur         - " + init.PostProcessing.MotionBlur);
           Debug("INIT.SHADER: MXAO                - " + init.PostProcessing.MXAO);
           Debug("INIT.SHADER: DOF                 - " + init.PostProcessing.DOF);
+          Debug("INIT.SHADER: SSR                 - " + init.PostProcessing.SSR);
         }
 
         /**
@@ -818,6 +820,7 @@ namespace HXE
             bw.Write((byte) Shaders.MotionBlur);
             bw.Write((byte) Shaders.MXAO);
             bw.Write((byte) Shaders.DOF);
+            bw.Write(Shaders.SSR);
           }
 
           /* persist */
@@ -916,6 +919,7 @@ namespace HXE
             Shaders.MotionBlur         = (MotionBlurOptions) br.ReadByte();
             Shaders.MXAO               = (MxaoOptions) br.ReadByte();
             Shaders.DOF                = (DofOptions) br.ReadByte();
+            Shaders.SSR                = br.ReadBoolean();
           }
         }
 
