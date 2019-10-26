@@ -207,5 +207,5 @@ SSR
 
 > Technique used - Screen Space Ray Tracing
 
-SSR stands for screen space reflections. This effect uses screen space ray tracing to 
-allow for realistic reflections universally.
+SSR stands for screen space reflections. This effect uses screen space
+ray tracing to allow for realistic reflections universally.

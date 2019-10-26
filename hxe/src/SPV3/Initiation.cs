@@ -186,14 +186,14 @@ namespace HXE.SPV3
         output.AppendLine($"set cl_remote_player_action_queue_tick_limit {option}");
       }
 
-      output.AppendLine("set rasterizer_soft_filter "                 + (vl ? "true" : "false")); /* volumetrics    */
-      output.AppendLine("set display_precache_progress "              + (df ? "true" : "false")); /* dynamic flares */
-      output.AppendLine("set use_super_remote_players_action_update " + (ld ? "false" : "true")); /* lens dirt      */
-      output.AppendLine("set use_new_vehicle_update_scheme "          + (fg ? "false" : "true")); /* film grain     */
-      output.AppendLine("set multiplayer_draw_teammates_names "       + (hv ? "false" : "true")); /* hud visor      */
-      output.AppendLine("set error_suppress_all "                     + (ssr ? "true" : "false")); /* ssr      */
+      output.AppendLine("set rasterizer_soft_filter "                 + (vl ? "true" : "false"));  /* volumetrics    */
+      output.AppendLine("set display_precache_progress "              + (df ? "true" : "false"));  /* dynamic flares */
+      output.AppendLine("set use_super_remote_players_action_update " + (ld ? "false" : "true"));  /* lens dirt      */
+      output.AppendLine("set use_new_vehicle_update_scheme "          + (fg ? "false" : "true"));  /* film grain     */
+      output.AppendLine("set multiplayer_draw_teammates_names "       + (hv ? "false" : "true"));  /* hud visor      */
+      output.AppendLine("set error_suppress_all "                     + (ssr ? "true" : "false")); /* ssr            */
 
-            Info("Saving initiation data to the initc.txt file");
+      Info("Saving initiation data to the initc.txt file");
       WriteAllText(output.ToString());
       Info("Successfully applied initc.txt configurations");
       Debug("Initiation data: \n\n" + ReadAllText());

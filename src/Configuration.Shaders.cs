@@ -141,7 +141,7 @@ namespace SPV3
         }
       }
 
-            public event PropertyChangedEventHandler PropertyChanged;
+      public event PropertyChangedEventHandler PropertyChanged;
 
       public void Save()
       {

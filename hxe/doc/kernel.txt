@@ -129,7 +129,7 @@ The following table outlines the available options:
                       Motion Blur           byte     0xAB
                       MXAO                  byte     0xAC
                       DOF                   byte     0xAD
-					  SSR					byte	 0xAE
+                      SSR                   byte     0xAE
 
 Implicitly speaking, the aforementioned properties are:
 
