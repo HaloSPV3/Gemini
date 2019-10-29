@@ -1,0 +1,18 @@
+INSTALLATION
+============
+
+The SPV3 Loader is officially distributed with the mod; however, to
+install it:
+
+0.  please ensure you have .NET 4.6.1 installed on your system
+1.  download an official archive (or compile the source yourself)
+2.  move the files from the archive (or bin folder if compiled) to the
+    SPV3 or HCE installation folders
+
+UPDATING
+--------
+
+The SPV3 loader checks for updates on start-up. When an update is
+available, click on the respective update button and download/open the
+ZIP on your computer. Move the files inside it to your SPV3/HCE
+installation, and replace any files if prompted.
