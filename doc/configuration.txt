@@ -80,5 +80,6 @@ LAYOUT
            Preset Toggle       bool
            Cinematic Toggle    bool
            Elevated Toggle     bool
+           Display Mode        byte
 
 Binary length: 256

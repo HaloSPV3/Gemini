@@ -44,6 +44,7 @@ namespace SPV3
       private byte   _framerate = 60;
       private byte   _gamma     = 150;
       private ushort _height    = (ushort) Screen.PrimaryScreen.Bounds.Height;
+      private byte   _mode;
       private bool   _photo;
       private byte   _preference = 1;
       private bool   _preset     = true;
@@ -51,6 +52,18 @@ namespace SPV3
       private ushort _width      = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
       private bool   _elevated;
+
+      public byte Mode
+      {
+        get => _mode;
+        set
+        {
+          if (value == _mode) return;
+          _mode = value;
+          OnPropertyChanged();
+          UpdateWindowBorderless();
+        }
+      }
 
       public bool Window
       {
@@ -243,7 +256,13 @@ namespace SPV3
 
       public void UpdateBorderlessEnabled()
       {
-        BorderlessEnabled = Window && Preference == 1 && Elevated == false;
+        BorderlessEnabled = Preference == 1 && Elevated == false;
+      }
+
+      public void UpdateWindowBorderless()
+      {
+        Borderless = _mode == 2;
+        Window     = _mode == 1 || _mode == 2;
       }
 
       public void Save()
@@ -295,6 +314,11 @@ namespace SPV3
             bw.Write(Elevated);
           }
 
+          /* display mode */
+          {
+            bw.Write(Mode);
+          }
+
           ms.Position = 0;
           ms.CopyTo(fs);
         }
@@ -342,6 +366,11 @@ namespace SPV3
             Preset    = br.ReadBoolean();
             Cinematic = br.ReadBoolean();
             Elevated  = br.ReadBoolean();
+          }
+
+          /* display mode */
+          {
+            Mode = br.ReadByte();
           }
         }
       }

@@ -130,22 +130,23 @@
                     </Grid>
                 </DockPanel>
                 <DockPanel Margin="0,5,0,0">
+                    <Label Content="Display Mode:" />
+                    <ComboBox SelectedIndex="{Binding Loader.Mode}"
+                              Width="110">
+                        <ComboBoxItem Content="Fullscreen"
+                                      ToolTip="Runs SPV3.2 in fullscreen mode." />
+                        <ComboBoxItem Content="Window"
+                                      ToolTip="Runs SPV3.2 in windowed mode." />
+                        <ComboBoxItem Content="Borderless"
+                                      ToolTip="Runs SPV3.2 in borderless mode."
+                                      IsEnabled="{Binding Loader.BorderlessEnabled}" />
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
                     <Label Content="Main Display:" />
                     <ComboBox SelectedIndex="{Binding Loader.Adapter}"
                               ItemsSource="{Binding Loader.Adapters }"
                               ToolTip="Sets the display that HCE/SPV3 will run on." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Window:" />
-                    <CheckBox IsChecked="{Binding Loader.Window}"
-                              ToolTip="Runs SPV3.2 in windowed mode." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Borderless:"
-                           IsEnabled="{Binding Loader.BorderlessEnabled}" />
-                    <CheckBox IsChecked="{Binding Loader.Borderless}"
-                              IsEnabled="{Binding Loader.BorderlessEnabled}"
-                              ToolTip="Runs the game in borderless window mode." />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Elevated:" />
