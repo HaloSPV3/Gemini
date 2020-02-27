@@ -81,5 +81,6 @@ LAYOUT
            Cinematic Toggle    bool
            Elevated Toggle     bool
            Display Mode        byte
+           Native Resolution   bool
 
 Binary length: 256

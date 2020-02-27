@@ -97,14 +97,15 @@
                                  HorizontalContentAlignment="Center"
                                  Width="50"
                                  Text="{Binding Loader.Width}"
-                                 ToolTip="Sets the video width of HCE/SPV3." />
+                                 ToolTip="Sets the video width of HCE/SPV3."
+                                 IsEnabled="{Binding Loader.ResolutionEnabled}" />
                         <TextBox Grid.Column="1"
                                  HorizontalAlignment="Right"
                                  HorizontalContentAlignment="Center"
                                  Width="50"
                                  Text="{Binding Loader.Height}"
-                                 ToolTip="Sets the video height of HCE/SPV3." />
-
+                                 ToolTip="Sets the video height of HCE/SPV3."
+                                 IsEnabled="{Binding Loader.ResolutionEnabled}" />
                     </Grid>
                 </DockPanel>
                 <DockPanel Margin="0,7.5,0,0">
@@ -147,6 +148,11 @@
                     <ComboBox SelectedIndex="{Binding Loader.Adapter}"
                               ItemsSource="{Binding Loader.Adapters }"
                               ToolTip="Sets the display that HCE/SPV3 will run on." />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Native Resolution:" />
+                    <CheckBox IsChecked="{Binding Loader.Native}"
+                              ToolTip="Runs SPV3 at the native resolution." />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Elevated:" />

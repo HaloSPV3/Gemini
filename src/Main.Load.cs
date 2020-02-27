@@ -139,8 +139,8 @@ namespace SPV3
           Video = new Executable.VideoOptions
           {
             Mode    = spv3.Preference == 1 && spv3.Framerate > 0,
-            Width   = spv3.Width,
-            Height  = spv3.Height,
+            Width   = spv3.Native ? (ushort) 0 : spv3.Width,
+            Height  = spv3.Native ? (ushort) 0 : spv3.Height,
             Refresh = spv3.Framerate,
             Window  = spv3.Window,
             Adapter = (byte) (spv3.Adapter + 1),

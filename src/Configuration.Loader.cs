@@ -45,13 +45,27 @@ namespace SPV3
       private byte   _gamma     = 150;
       private ushort _height    = (ushort) Screen.PrimaryScreen.Bounds.Height;
       private byte   _mode;
+      private bool   _native;
       private bool   _photo;
       private byte   _preference = 1;
       private bool   _preset     = true;
-      private bool   _shaders    = true;
-      private ushort _width      = (ushort) Screen.PrimaryScreen.Bounds.Width;
+      private bool   _resolutionEnabled;
+      private bool   _shaders = true;
+      private ushort _width   = (ushort) Screen.PrimaryScreen.Bounds.Width;
       private bool   _window;
       private bool   _elevated;
+
+      public bool Native
+      {
+        get => _native;
+        set
+        {
+          if (value == _native) return;
+          _native = value;
+          OnPropertyChanged();
+          UpdateResolutionEnabled();
+        }
+      }
 
       public byte Mode
       {
@@ -232,6 +246,17 @@ namespace SPV3
         }
       }
 
+      public bool ResolutionEnabled
+      {
+        get => _resolutionEnabled;
+        set
+        {
+          if (value == _resolutionEnabled) return;
+          _resolutionEnabled = value;
+          OnPropertyChanged();
+        }
+      }
+
       public bool Elevated
       {
         get => _elevated;
@@ -263,6 +288,11 @@ namespace SPV3
       {
         Borderless = _mode == 2;
         Window     = _mode == 1 || _mode == 2;
+      }
+
+      public void UpdateResolutionEnabled()
+      {
+        ResolutionEnabled = Native == false;
       }
 
       public void Save()
@@ -373,6 +403,9 @@ namespace SPV3
             Mode = br.ReadByte();
           }
         }
+
+        UpdateBorderlessEnabled();
+        UpdateResolutionEnabled();
       }
 
       public bool Exists()
