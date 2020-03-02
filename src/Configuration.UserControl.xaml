@@ -76,16 +76,12 @@
                        Margin="0,0,0,10" />
 
                 <DockPanel>
-                    <Label Content="Video Preference:" />
-                    <ComboBox SelectedIndex="{Binding Loader.Preference}"
-                              Width="110">
-                        <ComboBoxItem Content="Unlock Hertz"
-                                      ToolTip="This will set V-Sync off; however, expect potential instability." />
-                        <ComboBoxItem Content="Stable Video"
-                                      ToolTip="This will improve video stability, whilst also permitting custom refresh rates." />
-                    </ComboBox>
+                    <Label Content="Native Resolution:" />
+                    <CheckBox IsChecked="{Binding Loader.Native}"
+                              ToolTip="Runs SPV3 at the native resolution." />
                 </DockPanel>
-                <DockPanel Margin="0,7.5,0,0">
+
+                <DockPanel>
                     <Label Content="Width &amp; Height:" />
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -108,7 +104,17 @@
                                  IsEnabled="{Binding Loader.ResolutionEnabled}" />
                     </Grid>
                 </DockPanel>
-                <DockPanel Margin="0,7.5,0,0">
+                <DockPanel Margin="0,5,0,0">
+                    <Label Content="Video Preference:" />
+                    <ComboBox SelectedIndex="{Binding Loader.Preference}"
+                              Width="110">
+                        <ComboBoxItem Content="Unlock Hertz"
+                                      ToolTip="This will set V-Sync off; however, expect potential instability." />
+                        <ComboBoxItem Content="Stable Video"
+                                      ToolTip="This will improve video stability, whilst also permitting custom refresh rates." />
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
                     <Label Content="FPS/Hz &amp; Gamma:" />
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -148,11 +154,6 @@
                     <ComboBox SelectedIndex="{Binding Loader.Adapter}"
                               ItemsSource="{Binding Loader.Adapters }"
                               ToolTip="Sets the display that HCE/SPV3 will run on." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Native Resolution:" />
-                    <CheckBox IsChecked="{Binding Loader.Native}"
-                              ToolTip="Runs SPV3 at the native resolution." />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Elevated:" />
