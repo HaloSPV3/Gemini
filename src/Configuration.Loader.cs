@@ -24,8 +24,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows.Forms;
 using SPV3.Annotations;
+using static System.Windows.Forms.Screen;
 
 namespace SPV3
 {
@@ -35,25 +35,25 @@ namespace SPV3
     {
       private const int Length = 256;
 
-      private byte   _adapter;
-      private bool   _borderless;
-      private bool   _borderlessEnabled;
-      private bool   _cinematic = true;
-      private bool   _doom;
-      private bool   _eax;
-      private byte   _framerate = 60;
-      private byte   _gamma     = 150;
-      private ushort _height    = (ushort) Screen.PrimaryScreen.Bounds.Height;
-      private byte   _mode;
-      private bool   _native;
-      private bool   _photo;
-      private byte   _preference = 1;
-      private bool   _preset     = true;
-      private bool   _resolutionEnabled;
-      private bool   _shaders = true;
-      private ushort _width   = (ushort) Screen.PrimaryScreen.Bounds.Width;
-      private bool   _window;
-      private bool   _elevated;
+      private byte   _adapter;                                          /* physical monitor to run hce/spv3 on        */
+      private bool   _borderless;                                       /* run hce/spv3 without window borders        */
+      private bool   _borderlessEnabled;                                /* ability to toggle borderless               */
+      private bool   _cinematic = true;                                 /* toggle spv3 cinematic settings             */
+      private bool   _doom;                                             /* toggle spv3 doom mode                      */
+      private bool   _eax;                                              /* toggle hw accel. & environmental sound     */
+      private byte   _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
+      private byte   _gamma     = 150;                                  /* gamma level to run spv3 at (in vsync mode) */
+      private ushort _height    = (ushort) PrimaryScreen.Bounds.Height; /* height spv3/hce will be displayed at       */
+      private byte   _mode;                                             /* display - fullscreen/window/borderless     */
+      private bool   _native;                                           /* runs native instead of custom resolution   */
+      private bool   _photo;                                            /* enables spv3 photo/blind mode              */
+      private byte   _preference = 1;                                   /* video preference (stable vs hertz unlocked */
+      private bool   _preset     = true;                                /* use the built-in spv3 controller preset    */
+      private bool   _resolutionEnabled;                                /* ability to provide custom resolution       */
+      private bool   _shaders = true;                                   /* toggle spv3 post-processing effects        */
+      private ushort _width   = (ushort) PrimaryScreen.Bounds.Width;    /* width spv3/hce will be displayed at        */
+      private bool   _window;                                           /* runs spv3/hce as a windowed application    */
+      private bool   _elevated;                                         /* runs spv3/hce in elevated (admin) mode     */
 
       public bool Native
       {
@@ -269,7 +269,7 @@ namespace SPV3
         }
       }
 
-      public List<string> Adapters => Screen.AllScreens
+      public List<string> Adapters => AllScreens
         .Select
         (
           screen => screen.DeviceName
