@@ -347,6 +347,7 @@ namespace SPV3
           /* display mode */
           {
             bw.Write(Mode);
+            bw.Write(Native);
           }
 
           ms.Position = 0;
@@ -400,7 +401,8 @@ namespace SPV3
 
           /* display mode */
           {
-            Mode = br.ReadByte();
+            Mode   = br.ReadByte();
+            Native = br.ReadBoolean();
           }
         }
 
