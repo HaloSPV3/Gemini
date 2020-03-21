@@ -1,0 +1,13 @@
+<<<<<<< HEAD
+[submodule "hxe"]
+	path = hxe
+	url = https://github.com/HaloSPV3/hxe
+	branch = develop
+=======
+[submodule "Registrar"]
+	path = Registrar
+	url = https://github.com/AWilliams17/Registrar.git
+[submodule "SharpUtils"]
+	path = SharpUtils
+	url = https://github.com/AWilliams17/SharpUtils.git
+>>>>>>> refs/rewritten/b6e6c5b28eb512fd1e723f9ac2a662ce8876ffd2-2
