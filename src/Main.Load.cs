@@ -53,7 +53,7 @@ namespace SPV3
       public void Invoke()
       {
         var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration          */
-        var hxe       = new Kernel.Configuration(Paths.Kernel);                  /* for compatibility & tweaks */
+        var hxe       = new HXE.Kernel.Configuration(Paths.Kernel);              /* for compatibility & tweaks */
         var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
         var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
 
@@ -68,7 +68,7 @@ namespace SPV3
         }
 
         hxe.Load();
-        hxe.Mode               = Kernel.Configuration.ConfigurationMode.SPV33;
+        hxe.Mode               = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
         hxe.Tweaks.Sensor      = true;          /* forcefully enable motion sensor   */
         hxe.Main.Reset         = true;          /* improve loading stability         */
         hxe.Main.Patch         = true;          /* improve loading stability         */
@@ -87,7 +87,7 @@ namespace SPV3
 
         if (File.Exists(HXE.Paths.Version))
         {
-          hxe.Mode = Kernel.Configuration.ConfigurationMode.SPV33;
+          hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
         }
         if (chimera.Exists())
         {
@@ -133,7 +133,7 @@ namespace SPV3
         chimera.Save();   /* saves to %APPDATA%\SPV3 */
         hxe.Save();       /* saves to %APPDATA%\SPV3 */
 
-        Kernel.Invoke(new Executable
+        HXE.Kernel.Invoke(new Executable
         {
           Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
           Profile = new Executable.ProfileOptions

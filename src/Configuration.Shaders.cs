@@ -30,7 +30,7 @@ namespace SPV3
   {
     public class ConfigurationShaders : INotifyPropertyChanged
     {
-      private readonly Kernel.Configuration _configuration = new Kernel.Configuration(Paths.Kernel);
+      private readonly HXE.Kernel.Configuration _configuration = new HXE.Kernel.Configuration(Paths.Kernel);
 
       private int  _dof                = 0;
       private bool _dynamicLensFlares  = false;
@@ -47,7 +47,7 @@ namespace SPV3
       {
         if (System.IO.File.Exists(HXE.Paths.Version))
         {
-          _configuration.Mode = Kernel.Configuration.ConfigurationMode.SPV33;
+          _configuration.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
           return true;
         }
         else
@@ -70,7 +70,7 @@ namespace SPV3
         set
         {
           if (value == _dynamicLensFlares) return;
-          if (value == true && _configuration.Mode != Kernel.Configuration.ConfigurationMode.SPV33)
+          if (value == true && _configuration.Mode != HXE.Kernel.Configuration.ConfigurationMode.SPV33)
             _deband = false;
           _dynamicLensFlares = value;
           OnPropertyChanged();
@@ -171,7 +171,7 @@ namespace SPV3
         set
         {
           if (value == _deband) return;
-          if (value == true && _configuration.Mode == Kernel.Configuration.ConfigurationMode.SPV33)
+          if (value == true && _configuration.Mode == HXE.Kernel.Configuration.ConfigurationMode.SPV33)
             _dynamicLensFlares = false;
           _deband = value;
           OnPropertyChanged();
