@@ -115,37 +115,34 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel Margin="0,5,0,0">
-                    <Label Content="FPS/Hz &amp; Gamma:" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0"
-                                 Width="50"
+                    <Label Content="V-Sync Rate" />
+                        <TextBox Width="50"
                                  HorizontalAlignment="Left"
                                  HorizontalContentAlignment="Center"
                                  Text="{Binding Loader.Framerate}"
                                  IsEnabled="{Binding Loader.Preference}"
                                  ToolTip="Set the in-game refresh rate." />
-                        <TextBox Grid.Column="1"
-                                 Width="50"
-                                 HorizontalAlignment="Right"
-                                 HorizontalContentAlignment="Center"
-                                 Text="{Binding Loader.Gamma}"
-                                 ToolTip="Set the in-game gamma." />
-                    </Grid>
                 </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <Label Content="Gamma"/>
+                    <CheckBox IsChecked="{Binding Loader.UseGamma}" />
+                    <TextBox  Width="50"
+                              HorizontalAlignment="Left"
+                              HorizontalContentAlignment="Center"
+                              Text="{Binding Loader.Gamma}"
+                              IsEnabled="{Binding Loader.UseGamma}"
+                              ToolTip="Set the in-game refresh rate." />
+        </DockPanel>
                 <DockPanel Margin="0,5,0,0">
                     <Label Content="Display Mode:" />
                     <ComboBox SelectedIndex="{Binding Loader.Mode}"
                               Width="110">
                         <ComboBoxItem Content="Fullscreen"
-                                      ToolTip="Runs SPV3.2 in fullscreen mode." />
+                                      ToolTip="Runs SPV3 in fullscreen mode." />
                         <ComboBoxItem Content="Window"
-                                      ToolTip="Runs SPV3.2 in windowed mode." />
+                                      ToolTip="Runs SPV3 in windowed mode." />
                         <ComboBoxItem Content="Borderless"
-                                      ToolTip="Runs SPV3.2 in borderless mode."
+                                      ToolTip="Runs SPV3 in borderless mode."
                                       IsEnabled="{Binding Loader.BorderlessEnabled}" />
                     </ComboBox>
                 </DockPanel>
@@ -156,7 +153,7 @@
                               ToolTip="Sets the display that HCE/SPV3 will run on." />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Elevated:" />
+                    <Label Content="Run as Admin:" />
                     <CheckBox IsChecked="{Binding Loader.Elevated}"
                               ToolTip="Runs SPV3 as administrator, in hopes of preventing certain crashes." />
                 </DockPanel>
@@ -175,7 +172,7 @@
                 <DockPanel>
                     <Label Content="SPV3 Input Preset:" />
                     <CheckBox IsChecked="{Binding Loader.Preset}"
-                              ToolTip="Forces SPV3.2 controller mapping. Disable this if you want custom mapping." />
+                              ToolTip="Forces SPV3 controller mapping. Disable this if you want custom mapping." />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="DSOAL/EAX Audio:" />
@@ -186,13 +183,23 @@
                     <Label Content="Field of View:" />
                     <TextBox Text="{Binding OpenSauce.FieldOfView}" />
                 </DockPanel>
-                <Button Margin="0,5,0,0"
-                        Content="Calculate FOV"
-                        Click="CalculateFOV" />
-                <Button Margin="0,1,0,0"
-                        Content="Reset Weapon Positions"
-                        Click="ResetWeaponPositions"
-                        ToolTip="Click here if DOOM mode persists when you don't want it to." />
+                <DockPanel>
+                    <Button Margin="0,5,0,0"
+                            Content="Optimal FOV"
+                            Click="CalculateFOV" />
+                    <Button Margin="1,5,0,0"
+                            ToolTip="Click here if DOOM mode persists when you don't want it to."
+                            Width="122" 
+                            FontSize="9"
+                            Content="Reset Weapon Positions"
+                            Click="ResetWeaponPositions" />
+                </DockPanel>
+                <DockPanel>
+                    <Button Visibility="Hidden"
+                            Margin="0,5,0,0"
+                            Content="Positions"
+                            Click="Positions" />
+                </DockPanel>
             </StackPanel>
 
             <!-- Graphics -->
@@ -218,7 +225,7 @@
                 <DockPanel>
                     <Label Content="Post-Processing:" />
                     <CheckBox IsChecked="{Binding Loader.Shaders}"
-                              ToolTip="Enables SPV3.2's or SPV3.3's post-processing system." />
+                              ToolTip="Enables SPV3's post-processing system." />
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Visor Overlay:"
@@ -366,7 +373,7 @@
                 </Grid>
             </StackPanel>
 
-            <!-- OpenSauce & OpenSauce -->
+            <!-- OpenSauce & Chimera -->
             <StackPanel Grid.Column="2"
                         HorizontalAlignment="Right"
                         Margin="0,10,50,0"
@@ -396,8 +403,8 @@
                               ToolTip="Adds more visual depth to models." />
                 </DockPanel>
                 <DockPanel>
-                    <Label Content="Detailed Maps:" />
-                    <CheckBox IsChecked="{Binding OpenSauce.DetailedMaps}"
+                    <Label Content="Detail Normal Maps:" />
+                    <CheckBox IsChecked="{Binding OpenSauce.DetailNormalMaps}"
                               ToolTip="Adds more small visual depth to models." />
                 </DockPanel>
                 <DockPanel>
@@ -475,8 +482,15 @@
                     Width="100"
                     Margin="1,0,0,0" />
 
-            <!-- Versions -->
+      <!-- Versions -->
             <local:Version_UserControl />
-        </StackPanel>
+
+      <!-- HXE Config -->
+            <Button Content="Advanced"
+                    Click="Advanced"
+                    HorizontalAlignment="Right"
+                    Margin="350,0"
+                    Width="100" />
+    </StackPanel>
     </Grid>
 </UserControl>
