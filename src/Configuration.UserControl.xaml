@@ -76,15 +76,11 @@
                 Margin="0,0,0,10" />
 
         <DockPanel>
-          <Label Content="Native Resolution:" />
+          <Label Content="Width &amp; Height:" />
           <CheckBox IsChecked="{Binding Loader.Native}"
                     ToolTip="Runs SPV3 at the native resolution."
                     HorizontalAlignment="Left" />
-        </DockPanel>
-
-        <DockPanel>
-          <Label Content="Width &amp; Height:" />
-            <TextBox HorizontalAlignment="Left"
+          <TextBox HorizontalAlignment="Left"
                      HorizontalContentAlignment="Center"
                      Width="50"
                      Text="{Binding Loader.Width}"
@@ -179,6 +175,7 @@
             <TextBox Grid.Column="0"
               HorizontalAlignment="Left"
               HorizontalContentAlignment="Center"
+              Text="{Binding OpenSauce.FieldOfView}"
               Width="50" />
             <Button Grid.Column="2"
               Content="Optimal"
