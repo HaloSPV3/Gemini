@@ -25,472 +25,483 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SPV3"
              mc:Ignorable="d">
-    <UserControl.DataContext>
-        <local:Configuration />
-    </UserControl.DataContext>
-    <Grid Width="960"
+  <UserControl.DataContext>
+    <local:Configuration />
+  </UserControl.DataContext>
+  <Grid Width="960"
           Height="540">
-        <Grid.Background>
-            <ImageBrush ImageSource="Assets/background_settings.jpg" />
-        </Grid.Background>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <Grid.Background>
+      <ImageBrush ImageSource="Assets/background_settings.jpg" />
+    </Grid.Background>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
 
-        <!-- Settings -->
-        <Grid Grid.Row="0"
+    <!-- Settings -->
+    <Grid Grid.Row="0"
               Width="960"
               Background="#E5FFFFFF">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style TargetType="{x:Type TextBox}">
-                    <Setter Property="Width" Value="110" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                </Style>
-                <Style TargetType="{x:Type DockPanel}">
-                    <Setter Property="Margin" Value="0,1,0,0" />
-                </Style>
-            </Grid.Resources>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.Resources>
+        <Style TargetType="{x:Type TextBox}">
+          <Setter Property="Width" Value="110" />
+          <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type DockPanel}">
+          <Setter Property="Margin" Value="0,1,0,0" />
+        </Style>
+      </Grid.Resources>
 
-            <!-- General -->
-            <StackPanel Grid.Column="0"
-                        Margin="50,10,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="115" />
-                    </Style>
-                </StackPanel.Resources>
+      <!-- General -->
+      <StackPanel Grid.Column="0"
+                  Margin="50,10,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+        <StackPanel.Resources>
+          <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Width" Value="115" />
+          </Style>
+        </StackPanel.Resources>
 
-                <Label Content="General Settings"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top"
-                       Width="Auto"
-                       FontSize="16"
-                       Margin="0,0,0,10" />
+        <Label Content="General Settings"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Width="Auto"
+                FontSize="16"
+                Margin="0,0,0,10" />
 
-                <DockPanel>
-                    <Label Content="Native Resolution:" />
-                    <CheckBox IsChecked="{Binding Loader.Native}"
-                              ToolTip="Runs SPV3 at the native resolution." />
-                </DockPanel>
-
-                <DockPanel>
-                    <Label Content="Width &amp; Height:" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0"
-                                 HorizontalAlignment="Left"
-                                 HorizontalContentAlignment="Center"
-                                 Width="50"
-                                 Text="{Binding Loader.Width}"
-                                 ToolTip="Sets the video width of HCE/SPV3."
-                                 IsEnabled="{Binding Loader.ResolutionEnabled}" />
-                        <TextBox Grid.Column="1"
-                                 HorizontalAlignment="Right"
-                                 HorizontalContentAlignment="Center"
-                                 Width="50"
-                                 Text="{Binding Loader.Height}"
-                                 ToolTip="Sets the video height of HCE/SPV3."
-                                 IsEnabled="{Binding Loader.ResolutionEnabled}" />
-                    </Grid>
-                </DockPanel>
-                <DockPanel Margin="0,5,0,0">
-                    <Label Content="Video Preference:" />
-                    <ComboBox SelectedIndex="{Binding Loader.Preference}"
-                              Width="110">
-                        <ComboBoxItem Content="Unlock Hertz"
-                                      ToolTip="This will set V-Sync off; however, expect potential instability." />
-                        <ComboBoxItem Content="Stable Video"
-                                      ToolTip="This will improve video stability, whilst also permitting custom refresh rates." />
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel Margin="0,5,0,0">
-                    <Label Content="V-Sync Rate" />
-                        <TextBox Width="50"
-                                 HorizontalAlignment="Left"
-                                 HorizontalContentAlignment="Center"
-                                 Text="{Binding Loader.Framerate}"
-                                 IsEnabled="{Binding Loader.Preference}"
-                                 ToolTip="Set the in-game refresh rate." />
-                </DockPanel>
-                <DockPanel Margin="0,5,0,0">
-                    <Label Content="Gamma"/>
-                    <CheckBox IsChecked="{Binding Loader.UseGamma}" />
-                    <TextBox  Width="50"
-                              HorizontalAlignment="Left"
-                              HorizontalContentAlignment="Center"
-                              Text="{Binding Loader.Gamma}"
-                              IsEnabled="{Binding Loader.UseGamma}"
-                              ToolTip="Set the in-game refresh rate." />
+        <DockPanel>
+          <Label Content="Native Resolution:" />
+          <CheckBox IsChecked="{Binding Loader.Native}"
+                    ToolTip="Runs SPV3 at the native resolution."
+                    HorizontalAlignment="Left" />
         </DockPanel>
-                <DockPanel Margin="0,5,0,0">
-                    <Label Content="Display Mode:" />
-                    <ComboBox SelectedIndex="{Binding Loader.Mode}"
-                              Width="110">
-                        <ComboBoxItem Content="Fullscreen"
-                                      ToolTip="Runs SPV3 in fullscreen mode." />
-                        <ComboBoxItem Content="Window"
-                                      ToolTip="Runs SPV3 in windowed mode." />
-                        <ComboBoxItem Content="Borderless"
-                                      ToolTip="Runs SPV3 in borderless mode."
-                                      IsEnabled="{Binding Loader.BorderlessEnabled}" />
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel Margin="0,5,0,0">
-                    <Label Content="Main Display:" />
-                    <ComboBox SelectedIndex="{Binding Loader.Adapter}"
-                              ItemsSource="{Binding Loader.Adapters }"
-                              ToolTip="Sets the display that HCE/SPV3 will run on." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Run as Admin:" />
-                    <CheckBox IsChecked="{Binding Loader.Elevated}"
-                              ToolTip="Runs SPV3 as administrator, in hopes of preventing certain crashes." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="DOOM Mode:" />
-                    <CheckBox IsChecked="{Binding Loader.DOOM}"
-                              Unchecked="ResetWeaponPositions"
-                              ToolTip="Centers your weapons a la DOOM." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Photo Mode:" />
-                    <CheckBox IsChecked="{Binding Loader.Photo}"
-                              Unchecked="ResetWeaponPositions"
-                              ToolTip="Disables HUD and weapons - useful for taking photographs." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="SPV3 Input Preset:" />
-                    <CheckBox IsChecked="{Binding Loader.Preset}"
-                              ToolTip="Forces SPV3 controller mapping. Disable this if you want custom mapping." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="DSOAL/EAX Audio:" />
-                    <CheckBox IsChecked="{Binding Loader.EAX}"
-                              ToolTip="Enables Hardware Acceleration and Sound Enhancement. DSOAL is required for this!" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Field of View:" />
-                    <TextBox Text="{Binding OpenSauce.FieldOfView}" />
-                </DockPanel>
-                <DockPanel>
-                    <Button Margin="0,5,0,0"
-                            Content="Optimal FOV"
-                            Click="CalculateFOV" />
-                    <Button Margin="1,5,0,0"
-                            ToolTip="Click here if DOOM mode persists when you don't want it to."
-                            Width="122" 
-                            FontSize="9"
-                            Content="Reset Weapon Positions"
-                            Click="ResetWeaponPositions" />
-                </DockPanel>
-                <DockPanel>
-                    <Button Visibility="Hidden"
-                            Margin="0,5,0,0"
-                            Content="Positions"
-                            Click="Positions" />
-                </DockPanel>
-            </StackPanel>
 
-            <!-- Graphics -->
-            <StackPanel Grid.Column="1"
-                        Margin="0,10,0,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="140" />
-                    </Style>
-                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                        <Setter Property="Width" Value="100" />
-                    </Style>
-                </StackPanel.Resources>
+        <DockPanel>
+          <Label Content="Width &amp; Height:" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0"
+                     HorizontalAlignment="Left"
+                     HorizontalContentAlignment="Center"
+                     Width="50"
+                     Text="{Binding Loader.Width}"
+                     ToolTip="Sets the video width of HCE/SPV3."
+                     IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="2" />
+            <TextBox Grid.Column="2"
+                     HorizontalAlignment="Left"
+                     HorizontalContentAlignment="Center"
+                     Width="50"
+                     Text="{Binding Loader.Height}"
+                     ToolTip="Sets the video height of HCE/SPV3."
+                     IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="2" />
+          </Grid>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+          <Label Content="Video Preference:" />
+          <ComboBox SelectedIndex="{Binding Loader.Preference}"
+                    Width="110"
+                    HorizontalAlignment="Left">
+            <ComboBoxItem Content="Unlock Hertz"
+                          ToolTip="This will set V-Sync off; however, expect potential instability." />
+            <ComboBoxItem Content="Stable Video"
+                          ToolTip="This will improve video stability, whilst also permitting custom refresh rates." />
+          </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+          <Label Content="V-Sync Rate (Hz)" />
+          <TextBox Width="50"
+                   HorizontalAlignment="Left"
+                   HorizontalContentAlignment="Center"
+                   Text="{Binding Loader.Framerate}"
+                   IsEnabled="{Binding Loader.Preference}"
+                   ToolTip="Set the in-game refresh rate." />
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+          <Label Content="Gamma"/>
+          <CheckBox IsChecked="{Binding Loader.UseGamma}" 
+                    HorizontalAlignment="Left"/>
+          <TextBox  Width="50"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Center"
+                    Text="{Binding Loader.Gamma}"
+                    IsEnabled="{Binding Loader.UseGamma}"
+                    ToolTip="Set the in-game refresh rate." />
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+          <Label Content="Display Mode:" />
+          <ComboBox SelectedIndex="{Binding Loader.Mode}"
+                    Width="110"
+                    HorizontalAlignment="Left">
+            <ComboBoxItem Content="Fullscreen"
+                          ToolTip="Runs SPV3 in fullscreen mode." />
+            <ComboBoxItem Content="Window"
+                          ToolTip="Runs SPV3 in windowed mode." />
+            <ComboBoxItem Content="Borderless"
+                          ToolTip="Runs SPV3 in borderless mode."
+                          IsEnabled="{Binding Loader.BorderlessEnabled}" />
+          </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+          <Label Content="Main Display:" />
+          <ComboBox SelectedIndex="{Binding Loader.Adapter}"
+                    ItemsSource="{Binding Loader.Adapters }"
+                    ToolTip="Sets the display that HCE/SPV3 will run on." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Run as Admin:" />
+          <CheckBox IsChecked="{Binding Loader.Elevated}"
+                    ToolTip="Runs SPV3 as administrator, in hopes of preventing certain crashes." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="DOOM Mode:" />
+          <CheckBox IsChecked="{Binding Loader.DOOM}"
+                    Unchecked="ResetWeaponPositions"
+                    ToolTip="Centers your weapons a la DOOM." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Photo Mode:" />
+          <CheckBox IsChecked="{Binding Loader.Photo}"
+                    Unchecked="ResetWeaponPositions"
+                    ToolTip="Disables HUD and weapons - useful for taking photographs." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="SPV3 Input Preset:" />
+          <CheckBox IsChecked="{Binding Loader.Preset}"
+                    ToolTip="Forces SPV3 controller mapping. Disable this if you want custom mapping." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="DSOAL/EAX Audio:" />
+          <CheckBox IsChecked="{Binding Loader.EAX}"
+                    ToolTip="Enables Hardware Acceleration and Sound Enhancement. DSOAL is required for this!" />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Field of View:" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0"
+              HorizontalAlignment="Left"
+              HorizontalContentAlignment="Center"
+              Text="70"
+              Width="50" />
+            <Button Grid.Column="2"
+              Content="Optimal"
+              Click="CalculateFOV" 
+              HorizontalAlignment="Left" 
+              Margin="5,0,0,0"/>
+          </Grid>
+        </DockPanel>
+        <DockPanel>
+          <Button Visibility="Hidden"
+                  Content="Positions"
+                  Click="Positions" />
+        </DockPanel>
+      </StackPanel>
 
-                <Label Content="Post-Processing"
-                       HorizontalAlignment="Center"
-                       Width="Auto"
-                       FontSize="16"
-                       Margin="0,0,0,10" />
+      <!-- Graphics -->
+      <StackPanel Grid.Column="1"
+                  Margin="0,10,0,0"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top">
+        <StackPanel.Resources>
+          <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Width" Value="140" />
+          </Style>
+          <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Width" Value="100" />
+          </Style>
+        </StackPanel.Resources>
 
-                <DockPanel>
-                    <Label Content="Post-Processing:" />
-                    <CheckBox IsChecked="{Binding Loader.Shaders}"
-                              ToolTip="Enables SPV3's post-processing system." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Visor Overlay:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <CheckBox IsChecked="{Binding Shaders.HudVisor}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Enables HUD extras like visor holograms and helmet bits"/>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Film Grain:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <CheckBox IsChecked="{Binding Shaders.FilmGrain}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Enables Film Grain effects. Subjectively pleasant." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Volumetric Lighting:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <CheckBox IsChecked="{Binding Shaders.VolumetricLighting}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Enables simulation of light scattering through fog" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Lens Dirt:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <CheckBox IsChecked="{Binding Shaders.LensDirt}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Enables dirt and scratches on visor" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Motion Blur:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <ComboBox SelectedIndex="{Binding Shaders.MotionBlur}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Sets the Motion Blur level. POMB is high quality motion blur.&#x0a;Fall back to 'Built-in' when the game runs at sub 25 FPS">
-                        <ComboBoxItem Content="Off" />
-                        <ComboBoxItem Content="Built-in" />
-                        <ComboBoxItem Content="POMB Low" />
-                        <ComboBoxItem Content="POMB High" />
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Depth of Field:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <ComboBox SelectedIndex="{Binding Shaders.DOF}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Enables DOF effects. Turn this down for performance gains.">
-                        <ComboBoxItem Content="Off" />
-                        <ComboBoxItem Content="Low" />
-                        <ComboBoxItem Content="High" />
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Ambient Occlusion:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <ComboBox SelectedIndex="{Binding Shaders.MXAO}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Sets MXAO level. Turn this down for performance gains.">
-                        <ComboBoxItem Content="Off" />
-                        <ComboBoxItem Content="Low" />
-                        <ComboBoxItem Content="High" />
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel Visibility="{Binding Shaders.DynamicFlaresAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <Label Content="Dynamic Lens Flares:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <CheckBox IsChecked="{Binding Shaders.DynamicLensFlares}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Enables Dynamic Lens Flares effects." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="SSR:"
-                           IsEnabled="{Binding Loader.Shaders}" />
-                    <CheckBox IsChecked="{Binding Shaders.SSR}"
-                              IsEnabled="{Binding Loader.Shaders}"
-                              ToolTip="Enables Screen Space Ray Traced Reflections" />
-                </DockPanel>
-                <DockPanel Visibility="{Binding Shaders.DebandAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
-                  <Label Content="Debanding:"
-                                   IsEnabled="{Binding Loader.Shaders}" />
-                  <CheckBox IsChecked="{Binding Shaders.DynamicLensFlares}"
-                                      IsEnabled="{Binding Loader.Shaders}"
-                                      ToolTip="Removes banding artifacts/anomalies" />
-                </DockPanel>
+        <Label Content="Post-Processing"
+               HorizontalAlignment="Center"
+               Width="Auto"
+               FontSize="16"
+               Margin="0,0,0,10" />
+
+        <DockPanel>
+          <Label Content="Post-Processing:" />
+          <CheckBox IsChecked="{Binding Loader.Shaders}"
+                    ToolTip="Enables SPV3's post-processing system." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Visor Overlay:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <CheckBox IsChecked="{Binding Shaders.HudVisor}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Enables HUD extras like visor holograms and helmet bits"/>
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Film Grain:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <CheckBox IsChecked="{Binding Shaders.FilmGrain}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Enables Film Grain effects. Subjectively pleasant." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Volumetric Lighting:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <CheckBox IsChecked="{Binding Shaders.VolumetricLighting}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Enables simulation of light scattering through fog" />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Lens Dirt:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <CheckBox IsChecked="{Binding Shaders.LensDirt}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Enables dirt and scratches on visor" />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Motion Blur:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <ComboBox SelectedIndex="{Binding Shaders.MotionBlur}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Sets the Motion Blur level. POMB is high quality motion blur.&#x0a;Fall back to 'Built-in' when the game runs at sub 25 FPS">
+            <ComboBoxItem Content="Off" />
+            <ComboBoxItem Content="Built-in" />
+            <ComboBoxItem Content="POMB Low" />
+            <ComboBoxItem Content="POMB High" />
+          </ComboBox>
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Depth of Field:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <ComboBox SelectedIndex="{Binding Shaders.DOF}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Enables DOF effects. Turn this down for performance gains.">
+            <ComboBoxItem Content="Off" />
+            <ComboBoxItem Content="Low" />
+            <ComboBoxItem Content="High" />
+          </ComboBox>
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Ambient Occlusion:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <ComboBox SelectedIndex="{Binding Shaders.MXAO}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Sets MXAO level. Turn this down for performance gains.">
+            <ComboBoxItem Content="Off" />
+            <ComboBoxItem Content="Low" />
+            <ComboBoxItem Content="High" />
+          </ComboBox>
+        </DockPanel>
+        <DockPanel Visibility="{Binding Shaders.DynamicFlaresAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <Label Content="Dynamic Lens Flares:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <CheckBox IsChecked="{Binding Shaders.DynamicLensFlares}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Enables Dynamic Lens Flares effects." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="SSR:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <CheckBox IsChecked="{Binding Shaders.SSR}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Enables Screen Space Ray Traced Reflections" />
+        </DockPanel>
+        <DockPanel Visibility="{Binding Shaders.DebandAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <Label Content="Debanding:"
+                 IsEnabled="{Binding Loader.Shaders}" />
+          <CheckBox IsChecked="{Binding Shaders.DynamicLensFlares}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    ToolTip="Removes banding artifacts/anomalies" />
+        </DockPanel>
 
         <Label Content="Quality Presets"
-                       HorizontalAlignment="Center"
-                       Width="Auto"
-                       FontSize="16"
-                       Margin="0,7.5,0,10" />
+               HorizontalAlignment="Center"
+               Width="Auto"
+               FontSize="16"
+               Margin="0,7.5,0,10" />
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Button Grid.Column="0"
-                            Grid.Row="0"
-                            Margin="0,0,0.5,0.5"
-                            IsEnabled="{Binding Loader.Shaders}"
-                            Click="PresetVeryLow">
-                        Very Low
-                    </Button>
-                    <Button Grid.Column="1"
-                            Grid.Row="0"
-                            Margin="0.5,0,0.5,0.5"
-                            IsEnabled="{Binding Loader.Shaders}"
-                            Click="PresetLow">
-                        Low
-                    </Button>
-                    <Button Grid.Column="2"
-                            Grid.Row="0"
-                            Margin="0.5,0,0,0.5"
-                            IsEnabled="{Binding Loader.Shaders}"
-                            Click="PresetMedium">
-                        Medium
-                    </Button>
-                    <Button Grid.Column="0"
-                            Grid.Row="1"
-                            Margin="0,0.5,0.5,0"
-                            IsEnabled="{Binding Loader.Shaders}"
-                            Click="PresetHigh">
-                        High
-                    </Button>
-                    <Button Grid.Column="1"
-                            Grid.Row="1"
-                            Margin="0.5,0.5,0.5,0"
-                            IsEnabled="{Binding Loader.Shaders}"
-                            Click="PresetVeryHigh">
-                        Very High
-                    </Button>
-                    <Button Grid.Column="2"
-                            Grid.Row="1"
-                            Margin="0.5,0.5,0,0"
-                            IsEnabled="{Binding Loader.Shaders}"
-                            Click="PresetUltra">
-                        Ultra
-                    </Button>
-                </Grid>
-            </StackPanel>
-
-            <!-- OpenSauce & Chimera -->
-            <StackPanel Grid.Column="2"
-                        HorizontalAlignment="Right"
-                        Margin="0,10,50,0"
-                        VerticalAlignment="Top">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="125" />
-                    </Style>
-                </StackPanel.Resources>
-
-                <!-- OpenSauce -->
-                <Label Content="OpenSauce &amp; Chimera"
-                       HorizontalAlignment="Center"
-                       Width="Auto"
-                       FontSize="16"
-                       Margin="0,0,0,10" />
-
-                <DockPanel>
-                    <Label Content="G-Buffer:" />
-                    <CheckBox IsChecked="{Binding OpenSauce.GBuffer}"
-                              ToolTip="Disabling this will deactivate VISR and Thermal Vision."
-                              Unchecked="GBufferUnchecked" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Normal Maps:" />
-                    <CheckBox IsChecked="{Binding OpenSauce.NormalMaps}"
-                              ToolTip="Adds more visual depth to models." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Detail Normal Maps:" />
-                    <CheckBox IsChecked="{Binding OpenSauce.DetailNormalMaps}"
-                              ToolTip="Adds more small visual depth to models." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Specular Maps:" />
-                    <CheckBox IsChecked="{Binding OpenSauce.SpecularMaps}"
-                              ToolTip="Adds additional lighting effects to models." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Specular Lighting:" />
-                    <CheckBox IsChecked="{Binding OpenSauce.SpecularLighting}"
-                              ToolTip="Makes the lighting effects on models more accurate." />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Bloom:" />
-                    <CheckBox IsChecked="{Binding OpenSauce.Bloom}"
-                              ToolTip="Adds glowy highlights to visual bright spots." />
-                </DockPanel>
-
-                <Button Click="InstallOpenSauce"
-                        Margin="0,5,0,0">
-                    Install OpenSauce
-                </Button>
-
-                <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
-
-                <!-- Chimera -->
-                <DockPanel>
-                    <Label Content="Frame Smoothness:" />
-                    <ComboBox SelectedIndex="{Binding Chimera.Interpolation}"
-                              ToolTip="Also known as interpolation. Sets smoothness rate. A higher value is much more fluid, albeit more demanding.">
-                        <ComboBoxItem Content="0" />
-                        <ComboBoxItem Content="1" />
-                        <ComboBoxItem Content="2" />
-                        <ComboBoxItem Content="3" />
-                        <ComboBoxItem Content="4" />
-                        <ComboBoxItem Content="5" />
-                        <ComboBoxItem Content="6" />
-                        <ComboBoxItem Content="7" />
-                        <ComboBoxItem Content="8" />
-                        <ComboBoxItem Content="9" />
-                    </ComboBox>
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Anisotropic Filtering:" />
-                    <CheckBox IsChecked="{Binding Chimera.AnisotropicFiltering}" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Uncap Cinematic:" />
-                    <CheckBox IsChecked="{Binding Chimera.UncapCinematic}" />
-                </DockPanel>
-                <DockPanel>
-                    <Label Content="Block LOD:" />
-                    <CheckBox IsChecked="{Binding Chimera.BlockLOD}" />
-                </DockPanel>
-
-                <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
-
-                <DockPanel>
-                    <Label Content="Cinematic Bars:" />
-                    <CheckBox IsChecked="{Binding Loader.CinemaBars}" />
-                </DockPanel>
-            </StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+          <Button Grid.Column="0"
+                  Grid.Row="0"
+                  Margin="0,0,0.5,0.5"
+                  IsEnabled="{Binding Loader.Shaders}"
+                  Click="PresetVeryLow">
+            Very Low
+          </Button>
+          <Button Grid.Column="1"
+                  Grid.Row="0"
+                  Margin="0.5,0,0.5,0.5"
+                  IsEnabled="{Binding Loader.Shaders}"
+                  Click="PresetLow">
+            Low
+          </Button>
+          <Button Grid.Column="2"
+                  Grid.Row="0"
+                  Margin="0.5,0,0,0.5"
+                  IsEnabled="{Binding Loader.Shaders}"
+                  Click="PresetMedium">
+            Medium
+          </Button>
+          <Button Grid.Column="0"
+                  Grid.Row="1"
+                  Margin="0,0.5,0.5,0"
+                  IsEnabled="{Binding Loader.Shaders}"
+                  Click="PresetHigh">
+            High
+          </Button>
+          <Button Grid.Column="1"
+                  Grid.Row="1"
+                  Margin="0.5,0.5,0.5,0"
+                  IsEnabled="{Binding Loader.Shaders}"
+                  Click="PresetVeryHigh">
+            Very High
+          </Button>
+          <Button Grid.Column="2"
+                  Grid.Row="1"
+                  Margin="0.5,0.5,0,0"
+                  IsEnabled="{Binding Loader.Shaders}"
+                  Click="PresetUltra">
+            Ultra
+          </Button>
         </Grid>
+      </StackPanel>
 
-        <!-- Save -->
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
-                    Height="30"
-                    Margin="50,25">
-            <Button Content="Save"
-                    Click="Save"
-                    Width="100" />
-            <Button Content="Cancel"
-                    Click="Cancel"
-                    Width="100"
-                    Margin="1,0,0,0" />
+      <!-- OpenSauce & Chimera -->
+      <StackPanel Grid.Column="2"
+                  HorizontalAlignment="Right"
+                  Margin="0,10,50,0"
+                  VerticalAlignment="Top">
+        <StackPanel.Resources>
+          <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Width" Value="125" />
+          </Style>
+        </StackPanel.Resources>
+
+        <!-- OpenSauce -->
+        <Label Content="OpenSauce &amp; Chimera"
+               HorizontalAlignment="Center"
+               Width="Auto"
+               FontSize="16"
+               Margin="0,0,0,10" />
+
+        <DockPanel>
+          <Label Content="G-Buffer:" />
+          <CheckBox IsChecked="{Binding OpenSauce.GBuffer}"
+                    ToolTip="Disabling this will deactivate VISR and Thermal Vision."
+                    Unchecked="GBufferUnchecked" />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Normal Maps:" />
+          <CheckBox IsChecked="{Binding OpenSauce.NormalMaps}"
+                    ToolTip="Adds more visual depth to models." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Detail Normal Maps:" />
+          <CheckBox IsChecked="{Binding OpenSauce.DetailNormalMaps}"
+                    ToolTip="Adds more small visual depth to models." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Specular Maps:" />
+          <CheckBox IsChecked="{Binding OpenSauce.SpecularMaps}"
+                    ToolTip="Adds additional lighting effects to models." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Specular Lighting:" />
+          <CheckBox IsChecked="{Binding OpenSauce.SpecularLighting}"
+                    ToolTip="Makes the lighting effects on models more accurate." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Bloom:" />
+          <CheckBox IsChecked="{Binding OpenSauce.Bloom}"
+                    ToolTip="Adds glowy highlights to visual bright spots." />
+        </DockPanel>
+
+        <Button Click="InstallOpenSauce"
+                Margin="0,5,0,0">
+          Install OpenSauce
+        </Button>
+
+        <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
+
+        <!-- Chimera -->
+        <DockPanel>
+          <Label Content="Frame Smoothness:" />
+          <ComboBox SelectedIndex="{Binding Chimera.Interpolation}"
+                    ToolTip="Also known as interpolation. Sets smoothness rate. A higher value is much more fluid, albeit more demanding.">
+            <ComboBoxItem Content="0" />
+            <ComboBoxItem Content="1" />
+            <ComboBoxItem Content="2" />
+            <ComboBoxItem Content="3" />
+            <ComboBoxItem Content="4" />
+            <ComboBoxItem Content="5" />
+            <ComboBoxItem Content="6" />
+            <ComboBoxItem Content="7" />
+            <ComboBoxItem Content="8" />
+            <ComboBoxItem Content="9" />
+          </ComboBox>
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Anisotropic Filtering:" />
+          <CheckBox IsChecked="{Binding Chimera.AnisotropicFiltering}" />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Uncap Cinematic:" />
+          <CheckBox IsChecked="{Binding Chimera.UncapCinematic}" />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Block LOD:" />
+          <CheckBox IsChecked="{Binding Chimera.BlockLOD}" />
+        </DockPanel>
+
+        <Separator Margin="0,15,0,10" Background="#FFC8C8C8" />
+
+        <DockPanel>
+          <Label Content="Cinematic Bars:" />
+          <CheckBox IsChecked="{Binding Loader.CinemaBars}" />
+        </DockPanel>
+      </StackPanel>
+    </Grid>
+
+    <!-- Save -->
+    <StackPanel Grid.Row="1"
+                Orientation="Horizontal"
+                Height="30"
+                Margin="50,25">
+      <Button Content="Save"
+              Click="Save"
+              Width="100" />
+      <Button Content="Cancel"
+              Click="Cancel"
+              Width="100"
+              Margin="1,0,0,0" />
 
       <!-- Versions -->
-            <local:Version_UserControl />
+      <local:Version_UserControl />
 
       <!-- HXE Config -->
-            <Button Content="Advanced"
-                    Click="Advanced"
-                    HorizontalAlignment="Right"
-                    Margin="350,0"
-                    Width="100" />
+      <Button Content="Advanced"
+              Click="Advanced"
+              HorizontalAlignment="Right"
+              Margin="350,0"
+              Width="100" />
     </StackPanel>
-    </Grid>
+  </Grid>
 </UserControl>
