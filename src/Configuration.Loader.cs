@@ -42,14 +42,14 @@ namespace SPV3
       private bool   _doom;                                             /* toggle spv3 doom mode                      */
       private bool   _eax;                                              /* toggle hw accel. & environmental sound     */
       private byte   _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
-      private bool   _usegamma  = true;                                 /* when false, runs spv3/hce with -nogamma    */
+      private bool   _usegamma  = false;                                /* when false, runs spv3/hce with -nogamma    */
       private byte   _gamma     = 150;                                  /* gamma level to run spv3 at (in vsync mode) */
       private ushort _height    = (ushort) PrimaryScreen.Bounds.Height; /* height spv3/hce will be displayed at       */
       private byte   _mode;                                             /* display - fullscreen/window/borderless     */
       private bool   _native;                                           /* runs native instead of custom resolution   */
       private bool   _photo;                                            /* enables spv3 photo/blind mode              */
-      private byte   _preference = 1;                                   /* video preference (stable vs hertz unlocked */
-      private bool   _preset     = true;                                /* use the built-in spv3 controller preset    */
+      private bool   _vsync   = true;                                   /* V-sync preference (locked vs unlocked)     */
+      private bool   _preset  = true;                                   /* use the built-in spv3 controller preset    */
       private bool   _resolutionEnabled;                                /* ability to provide custom resolution       */
       private bool   _shaders = true;                                   /* toggle spv3 post-processing effects        */
       private ushort _width   = (ushort) PrimaryScreen.Bounds.Width;    /* width spv3/hce will be displayed at        */
@@ -169,13 +169,13 @@ namespace SPV3
         }
       }
 
-      public byte Preference
+      public bool Vsync
       {
-        get => _preference;
+        get => _vsync;
         set
         {
-          if (value == _preference) return;
-          _preference = value;
+          if (value == _vsync) return;
+          _vsync = value;
           OnPropertyChanged();
           UpdateBorderlessEnabled();
         }
@@ -293,7 +293,7 @@ namespace SPV3
 
       public void UpdateBorderlessEnabled()
       {
-        BorderlessEnabled = Preference == 1 && Elevated == false;
+        BorderlessEnabled = Vsync == false && Elevated == false;
       }
 
       public void UpdateWindowBorderless()
@@ -336,7 +336,7 @@ namespace SPV3
             bw.Write(Width);
             bw.Write(Height);
             bw.Write(Framerate);
-            bw.Write(Preference);
+            bw.Write(Vsync);
             bw.Write(UseGamma);
             bw.Write(Gamma);
             bw.Write(Adapter);
@@ -392,7 +392,7 @@ namespace SPV3
             Width      = br.ReadUInt16();
             Height     = br.ReadUInt16();
             Framerate  = br.ReadByte();
-            Preference = br.ReadByte();
+            Vsync      = br.ReadBoolean();
             UseGamma   = br.ReadBoolean();
             Gamma      = br.ReadByte();
             Adapter    = br.ReadByte();

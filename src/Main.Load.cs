@@ -77,10 +77,10 @@ namespace SPV3
         hxe.Main.Elevated      = spv3.Elevated; /* prevent certain crashes           */
         hxe.Video.Resolution   = true;          /* permit custom resolution override */
         hxe.Video.Quality      = false;         /* permit in-game quality settings   */
-        hxe.Video.Uncap        = spv3.Preference == 1;
+        hxe.Video.Uncap        = spv3.Vsync == false;
         hxe.Video.UseGamma     = spv3.UseGamma;
         hxe.Video.Gamma        = spv3.Gamma;
-        hxe.Video.Bless        = spv3.Borderless && spv3.Window && spv3.Preference == 1 && spv3.Elevated == false;
+        hxe.Video.Bless        = spv3.Borderless && spv3.Window && spv3.Vsync == false && spv3.Elevated == false;
         hxe.Audio.Enhancements = spv3.EAX;
         hxe.Input.Override     = spv3.Preset;
         hxe.Tweaks.CinemaBars  = spv3.CinemaBars;
@@ -147,7 +147,7 @@ namespace SPV3
           },
           Video = new Executable.VideoOptions
           {
-            Mode    = spv3.Preference == 1 && spv3.Framerate > 0,
+            Mode    = spv3.Vsync == false && spv3.Framerate > 0,
             Width   = spv3.Native ? (ushort) 0 : spv3.Width,
             Height  = spv3.Native ? (ushort) 0 : spv3.Height,
             Refresh = spv3.Framerate,

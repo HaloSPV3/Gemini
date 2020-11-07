@@ -84,48 +84,30 @@
 
         <DockPanel>
           <Label Content="Width &amp; Height:" />
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="Auto"/>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0"
-                     HorizontalAlignment="Left"
+            <TextBox HorizontalAlignment="Left"
                      HorizontalContentAlignment="Center"
                      Width="50"
                      Text="{Binding Loader.Width}"
                      ToolTip="Sets the video width of HCE/SPV3."
-                     IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="2" />
-            <TextBox Grid.Column="2"
-                     HorizontalAlignment="Left"
+                     IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="1" />
+          <TextBox HorizontalAlignment="Left"
                      HorizontalContentAlignment="Center"
                      Width="50"
+                     Margin="5,0,0,0"
                      Text="{Binding Loader.Height}"
                      ToolTip="Sets the video height of HCE/SPV3."
-                     IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="2" />
-          </Grid>
+                     IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="1" />
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-          <Label Content="Video Preference:" />
-          <ComboBox SelectedIndex="{Binding Loader.Preference}"
-                    Width="110"
-                    HorizontalAlignment="Left">
-            <ComboBoxItem Content="Unlock Hertz"
-                          ToolTip="This will set V-Sync off; however, expect potential instability." />
-            <ComboBoxItem Content="Stable Video"
-                          ToolTip="This will improve video stability, whilst also permitting custom refresh rates." />
-          </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="0,5,0,0">
-          <Label Content="V-Sync Rate (Hz)" />
-          <TextBox Width="50"
-                   HorizontalAlignment="Left"
-                   HorizontalContentAlignment="Center"
-                   Text="{Binding Loader.Framerate}"
-                   IsEnabled="{Binding Loader.Preference}"
-                   ToolTip="Set the in-game refresh rate." />
+          <Label Content="V-Sync" />
+          <CheckBox IsChecked="{Binding Loader.Vsync}" 
+                    HorizontalAlignment="Left"/>
+          <TextBox  Width="50"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Center"
+                    Text="{Binding Loader.Framerate}"
+                    IsEnabled="{Binding Loader.Vsync}"
+                    ToolTip="Set the in-game refresh rate." />
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
           <Label Content="Gamma"/>
@@ -136,12 +118,12 @@
                     HorizontalContentAlignment="Center"
                     Text="{Binding Loader.Gamma}"
                     IsEnabled="{Binding Loader.UseGamma}"
-                    ToolTip="Set the in-game refresh rate." />
+                    ToolTip="Set your PC's gamma brightness while the game is running." />
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
           <Label Content="Display Mode:" />
           <ComboBox SelectedIndex="{Binding Loader.Mode}"
-                    Width="110"
+                    Width="125"
                     HorizontalAlignment="Left">
             <ComboBoxItem Content="Fullscreen"
                           ToolTip="Runs SPV3 in fullscreen mode." />
@@ -156,7 +138,9 @@
           <Label Content="Main Display:" />
           <ComboBox SelectedIndex="{Binding Loader.Adapter}"
                     ItemsSource="{Binding Loader.Adapters }"
-                    ToolTip="Sets the display that HCE/SPV3 will run on." />
+                    ToolTip="Sets the display that HCE/SPV3 will run on." 
+                    HorizontalAlignment="Left"
+                    Width="125"/>
         </DockPanel>
         <DockPanel>
           <Label Content="Run as Admin:" />
@@ -190,19 +174,18 @@
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="Auto"/>
               <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0"
               HorizontalAlignment="Left"
               HorizontalContentAlignment="Center"
-              Text="70"
               Width="50" />
             <Button Grid.Column="2"
               Content="Optimal"
-              Click="CalculateFOV" 
-              HorizontalAlignment="Left" 
+              Click="CalculateFOV"
+              HorizontalAlignment="Left"
+              HorizontalContentAlignment="Center"
+              Width="75"
               Margin="5,0,0,0"/>
           </Grid>
         </DockPanel>
