@@ -266,6 +266,7 @@ namespace SPV3
           if (value == _resolutionEnabled) return;
           _resolutionEnabled = value;
           OnPropertyChanged();
+          UpdateNative();
         }
       }
 
@@ -305,6 +306,11 @@ namespace SPV3
       public void UpdateResolutionEnabled()
       {
         ResolutionEnabled = Native == false;
+      }
+
+      public void UpdateNative()
+      {
+        Native = ResolutionEnabled == false;
       }
 
       public void Save()

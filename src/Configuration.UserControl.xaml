@@ -77,8 +77,8 @@
 
         <DockPanel>
           <Label Content="Width &amp; Height:" />
-          <CheckBox IsChecked="{Binding Loader.Native}"
-                    ToolTip="Runs SPV3 at the native resolution."
+          <CheckBox IsChecked="{Binding Loader.ResolutionEnabled}"
+                    ToolTip="Allows you to use a custom resolution. Otherwise, it will use your system's current resolution."
                     HorizontalAlignment="Left" />
           <TextBox HorizontalAlignment="Left"
                      HorizontalContentAlignment="Center"
