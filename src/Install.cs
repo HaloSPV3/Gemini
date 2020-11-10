@@ -29,8 +29,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using HXE;
 using HXE.HCE;
+using HXE.Steam;
 using IWshRuntimeLibrary;
 using SPV3.Annotations;
+using static HXE.Paths.MCC;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
 using static System.IO.File;
@@ -39,13 +41,14 @@ namespace SPV3
 {
   public class Install : INotifyPropertyChanged
   {
-    private readonly string     _source = Path.Combine(CurrentDirectory, "data");
+    private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
-    private          Visibility _hce    = Visibility.Collapsed;
-    private          Visibility _load   = Visibility.Collapsed;
-    private          Visibility _main   = Visibility.Visible;
-    private          string     _status = "Awaiting user input...";
-    private          string     _target = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
+    private          Visibility _hce      = Visibility.Collapsed;
+    private          Visibility _load     = Visibility.Collapsed;
+    private          Visibility _main     = Visibility.Visible;
+    private          string     _status   = "Awaiting user input...";
+    private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
+    private          string     _steamexe = Path.Combine(Steam, SteamEXE);
 
     public bool CanInstall
     {
@@ -66,6 +69,18 @@ namespace SPV3
         if (value == _status) return;
         _status = value;
         OnPropertyChanged();
+      }
+    }
+
+    public string SteamEXEPath
+    {
+      get => _steamexe;
+      set
+      {
+        if (value == _steamexe) return;
+        SetSteam(value);
+        OnPropertyChanged();
+        // TO DO: Check if path exists
       }
     }
 
