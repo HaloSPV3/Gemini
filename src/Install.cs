@@ -49,6 +49,7 @@ namespace SPV3
     private          string     _status   = "Awaiting user input...";
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
     private          string     _steamexe = Path.Combine(Steam, SteamEXE);
+    private          string     _steamlibs= SteamLibs;
 
     public bool CanInstall
     {
@@ -72,6 +73,17 @@ namespace SPV3
       }
     }
 
+    public string SteamLibsPath
+    {
+      get => _steamlibs;
+      set
+      {
+        if (value == _steamlibs) return;
+        _steamlibs = value;
+        OnPropertyChanged();
+      }
+    }
+
     public string SteamEXEPath
     {
       get => _steamexe;
@@ -81,6 +93,30 @@ namespace SPV3
         SetSteam(value);
         OnPropertyChanged();
         // TO DO: Check if path exists
+
+        try
+        {
+          bool exists = Exists(SteamEXEPath);
+          if (!exists)
+          {
+            // TODO: implement search for Steam.exe or Steam.lnk shortcut
+            throw new NotImplementedException();
+          }
+          if (!Exists(Halo1Path))
+          {
+            var libs = new Libraries();
+            // TODO: Scan Libraries for Halo1.dll
+            libs.ScanLibraries(Halo1Path);
+            throw new NotImplementedException();
+          }
+          Status = "Waiting for user to select Steam.exe.";
+          //CanInstall = true; // change this to some other bool.
+        }
+        catch (Exception e)
+        {
+          Status = "Steam not found at selected path: " + e.Message.ToLower();
+          CanInstall = false;
+        }
       }
     }
 
