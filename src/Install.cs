@@ -23,7 +23,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -92,16 +91,9 @@ namespace SPV3
         if (value == _steamexe) return;
         SetSteam(value);
         OnPropertyChanged();
-        // TO DO: Check if path exists
 
         try
         {
-          bool exists = Exists(SteamEXEPath);
-          if (!exists)
-          {
-            // TODO: implement search for Steam.exe or Steam.lnk shortcut
-            throw new NotImplementedException();
-          }
           if (!Exists(Halo1Path))
           {
             var libs = new Libraries();

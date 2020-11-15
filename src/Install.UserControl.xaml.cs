@@ -60,6 +60,15 @@ namespace SPV3
       }
     }
 
+    private void BrowseSteam(object sender, RoutedEventArgs e)
+    {
+      using (var dialog = new OpenFileDialog())
+      {
+        if (dialog.ShowDialog() == DialogResult.OK)
+          _install.SteamEXEPath = dialog.FileName;
+      }
+    }
+
     private void InstallHce(object sender, RoutedEventArgs e)
     {
       _install.InstallHce();
