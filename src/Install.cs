@@ -42,9 +42,10 @@ namespace SPV3
   {
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
+    private          Visibility _mcc      = Visibility.Visible;
     private          Visibility _hce      = Visibility.Collapsed;
     private          Visibility _load     = Visibility.Collapsed;
-    private          Visibility _main     = Visibility.Visible;
+    private          Visibility _main     = Visibility.Collapsed;
     private          string     _status   = "Awaiting user input...";
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
     private          string     _steamexe = Path.Combine(Steam, SteamEXE);
@@ -202,6 +203,16 @@ namespace SPV3
       }
     }
 
+    public Visibility Mcc
+    {
+      get => _mcc;
+      set
+      {
+        if (value == _mcc) return;
+        _mcc = value;
+        OnPropertyChanged();
+      }
+    }
     public Visibility Hce
     {
       get => _hce;
@@ -229,6 +240,7 @@ namespace SPV3
     public void Initialise()
     {
       Main = Visibility.Visible;
+      Mcc  = Visibility.Collapsed;
       Hce  = Visibility.Collapsed;
 
       /**
@@ -255,6 +267,7 @@ namespace SPV3
       CanInstall = false;
 
       Main = Visibility.Collapsed;
+      Mcc  = Visibility.Collapsed;
       Hce  = Visibility.Visible;
     }
 
@@ -346,6 +359,27 @@ namespace SPV3
         CanInstall = true;
       }
     }
+    public void ViewHce()
+    {
+      Main = Visibility.Collapsed;
+      Mcc = Visibility.Collapsed;
+      Hce = Visibility.Visible;
+    }
+
+    public void ViewMain()
+    {
+      Main = Visibility.Visible;
+      Mcc = Visibility.Collapsed;
+      Hce = Visibility.Collapsed;
+    }
+
+    public void ViewMcc()
+    {
+      Main = Visibility.Collapsed;
+      Mcc = Visibility.Visible;
+      Hce = Visibility.Collapsed;
+    }
+
 
     public void InstallHce()
     {

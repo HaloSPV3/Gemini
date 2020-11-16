@@ -94,42 +94,49 @@
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="960"
+                    Width="640"
                     Visibility="{Binding Mcc}">
-            <TextBlock Foreground="White"
-                       TextWrapping="WrapWithOverflow"
-                       Margin="0,10"
-                       TextAlignment="Center">
-                A Steam copy of Halo:MCC CEA has not been found on your system.
-                <LineBreak />
-                Please browse to Steam.exe or a Steam shortcut and we'll do the rest!
-            </TextBlock>
-            <Grid Margin="0,1,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="100" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0"
-                        Margin="0,0,0.5,0"
-                        Click="Back">
-                    Go back...
-                </Button>
-                <Button Grid.Column="1"
-                                Margin="0.5,0"
-                                Click="Button_Click"
-                                Content="Step 1: Install HCE" />
-                <Button Grid.Column="2"
-                                Margin="0.5,0,0.5,0"
-                                Click="VerifyHce"
-                                Content="Step 2: Verify HCE" />
-                <Button Grid.Column="3"
-                                Margin="0.5,0,0,0"
-                                Click="Quit">
-                  Exit
-                </Button>
-            </Grid>
+            <Label Content="Locate Steam or its shortcut:"
+                   Foreground="White"/>
+            <DockPanel>
+                  <Button DockPanel.Dock="Right"
+                          Margin="1,0,0,0"
+                          Click="BrowseSteam"
+                          Content="Browse" />
+                  <TextBox Text="{Binding SteamEXEPath}"
+                           VerticalContentAlignment="Center"
+                           Margin="1,0,0,0"
+                           BorderThickness="0" />
+            </DockPanel>
+            <DockPanel Margin="0,1,0,0">
+              <Grid Margin="0,1,0,0">
+                  <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="100" />
+                      <ColumnDefinition />
+                      <ColumnDefinition Width="100" />
+                  </Grid.ColumnDefinitions>
+                  <Button Grid.Column="0"
+                          Margin="0,0,0.5,0"
+                          Click="Back">
+                      Go back...
+                  </Button>
+                  <Button Grid.Column="1"
+                          Margin="0.5,0">
+                          <TextBlock  Foreground="White"
+                                      TextWrapping="WrapWithOverflow"
+                                      TextAlignment="Center">
+                              A Steam copy of Halo:MCC CEA has not been found.
+                              <LineBreak />
+                              Find Steam.exe or a Steam shortcut and we'll do the rest!
+                          </TextBlock>
+                  </Button>
+                  <Button Grid.Column="2"
+                          Margin="0.5,0,0,0"
+                          Click="Quit">
+                    Exit
+                  </Button>
+              </Grid>
+            </DockPanel>
         </StackPanel>
 
         <!-- HCE -->
@@ -152,30 +159,38 @@
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0"
                         Margin="0,0,0.5,0"
-                        Click="Back">
+                        Click="ViewMain">
                     Go back...
                 </Button>
                 <Button Grid.Column="1"
                         Margin="0.5,0"
+                        Click="ViewMcc"
+                        Content="MCC" />
+                <Button Grid.Column="2"
+                        Margin="0.5,0"
                         Click="InstallHce"
                         Content="Step 1: Install HCE" />
-                <Button Grid.Column="2"
+                <Button Grid.Column="3"
                         Margin="0.5,0,0.5,0"
                         Click="VerifyHce"
                         Content="Step 2: Verify HCE" />
-                <Button Grid.Column="3"
+                <Button Grid.Column="4"
                         Margin="0.5,0,0,0"
                         Click="Quit">
                     Exit
                 </Button>
             </Grid>
         </StackPanel>
+        <StackPanel>
+        </StackPanel>
 
-        <!-- Load -->
+
+    <!-- Load -->
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"

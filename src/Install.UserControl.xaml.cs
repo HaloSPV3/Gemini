@@ -88,5 +88,20 @@ namespace SPV3
     {
       Environment.Exit(0);
     }
+
+    private void ViewMain(object sender, RoutedEventArgs e)
+    {
+      _install.ViewMain();
+    }
+
+    private void ViewMcc(object sender, RoutedEventArgs e)
+    {
+      _install.ViewMcc();
+    }
+
+    private void ViewHce(object sender, RoutedEventArgs e)
+    {
+      _install.ViewHce();
+    }
   }
 }
