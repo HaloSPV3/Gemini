@@ -42,14 +42,15 @@ namespace SPV3
   {
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
+    private          Visibility _steamFound = Visibility.Collapsed;
     private          Visibility _mcc      = Visibility.Visible;
     private          Visibility _hce      = Visibility.Collapsed;
     private          Visibility _load     = Visibility.Collapsed;
     private          Visibility _main     = Visibility.Collapsed;
     private          string     _status   = "Awaiting user input...";
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
-    private          string     _steamexe = Path.Combine(Steam, SteamEXE);
-    private          string     _steamlibs= SteamLibs;
+    private          string     _steamExe = Path.Combine(Steam, SteamEXE);
+    private          string     _steamLibs= SteamLibs;
 
     public bool CanInstall
     {
@@ -75,21 +76,21 @@ namespace SPV3
 
     public string SteamLibsPath
     {
-      get => _steamlibs;
+      get => _steamLibs;
       set
       {
-        if (value == _steamlibs) return;
-        _steamlibs = value;
+        if (value == _steamLibs) return;
+        _steamLibs = value;
         OnPropertyChanged();
       }
     }
 
     public string SteamEXEPath
     {
-      get => _steamexe;
+      get => _steamExe;
       set
       {
-        if (value == _steamexe) return;
+        if (value == _steamExe) return;
         SetSteam(value);
         OnPropertyChanged();
 
@@ -189,6 +190,17 @@ namespace SPV3
           Status     = "Selected folder contains existing HCE or SPV3 data. Please choose a different location.";
           CanInstall = false;
         }
+      }
+    }
+
+    public Visibility SteamFound
+    {
+      get => _steamFound;
+      set
+      {
+        if (value == _steamFound) return;
+        _steamFound = value;
+        OnPropertyChanged();
       }
     }
 
@@ -359,6 +371,15 @@ namespace SPV3
         CanInstall = true;
       }
     }
+
+    public string SteamStatus
+    {
+      get => 
+      Exists(_steamExe) ?
+      "Steam located!" :
+      "Find Steam.exe or a Steam shortcut and we'll do the rest!";
+    }
+
     public void ViewHce()
     {
       Main = Visibility.Collapsed;
@@ -379,7 +400,6 @@ namespace SPV3
       Mcc = Visibility.Visible;
       Hce = Visibility.Collapsed;
     }
-
 
     public void InstallHce()
     {

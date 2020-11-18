@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using UserControl = System.Windows.Controls.UserControl;
+using static System.Environment;
 
 namespace SPV3
 {
@@ -64,8 +65,14 @@ namespace SPV3
     {
       using (var dialog = new OpenFileDialog())
       {
+        dialog.InitialDirectory = GetFolderPath(SpecialFolder.Desktop);
+        dialog.Filter = "Steam.exe (Steam.exe)|*.lnk|All files (*.*)|*.*";
+
         if (dialog.ShowDialog() == DialogResult.OK)
+        {
           _install.SteamEXEPath = dialog.FileName;
+          _install.SteamFound = Visibility.Visible;
+        }
       }
     }
 
