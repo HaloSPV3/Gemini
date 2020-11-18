@@ -42,15 +42,14 @@ namespace SPV3
   {
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
-    private          Visibility _steamFound = Visibility.Collapsed;
     private          Visibility _mcc      = Visibility.Visible;
     private          Visibility _hce      = Visibility.Collapsed;
     private          Visibility _load     = Visibility.Collapsed;
     private          Visibility _main     = Visibility.Collapsed;
     private          string     _status   = "Awaiting user input...";
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
-    private          string     _steamExe = Path.Combine(Steam, SteamEXE);
-    private          string     _steamLibs= SteamLibs;
+    private          string     _steamExe = Path.Combine(Steam, SteamExe);
+    private          string     _steamLibs= SteamLibList;
 
     public bool CanInstall
     {
@@ -85,31 +84,34 @@ namespace SPV3
       }
     }
 
-    public string SteamEXEPath
+    public string SteamExePath
     {
       get => _steamExe;
       set
       {
         if (value == _steamExe) return;
-        SetSteam(value);
+        /// Sets the Steam directory and Library to containing Steam.exe.
+        /// This also sets a new path for Halo1Path within this directory
+        var libs = new Libraries();
+        SetSteam(value); 
         OnPropertyChanged();
 
-        try
+        if (!Exists(Halo1Path))
         {
-          if (!Exists(Halo1Path))
+          try
           {
-            var libs = new Libraries();
             // TODO: Scan Libraries for Halo1.dll
             libs.ScanLibraries(Halo1Path);
-            throw new NotImplementedException();
+            Halo1Path = "";
           }
-          Status = "Waiting for user to select Steam.exe.";
-          //CanInstall = true; // change this to some other bool.
+          catch (Exception e)
+          {
+            Status = e.Message.ToLower();
+          }
         }
-        catch (Exception e)
+        else
         {
-          Status = "Steam not found at selected path: " + e.Message.ToLower();
-          CanInstall = false;
+
         }
       }
     }
@@ -193,17 +195,6 @@ namespace SPV3
       }
     }
 
-    public Visibility SteamFound
-    {
-      get => _steamFound;
-      set
-      {
-        if (value == _steamFound) return;
-        _steamFound = value;
-        OnPropertyChanged();
-      }
-    }
-
     public Visibility Main
     {
       get => _main;
@@ -225,6 +216,7 @@ namespace SPV3
         OnPropertyChanged();
       }
     }
+
     public Visibility Hce
     {
       get => _hce;
@@ -375,7 +367,7 @@ namespace SPV3
     public string SteamStatus
     {
       get => 
-      Exists(_steamExe) ?
+      Exists(SteamExePath) ?
       "Steam located!" :
       "Find Steam.exe or a Steam shortcut and we'll do the rest!";
     }
