@@ -103,7 +103,7 @@
                           Margin="1,0,0,0"
                           Click="BrowseSteam"
                           Content="Browse" />
-                  <TextBox Text="{Binding SteamEXEPath}"
+                  <TextBox Text="{Binding SteamExePath}"
                            VerticalContentAlignment="Center"
                            Margin="1,0,0,0"
                            BorderThickness="0" />

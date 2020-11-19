@@ -49,7 +49,7 @@ namespace SPV3
     private          string     _status   = "Awaiting user input...";
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
     private          string     _steamExe = Path.Combine(Steam, SteamExe);
-    private          string     _steamLibs= SteamLibList;
+    private          string     _steamStatus = "Find Steam.exe or a Steam shortcut and we'll do the rest!";
 
     public bool CanInstall
     {
@@ -73,36 +73,21 @@ namespace SPV3
       }
     }
 
-    public string SteamLibsPath
-    {
-      get => _steamLibs;
-      set
-      {
-        if (value == _steamLibs) return;
-        _steamLibs = value;
-        OnPropertyChanged();
-      }
-    }
-
     public string SteamExePath
     {
       get => _steamExe;
       set
       {
         if (value == _steamExe) return;
-        /// Sets the Steam directory and Library to containing Steam.exe.
-        /// This also sets a new path for Halo1Path within this directory
-        var libs = new Libraries();
-        SetSteam(value); 
+        _steamExe = value;
+        SetSteam(value);
         OnPropertyChanged();
-
+        Halo1Path = Path.Combine(SteamLibrary, SteamMccH1, Halo1dll);
         if (!Exists(Halo1Path))
         {
           try
           {
-            // TODO: Scan Libraries for Halo1.dll
-            libs.ScanLibraries(Halo1Path);
-            Halo1Path = "";
+            MCC.Halo1.SetHalo1Path();
           }
           catch (Exception e)
           {
@@ -111,8 +96,19 @@ namespace SPV3
         }
         else
         {
-
+          throw new NotImplementedException("You've finally arrived, but there's still more work to be done! Next up: Crack!");
         }
+      }
+    }
+
+    public string SteamStatus
+    {
+      get => _steamStatus;
+      set
+      {
+        if (value == _steamStatus) return;
+        _steamStatus = value;
+        OnPropertyChanged();
       }
     }
 
@@ -364,12 +360,12 @@ namespace SPV3
       }
     }
 
-    public string SteamStatus
+    public void SetSteamStatus()
     {
-      get => 
-      Exists(SteamExePath) ?
-      "Steam located!" :
-      "Find Steam.exe or a Steam shortcut and we'll do the rest!";
+      SteamStatus =
+        Exists(SteamExePath) ?
+        "Steam located!" :
+        "Find Steam.exe or a Steam shortcut and we'll do the rest!";
     }
 
     public void ViewHce()
