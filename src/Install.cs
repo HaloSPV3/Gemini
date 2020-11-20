@@ -80,9 +80,14 @@ namespace SPV3
       {
         if (value == _steamExe) return;
         _steamExe = value;
-        SetSteam(value);
         OnPropertyChanged();
-        Halo1Path = Path.Combine(SteamLibrary, SteamMccH1, Halo1dll);
+
+        if (Exists(_steamExe))
+        {
+          SetSteam(value);
+          SetSteamStatus();
+          Halo1Path = Path.Combine(SteamLibrary, SteamMccH1, Halo1dll);
+        }
         if (!Exists(Halo1Path))
         {
           try
@@ -94,10 +99,7 @@ namespace SPV3
             Status = e.Message.ToLower();
           }
         }
-        else
-        {
-          throw new NotImplementedException("You've finally arrived, but there's still more work to be done! Next up: Crack!");
-        }
+        Status = "You've finally arrived, but there's still more work to be done! Next up: Crack!";
       }
     }
 
