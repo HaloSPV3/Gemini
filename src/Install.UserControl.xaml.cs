@@ -110,5 +110,22 @@ namespace SPV3
     {
       _install.ViewHce();
     }
+
+    private void SteamExePath_TextChanged(object sender, RoutedEventArgs e)
+    {
+      try
+      {
+        if (_install == null) return;
+        if (_install.SteamExePath.Contains("steam.exe"))
+        {
+          _install.SetSteamStatus();
+          _install.SteamExePath = _install.SteamExePath;
+        }
+      }
+      catch (Exception ex)
+      {
+        _install.Status = ex.Message;
+      }
+    }
   }
 }

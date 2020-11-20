@@ -104,6 +104,7 @@
                           Click="BrowseSteam"
                           Content="Browse" />
                   <TextBox Text="{Binding SteamExePath}"
+                           TextChanged="SteamExePath_TextChanged"
                            VerticalContentAlignment="Center"
                            Margin="1,0,0,0"
                            BorderThickness="0" />
@@ -116,19 +117,19 @@
                       <ColumnDefinition Width="100" />
                   </Grid.ColumnDefinitions>
                   <Button Grid.Column="0"
-                          Margin="0,0,0.5,0"
-                          Click="Back">
-                      Go back...
+                          Margin="0,0,0,0"
+                          Click="ViewHce">
+                      Back
                   </Button>
                   <Button Grid.Column="1"
-                          Margin="0.5,0">
+                          Margin="1,0,1,0">
                           <TextBlock  Foreground="White"
                                       TextWrapping="WrapWithOverflow"
                                       TextAlignment="Center"
                                       Text="{Binding SteamStatus}"/>
                   </Button>
                   <Button Grid.Column="2"
-                          Margin="0.5,0,0,0"
+                          Margin="0,0,0,0"
                           Click="Quit">
                     Exit
                   </Button>

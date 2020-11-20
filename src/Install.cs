@@ -42,10 +42,10 @@ namespace SPV3
   {
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
-    private          Visibility _mcc      = Visibility.Visible;
+    private          Visibility _mcc      = Visibility.Collapsed;
     private          Visibility _hce      = Visibility.Collapsed;
     private          Visibility _load     = Visibility.Collapsed;
-    private          Visibility _main     = Visibility.Collapsed;
+    private          Visibility _main     = Visibility.Visible;
     private          string     _status   = "Awaiting user input...";
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
     private          string     _steamExe = Path.Combine(Steam, SteamExe);
