@@ -68,11 +68,8 @@ namespace SPV3
         dialog.Filter = "Steam (*.exe)|*.exe";
         dialog.FilterIndex = 1;
         _install.SetSteamStatus();
-
         if (dialog.ShowDialog() == DialogResult.OK)
-        {
           _install.SteamExePath = dialog.FileName;
-        }
       }
     }
 
@@ -111,16 +108,28 @@ namespace SPV3
       _install.ViewHce();
     }
 
-    private void SteamExePath_TextChanged(object sender, RoutedEventArgs e)
+    private void Target_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
       try
       {
-        if (_install == null) return;
-        if (_install.SteamExePath.Contains("steam.exe"))
-        {
-          _install.SetSteamStatus();
-          _install.SteamExePath = _install.SteamExePath;
-        }
+        if (_install == null) 
+          return;
+        _install.Target = this.Target.Text;
+      }
+      catch (Exception ex)
+      {
+        _install.Status = ex.Message;
+      }
+    }
+
+    private void SteamExePath_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+      try
+      {
+        if (_install == null) 
+          return;
+        if (this.SteamExePath.Text.Contains("steam.exe"))
+          _install.SteamExePath = this.SteamExePath.Text;
       }
       catch (Exception ex)
       {

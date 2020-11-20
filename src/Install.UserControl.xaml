@@ -72,7 +72,9 @@
                         Margin="1,0,0,0"
                         Content="Browse"
                         Click="Browse" />
-                <TextBox Text="{Binding Target}"
+                <TextBox Name="Target"
+                         Text="{Binding Target}"
+                         TextChanged="Target_TextChanged"
                          VerticalContentAlignment="Center"
                          Margin="1,0,0,0"
                          BorderThickness="0" />
@@ -103,7 +105,8 @@
                           Margin="1,0,0,0"
                           Click="BrowseSteam"
                           Content="Browse" />
-                  <TextBox Text="{Binding SteamExePath}"
+                  <TextBox Name="SteamExePath"
+                           Text="{Binding SteamExePath}"
                            TextChanged="SteamExePath_TextChanged"
                            VerticalContentAlignment="Center"
                            Margin="1,0,0,0"
