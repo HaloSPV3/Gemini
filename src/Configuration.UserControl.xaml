@@ -111,13 +111,13 @@
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
           <Label Content="Gamma"/>
-          <CheckBox IsChecked="{Binding Loader.UseGamma}" 
+          <CheckBox IsChecked="{Binding Loader.GammaEnabled}" 
                     HorizontalAlignment="Left"/>
           <TextBox  Width="50"
                     HorizontalAlignment="Left"
                     HorizontalContentAlignment="Center"
                     Text="{Binding Loader.Gamma}"
-                    IsEnabled="{Binding Loader.UseGamma}"
+                    IsEnabled="{Binding Loader.GammaEnabled}"
                     ToolTip="Set your PC's gamma brightness while the game is running." />
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
@@ -130,8 +130,7 @@
             <ComboBoxItem Content="Window"
                           ToolTip="Runs SPV3 in windowed mode." />
             <ComboBoxItem Content="Borderless"
-                          ToolTip="Runs SPV3 in borderless mode."
-                          IsEnabled="{Binding Loader.BorderlessEnabled}" />
+                          ToolTip="Runs SPV3 in borderless mode. Disables V-Sync and Run as Admin because they are incompatible." />
           </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">

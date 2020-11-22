@@ -55,5 +55,22 @@ namespace SPV3
     {
       OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
     }
+
+    public void ShowHxeSettings()
+    {
+      var settings = new HXE.Settings();
+      settings.Show();
+      // Wait for HXE to close...somehow
+      Load();
+      if (false) return; // breakpoint
+    }
+
+    public void ShowHxeWepPositions()
+    {
+      var wepPositions = new HXE.Positions();
+      wepPositions.Show();
+      // Wait for HXE to close
+      if (false) return; // breakpoint
+    }
   }
 }

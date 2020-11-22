@@ -38,20 +38,19 @@ namespace SPV3
 
       private byte   _adapter;                                          /* physical monitor to run hce/spv3 on        */
       private bool   _borderless;                                       /* run hce/spv3 without window borders        */
-      private bool   _borderlessEnabled;                                /* ability to toggle borderless               */
       private bool   _cinemabars = false;                               /* toggle spv3 cinematic black bars           */
       private bool   _doom;                                             /* toggle spv3 doom mode                      */
       private bool   _eax;                                              /* toggle hw accel. & environmental sound     */
       private byte   _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
-      private bool   _usegamma  = false;                                /* when false, runs spv3/hce with -nogamma    */
-      private byte   _gamma     = 150;                                  /* gamma level to run spv3 at (in vsync mode) */
-      private ushort _height    = (ushort) PrimaryScreen.Bounds.Height; /* height spv3/hce will be displayed at       */
+      private bool   _gammaEnabled = false;                             /* when false, runs spv3/hce with -nogamma    */
+      private byte   _gamma  = 150;                                     /* gamma level to run spv3 at (in vsync mode) */
+      private ushort _height = (ushort) PrimaryScreen.Bounds.Height;    /* height spv3/hce will be displayed at       */
       private byte   _mode;                                             /* display - fullscreen/window/borderless     */
-      private bool   _native;                                           /* runs native instead of custom resolution   */
+      private bool   _native  = true;                                   /* runs native instead of custom resolution   */
       private bool   _photo;                                            /* enables spv3 photo/blind mode              */
       private bool   _vsync   = true;                                   /* V-sync preference (locked vs unlocked)     */
       private bool   _preset  = true;                                   /* use the built-in spv3 controller preset    */
-      private bool   _resolutionEnabled;                                /* ability to provide custom resolution       */
+      private bool   _resolutionEnabled = false;                        /* ability to provide custom resolution       */
       private bool   _shaders = true;                                   /* toggle spv3 post-processing effects        */
       private ushort _width   = (ushort) PrimaryScreen.Bounds.Width;    /* width spv3/hce will be displayed at        */
       private bool   _window;                                           /* runs spv3/hce as a windowed application    */
@@ -65,7 +64,7 @@ namespace SPV3
           if (value == _native) return;
           _native = value;
           OnPropertyChanged();
-          UpdateResolutionEnabled();
+          UpdateNative();
         }
       }
 
@@ -89,7 +88,6 @@ namespace SPV3
           if (value == _window) return;
           _window = value;
           OnPropertyChanged();
-          UpdateBorderlessEnabled();
         }
       }
 
@@ -178,7 +176,8 @@ namespace SPV3
           if (value == _vsync) return;
           _vsync = value;
           OnPropertyChanged();
-          UpdateBorderlessEnabled();
+          // if V-Sync == true, Borderless = false and Display Mode = Fullscreen
+          if (value == true) Mode = 0;
         }
       }
 
@@ -193,13 +192,13 @@ namespace SPV3
         }
       }
 
-      public bool UseGamma
+      public bool GammaEnabled
       {
-        get => _usegamma;
+        get => _gammaEnabled;
         set
         {
-          if (value == _usegamma) return;
-          _usegamma = value;
+          if (value == _gammaEnabled) return;
+          _gammaEnabled = value;
           OnPropertyChanged();
         }
       }
@@ -248,17 +247,6 @@ namespace SPV3
         }
       }
 
-      public bool BorderlessEnabled
-      {
-        get => _borderlessEnabled;
-        set
-        {
-          if (value == _borderlessEnabled) return;
-          _borderlessEnabled = value;
-          OnPropertyChanged();
-        }
-      }
-
       public bool ResolutionEnabled
       {
         get => _resolutionEnabled;
@@ -279,7 +267,8 @@ namespace SPV3
           if (value == _elevated) return;
           _elevated = value;
           OnPropertyChanged();
-          UpdateBorderlessEnabled();
+          // if Elevated == true, Borderless = false and Display Mode = Fullscreen
+          if (value == true) Mode = 0;
         }
       }
 
@@ -293,25 +282,23 @@ namespace SPV3
 
       public event PropertyChangedEventHandler PropertyChanged;
 
-      public void UpdateBorderlessEnabled()
-      {
-        BorderlessEnabled = Vsync == false && Elevated == false;
-      }
-
       public void UpdateWindowBorderless()
       {
-        Borderless = _mode == 2;
-        Window     = _mode == 1 || _mode == 2;
-      }
-
-      public void UpdateResolutionEnabled()
-      {
-        ResolutionEnabled = Native == false;
+        Window = _mode == 1 || _mode == 2;
+        if (_mode == 2)
+        {
+          Borderless = true;
+          Elevated = false;
+          Vsync = false;
+        }
+        else Borderless = false;
       }
 
       public void UpdateNative()
       {
-        Native = ResolutionEnabled == false;
+        if (ResolutionEnabled)
+          Native = false;
+        else Native = true;
       }
 
       public void Save()
@@ -344,7 +331,7 @@ namespace SPV3
             bw.Write(Height);
             bw.Write(Framerate);
             bw.Write(Vsync);
-            bw.Write(UseGamma);
+            bw.Write(GammaEnabled);
             bw.Write(Gamma);
             bw.Write(Adapter);
           }
@@ -380,55 +367,63 @@ namespace SPV3
         if (!Exists())
           return;
 
-        using (var fs = new FileStream(Paths.Configuration, FileMode.Open, FileAccess.Read))
-        using (var ms = new MemoryStream(Length))
-        using (var br = new BinaryReader(ms))
-        {
-          fs.CopyTo(ms);
-          ms.Position = 0;
-
-          /* padding */
+        try {
+          using (var fs = new FileStream(Paths.Configuration, FileMode.Open, FileAccess.Read))
+          using (var ms = new MemoryStream(Length))
+          using (var br = new BinaryReader(ms))
           {
-            ms.Position += 16 - ms.Position;
+            fs.CopyTo(ms);
+            ms.Position = 0;
+
+            /* padding */
+            {
+              ms.Position += 16 - ms.Position;
+            }
+
+            /* video */
+            {
+              Shaders = br.ReadBoolean();
+              Window = br.ReadBoolean();
+              Width = br.ReadUInt16();
+              Height = br.ReadUInt16();
+              Framerate = br.ReadByte();
+              Vsync = br.ReadBoolean();
+              GammaEnabled = br.ReadBoolean();
+              Gamma = br.ReadByte();
+              Adapter = br.ReadByte();
+            }
+
+            /* modes */
+            {
+              DOOM = br.ReadBoolean();
+              Photo = br.ReadBoolean();
+              Borderless = br.ReadBoolean();
+            }
+
+            /* tweaks */
+            {
+              EAX = br.ReadBoolean();
+              Preset = br.ReadBoolean();
+              CinemaBars = br.ReadBoolean();
+              Elevated = br.ReadBoolean();
+            }
+
+            /* display mode */
+            {
+              Mode = br.ReadByte();
+              Native = br.ReadBoolean();
+            }
           }
 
-          /* video */
-          {
-            Shaders    = br.ReadBoolean();
-            Window     = br.ReadBoolean();
-            Width      = br.ReadUInt16();
-            Height     = br.ReadUInt16();
-            Framerate  = br.ReadByte();
-            Vsync      = br.ReadBoolean();
-            UseGamma   = br.ReadBoolean();
-            Gamma      = br.ReadByte();
-            Adapter    = br.ReadByte();
-          }
-
-          /* modes */
-          {
-            DOOM       = br.ReadBoolean();
-            Photo      = br.ReadBoolean();
-            Borderless = br.ReadBoolean();
-          }
-
-          /* tweaks */
-          {
-            EAX        = br.ReadBoolean();
-            Preset     = br.ReadBoolean();
-            CinemaBars = br.ReadBoolean();
-            Elevated   = br.ReadBoolean();
-          }
-
-          /* display mode */
-          {
-            Mode   = br.ReadByte();
-            Native = br.ReadBoolean();
-          }
+          UpdateWindowBorderless();
+          UpdateNative();
         }
-
-        UpdateBorderlessEnabled();
-        UpdateResolutionEnabled();
+        catch(System.Exception e)
+        {
+          var log = (HXE.File) Paths.Exception;
+          log.WriteAllText("Oops. The saved settings file probably had different more or fewer settings than expected.\n Error: " + e);
+          return;
+        }
       }
 
       public bool Exists()
