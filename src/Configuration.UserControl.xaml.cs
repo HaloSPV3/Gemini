@@ -214,5 +214,34 @@ namespace SPV3
     {
 
     }
+
+    private void SSR_Or_ResolutionChanged(object sender, RoutedEventArgs e)
+    {
+      if (_configuration != null)
+      {
+        int pixelCount = 0;
+        if (sender.GetType() == typeof(TextBox) && (sender as TextBox).Name == "ResolutionWidth")
+        {
+            int width = 0;
+            int.TryParse((sender as TextBox).Text, out width);
+            pixelCount = _configuration.Loader.Height * width;
+        }
+        else if (sender.GetType() == typeof(TextBox) && (sender as TextBox).Name == "ResolutionHeight")
+        {
+            int height = 0;
+            int.TryParse((sender as TextBox).Text, out height);
+            pixelCount = _configuration.Loader.Width * height;
+        }
+        else
+        {
+          pixelCount = _configuration.Loader.Width * _configuration.Loader.Height;
+        }
+        if (_configuration.Shaders.SSR == true && pixelCount > 2332800)
+        {
+          MessageBox.Show("WARNING: With SSR on and your prefered resolution, you may not get stable FPS. " +
+                    "We recommend keeping resolution below 2160x1080 with SSR on.");
+        }
+      }
+    }
   }
 }
