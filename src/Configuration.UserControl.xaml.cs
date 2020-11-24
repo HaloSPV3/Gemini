@@ -214,5 +214,27 @@ namespace SPV3
     {
 
     }
+
+    private void SSR_Or_ResolutionChanged(object sender, RoutedEventArgs e)
+    {
+      if (_configuration == null)
+        return;
+
+      if (!_configuration.Shaders.SSR)
+        return;
+
+      if (!int.TryParse(ResolutionWidth.Text, out var width))
+        return;
+
+      if (!int.TryParse(ResolutionHeight.Text, out var height))
+        return;
+
+      if (width > 2160 || height > 1080)
+        MessageBox.Show
+        (
+          "WARNING: With SSR on and your preferred resolution, you may not get stable FPS. " +
+          "We recommend keeping resolution below 2160x1080 with SSR on."
+        );
+    }
   }
 }

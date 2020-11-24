@@ -81,17 +81,21 @@
                     ToolTip="Allows you to use a custom resolution. Otherwise, it will use your system's current resolution."
                     HorizontalAlignment="Left" />
           <TextBox HorizontalAlignment="Left"
+                     Name="ResolutionWidth"
                      HorizontalContentAlignment="Center"
                      Width="50"
                      Text="{Binding Loader.Width}"
                      ToolTip="Sets the video width of HCE/SPV3."
+                     TextChanged="SSR_Or_ResolutionChanged"
                      IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="1" />
           <TextBox HorizontalAlignment="Left"
+                     Name="ResolutionHeight"
                      HorizontalContentAlignment="Center"
                      Width="50"
                      Margin="5,0,0,0"
                      Text="{Binding Loader.Height}"
                      ToolTip="Sets the video height of HCE/SPV3."
+                     TextChanged="SSR_Or_ResolutionChanged"
                      IsEnabled="{Binding Loader.ResolutionEnabled}" Grid.ColumnSpan="1" />
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
@@ -292,6 +296,7 @@
                  IsEnabled="{Binding Loader.Shaders}" />
           <CheckBox IsChecked="{Binding Shaders.SSR}"
                     IsEnabled="{Binding Loader.Shaders}"
+                    Checked="SSR_Or_ResolutionChanged"
                     ToolTip="Enables Screen Space Ray Traced Reflections" />
         </DockPanel>
         <DockPanel Visibility="{Binding Shaders.DebandAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
