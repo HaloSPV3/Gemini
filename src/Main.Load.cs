@@ -53,8 +53,8 @@ namespace SPV3
 
       public void Invoke()
       {
-        var spv3      = new Configuration.ConfigurationLoader();                 /* for configuration          */
-        var hxe       = new HXE.Kernel.Configuration(Paths.Kernel);              /* for compatibility & tweaks */
+        var spv3      = Kernel.spv3;                                             /* for configuration          */
+        var hxe       = Kernel.hxe;                                              /* for compatibility & tweaks */
         var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
         var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
 
@@ -68,29 +68,8 @@ namespace SPV3
           spv3.Shaders = true;
         }
 
-        hxe.Load();
-        hxe.Mode               = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
-        hxe.Tweaks.Sensor      = true;          /* forcefully enable motion sensor   */
-        hxe.Main.Reset         = true;          /* improve loading stability         */
-        hxe.Main.Patch         = true;          /* improve loading stability         */
-        hxe.Main.Resume        = true;          /* improve loading stability         */
-        hxe.Main.Start         = true;          /* improve loading stability         */
-        hxe.Main.Elevated      = spv3.Elevated; /* prevent certain crashes           */
-        hxe.Video.Resolution   = true;          /* permit custom resolution override */
-        hxe.Video.Quality      = false;         /* permit in-game quality settings   */
-        hxe.Video.Uncap        = spv3.Vsync == false;
-        hxe.Video.GammaEnabled = spv3.GammaEnabled;
-        hxe.Video.Gamma        = spv3.Gamma;
-        hxe.Video.Bless        = spv3.Borderless && spv3.Window && spv3.Vsync == false && spv3.Elevated == false;
-        hxe.Audio.Enhancements = spv3.EAX;
-        hxe.Input.Override     = spv3.Preset;
-        hxe.Tweaks.CinemaBars  = spv3.CinemaBars;
-        hxe.Tweaks.Unload      = !spv3.Shaders;
+        Kernel.Load(); // Overrides moved to Kernel. Load() calls the overrides.
 
-        if (File.Exists(HXE.Paths.Version))
-        {
-          hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
-        }
         if (chimera.Exists())
         {
           chimera.Load();

@@ -190,13 +190,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>doom.bin</TargetPath>
     </ContentWithTargetPath>
-
     <!-- Presence Support -->
     <ContentWithTargetPath Include="Presence\DRP.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>controls\haloce_presence.dll</TargetPath>
     </ContentWithTargetPath>
-
     <!-- Tile Support -->
     <ContentWithTargetPath Include="Tile\spv3.visualelementsmanifest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

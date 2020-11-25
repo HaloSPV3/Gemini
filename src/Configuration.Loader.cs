@@ -303,62 +303,71 @@ namespace SPV3
 
       public void Save()
       {
-        using (var fs = new FileStream(Paths.Configuration, FileMode.Create, FileAccess.Write))
-        using (var ms = new MemoryStream(Length))
-        using (var bw = new BinaryWriter(ms))
+        try
         {
-          /* padding */
+          using (var fs = new FileStream(Paths.Configuration, FileMode.Create, FileAccess.Write))
+          using (var ms = new MemoryStream(Length))
+          using (var bw = new BinaryWriter(ms))
           {
-            bw.Write(new byte[Length]);
+            /* padding */
+            {
+              bw.Write(new byte[Length]);
+              ms.Position = 0;
+            }
+
+            /* signature */
+            {
+              bw.Write(Encoding.Unicode.GetBytes("~yumiris"));
+            }
+
+            /* padding */
+            {
+              bw.Write(new byte[16 - ms.Position]);
+            }
+
+            /* video */
+            {
+              bw.Write(Shaders);
+              bw.Write(Window);
+              bw.Write(Width);
+              bw.Write(Height);
+              bw.Write(Framerate);
+              bw.Write(Vsync);
+              bw.Write(GammaEnabled);
+              bw.Write(Gamma);
+              bw.Write(Adapter);
+            }
+
+            /* modes */
+            {
+              bw.Write(DOOM);
+              bw.Write(Photo);
+              bw.Write(Borderless);
+            }
+
+            /* tweaks */
+            {
+              bw.Write(EAX);
+              bw.Write(Preset);
+              bw.Write(CinemaBars);
+              bw.Write(Elevated);
+            }
+
+            /* display mode */
+            {
+              bw.Write(Mode);
+              bw.Write(Native);
+            }
+
             ms.Position = 0;
+            ms.CopyTo(fs);
           }
-
-          /* signature */
-          {
-            bw.Write(Encoding.Unicode.GetBytes("~yumiris"));
-          }
-
-          /* padding */
-          {
-            bw.Write(new byte[16 - ms.Position]);
-          }
-
-          /* video */
-          {
-            bw.Write(Shaders);
-            bw.Write(Window);
-            bw.Write(Width);
-            bw.Write(Height);
-            bw.Write(Framerate);
-            bw.Write(Vsync);
-            bw.Write(GammaEnabled);
-            bw.Write(Gamma);
-            bw.Write(Adapter);
-          }
-
-          /* modes */
-          {
-            bw.Write(DOOM);
-            bw.Write(Photo);
-            bw.Write(Borderless);
-          }
-
-          /* tweaks */
-          {
-            bw.Write(EAX);
-            bw.Write(Preset);
-            bw.Write(CinemaBars);
-            bw.Write(Elevated);
-          }
-
-          /* display mode */
-          {
-            bw.Write(Mode);
-            bw.Write(Native);
-          }
-
-          ms.Position = 0;
-          ms.CopyTo(fs);
+          /// Execute hxe.Kernel.Save()
+        }
+        catch(System.Exception e)
+        {
+          var log = (HXE.File)Paths.Exception;
+          log.WriteAllText("The Loader could not save settings.\n Error: " + e);
         }
       }
 
@@ -366,7 +375,6 @@ namespace SPV3
       {
         if (!Exists())
           return;
-
         try {
           using (var fs = new FileStream(Paths.Configuration, FileMode.Open, FileAccess.Read))
           using (var ms = new MemoryStream(Length))
@@ -421,8 +429,7 @@ namespace SPV3
         catch(System.Exception e)
         {
           var log = (HXE.File) Paths.Exception;
-          log.WriteAllText("Oops. The saved settings file probably had different more or fewer settings than expected.\n Error: " + e);
-          return;
+          log.WriteAllText("Oops. The file probably had more or fewer settings than expected.\n Error: " + e);
         }
       }
 
