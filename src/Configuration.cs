@@ -20,18 +20,24 @@
 
 using System.Collections.Generic;
 using static HXE.OpenSauce.OpenSauceObjects.ObjectsWeapon;
+using static SPV3.Kernel;
 
 namespace SPV3
 {
   public partial class Configuration
   {
+    // See SPV3.Kernel class
     public ConfigurationLoader    Loader    { get; set; } = new ConfigurationLoader();
     public ConfigurationShaders   Shaders   { get; set; } = new ConfigurationShaders();
     public ConfigurationOpenSauce OpenSauce { get; set; } = new ConfigurationOpenSauce();
     public ConfigurationChimera   Chimera   { get; set; } = new ConfigurationChimera();
+    public HXE.Settings           Settings  { get; set; } = new HXE.Settings(hxe);
+    public HXE.Positions          Positions { get; set; } = new HXE.Positions();
 
     public void Load()
     {
+      spv3 = Loader;
+      Kernel.Load();
       Loader.Load();
       Shaders.Load();
       OpenSauce.Load();
@@ -40,6 +46,8 @@ namespace SPV3
 
     public void Save()
     {
+      spv3 = Loader;
+      Kernel.Save();
       Loader.Save();
       Shaders.Save();
       OpenSauce.Save();
@@ -54,6 +62,19 @@ namespace SPV3
     public void ResetWeaponPositions()
     {
       OpenSauce.Configuration.Objects.Weapon.Positions = new List<PositionWeapon>();
+    }
+
+    public void ShowHxeSettings()
+    {
+      Kernel.Save();
+      Settings = new HXE.Settings(hxe);
+      Settings.ShowDialog();
+      Kernel.Load();
+    }
+
+    public void ShowHxeWepPositions()
+    {
+      Positions.ShowDialog();
     }
   }
 }

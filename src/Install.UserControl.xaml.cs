@@ -60,6 +60,19 @@ namespace SPV3
       }
     }
 
+    private void BrowseSteam(object sender, RoutedEventArgs e)
+    {
+      using (var dialog = new OpenFileDialog())
+      {
+        dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        dialog.Filter = "Steam (*.exe)|*.exe";
+        dialog.FilterIndex = 1;
+        _install.SetSteamStatus();
+        if (dialog.ShowDialog() == DialogResult.OK)
+          _install.SteamExePath = dialog.FileName;
+      }
+    }
+
     private void InstallHce(object sender, RoutedEventArgs e)
     {
       _install.InstallHce();
@@ -78,6 +91,50 @@ namespace SPV3
     private void Quit(object sender, RoutedEventArgs e)
     {
       Environment.Exit(0);
+    }
+
+    private void ViewMain(object sender, RoutedEventArgs e)
+    {
+      _install.ViewMain();
+    }
+
+    private void ViewMcc(object sender, RoutedEventArgs e)
+    {
+      _install.ViewMcc();
+    }
+
+    private void ViewHce(object sender, RoutedEventArgs e)
+    {
+      _install.ViewHce();
+    }
+
+    private void Target_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+      try
+      {
+        if (_install == null) 
+          return;
+        _install.Target = this.Target.Text;
+      }
+      catch (Exception ex)
+      {
+        _install.Status = ex.Message;
+      }
+    }
+
+    private void SteamExePath_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+      try
+      {
+        if (_install == null) 
+          return;
+        if (this.SteamExePath.Text.Contains("steam.exe"))
+          _install.SteamExePath = this.SteamExePath.Text;
+      }
+      catch (Exception ex)
+      {
+        _install.Status = ex.Message;
+      }
     }
   }
 }

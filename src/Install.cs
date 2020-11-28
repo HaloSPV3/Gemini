@@ -23,14 +23,15 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using HXE;
 using HXE.HCE;
+using HXE.Steam;
 using IWshRuntimeLibrary;
 using SPV3.Annotations;
+using static HXE.Paths.MCC;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
 using static System.IO.File;
@@ -39,13 +40,35 @@ namespace SPV3
 {
   public class Install : INotifyPropertyChanged
   {
-    private readonly string     _source = Path.Combine(CurrentDirectory, "data");
+    private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
+    private          bool       _isDebug  = false; // Temporary: set "True" to skip Halo CE Detection and access HCE and MCC panels
     private          bool       _canInstall;
-    private          Visibility _hce    = Visibility.Collapsed;
-    private          Visibility _load   = Visibility.Collapsed;
-    private          Visibility _main   = Visibility.Visible;
-    private          string     _status = "Awaiting user input...";
-    private          string     _target = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
+    private          Visibility _debug    = Visibility.Visible; // TODO: Implement Debug-Tools 'floating' panel
+    private          Visibility _mcc      = Visibility.Collapsed;
+    private          Visibility _hce      = Visibility.Collapsed;
+    private          Visibility _load     = Visibility.Collapsed;
+    private          Visibility _main     = Visibility.Visible;
+    private          string     _status   = "Awaiting user input...";
+    private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
+    private          string     _steamExe = Path.Combine(Steam, SteamExe);
+    private          string     _steamStatus = "Find Steam.exe or its shortcut and we'll do the rest!";
+
+    public bool IsDebug
+    {
+      get => _isDebug;
+      set
+      {
+        if (value == _isDebug) return;
+        _isDebug = value;
+        OnPropertyChanged();
+        if (value)
+        {
+          _debug = Visibility.Visible; 
+
+        }
+        else _debug = Visibility.Collapsed;
+      }
+    }
 
     public bool CanInstall
     {
@@ -65,6 +88,47 @@ namespace SPV3
       {
         if (value == _status) return;
         _status = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public string SteamExePath
+    {
+      get => _steamExe;
+      set
+      {
+        if (value == _steamExe) return;
+        _steamExe = value;
+        OnPropertyChanged();
+
+        if (Exists(_steamExe))
+        {
+          SetSteam(value);
+          SetSteamStatus();
+          Halo1Path = Path.Combine(SteamLibrary, SteamMccH1, Halo1dll);
+          if (!Exists(Halo1Path))
+          {
+            try
+            {
+              MCC.Halo1.SetHalo1Path();
+            }
+            catch (Exception e)
+            {
+              Status = e.Message.ToLower();
+            }
+          }
+          Status = "You've finally arrived, but there's still more work to be done! Next up: Crack!";
+        }
+      }
+    }
+
+    public string SteamStatus
+    {
+      get => _steamStatus;
+      set
+      {
+        if (value == _steamStatus) return;
+        _steamStatus = value;
         OnPropertyChanged();
       }
     }
@@ -159,6 +223,17 @@ namespace SPV3
       }
     }
 
+    public Visibility Mcc
+    {
+      get => _mcc;
+      set
+      {
+        if (value == _mcc) return;
+        _mcc = value;
+        OnPropertyChanged();
+      }
+    }
+
     public Visibility Hce
     {
       get => _hce;
@@ -186,6 +261,7 @@ namespace SPV3
     public void Initialise()
     {
       Main = Visibility.Visible;
+      Mcc  = Visibility.Collapsed;
       Hce  = Visibility.Collapsed;
 
       /**
@@ -206,12 +282,14 @@ namespace SPV3
         return;
       }
 
+      if (!IsDebug) // USE FOR DEBUGGING HCE AND MCC PANELS. If True, skip the following If statement
       if (Detection.InferFromRegistryKeyEntry() != null) return;
 
       Status     = "Please install a legal copy of HCE before installing SPV3.";
       CanInstall = false;
 
       Main = Visibility.Collapsed;
+      Mcc  = Visibility.Collapsed;
       Hce  = Visibility.Visible;
     }
 
@@ -302,6 +380,35 @@ namespace SPV3
         Status     = e.Message;
         CanInstall = true;
       }
+    }
+
+    public void SetSteamStatus()
+    {
+      SteamStatus =
+        Exists(SteamExePath) ?
+        "Steam located!" :
+        "Find Steam.exe or a Steam shortcut and we'll do the rest!";
+    }
+
+    public void ViewHce()
+    {
+      Main = Visibility.Collapsed;
+      Mcc = Visibility.Collapsed;
+      Hce = Visibility.Visible;
+    }
+
+    public void ViewMain()
+    {
+      Main = Visibility.Visible;
+      Mcc = Visibility.Collapsed;
+      Hce = Visibility.Collapsed;
+    }
+
+    public void ViewMcc()
+    {
+      Main = Visibility.Collapsed;
+      Mcc = Visibility.Visible;
+      Hce = Visibility.Collapsed;
     }
 
     public void InstallHce()

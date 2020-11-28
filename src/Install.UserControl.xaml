@@ -72,7 +72,9 @@
                         Margin="1,0,0,0"
                         Content="Browse"
                         Click="Browse" />
-                <TextBox Text="{Binding Target}"
+                <TextBox Name="Target"
+                         Text="{Binding Target}"
+                         TextChanged="Target_TextChanged"
                          VerticalContentAlignment="Center"
                          Margin="1,0,0,0"
                          BorderThickness="0" />
@@ -87,6 +89,54 @@
                         Click="Install"
                         Content="Install"
                         IsEnabled="{Binding CanInstall}" />
+            </DockPanel>
+        </StackPanel>
+        
+        <!-- MCC -->
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="640"
+                    Visibility="{Binding Mcc}">
+            <Label Content="Locate Steam or its shortcut:"
+                   Foreground="White"/>
+            <DockPanel>
+                  <Button DockPanel.Dock="Right"
+                          Margin="1,0,0,0"
+                          Click="BrowseSteam"
+                          Content="Browse" />
+                  <TextBox Name="SteamExePath"
+                           Text="{Binding SteamExePath}"
+                           TextChanged="SteamExePath_TextChanged"
+                           VerticalContentAlignment="Center"
+                           Margin="1,0,0,0"
+                           BorderThickness="0" />
+            </DockPanel>
+            <DockPanel Margin="0,1,0,0">
+              <Grid Margin="0,1,0,0">
+                  <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="100" />
+                      <ColumnDefinition />
+                      <ColumnDefinition Width="100" />
+                  </Grid.ColumnDefinitions>
+                  <Button Grid.Column="0"
+                          Margin="0,0,0,0"
+                          Click="ViewHce">
+                      Back
+                  </Button>
+                  <Button Grid.Column="1"
+                          Margin="1,0,1,0">
+                          <TextBlock  Foreground="White"
+                                      TextWrapping="WrapWithOverflow"
+                                      TextAlignment="Center"
+                                      Text="{Binding SteamStatus}"/>
+                  </Button>
+                  <Button Grid.Column="2"
+                          Margin="0,0,0,0"
+                          Click="Quit">
+                    Exit
+                  </Button>
+              </Grid>
             </DockPanel>
         </StackPanel>
 
@@ -110,30 +160,38 @@
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0"
                         Margin="0,0,0.5,0"
-                        Click="Back">
+                        Click="ViewMain">
                     Go back...
                 </Button>
                 <Button Grid.Column="1"
                         Margin="0.5,0"
+                        Click="ViewMcc"
+                        Content="MCC" />
+                <Button Grid.Column="2"
+                        Margin="0.5,0"
                         Click="InstallHce"
                         Content="Step 1: Install HCE" />
-                <Button Grid.Column="2"
+                <Button Grid.Column="3"
                         Margin="0.5,0,0.5,0"
                         Click="VerifyHce"
                         Content="Step 2: Verify HCE" />
-                <Button Grid.Column="3"
+                <Button Grid.Column="4"
                         Margin="0.5,0,0,0"
                         Click="Quit">
                     Exit
                 </Button>
             </Grid>
         </StackPanel>
+        <StackPanel>
+        </StackPanel>
 
-        <!-- Load -->
+
+    <!-- Load -->
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"

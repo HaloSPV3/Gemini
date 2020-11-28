@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -192,27 +191,12 @@ namespace SPV3
 
     private void Advanced(object sender, RoutedEventArgs e)
     {
-      // new HXE.Settings().Show();
-      Process hxe = new Process();
-      hxe.StartInfo.FileName = Paths.HXE;
-      hxe.StartInfo.Arguments = "-config";
-      hxe.Start();
-      hxe.WaitForExit();
+      _configuration.ShowHxeSettings();
     }
 
     private void Positions(object sender, RoutedEventArgs e)
     {
-      // new HXE.Positions().Show();
-      Process hxe = new Process();
-      hxe.StartInfo.FileName = Paths.HXE;
-      hxe.StartInfo.Arguments = "-positions";
-      hxe.Start();
-      hxe.WaitForExit();
-    }
-
-    private void ComboBox_SelectionChanged()
-    {
-
+      _configuration.ShowHxeWepPositions();
     }
 
     private void SSR_Or_ResolutionChanged(object sender, RoutedEventArgs e)
