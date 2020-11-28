@@ -33,7 +33,7 @@ namespace SPV3
     public static void Load()
     {
       hxe.Load();
-      SPV3Overrides();
+      Save();
     }
 
     /// <summary>

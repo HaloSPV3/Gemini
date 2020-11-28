@@ -66,8 +66,8 @@ namespace SPV3
 
     public void ShowHxeSettings()
     {
-      Settings = new HXE.Settings(hxe);
       Kernel.Save();
+      Settings = new HXE.Settings(hxe);
       Settings.ShowDialog();
       Kernel.Load();
     }
