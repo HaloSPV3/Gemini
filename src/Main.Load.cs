@@ -70,6 +70,10 @@ namespace SPV3
 
         Kernel.Load(); // Overrides moved to Kernel. Load() calls the overrides.
 
+        if (!File.Exists(HXE.Paths.Legacy))
+        {
+          hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
+        }
         if (chimera.Exists())
         {
           chimera.Load();

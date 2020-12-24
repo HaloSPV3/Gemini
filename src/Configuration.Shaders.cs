@@ -46,7 +46,11 @@ namespace SPV3
 
       public bool ModeIsSPV33()
       {
-        if (System.IO.File.Exists(HXE.Paths.Version))
+        /**
+         * TODO: Remove side-effect sometime down the line.
+         */
+        
+        if (!System.IO.File.Exists(HXE.Paths.Legacy))
         {
           _configuration.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
           return true;

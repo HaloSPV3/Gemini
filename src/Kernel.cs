@@ -25,7 +25,7 @@ namespace SPV3
      */
     public static Mode Infer()
     {
-      return Exists(HXE.Paths.Version)
+      return Exists(HXE.Paths.Legacy)
         ? Mode.SPV33
         : Mode.SPV32;
     }
