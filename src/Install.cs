@@ -153,16 +153,28 @@ namespace SPV3
         try
         {
           var exists = Directory.Exists(Target);
+          var path = Target;
+          var rootExists = Directory.Exists(Path.GetPathRoot(Target));
 
-          if (!exists)
-            Directory.CreateDirectory(Target);
+          if (!exists && !rootExists)
+          {
+            throw new DirectoryNotFoundException(Target);
+          }
+          if (!exists && rootExists)
+          {
+            while (!Directory.Exists(path))
+            {
+              path = Directory.GetParent(path).Name;
+              if (path == "Debug") return;
+            }
+          }
 
-          var test = Path.Combine(Target, "io.bin");
+          // if Target and Root exist...
+          _target = Path.GetFullPath(_target);
+          value = Path.GetFullPath(value);
+          var test = Path.Combine(path, "io.bin");
           WriteAllBytes(test, new byte[8]);
           Delete(test);
-
-          if (!exists)
-            Directory.Delete(Target);
 
           Status     = "Waiting for user to install SPV3.";
           CanInstall = true;
@@ -171,6 +183,7 @@ namespace SPV3
         {
           Status     = "Installation not possible at selected path: " + e.Message.ToLower();
           CanInstall = false;
+          return;
         }
 
         /**
@@ -179,21 +192,33 @@ namespace SPV3
 
         try
         {
-          var targetDrive = Path.GetPathRoot(Target);
 
-          foreach (var drive in DriveInfo.GetDrives())
+          /** First, check the C:\ drive to ensure there's enough free space 
+           * for temporary extraction to %temp% */
+          if (Directory.Exists(@"C:\"))
           {
-            if (!drive.IsReady || drive.Name != targetDrive) continue;
-
-            if (drive.TotalFreeSpace > 17179869184)
-            {
-              CanInstall = true;
-            }
-            else
-            {
-              Status     = "Not enough disk space (16GB required) at selected path: " + Target;
+            var systemDrive = new DriveInfo(@"C:\");
+            if (systemDrive.TotalFreeSpace < 10737418240)
+            { 
+              Status     = @"Not enough disk space (10GB required) on the C:\ drive. " + 
+                            "Clear junk files using Disk Cleanup or allocate more space to the volume";
               CanInstall = false;
             }
+          }
+
+          /** 
+           * Check if the target drive has at least 16GB of free space 
+           */
+          var targetDrive = new DriveInfo(Path.GetPathRoot(Target));
+
+          if (targetDrive.IsReady && targetDrive.TotalFreeSpace > 17179869184)
+          {
+            CanInstall = true;
+          }
+          else
+          {
+            Status     = "Not enough disk space (16GB required) at selected path: " + Target;
+            CanInstall = false;
           }
         }
         catch (Exception e)
@@ -302,16 +327,17 @@ namespace SPV3
       try
       {
         CanInstall = false;
+        bool gameExists = Registry.GameExists("Custom");
 
-        if (Exists(Halo1Path))
+        if (Exists(Halo1Path) && !gameExists)
         {
           try
           {
             /** Write a .reg file */
             {
               var data = new Registry.Data{ Version = "1.10" };
-              if (!Registry.GameExists("Custom"))
-                data.EXE_Path = $@"{Target}";
+              if (!gameExists)
+                data.EXE_Path = Target;
               Registry.WriteToFile("Custom", data);
             }
 
