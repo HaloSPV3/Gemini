@@ -35,40 +35,25 @@ using static HXE.Paths.MCC;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
 using static System.IO.File;
+using static System.Windows.Visibility;
 
 namespace SPV3
 {
   public class Install : INotifyPropertyChanged
   {
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
-    private          bool       _isDebug  = false; // Temporary: set "True" to skip Halo CE Detection and access HCE and MCC panels
+    private          bool       _skipDetect  = false; // Temporary: set "True" to skip Halo CE Detection and access HCE and MCC panels
     private          bool       _canInstall;
-    private          Visibility _debug    = Visibility.Visible; // TODO: Implement Debug-Tools 'floating' panel
-    private          Visibility _mcc      = Visibility.Collapsed;
-    private          Visibility _hce      = Visibility.Collapsed;
-    private          Visibility _load     = Visibility.Collapsed;
-    private          Visibility _main     = Visibility.Visible;
+    private          bool       _compress = true;
+    private readonly Visibility _dbgPnl   = Debug.IsDebug ? Visible : Collapsed; // TODO: Implement Debug-Tools 'floating' panel
+    private          Visibility _mcc      = Collapsed;
+    private          Visibility _hce      = Collapsed;
+    private          Visibility _load     = Collapsed;
+    private          Visibility _main     = Visible;
     private          string     _status   = "Awaiting user input...";
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
     private          string     _steamExe = Path.Combine(Steam, SteamExe);
     private          string     _steamStatus = "Find Steam.exe or its shortcut and we'll do the rest!";
-
-    public bool IsDebug
-    {
-      get => _isDebug;
-      set
-      {
-        if (value == _isDebug) return;
-        _isDebug = value;
-        OnPropertyChanged();
-        if (value)
-        {
-          _debug = Visibility.Visible; 
-
-        }
-        else _debug = Visibility.Collapsed;
-      }
-    }
 
     public bool CanInstall
     {
@@ -77,6 +62,17 @@ namespace SPV3
       {
         if (value == _canInstall) return;
         _canInstall = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public bool Compress
+    {
+      get => _compress;
+      set
+      {
+        if (value == _compress) return;
+        _compress = value;
         OnPropertyChanged();
       }
     }
@@ -111,13 +107,21 @@ namespace SPV3
             try
             {
               MCC.Halo1.SetHalo1Path();
+              if(Exists(Halo1Path))
+              {
+                Status = "Halo CEA Located." + "\r\n"
+                       + "Note: You will need administrative permissions to activate Halo via MCC.";
+                CanInstall = true;
+                Mcc = Collapsed;
+                Main = Visible;
+              }
             }
             catch (Exception e)
             {
               Status = e.Message.ToLower();
+              return;
             }
           }
-          Status = "You've finally arrived, but there's still more work to be done! Next up: Crack!";
         }
       }
     }
@@ -149,16 +153,28 @@ namespace SPV3
         try
         {
           var exists = Directory.Exists(Target);
+          var path = Target;
+          var rootExists = Directory.Exists(Path.GetPathRoot(Target));
 
-          if (!Directory.Exists(Target))
-            Directory.CreateDirectory(Target);
+          if (!exists && !rootExists)
+          {
+            throw new DirectoryNotFoundException(Target);
+          }
+          if (!exists && rootExists)
+          {
+            while (!Directory.Exists(path))
+            {
+              path = Directory.GetParent(path).Name;
+              if (path == "Debug") return;
+            }
+          }
 
-          var test = Path.Combine(Target, "io.bin");
+          // if Target and Root exist...
+          _target = Path.GetFullPath(_target);
+          value = Path.GetFullPath(value);
+          var test = Path.Combine(path, "io.bin");
           WriteAllBytes(test, new byte[8]);
           Delete(test);
-
-          if (!exists)
-            Directory.Delete(Target);
 
           Status     = "Waiting for user to install SPV3.";
           CanInstall = true;
@@ -167,6 +183,7 @@ namespace SPV3
         {
           Status     = "Installation not possible at selected path: " + e.Message.ToLower();
           CanInstall = false;
+          return;
         }
 
         /**
@@ -175,21 +192,33 @@ namespace SPV3
 
         try
         {
-          var targetDrive = Path.GetPathRoot(Target);
 
-          foreach (var drive in DriveInfo.GetDrives())
+          /** First, check the C:\ drive to ensure there's enough free space 
+           * for temporary extraction to %temp% */
+          if (Directory.Exists(@"C:\"))
           {
-            if (!drive.IsReady || drive.Name != targetDrive) continue;
-
-            if (drive.TotalFreeSpace > 17179869184)
-            {
-              CanInstall = true;
-            }
-            else
-            {
-              Status     = "Not enough disk space (16GB required) at selected path: " + Target;
+            var systemDrive = new DriveInfo(@"C:\");
+            if (systemDrive.TotalFreeSpace < 10737418240)
+            { 
+              Status     = @"Not enough disk space (10GB required) on the C:\ drive. " + 
+                            "Clear junk files using Disk Cleanup or allocate more space to the volume";
               CanInstall = false;
             }
+          }
+
+          /** 
+           * Check if the target drive has at least 16GB of free space 
+           */
+          var targetDrive = new DriveInfo(Path.GetPathRoot(Target));
+
+          if (targetDrive.IsReady && targetDrive.TotalFreeSpace > 17179869184)
+          {
+            CanInstall = true;
+          }
+          else
+          {
+            Status     = "Not enough disk space (16GB required) at selected path: " + Target;
+            CanInstall = false;
           }
         }
         catch (Exception e)
@@ -198,7 +227,7 @@ namespace SPV3
           CanInstall = false;
         }
 
-        /*
+        /**
          * Prohibit installations to known problematic folders.
          */
 
@@ -255,17 +284,17 @@ namespace SPV3
         OnPropertyChanged();
       }
     }
-
+    
     public event PropertyChangedEventHandler PropertyChanged;
 
     public void Initialise()
     {
-      Main = Visibility.Visible;
-      Mcc  = Visibility.Collapsed;
-      Hce  = Visibility.Collapsed;
+      Main = Visible;
+      Mcc  = Collapsed;
+      Hce  = Collapsed;
 
       /**
-       * Determine if the current environment fulfils the installation requirements.
+       * Determine if the current environment fulfills the installation requirements.
        */
 
       var manifest = (Manifest) Path.Combine(_source, HXE.Paths.Manifest);
@@ -282,15 +311,15 @@ namespace SPV3
         return;
       }
 
-      if (!IsDebug) // USE FOR DEBUGGING HCE AND MCC PANELS. If True, skip the following If statement
+      if (!_skipDetect) // USE FOR DEBUGGING HCE AND MCC PANELS. If True, skip the following If statement
       if (Detection.InferFromRegistryKeyEntry() != null) return;
 
       Status     = "Please install a legal copy of HCE before installing SPV3.";
       CanInstall = false;
 
-      Main = Visibility.Collapsed;
-      Mcc  = Visibility.Collapsed;
-      Hce  = Visibility.Visible;
+      Main = Collapsed;
+      Mcc  = Collapsed;
+      Hce  = Visible;
     }
 
     public async void Commit()
@@ -298,13 +327,51 @@ namespace SPV3
       try
       {
         CanInstall = false;
+        bool gameExists = Registry.GameExists("Custom");
+
+        if (Exists(Halo1Path) && !gameExists)
+        {
+          try
+          {
+            /** Write a .reg file */
+            {
+              var data = new Registry.Data{ Version = "1.10" };
+              if (!gameExists)
+                data.EXE_Path = Target;
+              Registry.WriteToFile("Custom", data);
+            }
+
+            /** Tell RegEdit to import the file */
+            {
+              var filepath = Path.Combine(CurrentDirectory, "Custom.reg");
+              var regedit = new Process();
+              regedit.StartInfo.FileName = "regedit.exe";
+              regedit.StartInfo.Arguments = $"/s {filepath}";
+              regedit.StartInfo.WorkingDirectory = CurrentDirectory;
+              regedit.StartInfo.UseShellExecute = true;
+              regedit.StartInfo.Verb = "runas";
+              regedit.Start();
+              regedit.WaitForExit();
+              if (0 != regedit.ExitCode)
+                throw new Exception("Failed to import to Registry.");
+            }
+
+            /** Cheers */
+            Status = "SPV3 successfully activated.";
+          }
+          catch (Exception e)
+          {
+            Status = "Failed to Activate Halo: " + e.ToString();
+            return;
+          }
+        }
 
         var progress = new Progress<Status>();
         progress.ProgressChanged +=
           (o, s) => Status =
             $"Installing SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
 
-        await Task.Run(() => { Installer.Install(_source, _target, progress); });
+        await Task.Run(() => { Installer.Install(_source, _target, progress, Compress); });
 
         /* shortcuts */
         {
@@ -342,6 +409,7 @@ namespace SPV3
 
           Shortcut(GetFolderPath(DesktopDirectory));
           Shortcut(appStartMenuPath);
+
         }
 
         MessageBox.Show(
@@ -365,9 +433,9 @@ namespace SPV3
 
           if (Exists(Path.Combine(Target, Paths.Executable)))
           {
-            Main = Visibility.Collapsed;
-            Hce  = Visibility.Collapsed;
-            Load = Visibility.Visible;
+            Main = Collapsed;
+            Hce  = Collapsed;
+            Load = Visible;
           }
           else
           {
@@ -392,23 +460,23 @@ namespace SPV3
 
     public void ViewHce()
     {
-      Main = Visibility.Collapsed;
-      Mcc = Visibility.Collapsed;
-      Hce = Visibility.Visible;
+      Main = Collapsed;
+      Mcc  = Collapsed;
+      Hce  = Visible;
     }
 
     public void ViewMain()
     {
-      Main = Visibility.Visible;
-      Mcc = Visibility.Collapsed;
-      Hce = Visibility.Collapsed;
+      Main = Visible;
+      Mcc  = Collapsed;
+      Hce  = Collapsed;
     }
 
     public void ViewMcc()
     {
-      Main = Visibility.Collapsed;
-      Mcc = Visibility.Visible;
-      Hce = Visibility.Collapsed;
+      Main = Collapsed;
+      Mcc  = Visible;
+      Hce  = Collapsed;
     }
 
     public void InstallHce()

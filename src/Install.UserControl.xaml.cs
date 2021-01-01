@@ -114,7 +114,7 @@ namespace SPV3
       {
         if (_install == null) 
           return;
-        _install.Target = this.Target.Text;
+        _install.Target = Target.Text;
       }
       catch (Exception ex)
       {
@@ -128,13 +128,17 @@ namespace SPV3
       {
         if (_install == null) 
           return;
-        if (this.SteamExePath.Text.Contains("steam.exe"))
-          _install.SteamExePath = this.SteamExePath.Text;
+        if (SteamExePath.Text.Contains("steam.exe"))
+          _install.SteamExePath = SteamExePath.Text;
       }
       catch (Exception ex)
       {
         _install.Status = ex.Message;
       }
     }
+
+    /// Flip boolean on click
+    private void CompressButton_Click(object sender, RoutedEventArgs e) =>
+      _install.Compress = true != _install.Compress;
   }
 }

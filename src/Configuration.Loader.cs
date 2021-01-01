@@ -27,6 +27,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using SPV3.Annotations;
 using static System.Windows.Forms.Screen;
+using static System.Windows.Visibility;
 
 namespace SPV3
 {
@@ -35,8 +36,10 @@ namespace SPV3
     public class ConfigurationLoader : INotifyPropertyChanged
     {
       private const int Length = 256;
+      private readonly System.Windows.Visibility _advancedButton = Debug.IsDebug ? Visible : Collapsed;
 
       private byte   _adapter;                                          /* physical monitor to run hce/spv3 on        */
+      private bool   _aHDR;                                             /* toggle spv3's adaptive hdr                 */
       private bool   _borderless;                                       /* run hce/spv3 without window borders        */
       private bool   _cinemabars = false;                               /* toggle spv3 cinematic black bars           */
       private bool   _doom;                                             /* toggle spv3 doom mode                      */
@@ -153,6 +156,17 @@ namespace SPV3
         {
           if (value == _shaders) return;
           _shaders = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public bool AHDR
+      {
+        get => _aHDR;
+        set
+        {
+          if (value == _aHDR) return;
+          _aHDR = value;
           OnPropertyChanged();
         }
       }
@@ -430,6 +444,15 @@ namespace SPV3
         {
           var log = (HXE.File) Paths.Exception;
           log.WriteAllText("Oops. The file probably had more or fewer settings than expected.\n Error: " + e);
+        }
+      }
+
+      public System.Windows.Visibility AdvancedVis
+      { 
+        get => _advancedButton;
+        set
+        {
+          OnPropertyChanged();
         }
       }
 
