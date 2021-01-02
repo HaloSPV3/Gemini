@@ -122,7 +122,7 @@
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
           <Label Content="Display Mode:" />
-          <ComboBox SelectedIndex="{Binding Loader.Mode}"
+          <ComboBox SelectedIndex="{Binding Loader.DisplayMode}"
                     Width="125"
                     HorizontalAlignment="Left">
             <ComboBoxItem Content="Fullscreen"
@@ -220,14 +220,23 @@
         <DockPanel>
           <Label Content="Post-Processing:" />
           <CheckBox IsChecked="{Binding Loader.Shaders}"
+                    Unchecked="Update_AdaptiveHDRIsReady"
                     ToolTip="Enables SPV3's post-processing system." />
+        </DockPanel>
+        <DockPanel>
+          <Label Content="Adaptive HDR:"
+                 IsEnabled="{Binding Loader.Shaders}"/>
+          <CheckBox IsChecked="{Binding Shaders.AdaptiveHDR}"
+                    IsEnabled="{Binding Loader.Shaders}"
+                    Unchecked="AdaptiveHDR_Unchecked"
+                    ToolTip="Enables High Dynamic Range. Adapts to the scene's light levels. Required for Bloom and Screen Space Reflections to render corectly." />
         </DockPanel>
         <DockPanel>
           <Label Content="Visor Overlay:"
                  IsEnabled="{Binding Loader.Shaders}" />
           <CheckBox IsChecked="{Binding Shaders.HudVisor}"
                     IsEnabled="{Binding Loader.Shaders}"
-                    ToolTip="Enables HUD extras like visor holograms and helmet bits"/>
+                    ToolTip="Enables HUD extras like visor holograms, helmet bits, and water droplets, and ice."/>
         </DockPanel>
         <DockPanel>
           <Label Content="Film Grain:"
@@ -292,20 +301,12 @@
                     ToolTip="Enables Dynamic Lens Flares effects." />
         </DockPanel>
         <DockPanel>
-          <Label Content="Adaptive HDR:"
-                 IsEnabled="{Binding Loader.Shaders}"/>
-          <CheckBox IsChecked="{Binding Loader.AHDR}"
-                    IsEnabled="{Binding Loader.Shaders}"
-                    Unchecked="AHDR_Unchecked"
-                    ToolTip="Enables High Dynamic Range. Adapts to the scene's light levels." />
-        </DockPanel>
-        <DockPanel>
           <Label Content="SSR:"
                  IsEnabled="{Binding Loader.Shaders}" />
           <CheckBox IsChecked="{Binding Shaders.SSR}"
-                    IsEnabled="{Binding Loader.AHDR}"
+                    IsEnabled="{Binding AdaptiveHDRIsReady}"
                     Checked="SSR_Or_ResolutionChanged"
-                    ToolTip="Enables Screen Space Ray Traced Reflections." />
+                    ToolTip="Requires Adaptive HDR. Enables Screen Space Ray Traced Reflections." />
         </DockPanel>
         <DockPanel Visibility="{Binding Shaders.DebandAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
           <Label Content="Debanding:"
@@ -424,6 +425,7 @@
         <DockPanel>
           <Label Content="Bloom:" />
           <CheckBox IsChecked="{Binding OpenSauce.Bloom}"
+                    IsEnabled="{Binding AdaptiveHDRIsReady}"
                     ToolTip="Requires Adaptive HDR. Adds glowy highlights to visual bright spots." />
         </DockPanel>
 

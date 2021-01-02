@@ -21,7 +21,6 @@
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using HXE;
 using HXE.SPV3;
 using SPV3.Annotations;
 
@@ -31,8 +30,9 @@ namespace SPV3
   {
     public class ConfigurationShaders : INotifyPropertyChanged
     {
-      private readonly HXE.Kernel.Configuration _configuration = new HXE.Kernel.Configuration(Paths.Kernel);
+      private readonly HXE.Kernel.Configuration _configuration = Kernel.hxe;
 
+      private bool _adaptiveHDR        = false;
       private int  _dof                = 0;
       private bool _dynamicLensFlares  = false;
       private bool _filmGrain          = false;
@@ -59,11 +59,24 @@ namespace SPV3
           return false;
       }
 
+      public bool AdaptiveHDR
+      {
+        get => _adaptiveHDR;
+        set
+        {
+          if (value == _adaptiveHDR) return;
+          _adaptiveHDR = value;
+          OnPropertyChanged();
+        }
+      }
+
+      // Remove when we have Halo global variables for both DLF and Deband. Still used by XML bindings.
       public bool DynamicFlaresAvailable
       {
         get => !ModeIsSPV33();
       }
 
+      // Remove when we have Halo global variables for both DLF and Deband. Still used by XML bindings.
       public bool DebandAvailable
       {
         get => ModeIsSPV33();
@@ -75,8 +88,6 @@ namespace SPV3
         set
         {
           if (value == _dynamicLensFlares) return;
-          if (value == true && _configuration.Mode != HXE.Kernel.Configuration.ConfigurationMode.SPV33)
-            _deband = false;
           _dynamicLensFlares = value;
           OnPropertyChanged();
         }
@@ -176,8 +187,6 @@ namespace SPV3
         set
         {
           if (value == _deband) return;
-          if (value == true && _configuration.Mode == HXE.Kernel.Configuration.ConfigurationMode.SPV33)
-            _dynamicLensFlares = false;
           _deband = value;
           OnPropertyChanged();
         }
@@ -187,6 +196,7 @@ namespace SPV3
 
       public void Save()
       {
+        _configuration.Shaders.AdaptiveHDR        = AdaptiveHDR;
         _configuration.Shaders.DynamicLensFlares  = DynamicLensFlares;
         _configuration.Shaders.FilmGrain          = FilmGrain;
         _configuration.Shaders.HudVisor           = HudVisor;
@@ -205,6 +215,7 @@ namespace SPV3
       {
         _configuration.Load();
 
+        AdaptiveHDR        = _configuration.Shaders.AdaptiveHDR;
         DynamicLensFlares  = _configuration.Shaders.DynamicLensFlares;
         FilmGrain          = _configuration.Shaders.FilmGrain;
         HudVisor           = _configuration.Shaders.HudVisor;

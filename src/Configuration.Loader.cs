@@ -39,7 +39,6 @@ namespace SPV3
       private readonly System.Windows.Visibility _advancedButton = Debug.IsDebug ? Visible : Collapsed;
 
       private byte   _adapter;                                          /* physical monitor to run hce/spv3 on        */
-      private bool   _aHDR;                                             /* toggle spv3's adaptive hdr                 */
       private bool   _borderless;                                       /* run hce/spv3 without window borders        */
       private bool   _cinemabars = false;                               /* toggle spv3 cinematic black bars           */
       private bool   _doom;                                             /* toggle spv3 doom mode                      */
@@ -48,7 +47,7 @@ namespace SPV3
       private bool   _gammaEnabled = false;                             /* when false, runs spv3/hce with -nogamma    */
       private byte   _gamma  = 150;                                     /* gamma level to run spv3 at (in vsync mode) */
       private ushort _height = (ushort) PrimaryScreen.Bounds.Height;    /* height spv3/hce will be displayed at       */
-      private byte   _mode;                                             /* display - fullscreen/window/borderless     */
+      private byte   _displayMode;                                      /* display - fullscreen/window/borderless     */
       private bool   _native  = true;                                   /* runs native instead of custom resolution   */
       private bool   _photo;                                            /* enables spv3 photo/blind mode              */
       private bool   _vsync   = true;                                   /* V-sync preference (locked vs unlocked)     */
@@ -67,17 +66,17 @@ namespace SPV3
           if (value == _native) return;
           _native = value;
           OnPropertyChanged();
-          UpdateNative();
+          ResolutionEnabled = !value;
         }
       }
 
-      public byte Mode
+      public byte DisplayMode
       {
-        get => _mode;
+        get => _displayMode;
         set
         {
-          if (value == _mode) return;
-          _mode = value;
+          if (value == _displayMode) return;
+          _displayMode = value;
           OnPropertyChanged();
           UpdateWindowBorderless();
         }
@@ -160,17 +159,6 @@ namespace SPV3
         }
       }
 
-      public bool AHDR
-      {
-        get => _aHDR;
-        set
-        {
-          if (value == _aHDR) return;
-          _aHDR = value;
-          OnPropertyChanged();
-        }
-      }
-
       public byte Framerate
       {
         get => _framerate;
@@ -190,8 +178,8 @@ namespace SPV3
           if (value == _vsync) return;
           _vsync = value;
           OnPropertyChanged();
-          // if V-Sync == true, Borderless = false and Display Mode = Fullscreen
-          if (value == true) Mode = 0;
+          if (value == true) DisplayMode = 0;
+          // UpdateWindowBorderless() is called by DisplayMode.Set{}. Sets Borderless to False.
         }
       }
 
@@ -269,7 +257,7 @@ namespace SPV3
           if (value == _resolutionEnabled) return;
           _resolutionEnabled = value;
           OnPropertyChanged();
-          UpdateNative();
+          Native = !value;
         }
       }
 
@@ -281,8 +269,8 @@ namespace SPV3
           if (value == _elevated) return;
           _elevated = value;
           OnPropertyChanged();
-          // if Elevated == true, Borderless = false and Display Mode = Fullscreen
-          if (value == true) Mode = 0;
+          if (value == true) DisplayMode = 0;
+          /// DisplayMode.Get{} calls WindowBorderlessUpdate()
         }
       }
 
@@ -298,21 +286,14 @@ namespace SPV3
 
       public void UpdateWindowBorderless()
       {
-        Window = _mode == 1 || _mode == 2;
-        if (_mode == 2)
+        Window = _displayMode == 1 || _displayMode == 2;
+        if (_displayMode == 2)
         {
           Borderless = true;
           Elevated = false;
           Vsync = false;
         }
         else Borderless = false;
-      }
-
-      public void UpdateNative()
-      {
-        if (ResolutionEnabled)
-          Native = false;
-        else Native = true;
       }
 
       public void Save()
@@ -369,7 +350,7 @@ namespace SPV3
 
             /* display mode */
             {
-              bw.Write(Mode);
+              bw.Write(DisplayMode);
               bw.Write(Native);
             }
 
@@ -432,13 +413,11 @@ namespace SPV3
 
             /* display mode */
             {
-              Mode = br.ReadByte();
+              DisplayMode = br.ReadByte();
               Native = br.ReadBoolean();
             }
           }
 
-          UpdateWindowBorderless();
-          UpdateNative();
         }
         catch(System.Exception e)
         {
