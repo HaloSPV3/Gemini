@@ -42,10 +42,9 @@ namespace SPV3
   public class Install : INotifyPropertyChanged
   {
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
-    private          bool       _skipDetect  = false; // Temporary: set "True" to skip Halo CE Detection and access HCE and MCC panels
     private          bool       _canInstall;
-    private          bool       _compress = true;
-    private readonly Visibility _dbgPnl   = Debug.IsDebug ? Visible : Collapsed; // TODO: Implement Debug-Tools 'floating' panel
+    private          bool       _compress = false;
+    //private readonly Visibility _dbgPnl   = Debug.IsDebug ? Visible : Collapsed; // TODO: Implement Debug-Tools 'floating' panel, Move this to Main.cs
     private          Visibility _mcc      = Collapsed;
     private          Visibility _hce      = Collapsed;
     private          Visibility _load     = Collapsed;
@@ -263,7 +262,7 @@ namespace SPV3
       }
     }
 
-    public Visibility Hce
+    public Visibility Activate
     {
       get => _hce;
       set
@@ -291,7 +290,7 @@ namespace SPV3
     {
       Main = Visible;
       Mcc  = Collapsed;
-      Hce  = Collapsed;
+      Activate  = Visible;
 
       /**
        * Determine if the current environment fulfills the installation requirements.
@@ -311,7 +310,6 @@ namespace SPV3
         return;
       }
 
-      if (!_skipDetect) // USE FOR DEBUGGING HCE AND MCC PANELS. If True, skip the following If statement
       if (Detection.InferFromRegistryKeyEntry() != null) return;
 
       Status     = "Please install a legal copy of HCE before installing SPV3.";
@@ -319,7 +317,7 @@ namespace SPV3
 
       Main = Collapsed;
       Mcc  = Collapsed;
-      Hce  = Visible;
+      Activate  = Visible;
     }
 
     public async void Commit()
@@ -434,7 +432,7 @@ namespace SPV3
           if (Exists(Path.Combine(Target, Paths.Executable)))
           {
             Main = Collapsed;
-            Hce  = Collapsed;
+            Activate  = Collapsed;
             Load = Visible;
           }
           else
@@ -462,21 +460,21 @@ namespace SPV3
     {
       Main = Collapsed;
       Mcc  = Collapsed;
-      Hce  = Visible;
+      Activate  = Visible;
     }
 
     public void ViewMain()
     {
       Main = Visible;
       Mcc  = Collapsed;
-      Hce  = Collapsed;
+      Activate  = Collapsed;
     }
 
     public void ViewMcc()
     {
       Main = Collapsed;
       Mcc  = Visible;
-      Hce  = Collapsed;
+      Activate  = Collapsed;
     }
 
     public void InstallHce()
