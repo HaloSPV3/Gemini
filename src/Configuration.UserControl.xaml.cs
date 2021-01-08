@@ -81,15 +81,23 @@ namespace SPV3
                       "This should only be used on low-end computers as a last resort.");
     }
 
-    private void AHDR_Unchecked(object sender, RoutedEventArgs e)
+    private void AdaptiveHDR_Unchecked(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.Bloom = false;
       _configuration.Shaders.SSR = false;
+      MessageBox.Show("WARNING: Bloom and Screen Space Reflections require Adaptive HDR to render correctly");
+      Update_AdaptiveHDRIsReady(sender, e);
+    }
+
+    private void Update_AdaptiveHDRIsReady(object sender, RoutedEventArgs e)
+    {
+      _configuration.AdaptiveHDRIsReady = true ==_configuration.Loader.Shaders == _configuration.Shaders.AdaptiveHDR;
     }
 
     private void PresetVeryLow(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = false;
+      _configuration.Shaders.AdaptiveHDR = false;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = false;
       _configuration.Shaders.LensDirt = false;
@@ -108,6 +116,7 @@ namespace SPV3
     private void PresetLow(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
+      _configuration.Shaders.AdaptiveHDR = false;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -126,6 +135,7 @@ namespace SPV3
     private void PresetMedium(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
+      _configuration.Shaders.AdaptiveHDR = true;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -144,6 +154,7 @@ namespace SPV3
     private void PresetHigh(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
+      _configuration.Shaders.AdaptiveHDR = true;
       _configuration.Shaders.FilmGrain = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -162,6 +173,7 @@ namespace SPV3
     private void PresetVeryHigh(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
+      _configuration.Shaders.AdaptiveHDR = true;
       _configuration.Shaders.FilmGrain = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -180,6 +192,7 @@ namespace SPV3
     private void PresetUltra(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
+      _configuration.Shaders.AdaptiveHDR = true;
       _configuration.Shaders.FilmGrain = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;

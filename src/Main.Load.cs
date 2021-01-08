@@ -131,7 +131,7 @@ namespace SPV3
           },
           Video = new Executable.VideoOptions
           {
-            Mode    = spv3.Vsync == false && spv3.Framerate > 0,
+            DisplayMode = spv3.Vsync == false && spv3.Framerate > 0,
             Width   = spv3.Native ? (ushort) 0 : spv3.Width,
             Height  = spv3.Native ? (ushort) 0 : spv3.Height,
             Refresh = spv3.Framerate,

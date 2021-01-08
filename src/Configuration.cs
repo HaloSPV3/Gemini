@@ -34,6 +34,8 @@ namespace SPV3
     public HXE.Settings           Settings  { get; set; } = new HXE.Settings(hxe);
     public HXE.Positions          Positions { get; set; } = new HXE.Positions();
 
+    public bool AdaptiveHDRIsReady = false; // see Configuration.UserControl.xaml.cs, Update_AdaptiveHDRIsReady().
+
     public void Load()
     {
       spv3 = Loader;
@@ -84,6 +86,7 @@ namespace SPV3
 
       Settings = new HXE.Settings(hxe);
       Settings.ShowDialog();
+      if (Settings.DialogResult == true)
       Kernel.Load();
     }
 
