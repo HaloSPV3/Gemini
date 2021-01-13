@@ -49,101 +49,122 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+  <Canvas>
+    <!-- Installation -->
     <Grid Width="960"
-          Height="540">
-        <Grid.Background>
-            <ImageBrush ImageSource="Assets/background_install.jpg" />
-        </Grid.Background>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="225" /> <!-- top      -->
-            <RowDefinition Height="115" /> <!-- contents -->
-            <RowDefinition Height="*" />   <!-- bottom   -->
-        </Grid.RowDefinitions>
+            Height="540"
+          Visibility="Visible">
+          <Grid.Background>
+              <ImageBrush ImageSource="Assets/background_install.jpg" />
+          </Grid.Background>
+          <Grid.RowDefinitions>
+              <RowDefinition Height="225" /> <!-- top      -->
+              <RowDefinition Height="115" /> <!-- contents -->
+              <RowDefinition Height="*" />   <!-- bottom   -->
+          </Grid.RowDefinitions>
 
-        <!-- Installation -->
+          <StackPanel Grid.Row="1"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Width="640"
+                      Visibility="{Binding Main}">
+              <Label Content="Location:"
+                     Foreground="White" />
+              <DockPanel>
+                  <Button DockPanel.Dock="Right"
+                          Margin="1,0,0,0"
+                          Content="Browse"
+                          Click="Browse" />
+                  <TextBox Name="Target"
+                           Text="{Binding Target}"
+                           TextChanged="Target_TextChanged"
+                           VerticalContentAlignment="Center"
+                           Margin="1,0,0,0"
+                           BorderThickness="0" />
+              </DockPanel>
+
+              <DockPanel Margin="0,1,0,0">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="150"/>
+              </Grid.ColumnDefinitions>
+              <Button Click="Back"
+                      Grid.Column="0">
+                Go back...
+              </Button>
+              <Button x:Name="InstallButton"
+                      Grid.Column="1"
+                      Margin="1,0,0,0"
+                      Click="Install"
+                      Content="Install"
+                      IsEnabled="{Binding CanInstall}"/>
+              <Button x:Name="CompressButton"
+                      Margin="1,0,0,0"
+                      Grid.Column="2"
+                      Padding="0"
+                      Click="CompressButton_Click">
+                <Button.ToolTip>
+                  <ToolTip MaxWidth="400">
+                    <TextBlock TextWrapping="Wrap">
+                      Enable NTFS compression for this folder to significantly save space.
+                      WARNING: Unless installing to an SSD, NTFS compression will cause data to load slower.
+                      This means maps may freeze up longer when loading new areas.
+                    </TextBlock>
+                  </ToolTip>
+                </Button.ToolTip>
+                <Grid Margin="-25,0" Width="auto">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                  </Grid.ColumnDefinitions>
+                  <Image Source="Assets/compressFolder.png"
+                         Grid.Column="0"
+                         Margin="1,0,0,0"
+                         Height="auto" 
+                         Width="24"/>
+                  <CheckBox  IsChecked="{Binding Compress}"
+                             Grid.Column="1"
+                             VerticalAlignment="Center"
+                             Margin="2,0,2,0"
+                             Padding="0"/>
+                  <TextBlock Grid.Column="2"
+                             Margin="1,0,1,0"
+                             VerticalAlignment="Center">
+                    Compress Folder
+                  </TextBlock>
+                </Grid>
+              </Button>
+            </Grid>
+          </DockPanel>
+        </StackPanel>
+      
+        <!-- Load -->
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="640"
-                    Visibility="{Binding Main}">
-            <Label Content="Location:"
-                   Foreground="White" />
-            <DockPanel>
-                <Button DockPanel.Dock="Right"
-                        Margin="1,0,0,0"
-                        Content="Browse"
-                        Click="Browse" />
-                <TextBox Name="Target"
-                         Text="{Binding Target}"
-                         TextChanged="Target_TextChanged"
-                         VerticalContentAlignment="Center"
-                         Margin="1,0,0,0"
-                         BorderThickness="0" />
-            </DockPanel>
+                    Visibility="{Binding Load}">
 
-            <DockPanel Margin="0,1,0,0">
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="150"/>
-              <ColumnDefinition Width="*"/>
-              <ColumnDefinition Width="150"/>
-            </Grid.ColumnDefinitions>
-            <Button Click="Back"
-                    Grid.Column="0">
-              Go back...
-            </Button>
-            <Button x:Name="InstallButton"
-                    Grid.Column="1"
-                    Margin="1,0,0,0"
-                    Click="Install"
-                    Content="Install"
-                    IsEnabled="{Binding CanInstall}"/>
-            <Button x:Name="CompressButton"
-                    Margin="1,0,0,0"
-                    Grid.Column="2"
-                    Padding="0"
-                    Click="CompressButton_Click">
-              <Button.ToolTip>
-                <ToolTip MaxWidth="400">
-                  <TextBlock TextWrapping="Wrap">
-                    Enable NTFS compression for this folder to significantly save space.
-                    WARNING: Unless installing to an SSD, NTFS compression will cause data to load slower.
-                    This means maps may freeze up longer when loading new areas.
-                  </TextBlock>
-                </ToolTip>
-              </Button.ToolTip>
-              <Grid Margin="-25,0" Width="auto">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="auto"/>
-                  <ColumnDefinition Width="auto"/>
-                  <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="Assets/compressFolder.png"
-                       Grid.Column="0"
-                       Margin="1,0,0,0"
-                       Height="auto" 
-                       Width="24"/>
-                <CheckBox  IsChecked="{Binding Compress}"
-                           Grid.Column="1"
-                           VerticalAlignment="Center"
-                           Margin="2,0,2,0"
-                           Padding="0"/>
-                <TextBlock Grid.Column="2"
-                           Margin="1,0,1,0"
-                           VerticalAlignment="Center">
-                  Compress Folder
-                </TextBlock>
-              </Grid>
-            </Button>
-          </Grid>
-        </DockPanel>
-          </StackPanel>
+            <Button Margin="1,0,0,0"
+                    Click="InvokeSpv3"
+                    Content="Load SPV3" />
+        </StackPanel>
 
-
+        <!-- Status -->
+        <Label Grid.Row="2"
+                Content="{Binding Status}"
+                Foreground="White"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,50" />
+      </Grid>
     <!-- Activation -->
     <Grid Width="960"
-          Height="540"
-          Visibility="{Binding Activate}">
+            Height="540"
+            Visibility="{Binding Activate}">
       <Grid.Background>
         <ImageBrush ImageSource="Assets/background_activation.webp"/>
       </Grid.Background>
@@ -161,25 +182,25 @@
 
       <!-- MCC -->
       <Canvas Grid.Row="1" 
-            ClipToBounds="true">
+              ClipToBounds="true">
         <Image Source="Assets/background_activation.webp"
-             Height="540"
-             Margin="0,-50,0,0">
+               Height="540"
+               Margin="0,-50,0,0">
           <Image.Effect>
             <BlurEffect Radius="20"/>
           </Image.Effect>
         </Image>
       </Canvas>
       <StackPanel Grid.Row="1"
-                  Width="960"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Visibility="Visible"
-                  Background="#80DC143C">
+                    Width="960"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="Visible"
+                    Background="#80DC143C">
         <DockPanel>
           <Label Content="Locate Steam or its shortcut:"
-                 Foreground="White"
-                 Margin="100,0"/>
+                   Foreground="White"
+                   Margin="100,0"/>
         </DockPanel>
         <DockPanel>
           <Grid Margin="100,0">
@@ -188,23 +209,23 @@
               <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0"
-                     Name="SteamExePath_TextBox"
-                     Text="{Binding SteamExePath}"
-                     TextChanged="SteamExePath_TextChanged"
-                     VerticalContentAlignment="Center"/>
+                       Name="SteamExePath_TextBox"
+                       Text="{Binding SteamExePath}"
+                       TextChanged="SteamExePath_TextChanged"
+                       VerticalContentAlignment="Center"/>
             <Button Grid.Column="1"
-                    Click="BrowseSteam"
-                    Content="Browse"/>
+                      Click="BrowseSteam"
+                      Content="Browse"/>
           </Grid>
         </DockPanel>
         <DockPanel>
           <Label Margin="100,0"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Center">
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center">
             <TextBlock Foreground="White"
-                       TextWrapping="WrapWithOverflow"
-                       TextAlignment="Center"
-                       Text="{Binding SteamStatus}"/>
+                         TextWrapping="WrapWithOverflow"
+                         TextAlignment="Center"
+                         Text="{Binding SteamStatus}"/>
           </Label>
         </DockPanel>
       </StackPanel>
@@ -232,9 +253,9 @@
                    TextWrapping="WrapWithOverflow"
                    Margin="0,10"
                    TextAlignment="Center">
-          A legal copy of Halo: Custom Edition has not been found on your system.
-          <LineBreak />
-          Please install it, then click on "Verify HCE" to check if the installation succeeded.
+            A legal copy of Halo: Custom Edition has not been found on your system.
+            <LineBreak />
+            Please install it, then click on "Verify HCE" to check if the installation succeeded.
         </TextBlock>
         <Grid Margin="0,1,0,0">
           <Grid.ColumnDefinitions>
@@ -263,7 +284,7 @@
           <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0"
-                Click="ViewMain"
+                Click="Back"
                 Content="Go Back"/>
         <Label Grid.Column="1"
                Content="{Binding Status}"
@@ -275,25 +296,5 @@
                 Content="Exit"/>
       </Grid>
     </Grid>
-
-    <!-- Load -->
-        <StackPanel Grid.Row="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Width="640"
-                    Visibility="{Binding Load}">
-
-            <Button Margin="1,0,0,0"
-                    Click="InvokeSpv3"
-                    Content="Load SPV3" />
-        </StackPanel>
-
-        <!-- Status -->
-        <Label Grid.Row="2"
-               Content="{Binding Status}"
-               Foreground="White"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Bottom"
-               Margin="0,0,0,50" />
-    </Grid>
+  </Canvas>
 </UserControl>

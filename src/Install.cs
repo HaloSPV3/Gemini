@@ -111,7 +111,6 @@ namespace SPV3
                 Status = "Halo CEA Located." + "\r\n"
                        + "Note: You will need administrative permissions to activate Halo via MCC.";
                 CanInstall = true;
-                Mcc = Collapsed;
                 Main = Visible;
               }
             }
@@ -251,17 +250,6 @@ namespace SPV3
       }
     }
 
-    public Visibility Mcc
-    {
-      get => _mcc;
-      set
-      {
-        if (value == _mcc) return;
-        _mcc = value;
-        OnPropertyChanged();
-      }
-    }
-
     public Visibility Activate
     {
       get => _hce;
@@ -289,7 +277,6 @@ namespace SPV3
     public void Initialise()
     {
       Main = Visible;
-      Mcc  = Collapsed;
       Activate  = Visible;
 
       /**
@@ -316,7 +303,6 @@ namespace SPV3
       CanInstall = false;
 
       Main = Collapsed;
-      Mcc  = Collapsed;
       Activate  = Visible;
     }
 
@@ -459,21 +445,12 @@ namespace SPV3
     public void ViewHce()
     {
       Main = Collapsed;
-      Mcc  = Collapsed;
       Activate  = Visible;
     }
 
     public void ViewMain()
     {
       Main = Visible;
-      Mcc  = Collapsed;
-      Activate  = Collapsed;
-    }
-
-    public void ViewMcc()
-    {
-      Main = Collapsed;
-      Mcc  = Visible;
       Activate  = Collapsed;
     }
 

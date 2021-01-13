@@ -33,6 +33,7 @@ namespace SPV3
     {
       private readonly HXE.Kernel.Configuration _configuration = Kernel.hxe;
 
+      private bool _adaptiveHDR_isReady = false;
       private bool _adaptiveHDR        = false;
       private int  _dof                = 0;
       private bool _dynamicLensFlares  = false;
@@ -58,6 +59,17 @@ namespace SPV3
         }
         else
           return false;
+      }
+
+      public bool AdaptiveHDR_isReady
+      {
+        get => _adaptiveHDR_isReady;
+        set
+        {
+          if (value == _adaptiveHDR_isReady) return;
+          _adaptiveHDR_isReady = value;
+          OnPropertyChanged();
+        }
       }
 
       public bool AdaptiveHDR
