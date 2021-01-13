@@ -33,8 +33,8 @@ namespace SPV3
     public static readonly string Directory     = Combine(GetFolderPath(ApplicationData), "SPV3");
     public static readonly string Initiation    = Combine(Directory,                      "initc.txt");
     public static readonly string Exception     = Combine(Directory,                      "exception.log");
-    public static readonly string Configuration = Combine(Directory,                      "loader-0x01.bin");
-    public static readonly string Kernel        = Combine(Directory,                      "kernel-0x01.bin");
+    public static readonly string Configuration = Combine(Directory,                      "loader-0x02.bin");
+    public static readonly string Kernel        = Combine(Directory,                      "kernel-0x02.bin");
     public static readonly string DOOM          = Combine(CurrentDirectory,               "doom.bin");
     public static readonly string Photo         = Combine(CurrentDirectory,               "photo.bin");
     public static readonly string Setup         = Combine(CurrentDirectory,               "setup.exe");
