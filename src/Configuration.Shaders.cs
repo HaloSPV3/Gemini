@@ -19,6 +19,7 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using HXE.SPV3;
@@ -196,17 +197,22 @@ namespace SPV3
 
       public void Save()
       {
-        _configuration.Shaders.AdaptiveHDR        = AdaptiveHDR;
-        _configuration.Shaders.DynamicLensFlares  = DynamicLensFlares;
-        _configuration.Shaders.FilmGrain          = FilmGrain;
-        _configuration.Shaders.HudVisor           = HudVisor;
-        _configuration.Shaders.LensDirt           = LensDirt;
-        _configuration.Shaders.VolumetricLighting = VolumetricLighting;
-        _configuration.Shaders.DOF                = (PostProcessing.DofOptions) DOF;
-        _configuration.Shaders.MotionBlur         = (PostProcessing.MotionBlurOptions) MotionBlur;
-        _configuration.Shaders.MXAO               = (PostProcessing.MxaoOptions) MXAO;
-        _configuration.Shaders.SSR                = SSR;
-        _configuration.Shaders.Deband             = Deband;
+        if (DynamicLensFlares) _configuration.Shaders  |= PP.DYNAMIC_LENS_FLARES;
+        if (DynamicLensFlares) _configuration.Shaders  |= PP.DYNAMIC_LENS_FLARES;
+        if (FilmGrain) _configuration.Shaders          |= PP.FILM_GRAIN;
+        if (HudVisor) _configuration.Shaders           |= PP.HUD_VISOR;
+        if (LensDirt) _configuration.Shaders           |= PP.LENS_DIRT;
+        if (VolumetricLighting) _configuration.Shaders |= PP.VOLUMETRIC_LIGHTING;
+        if (SSR) _configuration.Shaders                |= PP.SSR;
+        if (Deband) _configuration.Shaders             |= PP.DEBAND;
+        if (AdaptiveHDR) _configuration.Shaders        |= PP.ADAPTIVE_HDR;
+        if (DOF        == 1) _configuration.Shaders    |= PP.DOF_LOW;
+        if (DOF        == 2) _configuration.Shaders    |= PP.DOF_HIGH;
+        if (MotionBlur == 1) _configuration.Shaders    |= PP.MOTION_BLUR_BUILT_IN;
+        if (MotionBlur == 2) _configuration.Shaders    |= PP.MOTION_BLUR_POMB_LOW;
+        if (MotionBlur == 3) _configuration.Shaders    |= PP.MOTION_BLUR_POMB_HIGH;
+        if (MXAO       == 1) _configuration.Shaders    |= PP.MXAO_LOW;
+        if (MXAO       == 2) _configuration.Shaders    |= PP.MXAO_HIGH;
 
         _configuration.Save();
       }
@@ -215,17 +221,50 @@ namespace SPV3
       {
         _configuration.Load();
 
-        AdaptiveHDR        = _configuration.Shaders.AdaptiveHDR;
-        DynamicLensFlares  = _configuration.Shaders.DynamicLensFlares;
-        FilmGrain          = _configuration.Shaders.FilmGrain;
-        HudVisor           = _configuration.Shaders.HudVisor;
-        LensDirt           = _configuration.Shaders.LensDirt;
-        VolumetricLighting = _configuration.Shaders.VolumetricLighting;
-        DOF                = (byte) _configuration.Shaders.DOF;
-        MotionBlur         = (byte) _configuration.Shaders.MotionBlur;
-        MXAO               = (byte) _configuration.Shaders.MXAO;
-        SSR                = _configuration.Shaders.SSR;
-        Deband             = _configuration.Shaders.Deband;
+        DynamicLensFlares  = (_configuration.Shaders & PP.DYNAMIC_LENS_FLARES) != 0;
+        FilmGrain          = (_configuration.Shaders & PP.FILM_GRAIN)          != 0;
+        HudVisor           = (_configuration.Shaders & PP.HUD_VISOR)           != 0;
+        LensDirt           = (_configuration.Shaders & PP.LENS_DIRT)           != 0;
+        VolumetricLighting = (_configuration.Shaders & PP.VOLUMETRIC_LIGHTING) != 0;
+        SSR                = (_configuration.Shaders & PP.SSR)                 != 0;
+        Deband             = (_configuration.Shaders & PP.DEBAND)              != 0;
+        AdaptiveHDR        = (_configuration.Shaders & PP.ADAPTIVE_HDR)        != 0;
+
+        DOF = new Func<byte>(() =>
+        {
+          if ((_configuration.Shaders & PP.DOF_HIGH) != 0)
+            return 2;
+
+          if ((_configuration.Shaders & PP.DOF_LOW) != 0)
+            return 1;
+
+          return 0;
+        })();
+
+        MotionBlur = new Func<byte>(() =>
+        {
+          if ((_configuration.Shaders & PP.MOTION_BLUR_POMB_HIGH) != 0)
+            return 3;
+
+          if ((_configuration.Shaders & PP.MOTION_BLUR_POMB_LOW) != 0)
+            return 2;
+
+          if ((_configuration.Shaders & PP.MOTION_BLUR_BUILT_IN) != 0)
+            return 1;
+
+          return 0;
+        })();
+
+        MXAO = new Func<byte>(() =>
+        {
+          if ((_configuration.Shaders & PP.MXAO_HIGH) != 0)
+            return 2;
+
+          if ((_configuration.Shaders & PP.MXAO_LOW) != 0)
+            return 1;
+
+          return 0;
+        })();
       }
 
       [NotifyPropertyChangedInvocator]
