@@ -28,7 +28,7 @@ namespace SPV3
 {
   public partial class Configuration_UserControl : UserControl
   {
-    private readonly Configuration _configuration = new Configuration();
+    private readonly Configuration _configuration;
 
     public Configuration_UserControl()
     {
@@ -91,6 +91,7 @@ namespace SPV3
 
     private void Update_AdaptiveHDR_isReady(object sender, RoutedEventArgs e)
     {
+      if (_configuration == null) return;
       _configuration.Shaders.AdaptiveHDR_isReady = true == _configuration.Loader.Shaders == _configuration.Shaders.AdaptiveHDR;
     }
 

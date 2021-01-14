@@ -164,7 +164,7 @@
     <!-- Activation -->
     <Grid Width="960"
             Height="540"
-            Visibility="{Binding Activate}">
+            Visibility="{Binding Activation}">
       <Grid.Background>
         <ImageBrush ImageSource="Assets/background_activation.webp"/>
       </Grid.Background>
