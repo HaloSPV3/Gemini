@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2019 Emilian Roman
+ * Copyright (c) 2020 Noah Sherwin
  * 
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -33,8 +34,6 @@ namespace SPV3
     public ConfigurationChimera   Chimera   { get; set; } = new ConfigurationChimera();
     public HXE.Settings           Settings  { get; set; } = new HXE.Settings(hxe);
     public HXE.Positions          Positions { get; set; } = new HXE.Positions();
-
-    public bool AdaptiveHDRIsReady = false; // see Configuration.UserControl.xaml.cs, Update_AdaptiveHDRIsReady().
 
     public void Load()
     {

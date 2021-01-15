@@ -98,16 +98,6 @@ namespace SPV3
       _install.ViewMain();
     }
 
-    private void ViewMcc(object sender, RoutedEventArgs e)
-    {
-      _install.ViewMcc();
-    }
-
-    private void ViewHce(object sender, RoutedEventArgs e)
-    {
-      _install.ViewHce();
-    }
-
     private void Target_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
       try

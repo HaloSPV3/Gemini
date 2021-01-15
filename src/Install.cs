@@ -45,8 +45,7 @@ namespace SPV3
     private          bool       _canInstall;
     private          bool       _compress = false;
     //private readonly Visibility _dbgPnl   = Debug.IsDebug ? Visible : Collapsed; // TODO: Implement Debug-Tools 'floating' panel, Move this to Main.cs
-    private          Visibility _mcc      = Collapsed;
-    private          Visibility _hce      = Collapsed;
+    private          Visibility _activation = Collapsed;
     private          Visibility _load     = Collapsed;
     private          Visibility _main     = Visible;
     private          string     _status   = "Awaiting user input...";
@@ -111,7 +110,6 @@ namespace SPV3
                 Status = "Halo CEA Located." + "\r\n"
                        + "Note: You will need administrative permissions to activate Halo via MCC.";
                 CanInstall = true;
-                Mcc = Collapsed;
                 Main = Visible;
               }
             }
@@ -251,24 +249,13 @@ namespace SPV3
       }
     }
 
-    public Visibility Mcc
+    public Visibility Activation
     {
-      get => _mcc;
+      get => _activation;
       set
       {
-        if (value == _mcc) return;
-        _mcc = value;
-        OnPropertyChanged();
-      }
-    }
-
-    public Visibility Activate
-    {
-      get => _hce;
-      set
-      {
-        if (value == _hce) return;
-        _hce = value;
+        if (value == _activation) return;
+        _activation = value;
         OnPropertyChanged();
       }
     }
@@ -289,8 +276,6 @@ namespace SPV3
     public void Initialise()
     {
       Main = Visible;
-      Mcc  = Collapsed;
-      Activate  = Visible;
 
       /**
        * Determine if the current environment fulfills the installation requirements.
@@ -316,8 +301,7 @@ namespace SPV3
       CanInstall = false;
 
       Main = Collapsed;
-      Mcc  = Collapsed;
-      Activate  = Visible;
+      Activation  = Visible;
     }
 
     public async void Commit()
@@ -432,7 +416,7 @@ namespace SPV3
           if (Exists(Path.Combine(Target, Paths.Executable)))
           {
             Main = Collapsed;
-            Activate  = Collapsed;
+            Activation  = Collapsed;
             Load = Visible;
           }
           else
@@ -459,22 +443,13 @@ namespace SPV3
     public void ViewHce()
     {
       Main = Collapsed;
-      Mcc  = Collapsed;
-      Activate  = Visible;
+      Activation  = Visible;
     }
 
     public void ViewMain()
     {
       Main = Visible;
-      Mcc  = Collapsed;
-      Activate  = Collapsed;
-    }
-
-    public void ViewMcc()
-    {
-      Main = Collapsed;
-      Mcc  = Visible;
-      Activate  = Collapsed;
+      Activation  = Collapsed;
     }
 
     public void InstallHce()

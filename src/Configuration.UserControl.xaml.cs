@@ -75,7 +75,7 @@ namespace SPV3
       }
     }
 
-    private void GBufferUnchecked(object sender, RoutedEventArgs e)
+    private void GBuffer_Unchecked(object sender, RoutedEventArgs e)
     {
       MessageBox.Show("WARNING: VISR and Thermal Vision will not work. " +
                       "This should only be used on low-end computers as a last resort.");
@@ -85,19 +85,20 @@ namespace SPV3
     {
       _configuration.OpenSauce.Bloom = false;
       _configuration.Shaders.SSR = false;
-      MessageBox.Show("WARNING: Bloom and Screen Space Reflections require Adaptive HDR to render correctly");
-      Update_AdaptiveHDRIsReady(sender, e);
+      MessageBox.Show("WARNING: Bloom and Screen Space Reflections require Adaptive HDR to render correctly.");
+      Update_AdaptiveHDR_isReady(sender, e);
     }
 
-    private void Update_AdaptiveHDRIsReady(object sender, RoutedEventArgs e)
+    private void Update_AdaptiveHDR_isReady(object sender, RoutedEventArgs e)
     {
-      _configuration.AdaptiveHDRIsReady = true ==_configuration.Loader.Shaders == _configuration.Shaders.AdaptiveHDR;
+      if (_configuration == null) return;
+      _configuration.Shaders.AdaptiveHDR_isReady = true == _configuration.Loader.Shaders == _configuration.Shaders.AdaptiveHDR;
     }
 
     private void PresetVeryLow(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = false;
-      _configuration.Shaders.AdaptiveHDR = false;
+      _configuration.Shaders.AdaptiveHDR = true;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = false;
       _configuration.Shaders.LensDirt = false;
@@ -116,7 +117,7 @@ namespace SPV3
     private void PresetLow(object sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
-      _configuration.Shaders.AdaptiveHDR = false;
+      _configuration.Shaders.AdaptiveHDR = true;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
