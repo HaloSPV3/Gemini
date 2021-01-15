@@ -232,7 +232,7 @@
                     IsEnabled="{Binding Loader.Shaders}"
                     Unchecked="AdaptiveHDR_Unchecked"
                     Checked="Update_AdaptiveHDR_isReady"
-                    ToolTip="Enables High Dynamic Range. Adapts to the scene's light levels. Required for Bloom and Screen Space Reflections to render corectly." />
+                    ToolTip="Enables High Dynamic Range. Adapts to the scene's light levels. Required for Bloom and Screen Space Reflections to render correctly." />
         </DockPanel>
         <DockPanel>
           <Label Content="Visor Overlay:"
