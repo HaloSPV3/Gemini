@@ -272,7 +272,7 @@
   </Target>
   <Import Project="packages\Fody.4.2.1\build\Fody.targets" Condition="Exists('packages\Fody.4.2.1\build\Fody.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>"C:\Program Files\Git\bin\git.exe" rev-parse --short HEAD &gt; "$(ProjectDir)\hash"
+    <PreBuildEvent>git rev-parse --short HEAD &gt; "$(ProjectDir)\hash"
 </PreBuildEvent>
   </PropertyGroup>
 </Project>
