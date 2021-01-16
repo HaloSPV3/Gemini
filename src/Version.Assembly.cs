@@ -18,10 +18,13 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using SPV3.Annotations;
+using static System.Reflection.Assembly;
 
 namespace SPV3
 {
@@ -83,15 +86,21 @@ namespace SPV3
 
       public void Initialise()
       {
-        var versionMajor = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version.Major;
+        var versionMajor = GetEntryAssembly()?.GetName().Version.Major;
 
         if (versionMajor == null) return;
 
-        var current = (int) versionMajor;
+        var version = (int) versionMajor;
+        var refHash = new Func<string>(() =>
+        {
+          using (var stream = GetExecutingAssembly().GetManifestResourceStream("SPV3.hash"))
+          using (var reader = new StreamReader(stream ?? throw new InvalidOperationException()))
+            return reader.ReadToEnd();
+        })();
 
-        Version    = current;
-        Content    = $"Version {current:D4}";
-        Address    = $"https://github.com/yumiris/SPV3/tree/build-{current:D4}";
+        Version    = version;
+        Content    = $"Version {version:D4}-{refHash.ToUpper()}";
+        Address    = $"https://github.com/yumiris/HCE/commit/{refHash}";
         Visibility = Visibility.Visible;
       }
 
