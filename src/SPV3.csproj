@@ -241,7 +241,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\compressFolder.png" />
-    <Resource Include="Assets\background_activation.webp" />
     <Resource Include="Assets\background_activation.jpg" />
     <Content Include="Assets\logo_chief.png" />
   </ItemGroup>
