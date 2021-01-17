@@ -67,7 +67,7 @@ namespace SPV3
         dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         dialog.Filter = "Steam (*.exe)|*.exe";
         dialog.FilterIndex = 1;
-        _install.SetSteamStatus();
+        _install.Update_SteamStatus();
         if (dialog.ShowDialog() == DialogResult.OK)
           _install.SteamExePath = dialog.FileName;
       }
