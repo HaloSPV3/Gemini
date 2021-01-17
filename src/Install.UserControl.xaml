@@ -166,7 +166,7 @@
             Height="540"
             Visibility="{Binding Activation}">
       <Grid.Background>
-        <ImageBrush ImageSource="Assets/background_activation.webp"/>
+        <ImageBrush ImageSource="Assets/background_activation.jpg"/>
       </Grid.Background>
       <Grid.RowDefinitions>
         <RowDefinition Height="50" />
@@ -183,7 +183,7 @@
       <!-- MCC -->
       <Canvas Grid.Row="1" 
               ClipToBounds="true">
-        <Image Source="Assets/background_activation.webp"
+        <Image Source="Assets/background_activation.jpg"
                Height="540"
                Margin="0,-50,0,0">
           <Image.Effect>
@@ -233,7 +233,7 @@
       <!-- HCE -->
       <Canvas Grid.Row="3" 
               ClipToBounds="true">
-        <Image Source="Assets/background_activation.webp"
+        <Image Source="Assets/background_activation.jpg"
                Height="540"
                Margin="0,-340,0,0">
           <Image.Effect>
