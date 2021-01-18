@@ -98,7 +98,7 @@ namespace SPV3
         if (Exists(_steamExe))
         {
           SetSteam(value);
-          SetSteamStatus();
+          Update_SteamStatus();
           Halo1Path = Path.Combine(SteamLibrary, SteamMccH1, Halo1dll);
           if (!Exists(Halo1Path))
           {
@@ -111,10 +111,14 @@ namespace SPV3
                        + "Note: You will need administrative permissions to activate Halo via MCC.";
                 CanInstall = true;
                 Main = Visible;
+                Activation = Collapsed;
               }
             }
             catch (Exception e)
             {
+              var msg = "SteamExePath could not be set.\n Error: " + e.ToString();
+              var log = (HXE.File)Paths.Exception;
+              log.AppendAllText(msg + "\n");
               Status = e.Message.ToLower();
               return;
             }
@@ -178,7 +182,10 @@ namespace SPV3
         }
         catch (Exception e)
         {
-          Status     = "Installation not possible at selected path: " + e.Message.ToLower();
+          var msg = "Installation not possible at selected path: " + Target + "\n Error: " + e.ToString();
+          var log = (HXE.File)Paths.Exception;
+          log.AppendAllText(msg + "\n");
+          Status = msg;
           CanInstall = false;
           return;
         }
@@ -220,7 +227,10 @@ namespace SPV3
         }
         catch (Exception e)
         {
-          Status     = "Failed to get drive space: " + e.Message.ToLower();
+          var msg = "Failed to get drive space.\n Error:  " + e.ToString();
+          var log = (HXE.File)Paths.Exception;
+          log.AppendAllText(msg + "\n");
+          Status     = msg;
           CanInstall = false;
         }
 
@@ -276,6 +286,7 @@ namespace SPV3
     public void Initialise()
     {
       Main = Visible;
+      Activation = Collapsed;
 
       /**
        * Determine if the current environment fulfills the installation requirements.
@@ -343,7 +354,10 @@ namespace SPV3
           }
           catch (Exception e)
           {
-            Status = "Failed to Activate Halo: " + e.ToString();
+            var msg = "Failed to Activate Halo.\n Error:  " + e.ToString();
+            var log = (HXE.File)Paths.Exception;
+            log.AppendAllText(msg + "\n");
+            Status = msg;
             return;
           }
         }
@@ -372,7 +386,10 @@ namespace SPV3
             }
             catch (Exception e)
             {
-              Status = "Shortcut error: " + e.Message;
+              var msg = "Shortcut error.\n Error:  " + e.ToString();
+              var log = (HXE.File)Paths.Exception;
+              log.AppendAllText(msg + "\n");
+              Status = msg;
             }
           }
 
@@ -404,7 +421,10 @@ namespace SPV3
         }
         catch (Exception e)
         {
-          Status = e.Message;
+          var msg = "Failed to install OpenSauce via Amai Sosu.\n Error:  " + e.ToString();
+          var log = (HXE.File)Paths.Exception;
+          log.AppendAllText(msg + "\n");
+          Status = msg;
         }
         finally
         {
@@ -427,12 +447,15 @@ namespace SPV3
       }
       catch (Exception e)
       {
-        Status     = e.Message;
+        var msg = "Failed to install SPV3.\n Error:  " + e.ToString();
+        var log = (HXE.File)Paths.Exception;
+        log.AppendAllText(msg + "\n");
+        Status     = msg;
         CanInstall = true;
       }
     }
 
-    public void SetSteamStatus()
+    public void Update_SteamStatus()
     {
       SteamStatus =
         Exists(SteamExePath) ?
@@ -460,7 +483,10 @@ namespace SPV3
       }
       catch (Exception e)
       {
-        Status = e.Message;
+        var msg = "Failed to install Halo Custom Ediiton.\n Error:  " + e.ToString();
+        var log = (HXE.File)Paths.Exception;
+        log.AppendAllText(msg + "\n");
+        Status = msg;
       }
     }
 

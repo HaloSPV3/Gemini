@@ -42,7 +42,13 @@ namespace SPV3
     {
       Directory.CreateDirectory(Paths.Directory);     /* create data directory */
       Directory.CreateDirectory(HXE.Paths.Directory); /* create hxe directory  */
-      
+
+      {
+        FileInfo Log = new FileInfo(Paths.Exception);
+        if (Log.Length > 1048576) // If greater than 1 MiB...
+          WriteAllText(Paths.Exception, ""); // ...clear log.
+      }
+
       /**
        * We determine installation or initiation mode:
        * 
@@ -115,7 +121,7 @@ namespace SPV3
 
     private void Exception(Exception e, string description)
     {
-      WriteAllText(Paths.Exception, e.ToString());
+      AppendAllText(Paths.Exception, e.ToString());
 
       Error.Visibility = Visibility.Visible;
       Error.Content    = $"{description}: {e.Message.ToLower()}\n\nClick here for more information.";
