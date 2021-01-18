@@ -91,7 +91,7 @@ namespace SPV3
         else
           openSauce.Camera.CalculateFOV();
 
-        if (!File.Exists(HXE.Paths.Configuration))
+        if (!File.Exists(Paths.Configuration))
           openSauce.Camera.CalculateFOV();
 
         openSauce.HUD.ShowHUD                                       = true;
@@ -113,7 +113,7 @@ namespace SPV3
             hxe.Tweaks.Sensor     = false;
           }
 
-        if (openSauce.Camera.FieldOfView < 40 || openSauce.Camera.FieldOfView > 180)
+        if (openSauce.Camera.FieldOfView < 40.00 || openSauce.Camera.FieldOfView > 180.00)
           openSauce.Camera.CalculateFOV();
 
 

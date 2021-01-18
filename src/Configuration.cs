@@ -86,7 +86,7 @@ namespace SPV3
       Settings = new HXE.Settings(hxe);
       Settings.ShowDialog();
       if (Settings.DialogResult == true)
-      Kernel.Load();
+        Kernel.Load();
     }
 
     public void ShowHxeWepPositions()
