@@ -111,6 +111,7 @@ namespace SPV3
                        + "Note: You will need administrative permissions to activate Halo via MCC.";
                 CanInstall = true;
                 Main = Visible;
+                Activation = Collapsed;
               }
             }
             catch (Exception e)
@@ -285,6 +286,7 @@ namespace SPV3
     public void Initialise()
     {
       Main = Visible;
+      Activation = Collapsed;
 
       /**
        * Determine if the current environment fulfills the installation requirements.
