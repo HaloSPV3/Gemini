@@ -368,7 +368,7 @@ namespace SPV3
         catch(System.Exception e)
         {
           var log = (HXE.File)Paths.Exception;
-          log.WriteAllText("The Loader could not save settings.\n Error: " + e);
+          log.AppendAllText("The Loader could not save settings.\n Error: " + e + "\n");
         }
       }
 
@@ -441,7 +441,7 @@ namespace SPV3
         catch(System.Exception e)
         {
           var log = (HXE.File) Paths.Exception;
-          log.WriteAllText("Oops. The file probably had more or fewer settings than expected.\n Error: " + e);
+          log.AppendAllText("The settings probably had more or fewer settings than expected.\n Error: " + e + "\n");
         }
       }
 

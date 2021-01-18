@@ -118,7 +118,7 @@ namespace SPV3
             {
               var msg = "SteamExePath could not be set.\n Error: " + e.ToString();
               var log = (HXE.File)Paths.Exception;
-              log.WriteAllText(msg);
+              log.AppendAllText(msg + "\n");
               Status = e.Message.ToLower();
               return;
             }
@@ -184,7 +184,7 @@ namespace SPV3
         {
           var msg = "Installation not possible at selected path: " + Target + "\n Error: " + e.ToString();
           var log = (HXE.File)Paths.Exception;
-          log.WriteAllText(msg);
+          log.AppendAllText(msg + "\n");
           Status = msg;
           CanInstall = false;
           return;
@@ -229,7 +229,7 @@ namespace SPV3
         {
           var msg = "Failed to get drive space.\n Error:  " + e.ToString();
           var log = (HXE.File)Paths.Exception;
-          log.WriteAllText(msg);
+          log.AppendAllText(msg + "\n");
           Status     = msg;
           CanInstall = false;
         }
@@ -356,7 +356,7 @@ namespace SPV3
           {
             var msg = "Failed to Activate Halo.\n Error:  " + e.ToString();
             var log = (HXE.File)Paths.Exception;
-            log.WriteAllText(msg);
+            log.AppendAllText(msg + "\n");
             Status = msg;
             return;
           }
@@ -388,7 +388,7 @@ namespace SPV3
             {
               var msg = "Shortcut error.\n Error:  " + e.ToString();
               var log = (HXE.File)Paths.Exception;
-              log.WriteAllText(msg);
+              log.AppendAllText(msg + "\n");
               Status = msg;
             }
           }
@@ -423,7 +423,7 @@ namespace SPV3
         {
           var msg = "Failed to install OpenSauce via Amai Sosu.\n Error:  " + e.ToString();
           var log = (HXE.File)Paths.Exception;
-          log.WriteAllText(msg);
+          log.AppendAllText(msg + "\n");
           Status = msg;
         }
         finally
@@ -449,7 +449,7 @@ namespace SPV3
       {
         var msg = "Failed to install SPV3.\n Error:  " + e.ToString();
         var log = (HXE.File)Paths.Exception;
-        log.WriteAllText(msg);
+        log.AppendAllText(msg + "\n");
         Status     = msg;
         CanInstall = true;
       }
@@ -485,7 +485,7 @@ namespace SPV3
       {
         var msg = "Failed to install Halo Custom Ediiton.\n Error:  " + e.ToString();
         var log = (HXE.File)Paths.Exception;
-        log.WriteAllText(msg);
+        log.AppendAllText(msg + "\n");
         Status = msg;
       }
     }
