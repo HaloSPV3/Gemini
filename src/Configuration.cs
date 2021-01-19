@@ -37,22 +37,22 @@ namespace SPV3
 
     public void Load()
     {
-      spv3 = Loader;
-      Kernel.Load();
-      Loader.Load();
-      Shaders.Load();
-      OpenSauce.Load();
-      Chimera.Load();
+      Loader.Load();    // loader bin
+      spv3 = Loader;    // loader bin
+      Kernel.Load();    // kernel bin
+      Shaders.Load();   // kernel bin, load from Kernel.hxe
+      OpenSauce.Load(); // OS_Settings.user.xml
+      Chimera.Load();   // chimera bin
     }
 
     public void Save()
     {
-      spv3 = Loader;
-      Kernel.Save();
-      Loader.Save();
-      Shaders.Save();
-      OpenSauce.Save();
-      Chimera.Save();
+      Loader.Save();    // loader bin
+      spv3 = Loader;    // loader bin
+      Kernel.Save();    // kernel bin
+      Shaders.Save();   // kernel bin, load from Kernel.hxe
+      OpenSauce.Save(); // OS_Settings.user.xml
+      Chimera.Save();   // chimera bin
     }
 
     public void CalculateFOV()
@@ -70,23 +70,17 @@ namespace SPV3
       // Button is collapsed until the DataContext is synced
       Save();
       Kernel.Load();
-      hxe.Main.Elevated      = Loader.Elevated;
-      hxe.Video.Resolution   = Loader.ResolutionEnabled;
-      hxe.Video.Uncap        = !Loader.Vsync;
-      hxe.Video.GammaEnabled = Loader.GammaEnabled;
-      hxe.Video.Gamma        = Loader.Gamma;
-      hxe.Video.Bless        = Loader.Borderless;
-      hxe.Audio.Enhancements = Loader.EAX;
-      hxe.Input.Override     = Loader.Preset;
-      hxe.Tweaks.CinemaBars  = Loader.CinemaBars;
-      hxe.Tweaks.Sensor      = !Loader.Photo;
-      hxe.Tweaks.Unload      = Loader.Shaders;
-
+      SPV3KernelOverrides();
 
       Settings = new HXE.Settings(hxe);
       Settings.ShowDialog();
       if (Settings.DialogResult == true)
+      {
         Kernel.Load();
+        SPV3KernelOverrides();
+        CopyKernelToLoader();
+        Loader = spv3;
+      }
     }
 
     public void ShowHxeWepPositions()

@@ -31,8 +31,6 @@ namespace SPV3
   {
     public class ConfigurationShaders : INotifyPropertyChanged
     {
-      private readonly HXE.Kernel.Configuration _configuration = Kernel.hxe;
-
       private bool _adaptiveHDR_isReady = false;
       private bool _adaptiveHDR        = false;
       private int  _dof                = 0;
@@ -54,7 +52,7 @@ namespace SPV3
         
         if (!System.IO.File.Exists(HXE.Paths.Legacy))
         {
-          _configuration.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
+          Kernel.hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
           return true;
         }
         else
@@ -209,45 +207,45 @@ namespace SPV3
 
       public void Save()
       {
-        if (DynamicLensFlares) _configuration.Shaders  |= PP.DYNAMIC_LENS_FLARES;
-        if (DynamicLensFlares) _configuration.Shaders  |= PP.DYNAMIC_LENS_FLARES;
-        if (FilmGrain) _configuration.Shaders          |= PP.FILM_GRAIN;
-        if (HudVisor) _configuration.Shaders           |= PP.HUD_VISOR;
-        if (LensDirt) _configuration.Shaders           |= PP.LENS_DIRT;
-        if (VolumetricLighting) _configuration.Shaders |= PP.VOLUMETRIC_LIGHTING;
-        if (SSR) _configuration.Shaders                |= PP.SSR;
-        if (Deband) _configuration.Shaders             |= PP.DEBAND;
-        if (AdaptiveHDR) _configuration.Shaders        |= PP.ADAPTIVE_HDR;
-        if (DOF        == 1) _configuration.Shaders    |= PP.DOF_LOW;
-        if (DOF        == 2) _configuration.Shaders    |= PP.DOF_HIGH;
-        if (MotionBlur == 1) _configuration.Shaders    |= PP.MOTION_BLUR_BUILT_IN;
-        if (MotionBlur == 2) _configuration.Shaders    |= PP.MOTION_BLUR_POMB_LOW;
-        if (MotionBlur == 3) _configuration.Shaders    |= PP.MOTION_BLUR_POMB_HIGH;
-        if (MXAO       == 1) _configuration.Shaders    |= PP.MXAO_LOW;
-        if (MXAO       == 2) _configuration.Shaders    |= PP.MXAO_HIGH;
+        if (DynamicLensFlares) Kernel.hxe.Shaders  |= PP.DYNAMIC_LENS_FLARES;
+        if (DynamicLensFlares) Kernel.hxe.Shaders  |= PP.DYNAMIC_LENS_FLARES;
+        if (FilmGrain) Kernel.hxe.Shaders          |= PP.FILM_GRAIN;
+        if (HudVisor) Kernel.hxe.Shaders           |= PP.HUD_VISOR;
+        if (LensDirt) Kernel.hxe.Shaders           |= PP.LENS_DIRT;
+        if (VolumetricLighting) Kernel.hxe.Shaders |= PP.VOLUMETRIC_LIGHTING;
+        if (SSR) Kernel.hxe.Shaders                |= PP.SSR;
+        if (Deband) Kernel.hxe.Shaders             |= PP.DEBAND;
+        if (AdaptiveHDR) Kernel.hxe.Shaders        |= PP.ADAPTIVE_HDR;
+        if (DOF        == 1) Kernel.hxe.Shaders    |= PP.DOF_LOW;
+        if (DOF        == 2) Kernel.hxe.Shaders    |= PP.DOF_HIGH;
+        if (MotionBlur == 1) Kernel.hxe.Shaders    |= PP.MOTION_BLUR_BUILT_IN;
+        if (MotionBlur == 2) Kernel.hxe.Shaders    |= PP.MOTION_BLUR_POMB_LOW;
+        if (MotionBlur == 3) Kernel.hxe.Shaders    |= PP.MOTION_BLUR_POMB_HIGH;
+        if (MXAO       == 1) Kernel.hxe.Shaders    |= PP.MXAO_LOW;
+        if (MXAO       == 2) Kernel.hxe.Shaders    |= PP.MXAO_HIGH;
 
-        _configuration.Save();
+        Kernel.hxe.Save();
       }
 
       public void Load()
       {
-        _configuration.Load();
+        Kernel.hxe.Load();
 
-        DynamicLensFlares  = (_configuration.Shaders & PP.DYNAMIC_LENS_FLARES) != 0;
-        FilmGrain          = (_configuration.Shaders & PP.FILM_GRAIN)          != 0;
-        HudVisor           = (_configuration.Shaders & PP.HUD_VISOR)           != 0;
-        LensDirt           = (_configuration.Shaders & PP.LENS_DIRT)           != 0;
-        VolumetricLighting = (_configuration.Shaders & PP.VOLUMETRIC_LIGHTING) != 0;
-        SSR                = (_configuration.Shaders & PP.SSR)                 != 0;
-        Deband             = (_configuration.Shaders & PP.DEBAND)              != 0;
-        AdaptiveHDR        = (_configuration.Shaders & PP.ADAPTIVE_HDR)        != 0;
+        DynamicLensFlares  = (Kernel.hxe.Shaders & PP.DYNAMIC_LENS_FLARES) != 0;
+        FilmGrain          = (Kernel.hxe.Shaders & PP.FILM_GRAIN)          != 0;
+        HudVisor           = (Kernel.hxe.Shaders & PP.HUD_VISOR)           != 0;
+        LensDirt           = (Kernel.hxe.Shaders & PP.LENS_DIRT)           != 0;
+        VolumetricLighting = (Kernel.hxe.Shaders & PP.VOLUMETRIC_LIGHTING) != 0;
+        SSR                = (Kernel.hxe.Shaders & PP.SSR)                 != 0;
+        Deband             = (Kernel.hxe.Shaders & PP.DEBAND)              != 0;
+        AdaptiveHDR        = (Kernel.hxe.Shaders & PP.ADAPTIVE_HDR)        != 0;
 
         DOF = new Func<byte>(() =>
         {
-          if ((_configuration.Shaders & PP.DOF_HIGH) != 0)
+          if ((Kernel.hxe.Shaders & PP.DOF_HIGH) != 0)
             return 2;
 
-          if ((_configuration.Shaders & PP.DOF_LOW) != 0)
+          if ((Kernel.hxe.Shaders & PP.DOF_LOW) != 0)
             return 1;
 
           return 0;
@@ -255,13 +253,13 @@ namespace SPV3
 
         MotionBlur = new Func<byte>(() =>
         {
-          if ((_configuration.Shaders & PP.MOTION_BLUR_POMB_HIGH) != 0)
+          if ((Kernel.hxe.Shaders & PP.MOTION_BLUR_POMB_HIGH) != 0)
             return 3;
 
-          if ((_configuration.Shaders & PP.MOTION_BLUR_POMB_LOW) != 0)
+          if ((Kernel.hxe.Shaders & PP.MOTION_BLUR_POMB_LOW) != 0)
             return 2;
 
-          if ((_configuration.Shaders & PP.MOTION_BLUR_BUILT_IN) != 0)
+          if ((Kernel.hxe.Shaders & PP.MOTION_BLUR_BUILT_IN) != 0)
             return 1;
 
           return 0;
@@ -269,10 +267,10 @@ namespace SPV3
 
         MXAO = new Func<byte>(() =>
         {
-          if ((_configuration.Shaders & PP.MXAO_HIGH) != 0)
+          if ((Kernel.hxe.Shaders & PP.MXAO_HIGH) != 0)
             return 2;
 
-          if ((_configuration.Shaders & PP.MXAO_LOW) != 0)
+          if ((Kernel.hxe.Shaders & PP.MXAO_LOW) != 0)
             return 1;
 
           return 0;

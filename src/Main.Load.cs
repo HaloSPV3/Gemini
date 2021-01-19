@@ -53,26 +53,24 @@ namespace SPV3
 
       public void Invoke()
       {
-        var spv3      = Kernel.spv3;                                             /* for configuration          */
-        var hxe       = Kernel.hxe;                                              /* for compatibility & tweaks */
         var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
         var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
 
-        if (spv3.Exists())
+        if (Kernel.spv3.Exists())
         {
-          spv3.Load();
+          Kernel.spv3.Load();
         }
         else
         {
-          spv3.Preset  = true;
-          spv3.Shaders = true;
+          Kernel.spv3.Preset  = true;
+          Kernel.spv3.Shaders = true;
         }
 
-        Kernel.Load(); // Overrides moved to Kernel. Load() calls the overrides.
+        Kernel.Load(); // Loade hxe kernel instance. Overrides moved to Kernel. Load() calls the overrides.
 
         if (!File.Exists(HXE.Paths.Legacy))
         {
-          hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
+          Kernel.hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
         }
         if (chimera.Exists())
         {
@@ -98,29 +96,29 @@ namespace SPV3
         openSauce.Rasterizer.PostProcessing.MapEffects.Enabled      = false; /* for opensauce to interpret as true  */
         openSauce.Rasterizer.PostProcessing.ExternalEffects.Enabled = true;  /* for opensauce to interpret as false */
 
-        if (spv3.DOOM && !spv3.Photo)
+        if (Kernel.spv3.DOOM && !Kernel.spv3.Photo)
           if (File.Exists(Paths.DOOM))
           {
             openSauce.Objects.Weapon.Load(Paths.DOOM);
             openSauce.HUD.ShowHUD = true;
           }
 
-        if (spv3.Photo && !spv3.DOOM)
+        if (Kernel.spv3.Photo && !Kernel.spv3.DOOM)
           if (File.Exists(Paths.Photo))
           {
             openSauce.Objects.Weapon.Load(Paths.Photo);
-            openSauce.HUD.ShowHUD = false;
-            hxe.Tweaks.Sensor     = false;
+            openSauce.HUD.ShowHUD    = false;
+            Kernel.hxe.Tweaks.Sensor = false;
           }
 
         if (openSauce.Camera.FieldOfView < 40.00 || openSauce.Camera.FieldOfView > 180.00)
           openSauce.Camera.CalculateFOV();
 
 
-        spv3.Save();      /* saves to %APPDATA%\SPV3 */
-        openSauce.Save(); /* saves to %APPDATA%\SPV3 */
-        chimera.Save();   /* saves to %APPDATA%\SPV3 */
-        hxe.Save();       /* saves to %APPDATA%\SPV3 */
+        Kernel.spv3.Save(); /* saves to %APPDATA%\SPV3\loader-0x##.bin */
+        openSauce.Save();   /* saves to %APPDATA%\SPV3\OpenSauce\OS_Settings.User.xml */
+        chimera.Save();     /* saves to %APPDATA%\SPV3 */
+        Kernel.hxe.Save();  /* saves to %APPDATA%\SPV3 */
 
         HXE.Kernel.Invoke(new Executable
         {
@@ -131,13 +129,13 @@ namespace SPV3
           },
           Video = new Executable.VideoOptions
           {
-            DisplayMode = spv3.Vsync == false && spv3.Framerate > 0,
-            Width   = spv3.Native ? (ushort) 0 : spv3.Width,
-            Height  = spv3.Native ? (ushort) 0 : spv3.Height,
-            Refresh = spv3.Framerate,
-            Window  = spv3.Window,
-            Adapter = (byte) (spv3.Adapter + 1),
-            NoGamma = hxe.Video.GammaEnabled == false
+            DisplayMode = Kernel.spv3.Vsync == false && Kernel.spv3.Framerate > 0,
+            Width       = Kernel.spv3.ResolutionEnabled ? Kernel.spv3.Width  : (ushort) 0,
+            Height      = Kernel.spv3.ResolutionEnabled ? Kernel.spv3.Height : (ushort) 0,
+            Refresh     = Kernel.spv3.Framerate,
+            Window      = Kernel.spv3.Window,
+            Adapter     = (byte) (Kernel.spv3.Adapter + 1),
+            NoGamma     = Kernel.hxe.Video.GammaEnabled == false
           },
           Debug = new Executable.DebugOptions
           {
@@ -150,7 +148,7 @@ namespace SPV3
           {
             NoVideo = true
           }
-        }, hxe);;
+        }, Kernel.hxe);;
       }
 
       [NotifyPropertyChangedInvocator]

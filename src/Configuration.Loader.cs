@@ -50,7 +50,6 @@ namespace SPV3
       private byte   _gamma  = 150;                                     /* gamma level to run spv3 at (in vsync mode) */
       private ushort _height = (ushort) PrimaryScreen.Bounds.Height;    /* height spv3/hce will be displayed at       */
       private byte   _displayMode;                                      /* display - fullscreen/window/borderless     */
-      private bool   _native  = true;                                   /* runs native instead of custom resolution   */
       private bool   _photo;                                            /* enables spv3 photo/blind mode              */
       private bool   _vsync   = true;                                   /* V-sync preference (locked vs unlocked)     */
       private bool   _preset  = true;                                   /* use the built-in spv3 controller preset    */
@@ -59,18 +58,6 @@ namespace SPV3
       private ushort _width   = (ushort) PrimaryScreen.Bounds.Width;    /* width spv3/hce will be displayed at        */
       private bool   _window;                                           /* runs spv3/hce as a windowed application    */
       private bool   _elevated;                                         /* runs spv3/hce in elevated (admin) mode     */
-
-      public bool Native
-      {
-        get => _native;
-        set
-        {
-          if (value == _native) return;
-          _native = value;
-          OnPropertyChanged();
-          ResolutionEnabled = !value;
-        }
-      }
 
       public byte DisplayMode
       {
@@ -181,7 +168,7 @@ namespace SPV3
           _vsync = value;
           OnPropertyChanged();
           if (value == true) DisplayMode = 0;
-          // UpdateWindowBorderless() is called by DisplayMode.Set{}. Sets Borderless to False.
+          // UpdateWindowBorderless() is called by DisplayMode.Set{}. Sets Borderless to False if Vsync is True.
         }
       }
 
@@ -259,7 +246,6 @@ namespace SPV3
           if (value == _resolutionEnabled) return;
           _resolutionEnabled = value;
           OnPropertyChanged();
-          Native = !value;
         }
       }
 
@@ -358,7 +344,7 @@ namespace SPV3
             /* display mode */
             {
               bw.Write(DisplayMode);
-              bw.Write(Native);
+              bw.Write(ResolutionEnabled);
             }
 
             ms.Position = 0;
@@ -433,7 +419,7 @@ namespace SPV3
             /* display mode */
             {
               DisplayMode = br.ReadByte();
-              Native = br.ReadBoolean();
+              ResolutionEnabled = br.ReadBoolean();
             }
           }
 
