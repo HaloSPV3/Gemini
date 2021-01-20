@@ -89,7 +89,7 @@ namespace SPV3
         else
           openSauce.Camera.CalculateFOV();
 
-        if (!File.Exists(Paths.Configuration))
+        if (!File.Exists(Paths.Kernel))
           openSauce.Camera.CalculateFOV();
 
         openSauce.HUD.ShowHUD                                       = true;
@@ -115,10 +115,10 @@ namespace SPV3
           openSauce.Camera.CalculateFOV();
 
 
-        Kernel.spv3.Save(); /* saves to %APPDATA%\SPV3\loader-0x##.bin */
+        Kernel.spv3.Save(); /* saves to %APPDATA%\SPV3\loader-0x##.bin                */
+        Kernel.hxe.Save();  /* saves to %APPDATA%\SPV3\kernel-0x##.bin                */
+        chimera.Save();     /* saves to %APPDATA%\SPV3\chimera.bin                    */
         openSauce.Save();   /* saves to %APPDATA%\SPV3\OpenSauce\OS_Settings.User.xml */
-        chimera.Save();     /* saves to %APPDATA%\SPV3 */
-        Kernel.hxe.Save();  /* saves to %APPDATA%\SPV3 */
 
         HXE.Kernel.Invoke(new Executable
         {
