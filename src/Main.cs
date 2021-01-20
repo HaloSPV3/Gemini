@@ -121,7 +121,7 @@ namespace SPV3
 
     private void Exception(Exception e, string description)
     {
-      AppendAllText(Paths.Exception, e.ToString());
+      AppendAllText(Paths.Exception, e.ToString() + "\n");
 
       Error.Visibility = Visibility.Visible;
       Error.Content    = $"{description}: {e.Message.ToLower()}\n\nClick here for more information.";

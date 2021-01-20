@@ -116,9 +116,9 @@ namespace SPV3
             }
             catch (Exception e)
             {
-              var msg = "SteamExePath could not be set.\n Error: " + e.ToString();
+              var msg = "SteamExePath could not be set.\n Error: " + e.ToString() + "\n";
               var log = (HXE.File)Paths.Exception;
-              log.AppendAllText(msg + "\n");
+              log.AppendAllText(msg);
               Status = e.Message.ToLower();
               return;
             }
@@ -182,9 +182,9 @@ namespace SPV3
         }
         catch (Exception e)
         {
-          var msg = "Installation not possible at selected path: " + Target + "\n Error: " + e.ToString();
+          var msg = "Installation not possible at selected path: " + Target + "\n Error: " + e.ToString() + "\n";
           var log = (HXE.File)Paths.Exception;
-          log.AppendAllText(msg + "\n");
+          log.AppendAllText(msg);
           Status = msg;
           CanInstall = false;
           return;
@@ -227,9 +227,9 @@ namespace SPV3
         }
         catch (Exception e)
         {
-          var msg = "Failed to get drive space.\n Error:  " + e.ToString();
+          var msg = "Failed to get drive space.\n Error:  " + e.ToString() + "\n";
           var log = (HXE.File)Paths.Exception;
-          log.AppendAllText(msg + "\n");
+          log.AppendAllText(msg);
           Status     = msg;
           CanInstall = false;
         }
@@ -354,9 +354,9 @@ namespace SPV3
           }
           catch (Exception e)
           {
-            var msg = "Failed to Activate Halo.\n Error:  " + e.ToString();
+            var msg = "Failed to Activate Halo.\n Error:  " + e.ToString() + "\n";
             var log = (HXE.File)Paths.Exception;
-            log.AppendAllText(msg + "\n");
+            log.AppendAllText(msg);
             Status = msg;
             return;
           }
@@ -386,9 +386,9 @@ namespace SPV3
             }
             catch (Exception e)
             {
-              var msg = "Shortcut error.\n Error:  " + e.ToString();
+              var msg = "Shortcut error.\n Error:  " + e.ToString() + "\n";
               var log = (HXE.File)Paths.Exception;
-              log.AppendAllText(msg + "\n");
+              log.AppendAllText(msg);
               Status = msg;
             }
           }
@@ -421,9 +421,9 @@ namespace SPV3
         }
         catch (Exception e)
         {
-          var msg = "Failed to install OpenSauce via Amai Sosu.\n Error:  " + e.ToString();
+          var msg = "Failed to install OpenSauce via Amai Sosu.\n Error:  " + e.ToString() + "\n";
           var log = (HXE.File)Paths.Exception;
-          log.AppendAllText(msg + "\n");
+          log.AppendAllText(msg);
           Status = msg;
         }
         finally
@@ -447,9 +447,9 @@ namespace SPV3
       }
       catch (Exception e)
       {
-        var msg = "Failed to install SPV3.\n Error:  " + e.ToString();
+        var msg = "Failed to install SPV3.\n Error:  " + e.ToString() + "\n";
         var log = (HXE.File)Paths.Exception;
-        log.AppendAllText(msg + "\n");
+        log.AppendAllText(msg);
         Status     = msg;
         CanInstall = true;
       }
@@ -483,9 +483,9 @@ namespace SPV3
       }
       catch (Exception e)
       {
-        var msg = "Failed to install Halo Custom Ediiton.\n Error:  " + e.ToString();
+        var msg = "Failed to install Halo Custom Ediiton.\n Error:  " + e.ToString() + "\n";
         var log = (HXE.File)Paths.Exception;
-        log.AppendAllText(msg + "\n");
+        log.AppendAllText(msg);
         Status = msg;
       }
     }

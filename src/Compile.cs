@@ -129,9 +129,9 @@ namespace SPV3
       }
       catch (Exception e)
       {
-        var msg = "Compilation failed.\n Error:  " + e.ToString();
+        var msg = "Compilation failed.\n Error:  " + e.ToString() + "\n";
         var log = (HXE.File)Paths.Exception;
-        log.AppendAllText(msg + "\n");
+        log.AppendAllText(msg);
         Status     = msg;
         CanCompile = true;
       }
