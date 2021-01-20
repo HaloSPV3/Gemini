@@ -221,17 +221,18 @@
         <DockPanel>
           <Label Content="Post-Processing:" />
           <CheckBox IsChecked="{Binding Loader.Shaders}"
-                    Unchecked="Update_AdaptiveHDR_isReady"
-                    Checked="Update_AdaptiveHDR_isReady"
+                    Unchecked="Update_AdaptiveHDRisReady"
+                    Checked="Update_AdaptiveHDRisReady"
                     ToolTip="Enables SPV3's post-processing system." />
         </DockPanel>
         <DockPanel>
           <Label Content="Adaptive HDR:"
                  IsEnabled="{Binding Loader.Shaders}"/>
-          <CheckBox IsChecked="{Binding Shaders.AdaptiveHDR}"
+          <CheckBox Name="AdaptiveHDR_CheckBox"
+                    IsChecked="{Binding Shaders.AdaptiveHDR}"
                     IsEnabled="{Binding Loader.Shaders}"
-                    Unchecked="AdaptiveHDR_Unchecked"
-                    Checked="Update_AdaptiveHDR_isReady"
+                    Click="AdaptiveHDRChanged"
+                    Checked="Update_AdaptiveHDRisReady"
                     ToolTip="Enables High Dynamic Range. Adapts to the scene's light levels. Required for Bloom and Screen Space Reflections to render correctly." />
         </DockPanel>
         <DockPanel>
@@ -307,8 +308,8 @@
           <Label Content="SSR:"
                  IsEnabled="{Binding Loader.Shaders}" />
           <CheckBox IsChecked="{Binding Shaders.SSR}"
-                    IsEnabled="{Binding Shaders.AdaptiveHDR_isReady}"
-                    Checked="SSR_Or_ResolutionChanged"
+                    IsEnabled="{Binding Shaders.AdaptiveHDRisReady}"
+                    Click="SSR_Or_ResolutionChanged"
                     ToolTip="Requires Adaptive HDR. Enables Screen Space Ray Traced Reflections." />
         </DockPanel>
         <DockPanel Visibility="{Binding Shaders.DebandAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -401,9 +402,10 @@
 
         <DockPanel>
           <Label Content="G-Buffer:" />
-          <CheckBox IsChecked="{Binding OpenSauce.GBuffer}"
+          <CheckBox Name="GBuffer_CheckBox"
+                    IsChecked="{Binding OpenSauce.GBuffer}"
                     ToolTip="Disabling this will deactivate VISR and Thermal Vision."
-                    Unchecked="GBuffer_Unchecked" />
+                    Click="GBufferChanged" />
         </DockPanel>
         <DockPanel>
           <Label Content="Normal Maps:" />
@@ -428,7 +430,7 @@
         <DockPanel>
           <Label Content="Bloom:" />
           <CheckBox IsChecked="{Binding OpenSauce.Bloom}"
-                    IsEnabled="{Binding Shaders.AdaptiveHDR_isReady}"
+                    IsEnabled="{Binding Shaders.AdaptiveHDRisReady}"
                     ToolTip="Requires Adaptive HDR. Adds glowy highlights to visual bright spots." />
         </DockPanel>
 

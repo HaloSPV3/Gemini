@@ -59,7 +59,7 @@ namespace SPV3
           return false;
       }
 
-      public bool AdaptiveHDR_isReady
+      public bool AdaptiveHDRisReady
       {
         get => _adaptiveHDR_isReady;
         set
