@@ -43,11 +43,7 @@ namespace SPV3
       Directory.CreateDirectory(Paths.Directory);     /* create data directory */
       Directory.CreateDirectory(HXE.Paths.Directory); /* create hxe directory  */
 
-      {
-        FileInfo Log = new FileInfo(Paths.Exception);
-        if (Log.Length > 1048576) // If greater than 1 MiB...
-          WriteAllText(Paths.Exception, ""); // ...clear log.
-      }
+      WriteAllText(Paths.Exception, ""); // ...clear log.
 
       /**
        * We determine installation or initiation mode:
