@@ -125,7 +125,7 @@ namespace SPV3
           Path = Path.Combine(Environment.CurrentDirectory, HXE.Paths.HCE.Executable),
           Profile = new Executable.ProfileOptions
           {
-            Path = Paths.Directory
+            Path = SPV3.Paths.Directory
           },
           Video = new Executable.VideoOptions
           {
