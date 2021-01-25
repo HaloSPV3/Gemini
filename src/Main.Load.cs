@@ -114,6 +114,7 @@ namespace SPV3
         if (openSauce.Camera.FieldOfView < 40.00 || openSauce.Camera.FieldOfView > 180.00)
           openSauce.Camera.CalculateFOV();
 
+        Kernel.CopyLoaderToKernel();
 
         Kernel.spv3.Save(); /* saves to %APPDATA%\SPV3\loader-0x##.bin                */
         Kernel.hxe.Save();  /* saves to %APPDATA%\SPV3\kernel-0x##.bin                */
@@ -148,7 +149,7 @@ namespace SPV3
           {
             NoVideo = true
           }
-        }, Kernel.hxe);;
+        }, Kernel.hxe);
       }
 
       [NotifyPropertyChangedInvocator]
