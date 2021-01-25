@@ -69,6 +69,10 @@ namespace SPV3
           OnPropertyChanged();
           UpdateWindowBorderless();
         }
+        /*  0 == Fullscreen
+         *  1 == Window
+         *  2 == Borderless
+         */
       }
 
       public bool Window
@@ -246,6 +250,8 @@ namespace SPV3
           if (value == _resolutionEnabled) return;
           _resolutionEnabled = value;
           OnPropertyChanged();
+          if (value == true && DisplayMode == 2)
+            DisplayMode = 1;
         }
       }
 
@@ -280,6 +286,7 @@ namespace SPV3
           Borderless = true;
           Elevated = false;
           Vsync = false;
+          ResolutionEnabled = false;
         }
         else Borderless = false;
       }
