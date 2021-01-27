@@ -43,7 +43,7 @@ namespace SPV3
 
     private void Discord(object sender, MouseButtonEventArgs e)
     {
-      Process.Start("https://discord.gg/Cdh5b8z");
+      Process.Start("https://discord.gg/q4f7nTt");
     }
 
     private void Wikia(object sender, MouseButtonEventArgs e)
