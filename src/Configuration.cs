@@ -28,18 +28,15 @@ namespace SPV3
   public partial class Configuration
   {
     // See SPV3.Kernel class
-    public ConfigurationLoader    Loader    { get; set; } = new ConfigurationLoader();
+    public ConfigurationLoader    Loader    { get; set; } = spv3;
     public ConfigurationShaders   Shaders   { get; set; } = new ConfigurationShaders();
     public ConfigurationOpenSauce OpenSauce { get; set; } = new ConfigurationOpenSauce();
     public ConfigurationChimera   Chimera   { get; set; } = new ConfigurationChimera();
-    public HXE.Settings           Settings  { get; set; } = new HXE.Settings(hxe);
-    public HXE.Positions          Positions { get; set; } = new HXE.Positions();
 
     public void Load()
     {
-      Loader.Load();    // loader bin
-      spv3 = Loader;    // loader bin
-      Kernel.Load();    // kernel bin
+      Kernel.Load();    // kernel/loader bin
+      spv3 = Loader;    // assign local instance to static instance. Deprecate local instance?
       Shaders.Load();   // kernel bin, load from Kernel.hxe
       OpenSauce.Load(); // OS_Settings.user.xml
       Chimera.Load();   // chimera bin
@@ -47,9 +44,8 @@ namespace SPV3
 
     public void Save()
     {
-      Loader.Save();    // loader bin. Save Loader instance to disk.
-      spv3 = Loader;    // loader bin. Copy Loader instance to static instance
-      Kernel.Save();    // kernel bin
+      spv3 = Loader;    // loader bin. Copy local instance to static instance
+      Kernel.Save();    // kernel/loader bin.
       Shaders.Save();   // kernel bin, load from Kernel.hxe
       OpenSauce.Save(); // OS_Settings.user.xml
       Chimera.Save();   // chimera bin
@@ -67,11 +63,9 @@ namespace SPV3
 
     public void ShowHxeSettings()
     {
-      // Button is collapsed until the DataContext is synced
-      Save();
-      CopyLoaderToKernel();
+      Save(); // Save all settings, copy Loader to Kernel equivalents
 
-      Settings = new HXE.Settings(hxe);
+      var Settings = new HXE.Settings(hxe); // Pass modified Kernel instance to Settings.
       Settings.ShowDialog();
       if (Settings.DialogResult == true)
       {
@@ -82,8 +76,7 @@ namespace SPV3
 
     public void ShowHxeWepPositions()
     {
-      // Button is collapsed, but it works.
-      Positions.ShowDialog();
+      new HXE.Positions().ShowDialog();
     }
   }
 }

@@ -78,6 +78,7 @@ namespace SPV3
     public static void Load()
     {
       hxe.Load();
+      spv3.Load();
       CopyKernelToLoader();
     }
 
@@ -88,6 +89,7 @@ namespace SPV3
     public static void Save()
     {
       CopyLoaderToKernel();
+      spv3.Save();
       hxe.Save();
     }
   }
