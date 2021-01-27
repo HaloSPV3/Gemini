@@ -229,8 +229,6 @@ namespace SPV3
 
       public void Load()
       {
-        Kernel.hxe.Load();
-
         DynamicLensFlares  = (Kernel.hxe.Shaders & PP.DYNAMIC_LENS_FLARES) != 0;
         FilmGrain          = (Kernel.hxe.Shaders & PP.FILM_GRAIN)          != 0;
         HudVisor           = (Kernel.hxe.Shaders & PP.HUD_VISOR)           != 0;
