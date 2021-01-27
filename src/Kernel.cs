@@ -42,7 +42,7 @@ namespace SPV3
       hxe.Video.ResolutionEnabled  = spv3.ResolutionEnabled; /* permit custom resolution override */
       hxe.Video.Quality            = false;                  /* permit in-game quality settings   */
       hxe.Video.Uncap              = spv3.Vsync == false;
-      hxe.Video.GammaEnabled       = spv3.GammaEnabled;
+      hxe.Video.GammaOn            = spv3.GammaOn;
       hxe.Video.Gamma              = spv3.Gamma;
       hxe.Video.Bless              = spv3.Borderless && spv3.Window && spv3.Vsync == false && spv3.Elevated == false;
       hxe.Audio.Enhancements       = spv3.EAX;
@@ -57,7 +57,7 @@ namespace SPV3
       spv3.Elevated          = hxe.Main.Elevated;
       spv3.ResolutionEnabled = hxe.Video.ResolutionEnabled;
       spv3.Vsync             = hxe.Video.Uncap == false;
-      spv3.GammaEnabled      = hxe.Video.GammaEnabled;
+      spv3.GammaOn           = hxe.Video.GammaOn;
       spv3.Gamma             = hxe.Video.Gamma;
       spv3.EAX               = hxe.Audio.Enhancements;
       spv3.Preset            = hxe.Input.Override;

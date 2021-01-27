@@ -137,7 +137,7 @@ namespace SPV3
             Refresh     = Kernel.spv3.Framerate,
             Window      = Kernel.spv3.Window,
             Adapter     = (byte) (Kernel.spv3.Adapter + 1),
-            NoGamma     = Kernel.hxe.Video.GammaEnabled == false
+            NoGamma     = Kernel.hxe.Video.GammaOn == false
           },
           Debug = new Executable.DebugOptions
           {

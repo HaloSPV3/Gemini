@@ -46,7 +46,7 @@ namespace SPV3
       private bool   _doom;                                             /* toggle spv3 doom mode                      */
       private bool   _eax;                                              /* toggle hw accel. & environmental sound     */
       private byte   _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
-      private bool   _gammaEnabled = false;                             /* when false, runs spv3/hce with -nogamma    */
+      private bool   _gammaOn = false;                                  /* when false, runs spv3/hce with -nogamma    */
       private byte   _gamma  = 150;                                     /* gamma level to run spv3 at (in vsync mode) */
       private ushort _height = (ushort) PrimaryScreen.Bounds.Height;    /* height spv3/hce will be displayed at       */
       private byte   _displayMode;                                      /* display - fullscreen/window/borderless     */
@@ -187,13 +187,13 @@ namespace SPV3
         }
       }
 
-      public bool GammaEnabled
+      public bool GammaOn
       {
-        get => _gammaEnabled;
+        get => _gammaOn;
         set
         {
-          if (value == _gammaEnabled) return;
-          _gammaEnabled = value;
+          if (value == _gammaOn) return;
+          _gammaOn = value;
           OnPropertyChanged();
         }
       }
@@ -328,7 +328,7 @@ namespace SPV3
               bw.Write(Height);
               bw.Write(Framerate);
               bw.Write(Vsync);
-              bw.Write(GammaEnabled);
+              bw.Write(GammaOn);
               bw.Write(Gamma);
               bw.Write(Adapter);
             }
@@ -403,7 +403,7 @@ namespace SPV3
               Height = br.ReadUInt16();
               Framerate = br.ReadByte();
               Vsync = br.ReadBoolean();
-              GammaEnabled = br.ReadBoolean();
+              GammaOn = br.ReadBoolean();
               Gamma = br.ReadByte();
               Adapter = br.ReadByte();
             }

@@ -112,13 +112,13 @@
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
           <Label Content="Gamma"/>
-          <CheckBox IsChecked="{Binding Loader.GammaEnabled}" 
+          <CheckBox IsChecked="{Binding Loader.GammaOn}" 
                     HorizontalAlignment="Left"/>
           <TextBox  Width="50"
                     HorizontalAlignment="Left"
                     HorizontalContentAlignment="Center"
                     Text="{Binding Loader.Gamma}"
-                    IsEnabled="{Binding Loader.GammaEnabled}"
+                    IsEnabled="{Binding Loader.GammaOn}"
                     ToolTip="Set your PC's gamma brightness while the game is running." />
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
