@@ -53,26 +53,22 @@ namespace SPV3
 
       public void Invoke()
       {
-        var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /* for menu fixes, gfx, modes */
-        var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /* for interpolation          */
+        var openSauce = (OpenSauce) HXE.Paths.Custom.OpenSauce(Paths.Directory); /** for menu fixes, gfx, modes */
+        var chimera   = (Chimera) HXE.Paths.Custom.Chimera(Paths.Directory);     /** for interpolation          */
 
-        if (Kernel.spv3.Exists())
-        {
-          Kernel.spv3.Load();
-        }
-        else
-        {
-          Kernel.spv3.Preset  = true;
-          Kernel.spv3.Shaders = true;
-        }
+        /** Load HXE kernel & SPV3 Loader instances.
+         * Overrides moved to Kernel class.
+         * Assign SPV3 values to HXE equivalents.
+         */
+        Kernel.Load(); 
 
-        Kernel.Load(); // Load hxe kernel instance. Overrides moved to Kernel. Load() calls the overrides.
-
+        /** Switch to Legacy SPV3 mode */
         if (!File.Exists(HXE.Paths.Legacy))
         {
           Kernel.hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
         }
 
+        /** Load Chimera binary file */
         if (chimera.Exists())
         {
           chimera.Load();
@@ -85,6 +81,7 @@ namespace SPV3
           chimera.BlockLOD             = false;
         }
 
+        /** Load OpenSauce XML file */
         if (openSauce.Exists())
           openSauce.Load();
         else
@@ -115,12 +112,9 @@ namespace SPV3
         if (openSauce.Camera.FieldOfView < 40.00 || openSauce.Camera.FieldOfView > 180.00)
           openSauce.Camera.CalculateFOV();
 
-        Kernel.CopyLoaderToKernel();
-
-        Kernel.spv3.Save(); /* saves to %APPDATA%\SPV3\loader-0x##.bin                */
-        Kernel.hxe.Save();  /* saves to %APPDATA%\SPV3\kernel-0x##.bin                */
-        chimera.Save();     /* saves to %APPDATA%\SPV3\chimera.bin                    */
-        openSauce.Save();   /* saves to %APPDATA%\SPV3\OpenSauce\OS_Settings.User.xml */
+        Kernel.Save();      /* saves to %APPDATA%\SPV3\kernel-0x##.bin, loader-0x##.bin */
+        chimera.Save();     /* saves to %APPDATA%\SPV3\chimera.bin                      */
+        openSauce.Save();   /* saves to %APPDATA%\SPV3\OpenSauce\OS_Settings.User.xml   */
 
         HXE.Kernel.Invoke(new Executable
         {
