@@ -66,12 +66,13 @@ namespace SPV3
           Kernel.spv3.Shaders = true;
         }
 
-        Kernel.Load(); // Loade hxe kernel instance. Overrides moved to Kernel. Load() calls the overrides.
+        Kernel.Load(); // Load hxe kernel instance. Overrides moved to Kernel. Load() calls the overrides.
 
         if (!File.Exists(HXE.Paths.Legacy))
         {
           Kernel.hxe.Mode = HXE.Kernel.Configuration.ConfigurationMode.SPV33;
         }
+
         if (chimera.Exists())
         {
           chimera.Load();

@@ -47,8 +47,8 @@ namespace SPV3
 
     public void Save()
     {
-      Loader.Save();    // loader bin
-      spv3 = Loader;    // loader bin
+      Loader.Save();    // loader bin. Save Loader instance to disk.
+      spv3 = Loader;    // loader bin. Copy Loader instance to static instance
       Kernel.Save();    // kernel bin
       Shaders.Save();   // kernel bin, load from Kernel.hxe
       OpenSauce.Save(); // OS_Settings.user.xml
@@ -69,16 +69,13 @@ namespace SPV3
     {
       // Button is collapsed until the DataContext is synced
       Save();
-      Kernel.Load();
-      SPV3KernelOverrides();
+      CopyLoaderToKernel();
 
       Settings = new HXE.Settings(hxe);
       Settings.ShowDialog();
       if (Settings.DialogResult == true)
       {
         Kernel.Load();
-        SPV3KernelOverrides();
-        CopyKernelToLoader();
         Loader = spv3;
       }
     }
