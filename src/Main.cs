@@ -41,7 +41,6 @@ namespace SPV3
     public void Initialise()
     {
       Directory.CreateDirectory(Paths.Directory);     /* create data directory */
-      Directory.CreateDirectory(HXE.Paths.Directory); /* create hxe directory  */
 
       WriteAllText(Paths.Exception, ""); // ...clear log.
 

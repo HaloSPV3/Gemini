@@ -41,24 +41,29 @@ namespace SPV3
       private readonly System.Windows.Visibility _advancedButton = Debug.IsDebug ? Visible : Collapsed;
 
       private byte   _adapter;                                          /* physical monitor to run hce/spv3 on        */
-      private bool   _borderless;                                       /* run hce/spv3 without window borders        */
+      private bool   _borderless = false;                               /* run hce/spv3 without window borders        */
       private bool   _cinemabars = false;                               /* toggle spv3 cinematic black bars           */
-      private bool   _doom;                                             /* toggle spv3 doom mode                      */
-      private bool   _eax;                                              /* toggle hw accel. & environmental sound     */
+      private bool   _doom     = false;                                 /* toggle spv3 doom mode                      */
+      private bool   _eax      = true;                                  /* toggle hw accel. & environmental sound     */
       private byte   _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
-      private bool   _gammaEnabled = false;                             /* when false, runs spv3/hce with -nogamma    */
-      private byte   _gamma  = 150;                                     /* gamma level to run spv3 at (in vsync mode) */
-      private ushort _height = (ushort) PrimaryScreen.Bounds.Height;    /* height spv3/hce will be displayed at       */
-      private byte   _displayMode;                                      /* display - fullscreen/window/borderless     */
-      private bool   _photo;                                            /* enables spv3 photo/blind mode              */
-      private bool   _vsync   = true;                                   /* V-sync preference (locked vs unlocked)     */
-      private bool   _preset  = true;                                   /* use the built-in spv3 controller preset    */
+      private bool   _gammaOn  = false;                                 /* when false, runs spv3/hce with -nogamma    */
+      private byte   _gamma    = 150;                                   /* gamma level to run spv3 at (in vsync mode) */
+      private ushort _height   = (ushort) PrimaryScreen.Bounds.Height;  /* height spv3/hce will be displayed at       */
+      private byte   _displayMode = 0;                                  /* display - fullscreen/window/borderless     */
+      private bool   _photo    = false;                                 /* enables spv3 photo/blind mode              */
+      private bool   _vsync    = true;                                  /* V-sync preference (locked vs unlocked)     */
+      private bool   _preset   = true;                                  /* use the built-in spv3 controller preset    */
       private bool   _resolutionEnabled = false;                        /* ability to provide custom resolution       */
-      private bool   _shaders = true;                                   /* toggle spv3 post-processing effects        */
-      private ushort _width   = (ushort) PrimaryScreen.Bounds.Width;    /* width spv3/hce will be displayed at        */
-      private bool   _window;                                           /* runs spv3/hce as a windowed application    */
-      private bool   _elevated;                                         /* runs spv3/hce in elevated (admin) mode     */
+      private bool   _shaders  = true;                                  /* toggle spv3 post-processing effects        */
+      private ushort _width    = (ushort) PrimaryScreen.Bounds.Width;   /* width spv3/hce will be displayed at        */
+      private bool   _window   = false;                                 /* runs spv3/hce as a windowed application    */
+      private bool   _elevated = false;                                 /* runs spv3/hce in elevated (admin) mode     */
 
+       /**
+       * 0 == Fullscreen
+       * 1 == Window
+       * 2 == Borderless 
+       */
       public byte DisplayMode
       {
         get => _displayMode;
@@ -69,10 +74,6 @@ namespace SPV3
           OnPropertyChanged();
           UpdateWindowBorderless();
         }
-        /*  0 == Fullscreen
-         *  1 == Window
-         *  2 == Borderless
-         */
       }
 
       public bool Window
@@ -187,13 +188,13 @@ namespace SPV3
         }
       }
 
-      public bool GammaEnabled
+      public bool GammaOn
       {
-        get => _gammaEnabled;
+        get => _gammaOn;
         set
         {
-          if (value == _gammaEnabled) return;
-          _gammaEnabled = value;
+          if (value == _gammaOn) return;
+          _gammaOn = value;
           OnPropertyChanged();
         }
       }
@@ -328,7 +329,7 @@ namespace SPV3
               bw.Write(Height);
               bw.Write(Framerate);
               bw.Write(Vsync);
-              bw.Write(GammaEnabled);
+              bw.Write(GammaOn);
               bw.Write(Gamma);
               bw.Write(Adapter);
             }
@@ -403,7 +404,7 @@ namespace SPV3
               Height = br.ReadUInt16();
               Framerate = br.ReadByte();
               Vsync = br.ReadBoolean();
-              GammaEnabled = br.ReadBoolean();
+              GammaOn = br.ReadBoolean();
               Gamma = br.ReadByte();
               Adapter = br.ReadByte();
             }

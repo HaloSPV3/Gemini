@@ -32,9 +32,12 @@ namespace SPV3
 
     public Install_UserControl()
     {
-      InitializeComponent();
-      _install = (Install) DataContext;
-      _install.Initialise();
+      if (System.IO.File.Exists(System.IO.Path.Combine(Paths.Packages(Environment.CurrentDirectory), HXE.Paths.Manifest)))
+      {
+        InitializeComponent();
+        _install = (Install) DataContext;
+        _install.Initialise();
+      }
     }
 
     public event EventHandler Home;

@@ -33,7 +33,7 @@ namespace SPV3
     public Configuration_UserControl()
     {
       InitializeComponent();
-      _configuration = (Configuration)DataContext;
+      _configuration = (Configuration) DataContext;
       _configuration.Load();
     }
 

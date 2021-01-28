@@ -33,7 +33,7 @@ namespace SPV3
     {
       private bool   _bloom            = false;
       private bool   _detailNormalMaps = true;
-      private double _fieldOfView;
+      private double _fieldOfView      = 70;
       private bool   _gBuffer          = true;
       private bool   _normalMaps       = true;
       private bool   _specularLighting = true;

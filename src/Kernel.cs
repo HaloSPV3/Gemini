@@ -34,11 +34,15 @@ namespace SPV3
     {
       hxe.Mode = (HXE.Kernel.Configuration.ConfigurationMode) Infer();
       hxe.Tweaks.Sensor            = !(spv3.Photo && Exists(Paths.Photo)); /* forcefully enable motion sensor   */
+      hxe.Main.Reset               = true;                   /* improve loading stability         */
+      hxe.Main.Patch               = true;                   /* improve loading stability         */
+      hxe.Main.Resume              = true;                   /* improve loading stability         */
+      hxe.Main.Start               = true;                   /* improve loading stability         */
       hxe.Main.Elevated            = spv3.Elevated;          /* prevent certain crashes           */
       hxe.Video.ResolutionEnabled  = spv3.ResolutionEnabled; /* permit custom resolution override */
       hxe.Video.Quality            = false;                  /* permit in-game quality settings   */
       hxe.Video.Uncap              = spv3.Vsync == false;
-      hxe.Video.GammaEnabled       = spv3.GammaEnabled;
+      hxe.Video.GammaOn            = spv3.GammaOn;
       hxe.Video.Gamma              = spv3.Gamma;
       hxe.Video.Bless              = spv3.Borderless && spv3.Window && spv3.Vsync == false && spv3.Elevated == false;
       hxe.Audio.Enhancements       = spv3.EAX;
@@ -53,7 +57,7 @@ namespace SPV3
       spv3.Elevated          = hxe.Main.Elevated;
       spv3.ResolutionEnabled = hxe.Video.ResolutionEnabled;
       spv3.Vsync             = hxe.Video.Uncap == false;
-      spv3.GammaEnabled      = hxe.Video.GammaEnabled;
+      spv3.GammaOn           = hxe.Video.GammaOn;
       spv3.Gamma             = hxe.Video.Gamma;
       spv3.EAX               = hxe.Audio.Enhancements;
       spv3.Preset            = hxe.Input.Override;
@@ -74,44 +78,19 @@ namespace SPV3
     public static void Load()
     {
       hxe.Load();
-      Save();
+      spv3.Load();
+      CopyKernelToLoader();
     }
 
     /// <summary>
-    /// Apply SPV3 Loader overrides to the Kernel state 
+    /// Apply SPV3 Loader settings to the Kernel state 
     /// and save the Kernel state to the file system.
     /// </summary>
     public static void Save()
     {
-      SPV3KernelOverrides();
+      CopyLoaderToKernel();
+      spv3.Save();
       hxe.Save();
-    }
-
-    public static void SPV3KernelOverrides()
-    {
-      /**
-      * SPV3 Loader Overrides
-      * Copied from SPV3.Main.Load.Invoke()
-      */
-      hxe.Mode = (HXE.Kernel.Configuration.ConfigurationMode) Infer();
-      hxe.Tweaks.Sensor            = !(spv3.Photo && Exists(Paths.Photo)); /* forcefully enable motion sensor   */
-      hxe.Main.Reset               = true;                   /* improve loading stability         */
-      hxe.Main.Patch               = true;                   /* improve loading stability         */
-      hxe.Main.Resume              = true;                   /* improve loading stability         */
-      hxe.Main.Start               = true;                   /* improve loading stability         */
-      hxe.Main.Elevated            = spv3.Elevated;          /* prevent certain crashes           */
-      hxe.Video.ResolutionEnabled  = spv3.ResolutionEnabled; /* permit custom resolution override */
-      hxe.Video.Quality            = false;                  /* permit in-game quality settings   */
-      hxe.Video.Uncap              = spv3.Vsync == false;
-      hxe.Video.GammaEnabled       = spv3.GammaEnabled;
-      hxe.Video.Gamma              = spv3.Gamma;
-      hxe.Video.Bless              = spv3.Borderless && spv3.Window && spv3.Vsync == false && spv3.Elevated == false;
-      hxe.Audio.Enhancements       = spv3.EAX;
-      hxe.Input.Override           = spv3.Preset;
-      hxe.Tweaks.CinemaBars        = spv3.CinemaBars;
-      hxe.Tweaks.Unload            = !spv3.Shaders;
-
-      /// Should this handle OpenSauce and Chimera overrides, too?
     }
   }
 }

@@ -31,7 +31,7 @@ namespace SPV3
 {
   public class News : INotifyPropertyChanged
   {
-    private const string     Address = "https://raw.githubusercontent.com/yumiris/SPV3/meta/latest.xml";
+    private const string     Address = "https://raw.githubusercontent.com/yumiris/HCE/master/spv3/updates/latest.xml";
     private       string     _content;
     private       string     _link;
     private       Visibility _visibility = Visibility.Collapsed;
