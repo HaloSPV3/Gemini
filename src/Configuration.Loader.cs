@@ -36,24 +36,27 @@ namespace SPV3
         {
             private const int Length = 256;
 
-            private byte _adapter;                                          /* physical monitor to run hce/spv3 on        */
-            private bool _borderless = false;                               /* run hce/spv3 without window borders        */
-            private bool _cinemabars = false;                               /* toggle spv3 cinematic black bars           */
-            private byte _displayMode = 0;                                  /* display - fullscreen/window/borderless     */
-            private bool _doom = false;                                 /* toggle spv3 doom mode                      */
-            private bool _eax = false;                                 /* toggle hw accel. & environmental sound     */
-            private bool _elevated = false;                                 /* runs spv3/hce in elevated (admin) mode     */
-            private byte _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
-            private bool _gammaOn = false;                                 /* when false, runs spv3/hce with -nogamma    */
-            private byte _gamma = 150;                                   /* gamma level to run spv3 at (in vsync mode) */
-            private ushort _height = (ushort) PrimaryScreen.Bounds.Height;  /* height spv3/hce will be displayed at       */
-            private bool _photo = false;                                 /* enables spv3 photo/blind mode              */
-            private bool _preset = true;                                  /* use the built-in spv3 controller preset    */
-            private bool _resolutionEnabled = false;                        /* ability to provide custom resolution       */
-            private bool _shaders = true;                                  /* toggle spv3 post-processing effects        */
-            private bool _vsync = false;                                 /* V-sync preference (locked vs unlocked)     */
-            private ushort _width = (ushort) PrimaryScreen.Bounds.Width;   /* width spv3/hce will be displayed at        */
-            private bool _window = false;                                 /* runs spv3/hce as a windowed application    */
+            private byte   _adapter;                                          /* physical monitor to run hce/spv3 on        */
+            private bool   _borderless = false;                               /* run hce/spv3 without window borders        */
+            private bool   _cinemabars = false;                               /* toggle spv3 cinematic black bars           */
+            private byte   _displayMode = 0;                                  /* display - fullscreen/window/borderless     */
+            private bool   _doom     = false;                                 /* toggle spv3 doom mode                      */
+            private bool   _eax      = false;                                 /* toggle hw accel. & environmental sound     */
+            private bool   _elevated = false;                                 /* runs spv3/hce in elevated (admin) mode     */
+            private byte   _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
+            private byte   _framerateControl = 1;                             /* fps control - vsync, throttle, uncap       */
+            private bool   _framerateIsCapped = true;
+
+            private bool   _gammaOn  = false;                                 /* when false, runs spv3/hce with -nogamma    */
+            private byte   _gamma    = 150;                                   /* gamma level to run spv3 at (in vsync mode) */
+            private ushort _height   = (ushort) PrimaryScreen.Bounds.Height;  /* height spv3/hce will be displayed at       */
+            private bool   _photo    = false;                                 /* enables spv3 photo/blind mode              */
+            private bool   _preset   = true;                                  /* use the built-in spv3 controller preset    */
+            private bool   _resolutionEnabled = false;                        /* ability to provide custom resolution       */
+            private bool   _shaders  = true;                                  /* toggle spv3 post-processing effects        */
+            private bool   _vsync    = false;                                 /* V-sync preference (locked vs unlocked)     */
+            private ushort _width    = (ushort) PrimaryScreen.Bounds.Width;   /* width spv3/hce will be displayed at        */
+            private bool   _window   = false;                                 /* runs spv3/hce as a windowed application    */
 
             /**
             * 0 == Fullscreen
@@ -168,17 +171,44 @@ namespace SPV3
                 }
             }
 
+            public byte FramerateControl
+            {
+              get => _framerateControl;
+              set
+              {
+                if (value == _framerateControl) return;
+                _framerateControl = value;
+                OnPropertyChanged();
+                switch (value)
+                {
+                  case 0: // V-Sync
+                    FramerateIsCapped = true;
+                    Vsync = true;
+                    break;
+                  case 1: // Throttle
+                    FramerateIsCapped = true;
+                    Vsync = false;
+                    break;
+                  case 2: // Unlimited
+                    FramerateIsCapped = false;
+                    Vsync = false;
+                    break;
+                  default: break;
+                }
+              }
+            }
+            
             public bool Vsync
             {
-                get => _vsync;
-                set
-                {
-                    if (value == _vsync) return;
-                    _vsync = value;
-                    OnPropertyChanged();
-                    if (value == true)
-                        ResetDisplayMode();
-                }
+              get => _vsync;
+              set
+              {
+                if (value == _vsync) return;
+                _vsync = value;
+                OnPropertyChanged();
+                if (value == true)
+                  ResetDisplayMode();
+              }
             }
 
             public bool EAX
@@ -273,6 +303,17 @@ namespace SPV3
                 }
             }
 
+            public bool FramerateIsCapped
+            {
+              get => _framerateIsCapped;
+              set
+              {
+                if (value == _framerateIsCapped) return;
+                _framerateIsCapped = value;
+                OnPropertyChanged();
+              }
+            }
+            
             public List<string> Adapters => AllScreens
               .Select
               (

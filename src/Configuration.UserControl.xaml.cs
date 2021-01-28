@@ -36,6 +36,8 @@ namespace SPV3
             InitializeComponent();
             _configuration = (Configuration) DataContext;
             _configuration.Load();
+
+            _configuration.Chimera.Throttle = (byte) (_configuration.Loader.Framerate - 1);
         }
 
         public event EventHandler Home;
@@ -104,28 +106,51 @@ namespace SPV3
             _configuration.Shaders.AdaptiveHDRisReady = true == _configuration.Loader.Shaders == _configuration.Shaders.AdaptiveHDR;
         }
 
+        /** 
+         * "Go To Definition" in VS will create a new function
+         * But it works as-is.
+         */
+        private void FramerateControl(object sender, RoutedEventArgs e) 
+        {
+          if (_configuration == null) return;
+
+          switch(_configuration.Loader.FramerateControl)
+          {
+            case 0: // V-Sync
+              _configuration.Chimera.Throttle = 0;
+              break;
+            case 1: // Throttle
+              _configuration.Chimera.Throttle = (byte) (_configuration.Loader.Framerate - 1);
+              break;
+            case 2: // Unlimited
+              _configuration.Chimera.Throttle = 0;
+              break;
+            default: break;
+          }
+        }
+
         private void PresetVeryLow(object sender, RoutedEventArgs e)
         {
-            _configuration.OpenSauce.GBuffer = false;
-            _configuration.Shaders.AdaptiveHDR = true;
-            _configuration.Shaders.HudVisor = false;
-            _configuration.Shaders.FilmGrain = false;
-            _configuration.Shaders.VolumetricLighting = false;
-            _configuration.Shaders.LensDirt = false;
-            _configuration.Shaders.DynamicLensFlares = false;
-            _configuration.Shaders.MotionBlur = 0;
-            _configuration.Shaders.DOF = 0;
-            _configuration.Shaders.MXAO = 0;
-            _configuration.Shaders.SSR = false;
-            _configuration.Shaders.Deband = false;
-            _configuration.OpenSauce.NormalMaps = false;
-            _configuration.OpenSauce.DetailNormalMaps = false;
-            _configuration.OpenSauce.SpecularMaps = false;
-            _configuration.OpenSauce.SpecularLighting = false;
-            _configuration.OpenSauce.Bloom = false;
-            _configuration.Chimera.Interpolation = 0;
-            _configuration.Chimera.AnisotropicFiltering = false;
-            _configuration.Chimera.BlockLOD = false;
+          _configuration.OpenSauce.GBuffer            = false;
+          _configuration.Shaders.AdaptiveHDR          = true;
+          _configuration.Shaders.HudVisor             = false;
+          _configuration.Shaders.FilmGrain            = false;
+          _configuration.Shaders.VolumetricLighting   = false;
+          _configuration.Shaders.LensDirt             = false;
+          _configuration.Shaders.DynamicLensFlares    = false;
+          _configuration.Shaders.MotionBlur           = 0;
+          _configuration.Shaders.DOF                  = 0;
+          _configuration.Shaders.MXAO                 = 0;
+          _configuration.Shaders.SSR                  = false;
+          _configuration.Shaders.Deband               = false;
+          _configuration.OpenSauce.NormalMaps         = false;
+          _configuration.OpenSauce.DetailNormalMaps   = false;
+          _configuration.OpenSauce.SpecularMaps       = false;
+          _configuration.OpenSauce.SpecularLighting   = false;
+          _configuration.OpenSauce.Bloom              = false;
+          _configuration.Chimera.Interpolation        = 0;
+          _configuration.Chimera.AnisotropicFiltering = false;
+          _configuration.Chimera.BlockLOD             = false;
         }
 
         private void PresetLow(object sender, RoutedEventArgs e)
