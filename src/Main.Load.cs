@@ -125,7 +125,7 @@ namespace SPV3
           },
           Video = new Executable.VideoOptions
           {
-            DisplayMode = Kernel.spv3.Vsync == false && Kernel.spv3.Framerate > 0,
+            DisplayMode = Kernel.spv3.Framerate > 0,
             Width       = Kernel.spv3.ResolutionEnabled ? Kernel.spv3.Width  : (ushort) 0,
             Height      = Kernel.spv3.ResolutionEnabled ? Kernel.spv3.Height : (ushort) 0,
             Refresh     = Kernel.spv3.Framerate,
