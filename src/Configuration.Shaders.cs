@@ -205,6 +205,9 @@ namespace SPV3
 
       public event PropertyChangedEventHandler PropertyChanged;
 
+      /// <summary>
+      /// Saves this instance to SPV3.Kernel.hxe
+      /// </summary>
       public void Save()
       {
         if (DynamicLensFlares)  Kernel.hxe.Shaders |= PP.DYNAMIC_LENS_FLARES;
@@ -222,10 +225,11 @@ namespace SPV3
         if (MotionBlur == 3)    Kernel.hxe.Shaders |= PP.MOTION_BLUR_POMB_HIGH;
         if (MXAO       == 1)    Kernel.hxe.Shaders |= PP.MXAO_LOW;
         if (MXAO       == 2)    Kernel.hxe.Shaders |= PP.MXAO_HIGH;
-
-        Kernel.hxe.Save();
       }
 
+      /// <summary>
+      /// Loads this instance from SPV3.Kernel.hxe
+      /// </summary>
       public void Load()
       {
         DynamicLensFlares  = (Kernel.hxe.Shaders & PP.DYNAMIC_LENS_FLARES) != 0;
