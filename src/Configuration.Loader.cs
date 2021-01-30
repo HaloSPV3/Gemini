@@ -366,10 +366,10 @@ namespace SPV3
         }
       }
 
-      public void Load()
+      public ConfigurationLoader Load()
       {
         if (!Exists())
-          return;
+          return this;
         try {
           using (var fs = new FileStream(Paths.Configuration, FileMode.Open, FileAccess.Read))
           using (var ms = new MemoryStream(Length))
@@ -392,7 +392,7 @@ namespace SPV3
                 ms.Close();
                 br.Close();
                 Save();
-                return;
+                return this;
               }
             }
 
@@ -429,13 +429,14 @@ namespace SPV3
               DisplayMode = br.ReadByte();
               ResolutionEnabled = br.ReadBoolean();
             }
+            return this;
           }
-
         }
         catch(System.Exception e)
         {
           var log = (HXE.File) Paths.Exception;
-          log.AppendAllText("The settings probably had more or fewer settings than expected.\n Error: " + e + "\n");
+          log.AppendAllText("Failed to load Loader settings.\n Error: " + e + "\n");
+          return this;
         }
       }
 
