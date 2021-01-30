@@ -210,6 +210,8 @@ namespace SPV3
       /// </summary>
       public void Save()
       {
+        Kernel.hxe.Shaders = 0;
+        
         if (DynamicLensFlares)  Kernel.hxe.Shaders |= PP.DYNAMIC_LENS_FLARES;
         if (FilmGrain)          Kernel.hxe.Shaders |= PP.FILM_GRAIN;
         if (HudVisor)           Kernel.hxe.Shaders |= PP.HUD_VISOR;
