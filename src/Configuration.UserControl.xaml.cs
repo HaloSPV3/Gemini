@@ -113,6 +113,10 @@ namespace SPV3
       _configuration.Shaders.MXAO = 0;
       _configuration.Shaders.SSR = false;
       _configuration.Shaders.Deband = false;
+      _configuration.OpenSauce.NormalMaps = false;
+      _configuration.OpenSauce.DetailNormalMaps = false;
+      _configuration.OpenSauce.SpecularMaps = false;
+      _configuration.OpenSauce.SpecularLighting = false;
       _configuration.OpenSauce.Bloom = false;
       _configuration.Chimera.Interpolation = 0;
       _configuration.Chimera.AnisotropicFiltering = false;
@@ -133,6 +137,10 @@ namespace SPV3
       _configuration.Shaders.MXAO = 0;
       _configuration.Shaders.SSR = false;
       _configuration.Shaders.Deband = false;
+      _configuration.OpenSauce.NormalMaps = true;
+      _configuration.OpenSauce.DetailNormalMaps = false;
+      _configuration.OpenSauce.SpecularMaps = false;
+      _configuration.OpenSauce.SpecularLighting = true;
       _configuration.OpenSauce.Bloom = false;
       _configuration.Chimera.Interpolation = 8;
       _configuration.Chimera.AnisotropicFiltering = false;
@@ -153,6 +161,10 @@ namespace SPV3
       _configuration.Shaders.MXAO = 0;
       _configuration.Shaders.SSR = false;
       _configuration.Shaders.Deband = true;
+      _configuration.OpenSauce.NormalMaps = true;
+      _configuration.OpenSauce.DetailNormalMaps = true;
+      _configuration.OpenSauce.SpecularMaps = true;
+      _configuration.OpenSauce.SpecularLighting = true;
       _configuration.OpenSauce.Bloom = true;
       _configuration.Chimera.Interpolation = 8;
       _configuration.Chimera.AnisotropicFiltering = true;
@@ -173,6 +185,10 @@ namespace SPV3
       _configuration.Shaders.MXAO = 1;
       _configuration.Shaders.SSR = false;
       _configuration.Shaders.Deband = true;
+      _configuration.OpenSauce.NormalMaps = true;
+      _configuration.OpenSauce.DetailNormalMaps = true;
+      _configuration.OpenSauce.SpecularMaps = true;
+      _configuration.OpenSauce.SpecularLighting = true;
       _configuration.OpenSauce.Bloom = true;
       _configuration.Chimera.Interpolation = 8;
       _configuration.Chimera.AnisotropicFiltering = true;
@@ -192,6 +208,10 @@ namespace SPV3
       _configuration.Shaders.DOF = 2;
       _configuration.Shaders.MXAO = 2;
       _configuration.Shaders.Deband = true;
+      _configuration.OpenSauce.NormalMaps = true;
+      _configuration.OpenSauce.DetailNormalMaps = true;
+      _configuration.OpenSauce.SpecularMaps = true;
+      _configuration.OpenSauce.SpecularLighting = true;
       _configuration.Shaders.SSR = false;
       _configuration.OpenSauce.Bloom = true;
       _configuration.Chimera.Interpolation = 8;
@@ -213,6 +233,10 @@ namespace SPV3
       _configuration.Shaders.MXAO = 2;
       _configuration.Shaders.SSR = true;
       _configuration.Shaders.Deband = true;
+      _configuration.OpenSauce.NormalMaps = true;
+      _configuration.OpenSauce.DetailNormalMaps = true;
+      _configuration.OpenSauce.SpecularMaps = true;
+      _configuration.OpenSauce.SpecularLighting = true;
       _configuration.OpenSauce.Bloom = true;
       _configuration.Chimera.Interpolation = 8;
       _configuration.Chimera.AnisotropicFiltering = true;
