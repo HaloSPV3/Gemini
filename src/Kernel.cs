@@ -26,8 +26,8 @@ namespace SPV3
     public static Mode Infer()
     {
       return Exists(HXE.Paths.Legacy)
-        ? Mode.SPV33
-        : Mode.SPV32;
+        ? Mode.SPV32
+        : Mode.SPV33;
     }
 
     public static void CopyLoaderToKernel()
