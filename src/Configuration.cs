@@ -36,7 +36,7 @@ namespace SPV3
     public void Load()
     {
       Kernel.Load();    // kernel/loader bin
-      spv3 = Loader;    // assign local instance to static instance. Deprecate local instance?
+      Loader = spv3;    // assign static instance to local instance. Deprecate local instance?
       Shaders.Load();   // kernel bin, load from Kernel.hxe
       OpenSauce.Load(); // OS_Settings.user.xml
       Chimera.Load();   // chimera bin
