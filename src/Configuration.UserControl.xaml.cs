@@ -103,6 +103,7 @@ namespace SPV3
     {
       _configuration.OpenSauce.GBuffer = false;
       _configuration.Shaders.AdaptiveHDR = true;
+      _configuration.Shaders.HudVisor = false;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = false;
       _configuration.Shaders.LensDirt = false;
@@ -122,6 +123,7 @@ namespace SPV3
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
+      _configuration.Shaders.HudVisor = false;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -141,6 +143,7 @@ namespace SPV3
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
+      _configuration.Shaders.HudVisor = true;
       _configuration.Shaders.FilmGrain = false;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -160,6 +163,7 @@ namespace SPV3
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
+      _configuration.Shaders.HudVisor = true;
       _configuration.Shaders.FilmGrain = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -179,6 +183,7 @@ namespace SPV3
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
+      _configuration.Shaders.HudVisor = true;
       _configuration.Shaders.FilmGrain = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
@@ -198,6 +203,7 @@ namespace SPV3
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
+      _configuration.Shaders.HudVisor = true;
       _configuration.Shaders.FilmGrain = true;
       _configuration.Shaders.VolumetricLighting = true;
       _configuration.Shaders.LensDirt = true;
