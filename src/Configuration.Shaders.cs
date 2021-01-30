@@ -205,28 +205,31 @@ namespace SPV3
 
       public event PropertyChangedEventHandler PropertyChanged;
 
+      /// <summary>
+      /// Saves this instance to SPV3.Kernel.hxe
+      /// </summary>
       public void Save()
       {
-        if (DynamicLensFlares) Kernel.hxe.Shaders  |= PP.DYNAMIC_LENS_FLARES;
-        if (DynamicLensFlares) Kernel.hxe.Shaders  |= PP.DYNAMIC_LENS_FLARES;
-        if (FilmGrain) Kernel.hxe.Shaders          |= PP.FILM_GRAIN;
-        if (HudVisor) Kernel.hxe.Shaders           |= PP.HUD_VISOR;
-        if (LensDirt) Kernel.hxe.Shaders           |= PP.LENS_DIRT;
+        if (DynamicLensFlares)  Kernel.hxe.Shaders |= PP.DYNAMIC_LENS_FLARES;
+        if (FilmGrain)          Kernel.hxe.Shaders |= PP.FILM_GRAIN;
+        if (HudVisor)           Kernel.hxe.Shaders |= PP.HUD_VISOR;
+        if (LensDirt)           Kernel.hxe.Shaders |= PP.LENS_DIRT;
         if (VolumetricLighting) Kernel.hxe.Shaders |= PP.VOLUMETRIC_LIGHTING;
-        if (SSR) Kernel.hxe.Shaders                |= PP.SSR;
-        if (Deband) Kernel.hxe.Shaders             |= PP.DEBAND;
-        if (AdaptiveHDR) Kernel.hxe.Shaders        |= PP.ADAPTIVE_HDR;
-        if (DOF        == 1) Kernel.hxe.Shaders    |= PP.DOF_LOW;
-        if (DOF        == 2) Kernel.hxe.Shaders    |= PP.DOF_HIGH;
-        if (MotionBlur == 1) Kernel.hxe.Shaders    |= PP.MOTION_BLUR_BUILT_IN;
-        if (MotionBlur == 2) Kernel.hxe.Shaders    |= PP.MOTION_BLUR_POMB_LOW;
-        if (MotionBlur == 3) Kernel.hxe.Shaders    |= PP.MOTION_BLUR_POMB_HIGH;
-        if (MXAO       == 1) Kernel.hxe.Shaders    |= PP.MXAO_LOW;
-        if (MXAO       == 2) Kernel.hxe.Shaders    |= PP.MXAO_HIGH;
-
-        Kernel.hxe.Save();
+        if (SSR)                Kernel.hxe.Shaders |= PP.SSR;
+        if (Deband)             Kernel.hxe.Shaders |= PP.DEBAND;
+        if (AdaptiveHDR)        Kernel.hxe.Shaders |= PP.ADAPTIVE_HDR;
+        if (DOF        == 1)    Kernel.hxe.Shaders |= PP.DOF_LOW;
+        if (DOF        == 2)    Kernel.hxe.Shaders |= PP.DOF_HIGH;
+        if (MotionBlur == 1)    Kernel.hxe.Shaders |= PP.MOTION_BLUR_BUILT_IN;
+        if (MotionBlur == 2)    Kernel.hxe.Shaders |= PP.MOTION_BLUR_POMB_LOW;
+        if (MotionBlur == 3)    Kernel.hxe.Shaders |= PP.MOTION_BLUR_POMB_HIGH;
+        if (MXAO       == 1)    Kernel.hxe.Shaders |= PP.MXAO_LOW;
+        if (MXAO       == 2)    Kernel.hxe.Shaders |= PP.MXAO_HIGH;
       }
 
+      /// <summary>
+      /// Loads this instance from SPV3.Kernel.hxe
+      /// </summary>
       public void Load()
       {
         DynamicLensFlares  = (Kernel.hxe.Shaders & PP.DYNAMIC_LENS_FLARES) != 0;
