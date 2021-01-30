@@ -47,6 +47,7 @@ namespace SPV3
 
     private void Cancel(object sender, RoutedEventArgs e)
     {
+      _configuration.Load();
       Home?.Invoke(sender, e);
     }
 
