@@ -40,7 +40,7 @@ namespace SPV3
       hxe.Main.Start               = true;                   /* improve loading stability         */
       hxe.Main.Elevated            = spv3.Elevated;          /* prevent certain crashes           */
       hxe.Video.ResolutionEnabled  = spv3.ResolutionEnabled; /* permit custom resolution override */
-      hxe.Video.Quality            = false;                  /* permit in-game quality settings   */
+      hxe.Video.Quality            = true;                   /* enforce in-game quality settings  */
       hxe.Video.Uncap              = spv3.Vsync == false;
       hxe.Video.GammaOn            = spv3.GammaOn;
       hxe.Video.Gamma              = spv3.Gamma;
