@@ -100,29 +100,39 @@ namespace SPV3
           SetSteam(value);
           Update_SteamStatus();
           Halo1Path = Path.Combine(SteamLibrary, SteamMccH1, Halo1dll);
+
           if (!Exists(Halo1Path))
           {
             try
             {
               MCC.Halo1.SetHalo1Path();
-              if(Exists(Halo1Path))
-              {
-                Status = "Halo CEA Located." + "\r\n"
-                       + "Note: You will need administrative permissions to activate Halo via MCC.";
-                CanInstall = true;
-                Main = Visible;
-                Activation = Collapsed;
-              }
             }
             catch (Exception e)
             {
-              var msg = "SteamExePath could not be set.\n Error: " + e.ToString() + "\n";
+              var msg = "SteamExePath could not be set.\n Error: " + e.Message + "\n";
               var log = (HXE.File)Paths.Exception;
               log.AppendAllText(msg);
-              Status = e.Message.ToLower();
+              SteamStatus = e.Message.ToLower();
               return;
             }
           }
+
+          if (Exists(Halo1Path))
+          {
+            Status = "Halo CEA Located." + "\r\n"
+                   + "Note: You will need administrative permissions to activate Halo via MCC.";
+            CanInstall = true;
+            Main = Visible;
+            Activation = Collapsed;
+          }
+          else
+          {
+            SteamStatus = "Steam Located, but Halo CEA not found.";
+          }
+        }
+        else
+        {
+          Update_SteamStatus();
         }
       }
     }
