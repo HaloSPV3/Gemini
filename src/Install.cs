@@ -330,47 +330,6 @@ namespace SPV3
       try
       {
         CanInstall = false;
-        bool gameExists = Registry.GameExists("Custom");
-
-        if (Exists(Halo1Path) && !gameExists)
-        {
-          try
-          {
-            /** Write a .reg file */
-            {
-              var data = new Registry.Data{ Version = "1.10" };
-              if (!gameExists)
-                data.EXE_Path = Target;
-              Registry.WriteToFile("Custom", data);
-            }
-
-            /** Tell RegEdit to import the file */
-            {
-              var filepath = Path.Combine(CurrentDirectory, "Custom.reg");
-              var regedit = new Process();
-              regedit.StartInfo.FileName = "regedit.exe";
-              regedit.StartInfo.Arguments = $"/s {filepath}";
-              regedit.StartInfo.WorkingDirectory = CurrentDirectory;
-              regedit.StartInfo.UseShellExecute = true;
-              regedit.StartInfo.Verb = "runas";
-              regedit.Start();
-              regedit.WaitForExit();
-              if (0 != regedit.ExitCode)
-                throw new Exception("Failed to import to Registry.");
-            }
-
-            /** Cheers */
-            Status = "SPV3 successfully activated.";
-          }
-          catch (Exception e)
-          {
-            var msg = "Failed to Activate Halo.\n Error:  " + e.ToString() + "\n";
-            var log = (HXE.File)Paths.Exception;
-            log.AppendAllText(msg);
-            Status = msg;
-            return;
-          }
-        }
 
         var progress = new Progress<Status>();
         progress.ProgressChanged +=
@@ -378,6 +337,13 @@ namespace SPV3
             $"Installing SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
 
         await Task.Run(() => { Installer.Install(_source, _target, progress, Compress); });
+
+        /* DRM Patch */
+        {
+          if (Exists(Halo1Path) && !Registry.GameExists("Custom"))
+            Kernel.hxe.Tweaks.Patches |= Patcher.KPatches.DISABLE_DRM_AND_KEY_CHECKS;
+          new Patcher().Write(Kernel.hxe, Path.Combine(Target, HXE.Paths.HCE.Executable));
+        }
 
         /* shortcuts */
         {
