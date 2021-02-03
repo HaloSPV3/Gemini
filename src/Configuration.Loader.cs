@@ -35,8 +35,6 @@ namespace SPV3
   {
     public class ConfigurationLoader : INotifyPropertyChanged
     {
-      /// Increment when changing Save/Load offsets
-      private const byte CfgVersion = 20;
       private const int Length = 256;
       private readonly System.Windows.Visibility _advancedButton = Debug.IsDebug ? Visible : Collapsed;
 
@@ -316,11 +314,6 @@ namespace SPV3
               bw.Write(new byte[16 - ms.Position]);
             }
 
-            /* version */
-            {
-              bw.Write(CfgVersion);
-            }
-
             /* video */
             {
               bw.Write(Shaders);
@@ -381,19 +374,6 @@ namespace SPV3
             /* padding */
             {
               ms.Position += 16 - ms.Position;
-            }
-
-            /* version */
-            {
-              // If CfgVersion is different, write new file.
-              if (br.ReadByte() != CfgVersion)
-              {
-                fs.Close();
-                ms.Close();
-                br.Close();
-                Save();
-                return this;
-              }
             }
 
             /* video */
