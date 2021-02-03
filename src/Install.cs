@@ -342,7 +342,7 @@ namespace SPV3
         {
           if (Exists(Halo1Path) && !Registry.GameExists("Custom"))
             Kernel.hxe.Tweaks.Patches |= Patcher.KPatches.DISABLE_DRM_AND_KEY_CHECKS;
-          new Patcher().Write(Kernel.hxe, Path.Combine(Target, HXE.Paths.HCE.Executable));
+          new Patcher().Write(Kernel.hxe.Tweaks.Patches, Path.Combine(Target, HXE.Paths.HCE.Executable));
         }
 
         /* shortcuts */
