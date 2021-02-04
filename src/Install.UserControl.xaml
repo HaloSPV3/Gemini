@@ -126,6 +126,7 @@
                          Height="auto" 
                          Width="24"/>
                   <CheckBox  IsChecked="{Binding Compress}"
+                             Click="CompressButton_Click"
                              Grid.Column="1"
                              VerticalAlignment="Center"
                              Margin="2,0,2,0"
