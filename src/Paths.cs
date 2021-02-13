@@ -33,6 +33,7 @@ namespace SPV3
     public static readonly string Directory     = Combine(GetFolderPath(ApplicationData), "SPV3");
     public static readonly string Initiation    = Combine(Directory,                      "initc.txt");
     public static readonly string Exception     = Combine(Directory,                      "exception.log");
+    public static readonly string Install       = Combine(Directory,                      "install-loader.log");
     public static readonly string Configuration = Combine(Directory,                      "loader-0x03.bin");
     public static readonly string Kernel        = Combine(Directory,                      "kernel-0x04.bin");
     public static readonly string DOOM          = Combine(CurrentDirectory,               "doom.bin");
@@ -42,6 +43,7 @@ namespace SPV3
     public static readonly string Readme        = Combine(CurrentDirectory,               "readme.pdf");
     public static readonly string Changelog     = Combine(CurrentDirectory,               "changelog.pdf");
     public static readonly string Credits       = Combine(CurrentDirectory,               "credits.pdf");
+    public static readonly string OptimizeGuide = Combine(CurrentDirectory,               "optimization_guide.pdf");
 
     public static string Packages(string target)
     {

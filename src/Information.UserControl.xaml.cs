@@ -35,6 +35,7 @@ namespace SPV3
       ReadmeButton.Visibility    = File.Exists(Paths.Readme) ? Visibility.Visible : Visibility.Collapsed;
       ChangelogButton.Visibility = File.Exists(Paths.Changelog) ? Visibility.Visible : Visibility.Collapsed;
       CreditsButton.Visibility   = File.Exists(Paths.Credits) ? Visibility.Visible : Visibility.Collapsed;
+      OptiGuideButton.Visibility = File.Exists(Paths.OptimizeGuide) ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void Readme(object sender, MouseButtonEventArgs e)
@@ -50,6 +51,11 @@ namespace SPV3
     private void Credits(object sender, MouseButtonEventArgs e)
     {
       Process.Start(Paths.Credits);
+    }
+
+    private void OptimizationGuide(object sender, MouseButtonEventArgs e)
+    {
+      Process.Start(Paths.OptimizeGuide);
     }
   }
 }

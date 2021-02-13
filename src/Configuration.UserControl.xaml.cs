@@ -101,6 +101,12 @@ namespace SPV3
       }
     }
 
+    private void ShowInputPresetWindow(object sender, RoutedEventArgs e)
+    {
+      ControllerPreset controllerPresetWindow = new ControllerPreset ();
+      controllerPresetWindow.Show();
+    }
+
     private void GBufferChanged(object sender, RoutedEventArgs e)
     {
       if ((bool)!GBuffer_CheckBox.IsChecked)

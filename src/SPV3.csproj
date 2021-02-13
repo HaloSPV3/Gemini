@@ -104,6 +104,9 @@
       <DependentUpon>Configuration.UserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Context.cs" />
+    <Compile Include="ControllerPreset.xaml.cs">
+      <DependentUpon>ControllerPreset.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Debug.cs" />
     <Compile Include="Information.UserControl.xaml.cs">
       <DependentUpon>Information.UserControl.xaml</DependentUpon>
@@ -144,6 +147,10 @@
     </Compile>
     <Page Include="Compile.UserControl.xaml" />
     <Page Include="Configuration.UserControl.xaml" />
+    <Page Include="ControllerPreset.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Information.UserControl.xaml" />
     <Page Include="Install.UserControl.xaml" />
     <Page Include="Main.Window.xaml" />
@@ -242,6 +249,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\xbox_one_controller.png" />
     <Resource Include="Assets\compressFolder.png" />
     <Resource Include="Assets\background_activation.jpg" />
     <Content Include="Assets\logo_chief.png" />
