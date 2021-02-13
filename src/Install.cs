@@ -482,10 +482,14 @@ namespace SPV3
       }
       catch (Exception e)
       {
-        var msg = "Failed to install Halo Custom Edition.\n Error:  " + e.ToString() + "\n";
-        var log = (HXE.File)Paths.Exception;
+        var msg  = "Failed to install Halo Custom Edition." + NewLine
+                 + " Error:  " + e.ToString() + NewLine;
+        var log  = (HXE.File) Paths.Exception;
+        var ilog = (HXE.File) Paths.Install;
         log.AppendAllText(msg);
-        Status = msg;
+        ilog.AppendAllText(msg);
+        Status = "Failed to install Halo Custom Edition." + NewLine
+               + " Error:  " + e.Message;
       }
     }
 
@@ -496,37 +500,50 @@ namespace SPV3
       processes.AddRange(Process.GetProcessesByName("haloce.exe"));
       processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping.exe"));
 
-      if (processes.Count == 0)
-        return;
-      else
-      foreach (var process in processes)
+      if (Debug.IsDebug)
       {
-        var filename = process.MainModule.FileName;
-        if (filename.Contains("haloce.exe") || filename.Contains("halo.exe"))
-          if (process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621")
+        var text = string.Empty;
+        var file = (HXE.File) Paths.Install;
+
+        if (processes.Count != 0)
+          foreach (var proc in processes)
           {
-            Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
-            CanInstall = true;
-            Main       = Visible;
-            Activation = Collapsed;
-            Status = "Halo PC Found" + NewLine + "Waiting for user to install SPV3.";
-            return;
+            text += proc.MainWindowTitle + NewLine;
           }
-        if (process.MainModule.FileName.Contains("MCC-Win64-Shipping.exe"))
-          foreach (ProcessModule module in process.Modules) 
-          {
-              if (module.FileName.Contains("halo1.dll"))
-              {
-                Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
-                CanInstall = true;
-                Main       = Visible;
-                Activation = Collapsed;
-                Status = "MCC CEA Found" + NewLine + "Waiting for user to install SPV3.";
-                return;
-              }
-          }
+        else text = "None found.";
+        file.AppendAllText(text + NewLine + "=== END PROCS ===" + NewLine + NewLine);
       }
 
+      if (processes.Count != 0)
+        foreach (var process in processes)
+        {
+          var filename = process.MainModule.FileName;
+          if (filename.Contains("haloce.exe") || filename.Contains("halo.exe")) // we could skip this. FileVersion is good enough
+            if (process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621")
+            {
+              Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+              CanInstall = true;
+              Main       = Visible;
+              Activation = Collapsed;
+              Status = "Halo PC Found" + NewLine + "Waiting for user to install SPV3.";
+              return;
+            }
+            else if (process.MainModule.FileName.Contains("MCC-Win64-Shipping.exe"))
+              foreach (ProcessModule module in process.Modules)
+              {
+                if (module.FileName.Contains("halo1.dll"))
+                {
+                  Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+                  CanInstall = true;
+                  Main       = Visible;
+                  Activation = Collapsed;
+                  Status = "MCC CEA Found" + NewLine + "Waiting for user to install SPV3.";
+                  return;
+                }
+              }
+            else Status = "Process Detection: Halo not found";
+        }
+      else Status = "Process Detection: No MCC+CEA, Halo Retail, or Custom Edition processes found.";
       return;
     }
 
