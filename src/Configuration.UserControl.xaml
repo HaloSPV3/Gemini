@@ -80,7 +80,8 @@
           <Label Content="Width &amp; Height:" />
           <CheckBox IsChecked="{Binding Loader.ResolutionEnabled}"
                     ToolTip="Allows you to use a custom resolution. Otherwise, it will use your system's current resolution."
-                    HorizontalAlignment="Left" />
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center"/>
           <TextBox HorizontalAlignment="Left"
                      Name="ResolutionWidth"
                      HorizontalContentAlignment="Center"
@@ -163,6 +164,18 @@
           <Label Content="SPV3 Input Preset:" />
           <CheckBox IsChecked="{Binding Loader.Preset}"
                     ToolTip="Forces SPV3 controller mapping. Disable this if you want custom mapping." />
+          <Label MouseLeftButtonUp="ShowInputPresetWindow" FontFamily="Segoe UI Symbol" Content="&#xE18B;">
+              <Label.Style>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="#777" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+              </Label.Style>
+          </Label>
         </DockPanel>
         <DockPanel>
           <Label Content="DSOAL/EAX Audio:" />
