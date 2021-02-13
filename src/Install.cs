@@ -38,6 +38,7 @@ using static System.Environment.SpecialFolder;
 using static System.IO.File;
 using static System.Windows.Visibility;
 using System.Linq;
+using static System.Reflection.Assembly;
 
 namespace SPV3
 {
@@ -321,9 +322,13 @@ namespace SPV3
         var progress = new Progress<Status>();
         progress.ProgressChanged +=
           (o, s) => Status =
-            $"Installing SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
+            "Installing SPV3. Please wait until this is finished!";
 
-        await Task.Run(() => { Installer.Install(_source, _target, progress, Compress); });
+        await Task.Run(() => { SFX.Extract(new SFX.Configuration
+        {
+          Target     = new DirectoryInfo(Paths.Packages(Target)),
+          Executable = new FileInfo(GetExecutingAssembly().Location)
+        }); });
 
         /* MCC DRM Patch */
         if ((Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 0)
