@@ -124,14 +124,22 @@ namespace SPV3
         /**
          * Check validity of the specified target value.
          */
+        if (string.IsNullOrEmpty(Target))
+        {
+          Status = "Enter a valid path.";
+          CanInstall = false;
+          return;
+        }
+
         var array = value.ToCharArray();
-        if (char.IsLetter(array[0])
+        if (array.Count() >= 3
+          && char.IsLetter(array[0])
           && array[1] == ':'
-          && ( array[2] == '\\' || array[2] == '/'))
+          && (array[2] == '\\' || array[2] == '/'))
           try
           {
-            var exists = Directory.Exists(Target);
-            var path = Target;
+            var exists     = Directory.Exists(Target);
+            var path       = Target;
             var rootExists = Directory.Exists(Path.GetPathRoot(Target));
 
             if (!exists && !rootExists)
@@ -170,7 +178,8 @@ namespace SPV3
         /**
          * Check available disk space. This will NOT work on UNC paths!
          */
-        if (char.IsLetter(array[0])
+        if (array.Count() >= 3
+          && char.IsLetter(array[0])
           && array[1] == ':'
           && (array[2] == '\\' || array[2] == '/'))
           try
@@ -186,6 +195,7 @@ namespace SPV3
                 Status     = @"Not enough disk space (10GB required) on the C:\ drive. " + 
                               "Clear junk files using Disk Cleanup or allocate more space to the volume";
                 CanInstall = false;
+                return;
               }
             }
 
@@ -202,6 +212,7 @@ namespace SPV3
             {
               Status     = "Not enough disk space (16GB required) at selected path: " + Target;
               CanInstall = false;
+              return;
             }
           }
           catch (Exception e)
@@ -217,9 +228,9 @@ namespace SPV3
          * Prohibit installations to known problematic folders.
          */
 
-        if (Exists(Path.Combine(Target,    HXE.Paths.HCE.Executable))
-            || Exists(Path.Combine(Target, HXE.Paths.Executable))
-            || Exists(Path.Combine(Target, Paths.Executable)))
+        if (Exists(Path.Combine(Target, HXE.Paths.HCE.Executable))
+         || Exists(Path.Combine(Target, HXE.Paths.Executable))
+         || Exists(Path.Combine(Target, Paths.Executable)))
         {
           Status     = "Selected folder contains existing HCE or SPV3 data. Please choose a different location.";
           CanInstall = false;
@@ -442,8 +453,7 @@ namespace SPV3
         {
           Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
           Status = "Halo CEA Located via Steam." + NewLine
-                 + "Waiting for user to install SPV3." + NewLine
-                 + "Note: Administrator permissions are required to activate Halo via MCC.";
+                 + "Waiting for user to install SPV3." + NewLine;
           CanInstall = true;
           Main       = Visible;
           Activation = Collapsed;
