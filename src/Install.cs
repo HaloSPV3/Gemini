@@ -422,7 +422,7 @@ namespace SPV3
 
     public void CheckSteamPath(string exe)
     {
-      if (Exists(exe) && exe.Contains("steam.exe"))
+      if (Exists(exe) && exe.Equals("steam.exe"))
       {
         SetSteam(exe);
         Update_SteamStatus();
@@ -518,20 +518,21 @@ namespace SPV3
         foreach (var process in processes)
         {
           var filename = process.MainModule.FileName;
-          if (filename.Contains("haloce.exe") || filename.Contains("halo.exe")) // we could skip this. FileVersion is good enough
+          if (filename.Equals("haloce.exe") || filename.Equals("halo.exe")) // we could skip this. FileVersion is good enough
             if (process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621")
             {
               Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
               CanInstall = true;
               Main       = Visible;
               Activation = Collapsed;
-              Status = "Halo PC Found" + NewLine + "Waiting for user to install SPV3.";
+              Status     = "Halo PC Found" + NewLine
+                         + "Waiting for user to install SPV3.";
               return;
             }
-            else if (process.MainModule.FileName.Contains("MCC-Win64-Shipping.exe"))
+            else if (process.MainModule.FileName.Equals("MCC-Win64-Shipping.exe"))
               foreach (ProcessModule module in process.Modules)
               {
-                if (module.FileName.Contains("halo1.dll"))
+                if (module.FileName.Equals("halo1.dll"))
                 {
                   Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
                   CanInstall = true;
@@ -541,7 +542,6 @@ namespace SPV3
                   return;
                 }
               }
-            else Status = "Process Detection: Halo not found";
         }
       else Status = "Process Detection: No MCC+CEA, Halo Retail, or Custom Edition processes found.";
       return;
