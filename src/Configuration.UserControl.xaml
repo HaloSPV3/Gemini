@@ -164,7 +164,8 @@
           <Label Content="SPV3 Input Preset:" />
           <CheckBox IsChecked="{Binding Loader.Preset}"
                     ToolTip="Forces SPV3 controller mapping. Disable this if you want custom mapping." />
-          <Label MouseLeftButtonUp="ShowInputPresetWindow" FontFamily="Segoe UI Symbol" Content="&#xE18B;">
+          <Label MouseLeftButtonUp="ShowInputPresetWindow" FontFamily="Segoe UI Symbol" Content="&#xE18B;"
+                 ToolTip="Preview Controller Preset">
               <Label.Style>
                 <Style TargetType="Label">
                     <Setter Property="Foreground" Value="#777" />
