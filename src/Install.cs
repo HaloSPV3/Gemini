@@ -508,8 +508,11 @@ namespace SPV3
       processes.AddRange(Process.GetProcessesByName("haloce.exe"));
       processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping.exe"));
       var hpc = processes.Any(Process => Process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621");
-      var mcc = ((IEnumerable<ProcessModule>)((Process) processes.Where(Process => Process.MainModule.FileName == "MCC-Win64-Shipping.exe"))
-        .Modules).Any(ProcessModule => ProcessModule.FileName == Halo1dll); // Can this get any more cursed?
+      var mcc = false;
+
+      if (Process.GetProcessesByName("MCC-Win64-Shipping.exe").Count() != 0)
+        mcc = ((IEnumerable<ProcessModule>) processes.Where(Process => Process.MainModule.FileName == "MCC-Win64-Shipping.exe").First().Modules)
+          .Any(ProcessModule => ProcessModule.FileName == Halo1dll);
 
       if (Debug.IsDebug)
       {
