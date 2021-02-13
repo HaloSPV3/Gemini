@@ -48,13 +48,7 @@ namespace SPV3
     /// </returns>
     public static Type Infer()
     {
-      if (Exists(Path.Combine(CurrentDirectory, HCE.Executable)))
-        return Type.Load;
-
-      if (Exists(Path.Combine(Paths.Packages(CurrentDirectory), Manifest)))
-        return Type.Install;
-
-      return Type.Invalid;
+      return Exists(Path.Combine(CurrentDirectory, HCE.Executable)) ? Type.Load : Type.Install;
     }
   }
 }
