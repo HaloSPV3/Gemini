@@ -326,7 +326,7 @@ namespace SPV3
 
         await Task.Run(() => { SFX.Extract(new SFX.Configuration
         {
-          Target     = new DirectoryInfo(Paths.Packages(Target)),
+          Target     = new DirectoryInfo(Target),
           Executable = new FileInfo(GetExecutingAssembly().Location)
         }); });
 
