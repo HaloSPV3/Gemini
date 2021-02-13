@@ -90,12 +90,7 @@ namespace SPV3
 
     public string SteamExePath
     {
-      get 
-      {
-        if (Exists(_steamExe))
-          CheckSteamPath(_steamExe);
-        return _steamExe; 
-      }
+      get => _steamExe; 
       set
       {
         if (value == _steamExe) return;
@@ -307,6 +302,9 @@ namespace SPV3
 
       Main        = Collapsed;
       Activation  = Visible;
+
+      if (Exists(SteamExePath))
+        CheckSteamPath(SteamExePath);
     }
 
     public async void Commit()
