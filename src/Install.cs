@@ -262,12 +262,6 @@ namespace SPV3
     
     public event PropertyChangedEventHandler PropertyChanged;
 
-    // CLEANUP
-    private void DRMPatch()
-    {
-      new Patcher().Write(Kernel.hxe.Tweaks.Patches, Path.Combine(Target, HXE.Paths.HCE.Executable));
-    }
-
     public void Initialise()
     {
       Main = Visible;
