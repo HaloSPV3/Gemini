@@ -504,9 +504,9 @@ namespace SPV3
     public void IsHaloOrCEARunning()
     {
       var processes = new List<Process>();
-      processes.AddRange(Process.GetProcessesByName("halo.exe"));
-      processes.AddRange(Process.GetProcessesByName("haloce.exe"));
-      processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping.exe"));
+      processes.AddRange(Process.GetProcessesByName("halo"));
+      processes.AddRange(Process.GetProcessesByName("haloce"));
+      processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping"));
       var hpc = processes.Any(Process => Process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621");
       var mcc = false;
 
