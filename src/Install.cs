@@ -37,6 +37,7 @@ using static System.Environment;
 using static System.Environment.SpecialFolder;
 using static System.IO.File;
 using static System.Windows.Visibility;
+using System.Linq;
 
 namespace SPV3
 {
@@ -495,16 +496,18 @@ namespace SPV3
 
     public void IsHaloOrCEARunning()
     {
-      List<Process> processes = new List<Process>();
+      var processes = new List<Process>();
       processes.AddRange(Process.GetProcessesByName("halo.exe"));
       processes.AddRange(Process.GetProcessesByName("haloce.exe"));
       processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping.exe"));
+      var hpc = processes.Any(Process => Process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621");
+      var mcc = ((IEnumerable<ProcessModule>)((Process) processes.Where(Process => Process.MainModule.FileName == "MCC-Win64-Shipping.exe"))
+        .Modules).Any(ProcessModule => ProcessModule.FileName == Halo1dll); // Can this get any more cursed?
 
       if (Debug.IsDebug)
       {
-        var text = string.Empty;
         var file = (HXE.File) Paths.Install;
-
+        var text = string.Empty;
         if (processes.Count != 0)
           foreach (var proc in processes)
           {
@@ -515,35 +518,32 @@ namespace SPV3
       }
 
       if (processes.Count != 0)
-        foreach (var process in processes)
+      {
+        if (hpc)
         {
-          var filename = process.MainModule.FileName;
-          if (filename.Equals("haloce.exe") || filename.Equals("halo.exe")) // we could skip this. FileVersion is good enough
-            if (process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621")
-            {
-              Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
-              CanInstall = true;
-              Main       = Visible;
-              Activation = Collapsed;
-              Status     = "Halo PC Found" + NewLine
-                         + "Waiting for user to install SPV3.";
-              return;
-            }
-            else if (process.MainModule.FileName.Equals("MCC-Win64-Shipping.exe"))
-              foreach (ProcessModule module in process.Modules)
-              {
-                if (module.FileName.Equals("halo1.dll"))
-                {
-                  Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
-                  CanInstall = true;
-                  Main       = Visible;
-                  Activation = Collapsed;
-                  Status = "MCC CEA Found" + NewLine + "Waiting for user to install SPV3.";
-                  return;
-                }
-              }
+          Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+          CanInstall = true;
+          Main       = Visible;
+          Activation = Collapsed;
+          Status     = "Process Detection: Halo PC Found" + NewLine
+                     + "Waiting for user to install SPV3.";
+          return;
         }
-      else Status = "Process Detection: No MCC+CEA, Halo Retail, or Custom Edition processes found.";
+        else if (mcc)
+        {
+          Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+          CanInstall = true;
+          Main       = Visible;
+          Activation = Collapsed;
+          Status     = "Process Detection: MCC CEA Found" + NewLine
+                     + "Waiting for user to install SPV3.";
+          return;
+        }
+        else Status = "Process Detection: MCC Found, but CEA not present";
+        return;
+      }
+      else Status = "Process Detection: No Matching Processes" + NewLine 
+                  + "No MCC (with CEA), Halo Retail, or Custom Edition processes found.";
       return;
     }
 
