@@ -415,7 +415,7 @@ namespace SPV3
 
     public void CheckSteamPath(string exe)
     {
-      if (Exists(exe) && exe.Equals("steam.exe"))
+      if (Exists(exe) && exe.Contains("steam.exe"))
       {
         SetSteam(exe);
         Update_SteamStatus();
