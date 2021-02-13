@@ -50,5 +50,9 @@
                x:Name="CreditsButton">
             Credits
         </Label>
+        <Label MouseLeftButtonUp="OptimizationGuide"
+               x:Name="OptiGuideButton">
+            Optimization Guide
+        </Label>
     </StackPanel>
 </UserControl>

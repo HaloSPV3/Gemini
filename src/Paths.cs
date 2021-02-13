@@ -43,6 +43,7 @@ namespace SPV3
     public static readonly string Readme        = Combine(CurrentDirectory,               "readme.pdf");
     public static readonly string Changelog     = Combine(CurrentDirectory,               "changelog.pdf");
     public static readonly string Credits       = Combine(CurrentDirectory,               "credits.pdf");
+    public static readonly string OptimizeGuide = Combine(CurrentDirectory,               "optimization_guide.pdf");
 
     public static string Packages(string target)
     {
