@@ -21,6 +21,7 @@
 
 using System;
 using System.IO;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -60,6 +61,8 @@ namespace SPV3
       _configuration.Chimera.AnisotropicFiltering = true;
       _configuration.Chimera.BlockLOD             = false;
       _configuration.Save();
+      if (File.Exists(Paths.OptimizeGuide))
+        Process.Start(Paths.OptimizeGuide);
     }
 
     public event EventHandler Home;
