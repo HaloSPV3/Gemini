@@ -370,14 +370,20 @@ namespace SPV3
       try
       {
         var exists     = Directory.Exists(path);
-        var rootExists = Directory.Exists(Path.GetPathRoot(path));
+        var root       = Path.GetPathRoot(path);
+        var rootExists = Directory.Exists(root);
 
         if (!exists && rootExists)
         {
           while (!Directory.Exists(path))
           {
-            path = Directory.GetParent(path).Name;
-            if (path == CurrentDirectory) return;
+            path = Directory.GetParent(path).FullName;
+            if (path == CurrentDirectory)
+            {
+              Status = "Enter a valid path.";
+              CanInstall = false;
+              return;
+            }
           }
         }
 
