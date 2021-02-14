@@ -347,7 +347,8 @@ namespace SPV3
       /**
        * Check validity of the specified target value.
        */
-      if (string.IsNullOrEmpty(path) || !Directory.Exists(Path.GetPathRoot(path)))
+      if (string.IsNullOrEmpty(path) 
+        || !Directory.Exists(Path.GetPathRoot(path)))
       {
         Status = "Enter a valid path.";
         CanInstall = false;
@@ -371,10 +372,6 @@ namespace SPV3
         var exists     = Directory.Exists(path);
         var rootExists = Directory.Exists(Path.GetPathRoot(path));
 
-        if (!exists && !rootExists)
-        {
-          throw new DirectoryNotFoundException(path);
-        }
         if (!exists && rootExists)
         {
           while (!Directory.Exists(path))
@@ -409,14 +406,15 @@ namespace SPV3
       try
       {
         /** First, check the user's temp folder's drive to ensure there's enough free space 
-          * for temporary extraction to %temp% */
+          * for temporary extraction to %temp% 
+          */
         {
           var tmpath = Path.GetPathRoot(Path.GetTempPath());
           var systemDrive = new DriveInfo(tmpath);
           if (systemDrive.TotalFreeSpace < 11811160064)
           {
-            Status = @"Not enough disk space (11GB required) on the C:\ drive. " +
-                          "Clear junk files using Disk Cleanup or allocate more space to the volume";
+            Status = $"Not enough disk space (11GB required) on the {tmpath} drive. " +
+                      "Clear junk files using Disk Cleanup or allocate more space to the volume";
             CanInstall = false;
             return;
           }
@@ -446,18 +444,6 @@ namespace SPV3
         Status = msg;
         CanInstall = false;
       }
-
-      /**
-       * Prohibit installations to known problematic folders.
-       */
-      if (Exists(Path.Combine(path, HXE.Paths.HCE.Executable))
-       || Exists(Path.Combine(path, HXE.Paths.Executable))
-       || Exists(Path.Combine(path, Paths.Executable)))
-      {
-        Status = "Selected folder contains existing HCE or SPV3 data. Please choose a different location.";
-        CanInstall = false;
-      }
-
     }
 
     public void ViewActivation() // Debug widget
