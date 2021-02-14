@@ -354,8 +354,12 @@ namespace SPV3
         return;
       }
 
+      /** 
+       * Check if path contains Program Files or Program Files (x86)
+       */
       if (path.Contains(GetFolderPath(ProgramFiles))
-      || !string.IsNullOrEmpty(GetFolderPath(ProgramFilesX86)) && Target.Contains(GetFolderPath(ProgramFilesX86)))
+      || !string.IsNullOrEmpty(GetFolderPath(ProgramFilesX86)) 
+      && path.Contains(GetFolderPath(ProgramFilesX86)))
       {
         Status = "The game does not function correctly when install to Program Files. Please choose a difference location.";
         CanInstall = false;
@@ -364,12 +368,12 @@ namespace SPV3
 
       try
       {
-        var exists     = Directory.Exists(Target);
-        var rootExists = Directory.Exists(Path.GetPathRoot(Target));
+        var exists     = Directory.Exists(path);
+        var rootExists = Directory.Exists(Path.GetPathRoot(path));
 
         if (!exists && !rootExists)
         {
-          throw new DirectoryNotFoundException(Target);
+          throw new DirectoryNotFoundException(path);
         }
         if (!exists && rootExists)
         {
@@ -381,8 +385,7 @@ namespace SPV3
         }
 
         // if Target and Root exist...
-        _target = Path.GetFullPath(_target);
-        value = Path.GetFullPath(value);
+        path = Path.GetFullPath(path);
         var test = Path.Combine(path, "io.bin");
         WriteAllBytes(test, new byte[8]);
         Delete(test);
@@ -392,8 +395,8 @@ namespace SPV3
       }
       catch (Exception e)
       {
-        var msg = "Installation not possible at selected path: " + Target + "\n Error: " + e.ToString() + "\n";
-        var log = (HXE.File)Paths.Exception;
+        var msg = "Installation not possible at selected path: " + path + "\n Error: " + e.ToString() + "\n";
+        var log = (HXE.File) Paths.Exception;
         log.AppendAllText(msg);
         Status = msg;
         CanInstall = false;
@@ -423,7 +426,7 @@ namespace SPV3
         /** 
           * Check if the target drive has at least 16GB of free space 
           */
-        var targetDrive = new DriveInfo(Path.GetPathRoot(Target));
+        var targetDrive = new DriveInfo(Path.GetPathRoot(path));
 
         if (targetDrive.IsReady && targetDrive.TotalFreeSpace > 17179869184)
         {
@@ -431,7 +434,7 @@ namespace SPV3
         }
         else
         {
-          Status = "Not enough disk space (16GB required) at selected path: " + Target;
+          Status = "Not enough disk space (16GB required) at selected path: " + path;
           CanInstall = false;
           return;
         }
@@ -448,9 +451,9 @@ namespace SPV3
       /**
        * Prohibit installations to known problematic folders.
        */
-      if (Exists(Path.Combine(Target, HXE.Paths.HCE.Executable))
-       || Exists(Path.Combine(Target, HXE.Paths.Executable))
-       || Exists(Path.Combine(Target, Paths.Executable)))
+      if (Exists(Path.Combine(path, HXE.Paths.HCE.Executable))
+       || Exists(Path.Combine(path, HXE.Paths.Executable))
+       || Exists(Path.Combine(path, Paths.Executable)))
       {
         Status = "Selected folder contains existing HCE or SPV3 data. Please choose a different location.";
         CanInstall = false;
