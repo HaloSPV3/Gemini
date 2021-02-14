@@ -283,20 +283,6 @@ namespace SPV3
        * Determine if the current environment fulfills the installation requirements.
        */
 
-      var manifest = (Manifest) Path.Combine(_source, HXE.Paths.Manifest);
-
-      if (manifest.Exists())
-      {
-        Status     = "Waiting for user to install SPV3.";
-        CanInstall = true;
-      }
-      else
-      {
-        Status     = "Could not find manifest in the data directory.";
-        CanInstall = false;
-        return;
-      }
-
       if (Registry.GameExists("Custom")
        || Registry.GameExists("Retail")
        || ( Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1)
