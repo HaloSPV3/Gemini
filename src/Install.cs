@@ -165,10 +165,11 @@ namespace SPV3
       Main = Visible;
       Activation = Collapsed;
 
+      ValidateTarget(Target);
+
       /**
        * Determine if the current environment fulfills the installation requirements.
        */
-
       if (Registry.GameExists("Custom")
        || Registry.GameExists("Retail")
        || ( Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1)
