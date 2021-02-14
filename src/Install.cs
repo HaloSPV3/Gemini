@@ -345,25 +345,13 @@ namespace SPV3
 
     public void ValidateTarget(string path)
     {
-      /**
-       * Check validity of the specified target value.
+      /** Check validity of the specified target value.
+       * 
        */
       if (string.IsNullOrEmpty(path) 
         || !Directory.Exists(Path.GetPathRoot(path)))
       {
         Status = "Enter a valid path.";
-        CanInstall = false;
-        return;
-      }
-
-      /** 
-       * Check if path contains Program Files or Program Files (x86)
-       */
-      if (path.Contains(GetFolderPath(ProgramFiles))
-      || !string.IsNullOrEmpty(GetFolderPath(ProgramFilesX86)) 
-      && path.Contains(GetFolderPath(ProgramFilesX86)))
-      {
-        Status = "The game does not function correctly when install to Program Files. Please choose a difference location.";
         CanInstall = false;
         return;
       }
@@ -407,8 +395,31 @@ namespace SPV3
         return;
       }
 
-      /**
-       * Check available disk space. This will NOT work on UNC paths!
+      /** Check if the target is in Program Files or Program Files (x86)
+       * 
+       */
+      if (path.Contains(GetFolderPath(ProgramFiles))
+      || !string.IsNullOrEmpty(GetFolderPath(ProgramFilesX86)) 
+      && path.Contains(GetFolderPath(ProgramFilesX86)))
+      {
+        Status = "The game does not function correctly when install to Program Files. Please choose a difference location.";
+        CanInstall = false;
+        return;
+      }
+
+      /** Prohibit installing to MCC's folder
+       * 
+       */
+      if (path.Contains("Halo The Master Chief Collection"))
+      {
+        Status = "SPV3 does not run on MCC and it does not alter any game files within MCC." + NewLine 
+               + "It is a stand alone program built on top of Halo Custom Edition.";
+        CanInstall = false;
+        return;
+      }
+
+      /** Check available disk space. This will NOT work on UNC paths!
+       * 
        */
       try
       {
