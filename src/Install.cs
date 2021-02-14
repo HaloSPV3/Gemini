@@ -125,7 +125,7 @@ namespace SPV3
         /**
          * Check validity of the specified target value.
          */
-        if (string.IsNullOrEmpty(Target) || !Directory.Exists(Target))
+        if (string.IsNullOrEmpty(Target) || !Directory.Exists(Path.GetPathRoot(Target)))
         {
           Status = "Enter a valid path.";
           CanInstall = false;
