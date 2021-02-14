@@ -121,7 +121,7 @@ namespace SPV3
         if (value == _target) return;
         _target = value;
         OnPropertyChanged();
-
+        ValidateTarget(value);
       }
     }
 
@@ -380,7 +380,7 @@ namespace SPV3
           while (!Directory.Exists(path))
           {
             path = Directory.GetParent(path).Name;
-            if (path == "Debug") return;
+            if (path == CurrentDirectory) return;
           }
         }
 
@@ -408,12 +408,11 @@ namespace SPV3
        */
       try
       {
-
-        /** First, check the C:\ drive to ensure there's enough free space 
+        /** First, check the user's temp folder's drive to ensure there's enough free space 
           * for temporary extraction to %temp% */
-        if (Directory.Exists(@"C:\"))
         {
-          var systemDrive = new DriveInfo(@"C:\");
+          var tmpath = Path.GetPathRoot(Path.GetTempPath());
+          var systemDrive = new DriveInfo(tmpath);
           if (systemDrive.TotalFreeSpace < 11811160064)
           {
             Status = @"Not enough disk space (11GB required) on the C:\ drive. " +
