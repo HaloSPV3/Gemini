@@ -414,9 +414,9 @@ namespace SPV3
         if (Directory.Exists(@"C:\"))
         {
           var systemDrive = new DriveInfo(@"C:\");
-          if (systemDrive.TotalFreeSpace < 10737418240)
+          if (systemDrive.TotalFreeSpace < 11811160064)
           {
-            Status = @"Not enough disk space (10GB required) on the C:\ drive. " +
+            Status = @"Not enough disk space (11GB required) on the C:\ drive. " +
                           "Clear junk files using Disk Cleanup or allocate more space to the volume";
             CanInstall = false;
             return;
