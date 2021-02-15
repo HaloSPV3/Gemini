@@ -168,11 +168,20 @@ namespace SPV3
       ValidateTarget(Target);
 
       /**
+       * Activate SPV3 if Retail is installed
+       */
+      if (Registry.GameActivated("Retail")
+        && (Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 1)
+      {
+        Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+      }
+
+      /**
        * Determine if the current environment fulfills the installation requirements.
        */
-      if (Registry.GameExists("Custom")
-       || Registry.GameExists("Retail")
-       || ( Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1)
+      if (Registry.GameActivated("Custom")
+          || Registry.GameActivated("Retail")
+          || (Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1)
         return;
       // else, prompt for activation
 
