@@ -206,16 +206,35 @@ namespace SPV3
           (o, s) => Status =
             "Installing SPV3. Please wait until this is finished!";
 
-        await Task.Run(() => { SFX.Extract(new SFX.Configuration
+        try
         {
-          Target     = new DirectoryInfo(Target),
-          Executable = new FileInfo(GetExecutingAssembly().Location)
-        }); });
+          await Task.Run(() =>
+          {
+            SFX.Extract(new SFX.Configuration
+            {
+              Target = new DirectoryInfo(Target),
+              Executable = new FileInfo(GetExecutingAssembly().Location)
+            });
+          });
+        }
+        catch(InvalidOperationException)
+        {
+          if (!Debug.IsDebug)
+            throw;
+        }
 
         /* MCC DRM Patch */
-        if ((Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 0)
-          new Patcher().Write(Kernel.hxe.Tweaks.Patches, Path.Combine(Target, HXE.Paths.HCE.Executable));
 
+        try
+        {
+          if ((Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 0)
+            new Patcher().Write(Kernel.hxe.Tweaks.Patches, Path.Combine(Target, HXE.Paths.HCE.Executable));
+        }
+        catch (Exception)
+        {
+          if (!Debug.IsDebug)
+            throw;
+        }
         /* shortcuts */
         {
           void Shortcut(string shortcutPath)
