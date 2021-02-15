@@ -263,6 +263,10 @@ namespace SPV3
           "Installation has been successful! " +
           "Please install OpenSauce to the SPV3 folder OR Halo CE folder using AmaiSosu. Click OK to continue ...");
 
+        while(!Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "OpenSauceUI.pak")) ||
+              !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "gbuffer_shaders.shd")) ||
+              !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "pp_shaders.shd")))
+          new AmaiSosu { Path = Path.Combine(Target, Paths.AmaiSosu) }.Execute();
         try
         {
           new AmaiSosu {Path = Path.Combine(Target, Paths.AmaiSosu)}.Execute();

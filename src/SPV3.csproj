@@ -283,4 +283,7 @@
     <PreBuildEvent>git rev-parse --short HEAD &gt; "$(ProjectDir)\hash"
 </PreBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>del "$(TargetDir)MahApps.Metro.xml"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
