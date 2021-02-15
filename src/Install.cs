@@ -44,6 +44,7 @@ namespace SPV3
 {
   public class Install : INotifyPropertyChanged
   {
+    private const    string     _ssdRec   = "SPV3 must be installed to an SSD. Otherwise, you will experience loading hitches.";
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
     private          bool       _compress = false;
@@ -51,7 +52,7 @@ namespace SPV3
     private          Visibility _activation = Collapsed;
     private          Visibility _load     = Collapsed;
     private          Visibility _main     = Visible;
-    private          string     _status   = "Awaiting user input...";
+    private          string     _status   = _ssdRec;
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
     private          string     _steamExe = Path.Combine(Steam, SteamExe);
     private          string     _steamStatus = "Find Steam.exe or its shortcut and we'll do the rest!";
@@ -167,14 +168,20 @@ namespace SPV3
 
       ValidateTarget(Target);
 
-      /**
-       * Determine if the current environment fulfills the installation requirements.
-       */
-      if (Registry.GameExists("Custom")
-       || Registry.GameExists("Retail")
-       || ( Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1)
+      /** Activate SPV3 if Retail is installed */
+      if (Registry.GameActivated("Retail")
+        && (Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 1)
+      {
+        Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+      }
+
+      /** Determine if the current environment 
+       *  fulfills the installation requirements. */
+      if (Registry.GameActivated("Custom")
+          || Registry.GameActivated("Retail")
+          || (Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1)
         return;
-      // else, prompt for activation
+      /** else, prompt for activation */
 
       Status     = "Please install a legal copy of Halo 1 before installing SPV3.";
       CanInstall = false;
@@ -197,17 +204,37 @@ namespace SPV3
           (o, s) => Status =
             "Installing SPV3. Please wait until this is finished!";
 
-        await Task.Run(() => { SFX.Extract(new SFX.Configuration
+        try
         {
-          Target     = new DirectoryInfo(Target),
-          Executable = new FileInfo(GetExecutingAssembly().Location)
-        }); });
+          await Task.Run(() =>
+          {
+            SFX.Extract(new SFX.Configuration
+            {
+              Target = new DirectoryInfo(Target),
+              Executable = new FileInfo(GetExecutingAssembly().Location)
+            });
+          });
+        }
+        catch(InvalidOperationException)
+        {
+          if (!Debug.IsDebug)
+            throw;
+        }
 
-        /* MCC DRM Patch */
-        if ((Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 0)
-          new Patcher().Write(Kernel.hxe.Tweaks.Patches, Path.Combine(Target, HXE.Paths.HCE.Executable));
+        /** MCC DRM Patch */
 
-        /* shortcuts */
+        try
+        {
+          if ((Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 0)
+            new Patcher().Write(Kernel.hxe.Tweaks.Patches, Path.Combine(Target, HXE.Paths.HCE.Executable));
+        }
+        catch (FileNotFoundException)
+        {
+          if (!Debug.IsDebug)
+            throw;
+        }
+
+        /** shortcuts */
         {
           void Shortcut(string shortcutPath)
           {
@@ -254,9 +281,27 @@ namespace SPV3
           "Installation has been successful! " +
           "Please install OpenSauce to the SPV3 folder OR Halo CE folder using AmaiSosu. Click OK to continue ...");
 
+        /** Install OpenSauce via AmaiSosu */
         try
         {
-          new AmaiSosu {Path = Path.Combine(Target, Paths.AmaiSosu)}.Execute();
+          var amaiSosu = new AmaiSosu { Path = Path.Combine(Target, Paths.AmaiSosu) };
+          while (!Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "OpenSauceUI.pak"))
+              && !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "gbuffer_shaders.shd"))
+              && !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "pp_shaders.shd")))
+          {
+            try
+            {
+              amaiSosu.Execute();
+              if (!amaiSosu.Exists())
+                MessageBox.Show("Click OK after AmaiSosu is installed.");
+            }
+            catch(Exception e)
+            {
+              if (e.Message == "The operation was canceled by the user") // RunAs elevation not granted
+                continue;
+              else throw;
+            }
+          }
         }
         catch (Exception e)
         {
@@ -331,7 +376,7 @@ namespace SPV3
         {
           Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
           Status = "Halo CEA Located via Steam." + NewLine
-                 + "Waiting for user to install SPV3." + NewLine;
+                 + _ssdRec + NewLine;
           CanInstall = true;
           Main       = Visible;
           Activation = Collapsed;
@@ -345,25 +390,13 @@ namespace SPV3
 
     public void ValidateTarget(string path)
     {
-      /**
-       * Check validity of the specified target value.
+      /** Check validity of the specified target value.
+       * 
        */
       if (string.IsNullOrEmpty(path) 
         || !Directory.Exists(Path.GetPathRoot(path)))
       {
         Status = "Enter a valid path.";
-        CanInstall = false;
-        return;
-      }
-
-      /** 
-       * Check if path contains Program Files or Program Files (x86)
-       */
-      if (path.Contains(GetFolderPath(ProgramFiles))
-      || !string.IsNullOrEmpty(GetFolderPath(ProgramFilesX86)) 
-      && path.Contains(GetFolderPath(ProgramFilesX86)))
-      {
-        Status = "The game does not function correctly when install to Program Files. Please choose a difference location.";
         CanInstall = false;
         return;
       }
@@ -394,7 +427,7 @@ namespace SPV3
         WriteAllBytes(test, new byte[8]);
         Delete(test);
 
-        Status = "Waiting for user to install SPV3.";
+        Status = _ssdRec;
         CanInstall = true;
       }
       catch (Exception e)
@@ -407,8 +440,31 @@ namespace SPV3
         return;
       }
 
-      /**
-       * Check available disk space. This will NOT work on UNC paths!
+      /** Check if the target is in Program Files or Program Files (x86)
+       * 
+       */
+      if (path.Contains(GetFolderPath(ProgramFiles))
+      || !string.IsNullOrEmpty(GetFolderPath(ProgramFilesX86)) 
+      && path.Contains(GetFolderPath(ProgramFilesX86)))
+      {
+        Status = "The game does not function correctly when install to Program Files. Please choose a difference location.";
+        CanInstall = false;
+        return;
+      }
+
+      /** Prohibit installing to MCC's folder
+       * 
+       */
+      if (path.Contains("Halo The Master Chief Collection"))
+      {
+        Status = "SPV3 does not run on MCC and it does not alter any game files within MCC." + NewLine 
+               + "It is a stand alone program built on top of Halo Custom Edition.";
+        CanInstall = false;
+        return;
+      }
+
+      /** Check available disk space. This will NOT work on UNC paths!
+       * 
        */
       try
       {
@@ -526,7 +582,7 @@ namespace SPV3
           Main       = Visible;
           Activation = Collapsed;
           Status     = "Process Detection: Halo PC Found" + NewLine
-                     + "Waiting for user to install SPV3.";
+                     + _ssdRec;
           return;
         }
         else if (mcc)
@@ -536,7 +592,7 @@ namespace SPV3
           Main       = Visible;
           Activation = Collapsed;
           Status     = "Process Detection: MCC CEA Found" + NewLine
-                     + "Waiting for user to install SPV3.";
+                     + _ssdRec;
           return;
         }
         else Status = "Process Detection: MCC Found, but CEA not present";

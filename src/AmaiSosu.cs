@@ -47,7 +47,7 @@ namespace SPV3
 
     public void Execute()
     {
-      Process.Start(Exists() ? Path : Address);
+      Process.Start(Exists() ? Path : Address).WaitForExit();
     }
 
     /// <summary>
