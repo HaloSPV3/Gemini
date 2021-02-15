@@ -230,11 +230,12 @@ namespace SPV3
           if ((Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 0)
             new Patcher().Write(Kernel.hxe.Tweaks.Patches, Path.Combine(Target, HXE.Paths.HCE.Executable));
         }
-        catch (Exception)
+        catch (FileNotFoundException)
         {
           if (!Debug.IsDebug)
             throw;
         }
+
         /* shortcuts */
         {
           void Shortcut(string shortcutPath)
