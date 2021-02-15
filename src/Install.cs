@@ -44,6 +44,7 @@ namespace SPV3
 {
   public class Install : INotifyPropertyChanged
   {
+    private const    string     _ssdRec   = "SPV3 must be installed to an SSD. Otherwise, you will experience loading hitches.";
     private readonly string     _source   = Path.Combine(CurrentDirectory, "data");
     private          bool       _canInstall;
     private          bool       _compress = false;
@@ -51,7 +52,7 @@ namespace SPV3
     private          Visibility _activation = Collapsed;
     private          Visibility _load     = Collapsed;
     private          Visibility _main     = Visible;
-    private          string     _status   = "Awaiting user input...";
+    private          string     _status   = _ssdRec;
     private          string     _target   = Path.Combine(GetFolderPath(Personal), "My Games", "Halo SPV3");
     private          string     _steamExe = Path.Combine(Steam, SteamExe);
     private          string     _steamStatus = "Find Steam.exe or its shortcut and we'll do the rest!";
@@ -167,23 +168,20 @@ namespace SPV3
 
       ValidateTarget(Target);
 
-      /**
-       * Activate SPV3 if Retail is installed
-       */
+      /** Activate SPV3 if Retail is installed */
       if (Registry.GameActivated("Retail")
         && (Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) != 1)
       {
         Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
       }
 
-      /**
-       * Determine if the current environment fulfills the installation requirements.
-       */
+      /** Determine if the current environment 
+       *  fulfills the installation requirements. */
       if (Registry.GameActivated("Custom")
           || Registry.GameActivated("Retail")
           || (Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1)
         return;
-      // else, prompt for activation
+      /** else, prompt for activation */
 
       Status     = "Please install a legal copy of Halo 1 before installing SPV3.";
       CanInstall = false;
@@ -223,7 +221,7 @@ namespace SPV3
             throw;
         }
 
-        /* MCC DRM Patch */
+        /** MCC DRM Patch */
 
         try
         {
@@ -236,7 +234,7 @@ namespace SPV3
             throw;
         }
 
-        /* shortcuts */
+        /** shortcuts */
         {
           void Shortcut(string shortcutPath)
           {
@@ -283,9 +281,7 @@ namespace SPV3
           "Installation has been successful! " +
           "Please install OpenSauce to the SPV3 folder OR Halo CE folder using AmaiSosu. Click OK to continue ...");
 
-        /** Install OpenSauce via AmaiSosu 
-         * 
-         */
+        /** Install OpenSauce via AmaiSosu */
         try
         {
           var amaiSosu = new AmaiSosu { Path = Path.Combine(Target, Paths.AmaiSosu) };
@@ -380,7 +376,7 @@ namespace SPV3
         {
           Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
           Status = "Halo CEA Located via Steam." + NewLine
-                 + "Waiting for user to install SPV3." + NewLine;
+                 + _ssdRec + NewLine;
           CanInstall = true;
           Main       = Visible;
           Activation = Collapsed;
@@ -431,7 +427,7 @@ namespace SPV3
         WriteAllBytes(test, new byte[8]);
         Delete(test);
 
-        Status = "Waiting for user to install SPV3.";
+        Status = _ssdRec;
         CanInstall = true;
       }
       catch (Exception e)
@@ -586,7 +582,7 @@ namespace SPV3
           Main       = Visible;
           Activation = Collapsed;
           Status     = "Process Detection: Halo PC Found" + NewLine
-                     + "Waiting for user to install SPV3.";
+                     + _ssdRec;
           return;
         }
         else if (mcc)
@@ -596,7 +592,7 @@ namespace SPV3
           Main       = Visible;
           Activation = Collapsed;
           Status     = "Process Detection: MCC CEA Found" + NewLine
-                     + "Waiting for user to install SPV3.";
+                     + _ssdRec;
           return;
         }
         else Status = "Process Detection: MCC Found, but CEA not present";
