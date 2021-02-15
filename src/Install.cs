@@ -283,13 +283,29 @@ namespace SPV3
           "Installation has been successful! " +
           "Please install OpenSauce to the SPV3 folder OR Halo CE folder using AmaiSosu. Click OK to continue ...");
 
-
+        /** Install OpenSauce via AmaiSosu 
+         * 
+         */
         try
         {
-          while (!Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "OpenSauceUI.pak")) ||
-                !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "gbuffer_shaders.shd")) ||
-                !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "pp_shaders.shd")))
-            new AmaiSosu { Path = Path.Combine(Target, Paths.AmaiSosu) }.Execute();
+          var amaiSosu = new AmaiSosu { Path = Path.Combine(Target, Paths.AmaiSosu) };
+          while (!Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "OpenSauceUI.pak"))
+              && !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "gbuffer_shaders.shd"))
+              && !Exists(Path.Combine(GetFolderPath(CommonApplicationData), "Kornner Studios", "Halo CE", "shaders", "pp_shaders.shd")))
+          {
+            try
+            {
+              amaiSosu.Execute();
+              if (!amaiSosu.Exists())
+                MessageBox.Show("Click OK after AmaiSosu is installed.");
+            }
+            catch(Exception e)
+            {
+              if (e.Message == "The operation was canceled by the user") // RunAs elevation not granted
+                continue;
+              else throw;
+            }
+          }
         }
         catch (Exception e)
         {
