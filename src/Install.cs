@@ -545,13 +545,13 @@ namespace SPV3
       var processes = new List<Process>();
       processes.AddRange(Process.GetProcessesByName("halo"));
       processes.AddRange(Process.GetProcessesByName("haloce"));
-      processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping"));
+      processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping-WinStore"));
       var hpc = processes.Any(Process => Process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621");
       var mcc = false;
 
-      if (Process.GetProcessesByName("MCC-Win64-Shipping").Count() != 0)
+      if (Process.GetProcessesByName("MCC-Win64-Shipping-WinStore").Count() != 0)
       {
-        System.Collections.ReadOnlyCollectionBase mods = Process.GetProcessesByName("MCC-Win64-Shipping").First().Modules;
+        System.Collections.ReadOnlyCollectionBase mods = Process.GetProcessesByName("MCC-Win64-Shipping-WinStore").First().Modules;
         foreach (ProcessModule mod in mods)
         {
           mcc = mod.ModuleName == Halo1dll;
