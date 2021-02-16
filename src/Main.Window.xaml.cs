@@ -50,9 +50,12 @@ namespace SPV3
 
     private async void Load(object sender, RoutedEventArgs e)
     {
+      Splash loading_splash = new Splash();
       LoadButton.IsEnabled = false;
+      loading_splash.Show();
       await Task.Run(() => { _main.Invoke(); });
       LoadButton.IsEnabled = true;
+      loading_splash.QueueSplashClose();
     }
 
     private async void Assets(object sender, RoutedEventArgs e)

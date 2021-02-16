@@ -137,6 +137,9 @@
     <Compile Include="Social.UserControl.xaml.cs">
       <DependentUpon>Social.UserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Splash.xaml.cs">
+      <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Version.Assembly.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="Version.Upstream.cs" />
@@ -159,6 +162,10 @@
     <Page Include="News.UserControl.xaml" />
     <Page Include="Report.UserControl.xaml" />
     <Page Include="Social.UserControl.xaml" />
+    <Page Include="Splash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Version.UserControl.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -247,9 +254,11 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="spv3_art.png" />
     <Resource Include="Assets\xbox_one_controller.png" />
     <Resource Include="Assets\compressFolder.png" />
     <Resource Include="Assets\background_activation.jpg" />
+    <Resource Include="Assets\spv3_art.png" />
     <Content Include="Assets\logo_chief.png" />
   </ItemGroup>
   <ItemGroup>
