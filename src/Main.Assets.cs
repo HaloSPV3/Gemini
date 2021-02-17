@@ -26,6 +26,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HXE;
 using SPV3.Annotations;
+using Process = System.Diagnostics.Process;
 
 namespace SPV3
 {

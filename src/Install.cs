@@ -39,6 +39,7 @@ using static System.IO.File;
 using static System.Windows.Visibility;
 using System.Linq;
 using static System.Reflection.Assembly;
+using Process = System.Diagnostics.Process;
 
 namespace SPV3
 {
