@@ -543,65 +543,41 @@ namespace SPV3
 
     public void IsHaloOrCEARunning()
     {
-      var processes = new List<Process>();
-      processes.AddRange(Process.GetProcessesByName("halo"));
-      processes.AddRange(Process.GetProcessesByName("haloce"));
-      processes.AddRange(Process.GetProcessesByName("MCC-Win64-Shipping-WinStore"));
-      var hpc = processes.Any(Process => Process.MainModule.FileVersionInfo.FileVersion == "01.00.10.0621");
-      var mcc = false;
+      var inferredProcess = HXE.Process.Infer();
 
-      if (Process.GetProcessesByName("MCC-Win64-Shipping-WinStore").Count() != 0)
+      if (inferredProcess != HXE.Process.Type.Unknown)
       {
-        System.Collections.ReadOnlyCollectionBase mods = Process.GetProcessesByName("MCC-Win64-Shipping-WinStore").First().Modules;
-        foreach (ProcessModule mod in mods)
+        switch (inferredProcess)
         {
-          mcc = mod.ModuleName == Halo1dll;
-          if (mcc)
+          /**
+           * HPC/HCE
+           */
+          case HXE.Process.Type.Retail:
+          case HXE.Process.Type.HCE:
+            Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+            CanInstall                =  true;
+            Main                      =  Visible;
+            Activation                =  Collapsed;
+            Status                    =  $"Process Detection: Halo PC/CE Found{NewLine}{_ssdRec}";
+            break;
+
+          /**
+           * MCC CEA
+           */
+          case HXE.Process.Type.Steam:
+          case HXE.Process.Type.Store:
+            Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
+            CanInstall                =  true;
+            Main                      =  Visible;
+            Activation                =  Collapsed;
+            Status                    =  $"Process Detection: MCC CEA Found{NewLine}{_ssdRec}";
             break;
         }
-      }
 
-      if (Debug.IsDebug)
-      {
-        var file = (HXE.File) Paths.Install;
-        var text = string.Empty;
-        if (processes.Count != 0)
-          foreach (var proc in processes)
-          {
-            text += proc.MainWindowTitle + NewLine;
-          }
-        else text = "None found.";
-        file.AppendAllText(text + NewLine + "=== END PROCS ===" + NewLine + NewLine);
+        Status = "Process Detection: MCC Found, but CEA not present";
       }
-
-      if (processes.Count != 0)
-      {
-        if (hpc)
-        {
-          Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
-          CanInstall = true;
-          Main       = Visible;
-          Activation = Collapsed;
-          Status     = "Process Detection: Halo PC Found" + NewLine
-                     + _ssdRec;
-          return;
-        }
-        else if (mcc)
-        {
-          Kernel.hxe.Tweaks.Patches |= Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS;
-          CanInstall = true;
-          Main       = Visible;
-          Activation = Collapsed;
-          Status     = "Process Detection: MCC CEA Found" + NewLine
-                     + _ssdRec;
-          return;
-        }
-        else Status = "Process Detection: MCC Found, but CEA not present";
-        return;
-      }
-      else Status = "Process Detection: No Matching Processes" + NewLine 
-                  + "No MCC (with CEA), Halo Retail, or Custom Edition processes found.";
-      return;
+      else
+        Status = $"Process Detection: No Matching Processes{NewLine}No MCC (with CEA), HPC, or HCE processes found.";
     }
 
     public void InvokeSpv3()
