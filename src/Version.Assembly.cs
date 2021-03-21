@@ -91,12 +91,12 @@ namespace SPV3
         if (versionMajor == null) return;
 
         var version = (int) versionMajor;
-        var refHash = new Func<string>(() =>
-        {
-          using (var stream = GetExecutingAssembly().GetManifestResourceStream("SPV3.hash"))
-          using (var reader = new StreamReader(stream ?? throw new InvalidOperationException()))
-            return reader.ReadToEnd();
-        })();
+                var refHash = new Func<string>(() =>
+                {
+                    using (var stream = GetExecutingAssembly().GetManifestResourceStream("SPV3.hash"))
+                    using (var reader = new StreamReader(stream ?? throw new InvalidOperationException()))
+                        return reader.ReadToEnd();
+                })();
 
         Version    = version;
         Content    = $"Version {version:D4}-{refHash.ToUpper()}";
