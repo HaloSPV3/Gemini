@@ -1,0 +1,4 @@
+[submodule "hxe"]
+	path = hxe
+	url = https://github.com/HaloSPV3/hxe
+	branch = develop
