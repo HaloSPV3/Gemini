@@ -2,3 +2,7 @@
 	path = ext/hxe
 	url = https://github.com/HaloSPV3/hxe
 	branch = main
+[submodule "hmt"]
+	path = ext/hmt
+	url = https://github.com/AWilliams17/Halo-CE-Mouse-Tool
+	branch = master
