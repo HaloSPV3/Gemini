@@ -72,8 +72,31 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\*.*">
+      <Link>.root\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="..\.github/**/*.*">
+     <Link>.root\.github\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </None>
+    <None Include="..\doc/**/*.*">
+      <Link>.docs\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="..\*.md">
+      <Link>.docs-misc\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="*.txt">
+      <Link>.docs-misc\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="src.licenseheader">
+      <Link>.docs-misc\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
