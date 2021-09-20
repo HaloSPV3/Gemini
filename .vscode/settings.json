@@ -1,0 +1,19 @@
+{
+  "conventionalCommits.scopes": [
+    "contributing", // contributing.md
+    "deps", // Node dependencies
+    "release", // Release workflow
+    "semantic-release",
+    "giversion",
+    "codeql",
+    "ci", // CI workflow
+    "vscode", // VSCode configs
+    "editorconfig",
+    "readme",
+    "renovate",
+    "conv-pr", // Conventional Pull Request config
+    "commitizen",
+    "pull-requests", // pull requests workflow
+    "SPV3"
+  ]
+}
