@@ -3,17 +3,53 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C6922C15-C0C1-46D0-B2BC-2B0FF2BAD82B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <AssemblyName>SPV3 Loader</AssemblyName>
+    <!-- Application | Resources -->
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <RootNamespace>SPV3</RootNamespace>
-    <AssemblyName>spv3</AssemblyName>
     <TargetFramework>net462</TargetFramework>
+    <!-- Build | General -->
+    <Deterministic>true</Deterministic>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <!-- Build | Error and warnings -->
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <!-- Build | Output -->
+    <!-- Build | Events -->
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <!-- Build | Strong Naming -->
+    <SignAssembly>False</SignAssembly>
+    <!-- NuGet Packaging -->
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/HaloSPV3/SPV3-Loader</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HaloSPV3/SPV3-Loader</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageTags>Halo</PackageTags>
+    <PackageLicenseExpression>Zlib</PackageLicenseExpression>
+    <Authors>HaloSPV3</Authors>
+    <Company>github/HaloSPV3</Company>
+    <Description>The Halo SPV3 Installer and Loader</Description>
+    <Copyright>Copyright © 2019 Emilian Roman</Copyright>
+    <!--<PackageIcon>icon.png</PackageIcon>-->
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <IncludeSymbols>false</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- GitVersion DotNet SDK Compatibility -->
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <!-- Misc -->
+    <ProjectGuid>{C6922C15-C0C1-46D0-B2BC-2B0FF2BAD82B}</ProjectGuid>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ProductName>SPV3 Loader</ProductName>
+    <PublisherName>Halo SPV3 Team</PublisherName>
+      <!-- Not supported when targeting net4xx
+    <PublishSingleFile>true</PublishSingleFile>-->
+    <PublishTrimmed>true</PublishTrimmed>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+    <ToolCommandName>spv3</ToolCommandName>
+    <UseWPF>true</UseWPF>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
