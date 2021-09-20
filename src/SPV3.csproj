@@ -232,7 +232,7 @@
     <Content Include="Assets\logo_chief.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\hxe\kernel\src\HXE.csproj">
+    <ProjectReference Include="..\ext\hxe\kernel\src\HXE.csproj">
       <Project>{acaa5d9f-b23d-43e1-b2df-8c03230975a1}</Project>
       <Name>HXE</Name>
     </ProjectReference>
