@@ -283,11 +283,16 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="pwsh ./.msb.prebuild.ps1" />
+  </Target>
   <PropertyGroup>
-    <PreBuildEvent>git rev-parse --short HEAD &gt; "$(ProjectDir)\hash"
-</PreBuildEvent>
+    <PreBuildEvent>git rev-parse --short HEAD &gt; "$(ProjectDir)\hash"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>del "$(TargetDir)MahApps.Metro.xml"</PostBuildEvent>
   </PropertyGroup>
+  <Target Name="NoConfig" AfterTargets="PostBuildEvent;AfterPublish">
+    <Exec Command="pwsh ./.msb.noConfig.ps1" />
+  </Target>
 </Project>
