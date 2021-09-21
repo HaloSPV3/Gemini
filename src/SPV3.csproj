@@ -31,7 +31,7 @@
     <Company>github/HaloSPV3</Company>
     <Description>The Halo SPV3 Installer and Loader</Description>
     <Copyright>Copyright © 2019 Emilian Roman</Copyright>
-    <!--<PackageIcon>icon.png</PackageIcon>-->
+    <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <IncludeSymbols>false</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -73,6 +73,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\README.md">
+      <Link>.docs-misc\REAMDE.md</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\*.*">
       <Link>.root\%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -132,7 +138,7 @@
     <Resource Include="Assets\background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\logo.png" />
+    <Resource Include="Assets\logo.png" Pack="True" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\background_install.jpg" />
