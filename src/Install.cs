@@ -24,12 +24,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using HXE;
 using HXE.HCE;
 using HXE.MCC;
-using IWshRuntimeLibrary;
 using SPV3.Annotations;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
@@ -294,13 +296,15 @@ namespace SPV3
 
                         try
                         {
-                            var shell = new WshShell();
-                            var shortcut = (IWshShortcut) shell.CreateShortcut(Path.Combine(shortcutPath, "SPV3.lnk"));
+                            // TODO: Check for existing shortcut. What if the user wants to keep both instead of overwriting?
+                            var shortcutFile = new ShortcutFile();
+                            shortcutPath = Path.Combine(shortcutPath, "SPV3.lnk");
+                            Create(shortcutPath);
 
-                            shortcut.Description = "Single Player Version 3";
-                            shortcut.TargetPath = targetFileLocation;
-                            shortcut.WorkingDirectory = Target;
-                            shortcut.Save();
+                            shortcutFile.shellLink.SetDescription("Single Player Version 3");
+                            shortcutFile.shellLink.SetPath(targetFileLocation);
+                            shortcutFile.shellLink.SetWorkingDirectory(Target);
+                            shortcutFile.persistFile.Save(shortcutPath, false);
                         }
                         catch (Exception e)
                         {
@@ -669,6 +673,47 @@ namespace SPV3
                 WorkingDirectory = Target
             });
             Exit(0);
+        }
+
+        [ComImport]
+        [Guid("00021401-0000-0000-C000-000000000046")]
+        internal class ShortcutFile
+        {
+            internal IShellLink shellLink;
+            internal IPersistFile persistFile;
+        }
+
+        /// <summary>
+        ///     Interface for IShellLink <br/>
+        ///     Exposes methods that create, modify, and resolve Shell links. <br/>
+        ///     Currently not available in DotNet API. Check again when targetting .NET 5/6 <br/>
+        ///     <see href="https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishelllinka"/>
+        /// </summary>
+        [ComImport]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [Guid("000214F9-0000-0000-C000-000000000046")]
+        internal interface IShellLink
+        {
+            void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out IntPtr pfd, int fFlags);
+            void GetIDList(out IntPtr ppidl);
+            void SetIDList(IntPtr pidl);
+            void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszName, int cchMaxName);
+            void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+            void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir, int cchMaxPath);
+            void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string pszDir);
+            void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs, int cchMaxPath);
+            void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
+            void GetHotkey(out short pwHotkey);
+            void SetHotkey(short wHotkey);
+            void GetShowCmd(out int piShowCmd);
+            void SetShowCmd(int iShowCmd);
+            void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszIconPath, int cchIconPath, out int piIcon);
+            void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string pszIconPath, int iIcon);
+            void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string pszPathRel, int dwReserved);
+            void Resolve(IntPtr hwnd, int fFlags);
+            void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
+            void Save(string shortcutPath, bool v);
+            //void System.Runtime.InteropServices.ComInterface
         }
 
         [NotifyPropertyChangedInvocator]
