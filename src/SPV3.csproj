@@ -210,15 +210,13 @@
     </PackageReference>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="pwsh ./.msb.prebuild.ps1" />
+    <Exec Command="
+    git rev-parse --short HEAD > '$(ProjectDir)\hash';
+    pwsh ./.msb.prebuild.ps1" />
   </Target>
-  <PropertyGroup>
-    <PreBuildEvent>git rev-parse --short HEAD &gt; "$(ProjectDir)\hash"</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>del "$(TargetDir)MahApps.Metro.xml"</PostBuildEvent>
-  </PropertyGroup>
-  <Target Name="NoConfig" AfterTargets="PostBuildEvent;AfterPublish">
-    <Exec Command="pwsh ./.msb.noConfig.ps1" />
+  <Target Name="CleanOutput" AfterTargets="PostBuildEvent;AfterPublish">
+    <Exec Command="
+    del '$(TargetDir)MahApps.Metro.xml';
+    pwsh ./.msb.noConfig.ps1" />
   </Target>
 </Project>
