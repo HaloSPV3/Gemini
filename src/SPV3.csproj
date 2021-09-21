@@ -115,7 +115,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <EmbeddedResource Include="hash">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
