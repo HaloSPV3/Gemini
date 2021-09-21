@@ -42,10 +42,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductName>SPV3 Loader</ProductName>
     <PublisherName>Halo SPV3 Team</PublisherName>
-      <!-- Not supported when targeting net4xx
-    <PublishSingleFile>true</PublishSingleFile>-->
+      <!-- Not supported when targeting net4xx-->
+    <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
-    <RuntimeIdentifier>win</RuntimeIdentifier>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ToolCommandName>spv3</ToolCommandName>
     <UseWPF>true</UseWPF>
