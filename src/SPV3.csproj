@@ -8,7 +8,7 @@
     <!-- Application | Resources -->
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <RootNamespace>SPV3</RootNamespace>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <!-- Build | General -->
     <Deterministic>true</Deterministic>
     <FileAlignment>512</FileAlignment>
@@ -44,7 +44,6 @@
     <PublisherName>Halo SPV3 Team</PublisherName>
       <!-- Not supported when targeting net4xx-->
     <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ToolCommandName>spv3</ToolCommandName>
@@ -202,17 +201,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Costura.Fody">
-      <Version>3.3.3</Version>
-    </PackageReference>
-    <PackageReference Include="Fody">
-      <Version>4.2.1</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="MahApps.Metro">
       <Version>1.6.5</Version>
     </PackageReference>
+    <PackageReference Include="System.Management" Version="6.0.0-rc.1.21451.13" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="git rev-parse --short HEAD &gt; '$(ProjectDir)\hash'; pwsh ./.msb.prebuild.ps1" />
