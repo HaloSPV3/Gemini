@@ -1,4 +1,4 @@
-﻿/* MIT License
+/* MIT License
 
 Copyright (c) 2016 JetBrains http://www.jetbrains.com
 
@@ -116,6 +116,9 @@ namespace SPV3.Annotations
     AttributeTargets.Property    | AttributeTargets.Delegate)]
   public sealed class StringFormatMethodAttribute : Attribute
   {
+    /// <summary>
+    ///   Format a parameter of an annotated method
+    /// </summary>
     /// <param name="formatParameterName">
     ///   Specifies which parameter of an annotated method should be treated as format-string
     /// </param>
