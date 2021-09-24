@@ -1,0 +1,71 @@
+﻿name: ci
+# This workflow demonstrates the minimal requirements for building, publishing, and packing the Solution with DotNet CLI
+
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+    - '!**/*.md'
+    - '!**/*.txt'
+
+  pull_request:
+    types:
+    - opened
+    - reopened
+    - ready_for_review
+
+jobs:
+  ################
+  # BUILD
+  ################
+  build:
+    name: Build
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        buildConfig: [ "Release", "Debug" ]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+        fetch-depth: 0
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x' # SDK Version to use.
+        include-prerelease: true
+
+    - name: Build
+      working-directory: ./src/
+      run: dotnet build SPV3.csproj -c ${{ matrix.buildConfig }}
+
+  ################
+  # BUILD AND PUBLISH
+  ################
+  publish:
+    name: Publish
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        buildConfig: [ "Release", "Debug" ]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+        fetch-depth: 0
+
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x' # SDK Version to use.
+        include-prerelease: true
+
+    - name: Build and Publish
+      working-directory: ./src/
+      run: dotnet publish SPV3.csproj -c ${{ matrix.buildConfig }}
