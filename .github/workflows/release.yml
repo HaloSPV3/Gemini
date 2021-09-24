@@ -1,0 +1,151 @@
+name: release
+# Ref: Building .NET Framework Applications with Github Actions
+# https://www.codingwithcalvin.net/building-net-framework-applications-with-github-actions/
+
+# TODO: Set up Unit Tests: https://docs.microsoft.com/en-us/visualstudio/test/unit-test-basics?view=vs-2019
+# TODO: https://github.com/dorny/test-reporter
+# TODO: Use Semantic Release for GitHub Releases
+# TODO: https://github.com/actions/upload-artifact
+# TODO: https://github.com/dawidd6/action-download-artifact
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+    - '.github/workflows/'
+    - '**/*.md'
+    - '**/*.txt'
+
+ # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+ # However, each Job uses separate Runners
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest # The type of runner that the job will run on
+
+    steps:
+    ################
+    # SETUP
+    ################
+
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Required by tj-actions/changed-files and GitVersion
+        submodules: 'recursive'
+
+    - name: Extract branch name
+      uses: nelonoel/branch-name@v1.0.1
+      id: extract_branch
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+    - run: npm install
+    # Dependents: Semantic Release
+
+    # Authenticates packages to push to GPR
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x' # SDK Version to use.
+        include-prerelease: true
+
+    - name: Add GitHub Package Repository
+      run: dotnet nuget add source https://nuget.pkg.github.com/HaloSPV3/index.json -n "github" -u USERNAME -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+
+      #Registered Sources:
+      #  1.  nuget.org [Enabled]
+      #      https://api.nuget.org/v3/index.json
+      #  2.  github [Enabled]
+      #      https://nuget.pkg.github.com/HaloSPV3/index.json
+      #  3.  Microsoft Visual Studio Offline Packages [Enabled]
+      #      C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
+
+    - name: Set NuGet.org Credentials
+      run: dotnet nuget update source "nuget.org" -u USERNAME -p ${{ secrets.NUGET_TOKEN }} --store-password-in-clear-text
+
+    # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitversion/index.md
+    # GitVersion.MSBuild is already used to stamp the assembly/package versions.
+    # This action is used to ensure we can pass the appropriate variables to Semantic Release
+    - name: Setup GitVersion
+      uses: GitTools/actions/gitversion/setup@v0.9.10
+      id: gitversion
+      with:
+        versionSpec: '5.x'
+    - run: echo {{ steps.gitversion.outputs.fullSemVer }}
+
+    ################
+    # BUILD
+    ################
+    - name: Build, Pack, and prep for Publish
+      run: |
+        dotnet publish src -c Release --self-contained --use-current-runtime -p:ContinuousIntegrationBuild=true
+        src/.msb.noConfig.ps1
+
+    - name: Compress Publish Artifacts
+      working-directory: bin/release/win-x64/publish
+      run: 7z a "SPV3.$env:GitVersion_FullSemVer.zip" *.xml *.exe
+
+    ################
+    # TESTS
+    # TODO: Move Unit Tests to separate workflows
+    # TODO: Set up unit tests for HXE.csproj
+    ################
+
+    # TODO: HXE dry-run
+    #- name: Test x86 compatibility
+    #  run: |
+    #    dotnet run --project src/ -r win-x86 -- --config
+
+    #- name: Setup OpenCover, XUnit for .NET Framework
+    #  run: |
+    #    choco install opencover.portable
+    #    choco install xunit
+    #
+    # docs: https://github.com/codecov/example-csharp
+    # - name: Write Unit Test Reports
+    #   working-directory: ./src/
+    #   run: OpenCover.Console.exe -register:user -target:"xunit.console.x86.exe" -targetargs:"..\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:"..\hxe_coverage.xml"
+    #
+    # - name: Upload unit test reports to CodeCoverage
+    #   uses: codecov/codecov-action@v1
+    #   with:
+    #     # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+    #     files: ./hxe_coverage.xml
+    #     flags: unittests # optional
+    #     functionalities: recursesubs # search for code in git submodules as well
+    #     # name: codecov-umbrella # optional
+    #     # fail_ci_if_error: true # optional (default = false)
+    #     # verbose: true # optional (default = false)
+
+    ################
+    # RELEASE
+    ################
+    # GitReleaseManager or Semantic Release?
+
+    # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitreleasemanager/index.md
+    - name: Setup GitReleaseManager
+      id: gitRM
+      uses: gittools/actions/gitreleasemanager/setup@v0.9.10
+      with:
+        versionSpec: '0.12.x'
+
+    # https://github.com/marketplace/actions/action-for-semantic-release
+    - name: Setup Semantic Release
+      run: npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: publish-artifacts
+        path: bin/release/win-x64/publish
+
+    - name: Publish to GitHub Packages
+      working-directory: bin/Release
+      run: dotnet nuget push *.nupkg -s "github" -k ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish to nuget.org
+      working-directory: bin/Release
+      run: dotnet nuget push *.nupkg -s "nuget.org" -k ${{ secrets.NUGET_TOKEN }}
