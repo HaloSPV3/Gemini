@@ -100,7 +100,7 @@ namespace SPV3
 
         Version    = version;
         Content    = $"Version {version:D4}-{refHash.ToUpper()}";
-        Address    = $"https://github.com/HaloSPV3/HCE/commit/{refHash}";
+        Address    = $"https://github.com/HaloSPV3/SPV3-Loader/commit/{refHash}";
         Visibility = Visibility.Visible;
       }
 
