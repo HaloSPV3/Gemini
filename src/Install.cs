@@ -675,6 +675,7 @@ namespace SPV3
             Exit(0);
         }
 
+#pragma warning disable CS0649
         [ComImport]
         [Guid("00021401-0000-0000-C000-000000000046")]
         internal class ShortcutFile
