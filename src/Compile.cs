@@ -109,8 +109,8 @@ namespace SPV3
          * Copy data... 
          */
 
-        Copy(GetExecutingAssembly().Location, Combine(Target, "spv3.exe"));
-        Copy(Combine(CurrentDirectory,                        "hxe.exe"), Combine(Target, "hxe.exe"));
+        Copy(AppContext.BaseDirectory, Combine(Target, "spv3.exe"));
+        Copy(Combine(CurrentDirectory, "hxe.exe"), Combine(Target, "hxe.exe"));
 
         /**
          * Restore the file which permits us to compile!

@@ -4,11 +4,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <AssemblyName>SPV3 Loader</AssemblyName>
+    <AssemblyName>SPV3-Loader</AssemblyName>
     <!-- Application | Resources -->
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <RootNamespace>SPV3</RootNamespace>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <!-- Build | General -->
     <Deterministic>true</Deterministic>
     <FileAlignment>512</FileAlignment>
@@ -31,7 +31,7 @@
     <Company>github/HaloSPV3</Company>
     <Description>The Halo SPV3 Installer and Loader</Description>
     <Copyright>Copyright © 2019 Emilian Roman</Copyright>
-    <!--<PackageIcon>icon.png</PackageIcon>-->
+    <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <IncludeSymbols>false</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -42,10 +42,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductName>SPV3 Loader</ProductName>
     <PublisherName>Halo SPV3 Team</PublisherName>
-      <!-- Not supported when targeting net4xx
-    <PublishSingleFile>true</PublishSingleFile>-->
-    <PublishTrimmed>true</PublishTrimmed>
-    <RuntimeIdentifier>win</RuntimeIdentifier>
+      <!-- Not supported when targeting net4xx-->
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ToolCommandName>spv3</ToolCommandName>
     <UseWPF>true</UseWPF>
@@ -73,6 +72,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\README.md">
+      <Link>.docs-misc\REAMDE.md</Link>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\*.*">
       <Link>.root\%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -98,24 +103,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
     <EmbeddedResource Include="hash">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -133,7 +120,7 @@
     <Resource Include="Assets\background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\logo.png" />
+    <Resource Include="Assets\logo.png" Pack="True" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\background_install.jpg" />
@@ -174,17 +161,6 @@
     </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="IWshRuntimeLibrary">
-      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\xbox_one_controller.png" />
     <Resource Include="Assets\compressFolder.png" />
     <Resource Include="Assets\background_activation.jpg" />
@@ -203,33 +179,21 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub">
       <Version>1.1.0-beta-20204-02</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Costura.Fody">
-      <Version>3.3.3</Version>
-    </PackageReference>
-    <PackageReference Include="Fody">
-      <Version>4.2.1</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="MahApps.Metro">
-      <Version>1.6.5</Version>
+      <Version>2.4.7</Version>
     </PackageReference>
+    <PackageReference Include="System.Management" Version="6.0.0-rc.1.21451.13" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="pwsh ./.msb.prebuild.ps1" />
+    <Exec Command="git rev-parse --short HEAD &gt; '$(ProjectDir)\hash'; pwsh ./.msb.prebuild.ps1" />
   </Target>
-  <PropertyGroup>
-    <PreBuildEvent>git rev-parse --short HEAD &gt; "$(ProjectDir)\hash"</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>del "$(TargetDir)MahApps.Metro.xml"</PostBuildEvent>
-  </PropertyGroup>
-  <Target Name="NoConfig" AfterTargets="PostBuildEvent;AfterPublish">
-    <Exec Command="pwsh ./.msb.noConfig.ps1" />
+  <Target Name="CleanOutput" AfterTargets="PostBuildEvent;AfterPublish">
+    <Exec Command="pwsh -c ./.msb.noConfig.ps1" />
   </Target>
 </Project>

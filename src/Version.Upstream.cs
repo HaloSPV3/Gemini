@@ -21,10 +21,10 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using SPV3.Annotations;
+using static HXE.Net.Http.GlobalHttpClient;
 
 namespace SPV3
 {
@@ -85,18 +85,18 @@ namespace SPV3
 
       public event PropertyChangedEventHandler PropertyChanged;
 
-      public void Initialise()
+      public async void Initialise()
       {
         try
         {
-          using (var wr = (HttpWebResponse) WebRequest.Create(Header).GetResponse())
-          using (var rs = wr.GetResponseStream())
+          StaticHttpClient.Timeout = TimeSpan.FromSeconds(30);
+          using (var rm = await StaticHttpClient.GetAsync(Header))
+          using (var rs = rm.Content.ReadAsStream())
           using (var sr = new StreamReader(rs
                                            ?? throw new Exception("Could not get response stream.")))
           {
             var serverVersion = int.Parse(sr.ReadLine()?.TrimEnd()
                                           ?? throw new Exception("Could not infer server-side version."));
-
             var clientVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Major;
 
             Version = serverVersion;
