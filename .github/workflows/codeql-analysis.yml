@@ -1,0 +1,53 @@
+﻿name: "CodeQL"
+
+on:
+  push:
+
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+    # https://docs.github.com/en/code-security/secure-coding/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#avoiding-unnecessary-scans-of-pull-requests
+    paths-ignore:
+    - '**/*.md'
+    - '**/*.txt'
+  schedule:
+  - cron '35 19 * * 6'
+
+env:
+  DOTNET_NOLOGO: true
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: windows-2022
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+        fetch-depth: 0
+
+    - name: Setup DotNet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        config-file: 'lgtm.yml'
+        languages: 'csharp'
+
+    # -p:UseSharedCompilation=false is necessary for CodeQL to analyze .NET Framework builds.
+    # See #5 in https://docs.github.com/en/code-security/secure-coding/automatically-scanning-your-code-for-vulnerabilities-and-errors/troubleshooting-the-codeql-workflow#no-code-found-during-the-build
+    - name: Build Solutions
+      working-directory: ./src/
+      run: dotnet build --no-incremental -p:UseSharedCompilation=false SPV3.csproj
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
