@@ -38,8 +38,8 @@ namespace SPV3
 
     public void Changelog()
     {
-      Process.Start(@"https://source.n2.network/spv3/log/?showmsg=1&qt=range&q=" +
-                    $"build-{Assembly.Version:D4}..build-{Upstream.Version:D4}");
+      Process.Start(@"https://github.com/HaloSPV3/SPV3-Loader/compare/" +
+                    $"v{Assembly.Version:D4}..v{Upstream.Version:D4}");
     }
   }
 }
