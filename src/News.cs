@@ -21,10 +21,11 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Xml.Serialization;
+using HXE.Net.Http;
 using SPV3.Annotations;
 
 namespace SPV3
@@ -72,27 +73,28 @@ namespace SPV3
 
 				public event PropertyChangedEventHandler PropertyChanged;
 
-				public void Initialise()
+				public async void Initialise()
 				{
-						try
+					try
+					{
+						var task = GlobalHttpClient.StaticHttpClient.GetStreamAsync(Address);
+						using (var sr = new StreamReader(await task))
+						using (var reader = new StringReader(sr.ReadToEnd()))
 						{
-								using (var wr = (HttpWebResponse) WebRequest.Create(Address).GetResponse())
-								using (var rs = wr.GetResponseStream())
-								using (var sr = new StreamReader(rs ?? throw new NullReferenceException("No response for manifest.")))
-								{
-										using (var reader = new StringReader(sr.ReadToEnd()))
-										{
-												var news = (News) new XmlSerializer(typeof(News)).Deserialize(reader);
-												Content = news.Content;
-												Link = news.Link;
-												Visibility = Visibility.Visible;
-										}
-								}
+							var news = (News) new XmlSerializer(typeof(News)).Deserialize(reader);
+							Content = news.Content;
+							Link = news.Link;
+							Visibility = Visibility.Visible;
 						}
-						catch (Exception)
-						{
-								Visibility = Visibility.Collapsed;
-						}
+					}
+					catch (HttpRequestException e)
+					{
+						throw new HttpRequestException("No response for manifest.", e);
+					}
+					catch (Exception)
+					{
+							Visibility = Visibility.Collapsed;
+					}
 				}
 
 				[NotifyPropertyChangedInvocator]
