@@ -33,7 +33,7 @@ namespace SPV3
     /// <summary>
     ///   AmaiSosu download path.
     /// </summary>
-    public const string Address = "https://github.com/yumiris/AmaiSosu/releases/latest";
+    public const string Address = "https://github.com/HaloSPV3/AmaiSosu/releases/latest";
 
     /// <summary>
     ///   AmaiSosu executable path.
