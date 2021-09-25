@@ -1,6 +1,6 @@
 {
   "name": "SPV3-Loader",
-  "description": "Automate commit messages quality, automate changelog and release generation",
+  "description": "Automate commit messages quality, changelog generation, and release creation",
   "version": "1.0.0",
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
