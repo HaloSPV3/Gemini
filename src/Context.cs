@@ -28,7 +28,7 @@ namespace SPV3
   /// <summary>
   ///   Module for determining the scenario of the loader environment.
   /// </summary>
-  public class Context
+  public static class Context
   {
     /// <summary>
     ///   Possible environment states.
