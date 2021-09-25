@@ -24,7 +24,7 @@ using static System.IO.Path;
 
 namespace SPV3
 {
-  public class Paths
+  public static class Paths
   {
     public const string Compile    = "0xCOMPILE";
     public const string AmaiSosu   = "amaisosu.exe";
