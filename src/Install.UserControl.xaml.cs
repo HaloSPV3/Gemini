@@ -136,10 +136,13 @@ namespace SPV3
       }
     }
 
-    /// Flip boolean on click
-    private void CompressButton_Click(object sender, RoutedEventArgs e) =>
-      _install.Compress = true != _install.Compress;
-
+    /// <summary>
+    ///   Flip boolean on click
+    /// </summary>
+    private void CompressButton_Click(object sender, RoutedEventArgs e)
+    {
+        _install.Compress = !_install.Compress;
+    }
 
     private void DirctList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
