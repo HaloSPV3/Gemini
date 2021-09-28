@@ -112,32 +112,18 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Positions -->
-    <ContentWithTargetPath Include="Positions\Photo.bin">
+    <Content Include="Positions/*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>photo.bin</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="Positions\DOOM.bin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>doom.bin</TargetPath>
-    </ContentWithTargetPath>
+    </Content>
     <!-- Presence Support -->
-    <ContentWithTargetPath Include="Presence\DRP.dll">
+    <Content Include="Presence\DRP.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>controls\haloce_presence.dll</TargetPath>
-    </ContentWithTargetPath>
+    </Content>
     <!-- Tile Support -->
-    <ContentWithTargetPath Include="Tile\spv3.visualelementsmanifest.xml">
+    <Content Include="Tile\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>spv3.visualelementsmanifest.xml</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="Tile\tile-small.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>tile-small.png</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="Tile\tile.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>tile.png</TargetPath>
-    </ContentWithTargetPath>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildProjectDirectory)\..\ext\hxe\src\HXE.csproj">
