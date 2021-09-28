@@ -40,7 +40,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductName>SPV3 Loader</ProductName>
     <PublisherName>Halo SPV3 Team</PublisherName>
-      <!-- Not supported when targeting net4xx-->
     <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -162,8 +161,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.2" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub">
-      <Version>1.1.0-beta-20204-02</Version>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
