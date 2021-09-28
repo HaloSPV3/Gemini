@@ -160,10 +160,13 @@
     </PackageReference>
     <PackageReference Include="System.Management" Version="6.0.0-rc.1.21451.13" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="git rev-parse --short HEAD > '$(MSBuildProjectDirectory)\hash'; pwsh $(MSBuildProjectDirectory)/../ext/HXE/src/.msb.prebuild.ps1" />
+  <Target Name="Unshallow" BeforeTargets="CreateHashFile">
+    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/HXE/src/.msb.prebuild.ps1"/>
   </Target>
-  <Target Name="CleanOutput" AfterTargets="PostBuildEvent;AfterPublish">
-    <Exec Command="pwsh $(MSBuildProjectDirectory)\.msb.noConfig.ps1" />
+  <Target Name="CreateHashFile" BeforeTargets="PreBuildEvent">
+    <Exec Command="git rev-parse --short HEAD > $(MSBuildProjectDirectory)/hash" />
+  </Target>
+  <Target Name="NoConfig" AfterTargets="PostBuildEvent;AfterPublish">
+    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/HXE/src/.msb.noConfig.ps1" />
   </Target>
 </Project>
