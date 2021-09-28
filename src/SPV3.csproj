@@ -18,8 +18,6 @@
     <!-- Build | Output -->
     <!-- Build | Events -->
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <!-- Build | Strong Naming -->
-    <SignAssembly>False</SignAssembly>
     <!-- NuGet Packaging -->
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/HaloSPV3/SPV3-Loader</PackageProjectUrl>
