@@ -37,12 +37,13 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <!-- GitVersion DotNet SDK Compatibility -->
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <!-- Publish -->
+    <PublishSingleFile>true</PublishSingleFile>
     <!-- Misc -->
     <ProjectGuid>{C6922C15-C0C1-46D0-B2BC-2B0FF2BAD82B}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductName>SPV3 Loader</ProductName>
     <PublisherName>Halo SPV3 Team</PublisherName>
-    <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ToolCommandName>spv3</ToolCommandName>
