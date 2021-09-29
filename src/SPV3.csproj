@@ -10,7 +10,8 @@
     <!-- Application | Resources -->
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <RootNamespace>SPV3</RootNamespace>
-    <TargetFrameworks>net6.0-windows;net5.0-windows</TargetFrameworks>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
     <!-- Build | General -->
     <Deterministic>true</Deterministic>
     <FileAlignment>512</FileAlignment>
