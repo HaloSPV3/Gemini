@@ -97,18 +97,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\amaisosu.png" />
-    <Resource Include="Assets\background.jpg" />
-    <Resource Include="Assets\background_activation.jpg" />
-    <Resource Include="Assets\background_compile.jpg" />
-    <Resource Include="Assets\background_install.jpg" />
-    <Resource Include="Assets\background_settings.jpg" />
-    <Resource Include="Assets\compressFolder.png" />
-    <Resource Include="Assets\hxe.ico" />
-    <Resource Include="Assets\icon.ico" />
+    <Resource Include="Assets\*.*" Exclude="Assets\logo*" />
     <Resource Include="Assets\logo.png" Pack="True" PackagePath="\" />
-    <Resource Include="Assets\spv3_art.png" />
-    <Resource Include="Assets\xbox_one_controller.png" />
     <Content Include="Assets\logo_chief.png" />
   </ItemGroup>
   <ItemGroup>
