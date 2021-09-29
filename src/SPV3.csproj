@@ -138,7 +138,6 @@
       <Version>2.4.7</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0-rc.1.21451.13" />
-    <PackageReference Include="System.Management" Version="6.0.0-rc.1.21451.13" />
   </ItemGroup>
   <Target Name="Unshallow" BeforeTargets="CreateHashFile">
     <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/HXE/src/.msb.prebuild.ps1" />
