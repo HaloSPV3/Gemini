@@ -103,8 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Positions -->
-    <Content Include="Positions/*">
+    <Content Include="Positions\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(FileName)%(Extension)</TargetPath>
     </Content>
     <!-- Presence Support -->
     <Content Include="Presence\DRP.dll">
@@ -112,8 +113,9 @@
       <TargetPath>controls\haloce_presence.dll</TargetPath>
     </Content>
     <!-- Tile Support -->
-    <Content Include="Tile\*">
+    <Content Include="Tile\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(FileName)%(Extension)</TargetPath>
     </Content>
   </ItemGroup>
   <ItemGroup>
