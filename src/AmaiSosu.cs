@@ -51,7 +51,11 @@ namespace SPV3
 
     public void Execute()
     {
-      Process.Start(Exists() ? Path : Address, "--auto").WaitForExit();
+      var exists = Exists();
+      var uri = exists ? Path : Address;
+      var args = exists ? "--auto" : "";
+      var startInfo = new ProcessStartInfo(uri, args) { UseShellExecute = true };
+      Process.Start(startInfo).WaitForExit();
     }
 
     /// <summary>

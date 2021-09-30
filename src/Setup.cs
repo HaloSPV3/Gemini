@@ -48,7 +48,9 @@ namespace SPV3
 
         public void Execute()
         {
-            Process.Start(Exists() ? Path : Address);
+            var uri = Exists() ? Path : Address;
+            var startInfo = new ProcessStartInfo(uri) { UseShellExecute = true };
+            Process.Start(startInfo);
         }
 
         /// <summary>

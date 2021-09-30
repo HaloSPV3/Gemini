@@ -1,14 +1,14 @@
 /**
  * Copyright (c) 2019 Emilian Roman
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
- * 
+ *
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it
  * freely, subject to the following restrictions:
- * 
+ *
  * 1. The origin of this software must not be misrepresented; you must not
  *    claim that you wrote the original software. If you use this software
  *    in a product, an acknowledgment in the product documentation would be
@@ -31,24 +31,29 @@ namespace SPV3
       InitializeComponent();
     }
 
+    private ProcessStartInfo _getStartInfo(string uri)
+    {
+      return new ProcessStartInfo(uri) { UseShellExecute = true };
+    }
+
     private void Reddit(object sender, MouseButtonEventArgs e)
     {
-      Process.Start("https://www.reddit.com/r/halospv3");
+      Process.Start(_getStartInfo("https://www.reddit.com/r/halospv3"));
     }
 
     private void Twitter(object sender, MouseButtonEventArgs e)
     {
-      Process.Start("https://twitter.com/halo_spv3");
+      Process.Start(_getStartInfo("https://twitter.com/halo_spv3"));
     }
 
     private void Discord(object sender, MouseButtonEventArgs e)
     {
-      Process.Start("https://discord.gg/q4f7nTt");
+      Process.Start(_getStartInfo("https://discord.gg/q4f7nTt"));
     }
 
     private void Wikia(object sender, MouseButtonEventArgs e)
     {
-      Process.Start("https://halo-spv3.fandom.com");
+      Process.Start(_getStartInfo("https://halo-spv3.fandom.com"));
     }
   }
 }
