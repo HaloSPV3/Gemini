@@ -34,7 +34,7 @@ namespace SPV3
     {
       private string _address;
       private string _content;
-      private int    _version;
+      private System.Version _version;
 
       private Visibility _visibility = Visibility.Collapsed;
 
@@ -71,7 +71,7 @@ namespace SPV3
         }
       }
 
-      public int Version
+      public System.Version Version
       {
         get => _version;
         set
@@ -86,20 +86,18 @@ namespace SPV3
 
       public void Initialise()
       {
-        var versionMajor = GetEntryAssembly()?.GetName().Version.Major;
+        var version = GetExecutingAssembly()?.GetName().Version;
+        if (version.Major == 0) return;
 
-        if (versionMajor == null) return;
-
-        var version = (int) versionMajor;
-                var refHash = new Func<string>(() =>
-                {
-                    using (var stream = GetExecutingAssembly().GetManifestResourceStream("SPV3.hash"))
-                    using (var reader = new StreamReader(stream ?? throw new InvalidOperationException()))
-                        return reader.ReadToEnd();
-                })();
+        var refHash = new Func<string>(() =>
+        {
+            using (var stream = GetExecutingAssembly().GetManifestResourceStream("SPV3.hash"))
+            using (var reader = new StreamReader(stream ?? throw new InvalidOperationException()))
+                return reader.ReadToEnd();
+        })();
 
         Version    = version;
-        Content    = $"Version {version:D4}-{refHash.ToUpper()}";
+        Content    = $"Version {version}-{refHash.ToUpper()}";
         Address    = $"https://github.com/HaloSPV3/SPV3-Loader/commit/{refHash}";
         Visibility = Visibility.Visible;
       }
