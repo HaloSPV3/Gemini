@@ -32,7 +32,7 @@ namespace SPV3
 {
     public class News : INotifyPropertyChanged
 	{
-		private const string Address = "https://raw.githubusercontent.com/HaloSPV3/HCE/main/spv3/updates/latest.xml";
+		private const string Address = "https://github.com/HaloSPV3/HCE/raw/meta/news.xml";
 		private string _content;
 		private string _link;
 		private Visibility _visibility = Visibility.Collapsed;
