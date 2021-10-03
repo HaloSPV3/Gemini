@@ -25,12 +25,12 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Xml.Serialization;
-using HXE.Net.Http;
+using static HXE.Net.DefaultHttpClient;
 using SPV3.Annotations;
 
 namespace SPV3
 {
-	public class News : INotifyPropertyChanged
+    public class News : INotifyPropertyChanged
 	{
 		private const string Address = "https://raw.githubusercontent.com/HaloSPV3/HCE/main/spv3/updates/latest.xml";
 		private string _content;
@@ -77,7 +77,7 @@ namespace SPV3
 		{
 			try
 			{
-				var task = GlobalHttpClient.StaticHttpClient.GetStreamAsync(Address);
+				var task = Client.GetStreamAsync(Address);
 				using (var sr = new StreamReader(await task))
 				using (var reader = new StringReader(sr.ReadToEnd()))
 				{

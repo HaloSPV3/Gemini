@@ -1,14 +1,14 @@
 /**
  * Copyright (c) 2019 Emilian Roman
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
  * arising from the use of this software.
- * 
+ *
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it
  * freely, subject to the following restrictions:
- * 
+ *
  * 1. The origin of this software must not be misrepresented; you must not
  *    claim that you wrote the original software. If you use this software
  *    in a product, an acknowledgment in the product documentation would be
@@ -24,11 +24,11 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using SPV3.Annotations;
-using static HXE.Net.Http.GlobalHttpClient;
+using static HXE.Net.DefaultHttpClient;
 
 namespace SPV3
 {
-  public partial class Version
+    public partial class Version
   {
     public class VersionUpstream : INotifyPropertyChanged
     {
@@ -89,8 +89,8 @@ namespace SPV3
       {
         try
         {
-          StaticHttpClient.Timeout = TimeSpan.FromSeconds(30);
-          using (var rm = await StaticHttpClient.GetAsync(Header))
+          Client.Timeout = TimeSpan.FromSeconds(30);
+          using (var rm = await Client.GetAsync(Header))
           using (var rs = rm.Content.ReadAsStream())
           using (var sr = new StreamReader(rs
                                            ?? throw new Exception("Could not get response stream.")))
