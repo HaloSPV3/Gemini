@@ -30,7 +30,7 @@ using SPV3.Annotations;
 
 namespace SPV3
 {
-    public class News : INotifyPropertyChanged
+	public class News : INotifyPropertyChanged
 	{
 		private const string Address = "https://github.com/HaloSPV3/HCE/raw/meta/news.xml";
 		private string _content;
@@ -77,8 +77,9 @@ namespace SPV3
 		{
 			try
 			{
-				var task = Client.GetStreamAsync(Address);
-				using (var sr = new StreamReader(await task))
+				using (HttpResponseMessage responseMessage = await Client.GetAsync(Address).ConfigureAwait(false))
+				using (Stream contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
+				using (var sr = new StreamReader(contentStream))
 				using (var reader = new StringReader(sr.ReadToEnd()))
 				{
 					var news = (News) new XmlSerializer(typeof(News)).Deserialize(reader);
