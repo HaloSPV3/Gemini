@@ -97,7 +97,7 @@ namespace SPV3
           {
             var serverVersion = int.Parse(sr.ReadLine()?.TrimEnd()
                                           ?? throw new Exception("Could not infer server-side version."));
-            var clientVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.Major;
+            var clientVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major;
 
             Version = serverVersion;
             Content    = $"Update loader to {serverVersion:D4}";
