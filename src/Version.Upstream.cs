@@ -28,14 +28,14 @@ using static HXE.Net.DefaultHttpClient;
 
 namespace SPV3
 {
-    public partial class Version
+  public partial class Version
   {
     public class VersionUpstream : INotifyPropertyChanged
     {
-      private const string Header = "https://builds.n2.network/spv3/HEADER.txt";
-      private       string _address;
-      private       string _content;
-      private       int    _version;
+      private const string Latest = "https://github.com/HaloSPV3/HCE/raw/meta/latest.xml";
+      private string _address;
+      private string _content;
+      private System.Version _version;
 
       private Visibility _visibility = Visibility.Collapsed;
 
@@ -72,7 +72,8 @@ namespace SPV3
         }
       }
 
-      public int Version
+      // TODO: rename to NewVersion
+      public System.Version Version
       {
         get => _version;
         set
@@ -89,18 +90,18 @@ namespace SPV3
       {
         try
         {
-          Client.Timeout = TimeSpan.FromSeconds(30);
-          using (var rm = await Client.GetAsync(Header))
-          using (var rs = rm.Content.ReadAsStream())
+          Client.Timeout = TimeSpan.FromSeconds(10);
+          using (var rm = await Client.GetAsync(Latest))
+          using (var rs = await rm.Content.ReadAsStreamAsync())
           using (var sr = new StreamReader(rs
                                            ?? throw new Exception("Could not get response stream.")))
           {
-            var serverVersion = int.Parse(sr.ReadLine()?.TrimEnd()
+            var serverVersion = System.Version.Parse(sr.ReadLine()?.TrimEnd()
                                           ?? throw new Exception("Could not infer server-side version."));
-            var clientVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major;
+            var clientVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
             Version = serverVersion;
-            Content    = $"Update loader to {serverVersion:D4}";
+            Content    = $"Update loader to {serverVersion}";
             Visibility = serverVersion > clientVersion ? Visibility.Visible : Visibility.Collapsed;
             Address    = sr.ReadLine()?.TrimEnd() ?? throw new Exception("Could not infer update ZIP.");
           }
