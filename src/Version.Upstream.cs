@@ -95,16 +95,16 @@ namespace SPV3
           using (var rm = await Client.GetAsync(Latest))
           using (var rs = await rm.Content.ReadAsStreamAsync())
           using (var sr = new StreamReader(rs
-                                           ?? throw new Exception("Could not get response stream.")))
+                                           ?? throw new NullReferenceException("There was a 'success' response from the server, but the expected content was not found.")))
           {
             var serverVersion = System.Version.Parse(sr.ReadLine()?.TrimEnd()
-                                          ?? throw new Exception("Could not infer server-side version."));
+                                          ?? throw new NullReferenceException("Could not infer server-side version."));
             var clientVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
             Version = serverVersion;
             Content    = $"Update loader to {serverVersion}";
             Visibility = serverVersion > clientVersion ? Visibility.Visible : Visibility.Collapsed;
-            Address    = sr.ReadLine()?.TrimEnd() ?? throw new Exception("Could not infer update ZIP.");
+            Address    = sr.ReadLine()?.TrimEnd() ?? throw new NullReferenceException("Update manifest did not contain file URL.");
           }
           Client.Timeout = oldTimeout;
         }
