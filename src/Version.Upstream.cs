@@ -90,6 +90,7 @@ namespace SPV3
       {
         try
         {
+          var oldTimeout = Client.Timeout;
           Client.Timeout = TimeSpan.FromSeconds(10);
           using (var rm = await Client.GetAsync(Latest))
           using (var rs = await rm.Content.ReadAsStreamAsync())
@@ -105,6 +106,7 @@ namespace SPV3
             Visibility = serverVersion > clientVersion ? Visibility.Visible : Visibility.Collapsed;
             Address    = sr.ReadLine()?.TrimEnd() ?? throw new Exception("Could not infer update ZIP.");
           }
+          Client.Timeout = oldTimeout;
         }
         catch (Exception)
         {
