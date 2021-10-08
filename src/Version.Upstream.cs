@@ -21,12 +21,14 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Serialization;
 using SPV3.Annotations;
 using static HXE.Net.DefaultHttpClient;
-using System.Threading.Tasks;
 
 namespace SPV3
 {
@@ -111,8 +113,9 @@ namespace SPV3
                     using (var sr = new StreamReader(rs
                                                      ?? throw new NullReferenceException("There was a 'success' response from the server, but the expected content was not found.")))
                     {
-                        var serverVersion = System.Version.Parse(sr.ReadLine()?.TrimEnd()
-                                                     ?? throw new NullReferenceException("Could not infer server-side version."));
+                        var latest = (HXE.Latest)new XmlSerializer(typeof(HXE.Latest)).Deserialize(rs);
+                        var app = latest.Apps.First(x => x.name.Equals("SPV3", StringComparison.Ordinal));
+                        var serverVersion = app.version;
                         var clientVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
                         Version = serverVersion;
