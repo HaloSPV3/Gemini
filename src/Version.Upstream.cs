@@ -21,10 +21,12 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using SPV3.Annotations;
 using static HXE.Net.DefaultHttpClient;
+using System.Threading.Tasks;
 
 namespace SPV3
 {
@@ -92,6 +94,18 @@ namespace SPV3
                 {
                     var oldTimeout = Client.Timeout;
                     Client.Timeout = TimeSpan.FromSeconds(10);
+
+                    try
+                    {
+                        HttpResponseMessage headerResponse = await Client.GetAsync(Latest, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+                        if (!headerResponse.IsSuccessStatusCode)
+                            throw new HttpRequestException("Failed to download update manifest.");
+                    }
+                    catch (TaskCanceledException e)
+                    {
+                        throw new TaskCanceledException($"The server did not respond within {Client.Timeout} seconds.", e);
+                    }
+
                     using (var rm = await Client.GetAsync(Latest))
                     using (var rs = await rm.Content.ReadAsStreamAsync())
                     using (var sr = new StreamReader(rs
