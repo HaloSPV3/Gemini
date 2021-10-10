@@ -1,17 +1,10 @@
-name: "CodeQL"
+name: CodeQL
 
 on:
   push:
-    branches:
-      - '**/**'
   pull_request:
     types: [opened, reopened, ready_for_review]
     # https://docs.github.com/en/code-security/secure-coding/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#avoiding-unnecessary-scans-of-pull-requests
-    paths-ignore:
-    - '**/*.md'
-    - '**/*.txt'
-  schedule:
-  - cron '35 19 * * 6'
 
 env:
   DOTNET_NOLOGO: true
