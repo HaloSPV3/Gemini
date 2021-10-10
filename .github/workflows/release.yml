@@ -78,7 +78,7 @@ jobs:
     ################
     - name: Build, Pack, and prep for Publish
       run: |
-        dotnet publish src -c Release --self-contained --use-current-runtime -p:ContinuousIntegrationBuild=true
+        dotnet publish src -c Release --self-contained -p:ContinuousIntegrationBuild=true
         src/.msb.noConfig.ps1
 
     - name: Compress Publish Artifacts
