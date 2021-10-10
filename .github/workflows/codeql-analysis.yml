@@ -1,8 +1,9 @@
-﻿name: "CodeQL"
+name: "CodeQL"
 
 on:
   push:
-
+    branches:
+      - '**/**'
   pull_request:
     types: [opened, reopened, ready_for_review]
     # https://docs.github.com/en/code-security/secure-coding/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#avoiding-unnecessary-scans-of-pull-requests
