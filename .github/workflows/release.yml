@@ -82,8 +82,8 @@ jobs:
         src/.msb.noConfig.ps1
 
     - name: Compress Publish Artifacts
-      working-directory: bin/release/win-x64/publish
-      run: 7z a "SPV3.$env:GitVersion_FullSemVer.zip" *.xml *.exe
+      working-directory: bin/release/net5.0-windows/win-x64/publish
+      run: 7z a "SPV3.$env:GitVersion_FullSemVer.zip" *.*
 
     ################
     # TESTS
@@ -134,7 +134,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: publish-artifacts
-        path: bin/release/win-x64/publish
+        path: bin/release/net5.0-windows/win-x64/publish
 
     - name: Publish to GitHub Packages
       working-directory: bin/Release
