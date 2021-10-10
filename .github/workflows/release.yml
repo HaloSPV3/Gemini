@@ -12,7 +12,7 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
-    - '.github/workflows/'
+    - '.github/**/*.*'
     - '**/*.md'
     - '**/*.txt'
 
