@@ -134,7 +134,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MahApps.Metro">
-      <Version>2.4.7</Version>
+      <Version>2.4.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0-rc.1.21451.13" />
   </ItemGroup>
