@@ -16,6 +16,9 @@
         "azsdktm.securityintellisense",
         "be5invis.toml",
         "yeluoqiuzhi.vscode-detect-charset",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "ms-dotnettools.csharp",
+        "fudge.auto-using",
+        "bierner.github-markdown-preview"
     ]
 }
