@@ -49,6 +49,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ToolCommandName>spv3</ToolCommandName>
     <UseWPF>true</UseWPF>
+    <StartupObject>SPV3.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
