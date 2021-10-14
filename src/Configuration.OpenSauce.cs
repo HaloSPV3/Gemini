@@ -19,10 +19,14 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using HXE;
 using SPV3.Annotations;
+using static System.Environment;
 using static HXE.Paths.Custom;
 
 namespace SPV3
@@ -38,6 +42,7 @@ namespace SPV3
             private bool _normalMaps = true;
             private bool _specularLighting = true;
             private bool _specularMaps = true;
+            private bool _gBufferIsAvailable;
 
             public OpenSauce Configuration { get; } = (OpenSauce) OpenSauce(Paths.Directory);
 
@@ -118,6 +123,45 @@ namespace SPV3
                 }
             }
 
+            public bool GBufferIsAvailable
+            {
+                get => _gBufferIsAvailable;
+                set
+                {
+                    if (value == _gBufferIsAvailable) return;
+                    _gBufferIsAvailable = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public static bool GetGBufferAvailability()
+            {
+                string ProgData = GetFolderPath(SpecialFolder.CommonApplicationData);
+                string Shaders = Path.Combine(ProgData, "Kornner Studios", "Halo CE", "shaders");
+                string Shaders_GB = Path.Combine(Shaders, "gbuffer_shaders.shd");
+                string Shaders_PP = Path.Combine(Shaders, "pp_shaders.shd");
+                try
+                {
+                    if (!System.IO.File.Exists(Shaders_GB) || !System.IO.File.Exists(Shaders_PP))
+                    {
+                        _ = MessageBox.Show(
+                            messageBoxText: "OpenSauce was not installed properly. Some gameplay features won't work as intended.",
+                            caption: "WARNING",
+                            MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                        return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    string msg = "An exception was thrown while checking for OpenSauce GBuffer availability." + e.ToString();
+                    HXE.Console.Error(msg);
+                    new HXE.File { Path = Paths.Exception }.AppendAllText(msg);
+                    return false;
+                }
+
+                return true;
+            }
+
             public event PropertyChangedEventHandler PropertyChanged;
 
             public void Save()
@@ -134,6 +178,9 @@ namespace SPV3
 
             public void Load()
             {
+                GBufferIsAvailable = GetGBufferAvailability();
+                GBuffer = GBufferIsAvailable;
+
                 if (!Configuration.Exists())
                 {
                     FieldOfView = Configuration.Camera.CalculateFOV();
@@ -141,7 +188,7 @@ namespace SPV3
                 }
 
                 Configuration.Load();
-                GBuffer = Configuration.Rasterizer.GBuffer.Enabled;
+                GBuffer = GBufferIsAvailable ? Configuration.Rasterizer.GBuffer.Enabled : false;
                 NormalMaps = Configuration.Rasterizer.ShaderExtensions.Object.NormalMaps;
                 DetailNormalMaps = Configuration.Rasterizer.ShaderExtensions.Object.DetailNormalMaps;
                 SpecularMaps = Configuration.Rasterizer.ShaderExtensions.Object.SpecularMaps;

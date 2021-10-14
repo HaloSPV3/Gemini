@@ -417,6 +417,7 @@
         <DockPanel>
           <Label Content="G-Buffer:" />
           <CheckBox Name="GBuffer_CheckBox"
+										IsEnabled="{Binding OpenSauce.GBufferIsAvailable}"
                     IsChecked="{Binding OpenSauce.GBuffer}"
                     ToolTip="Disabling this will deactivate VISR and Thermal Vision."
                     Click="GBufferChanged" />
