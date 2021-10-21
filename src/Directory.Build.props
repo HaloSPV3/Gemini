@@ -25,7 +25,9 @@
   <!-- Publish -->
     <PublishSingleFile>true</PublishSingleFile>
     <PublishSelfContained>false</PublishSelfContained>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <RuntimeIdentifier>win10-x86</RuntimeIdentifier>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
     <!-- Misc -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
  </PropertyGroup>
