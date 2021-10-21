@@ -40,7 +40,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup> <!-- Misc Project Items -->
     <None Include="..\README.md">
       <Link>.docs-misc\REAMDE.md</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -71,17 +71,17 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup> <!-- Commit Hash -->
     <EmbeddedResource Include="hash">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup> <!-- Logos & Icons -->
     <Resource Include="Assets\*.*" Exclude="Assets\logo*" />
     <Resource Include="Assets\logo.png" Pack="True" PackagePath="\" />
     <Content Include="Assets\logo_chief.png" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup> <!-- SxS Content -->
     <!-- Positions -->
     <Content Include="Positions\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -98,14 +98,13 @@
       <TargetPath>%(FileName)%(Extension)</TargetPath>
     </Content>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup> <!-- Project References -->
     <ProjectReference Include="$(MSBuildProjectDirectory)\..\ext\hxe\src\HXE.csproj">
       <Project>{acaa5d9f-b23d-43e1-b2df-8c03230975a1}</Project>
       <Name>HXE</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <!-- Package References -->
+  <ItemGroup> <!-- Package References -->
     <PackageReference Include="Fody" Version="6.5.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
