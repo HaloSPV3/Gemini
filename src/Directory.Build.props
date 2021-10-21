@@ -24,6 +24,7 @@
     </PublishRepositoryUrl>
   <!-- Publish -->
     <PublishSingleFile>true</PublishSingleFile>
+    <PublishSelfContained>false</PublishSelfContained>
     <RuntimeIdentifier>win10-x86</RuntimeIdentifier>
     <!-- Misc -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
