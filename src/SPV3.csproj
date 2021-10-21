@@ -118,6 +118,21 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0-rc.1.21451.13" />
   </ItemGroup>
+  <ItemGroup> <!-- IL Link -->
+    <Content Update="HXE.dll">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>false</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="sni.dll">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>false</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+  <ItemGroup> <!-- Trimmer -->
+    <TrimmerRootAssembly Include="sni" /> <!-- runtime.native.system.data.sqlclient.sni -->
+    <!--<TrimmerRootAssembly Include="System.Security" />-->
+    <TrimmerRootAssembly Include="HXE" />
+  </ItemGroup>
   <Target Name="Unshallow" BeforeTargets="CreateHashFile">
     <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/HXE/src/.msb.prebuild.ps1" />
   </Target>
