@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Prefer32Bit>false</Prefer32Bit>
-    <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <OutputType>WinExe</OutputType>
     <AssemblyName>SPV3-Loader</AssemblyName>
     <!-- Application | Resources -->
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <RootNamespace>SPV3</RootNamespace>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
     <!-- Build | General -->
-    <Deterministic>true</Deterministic>
-    <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <!-- Build | Error and warnings -->
     <!-- Build | Output -->
     <!-- Build | Events -->
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <!-- NuGet Packaging -->
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/HaloSPV3/SPV3-Loader</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HaloSPV3/SPV3-Loader</RepositoryUrl>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageTags>Halo</PackageTags>
     <PackageLicenseExpression>Zlib</PackageLicenseExpression>
     <Authors>HaloSPV3</Authors>
@@ -33,19 +23,11 @@
     <Copyright>Copyright © 2019 Emilian Roman</Copyright>
     <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <IncludeSymbols>false</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <!-- GitVersion DotNet SDK Compatibility -->
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <!-- Publish -->
-    <PublishSingleFile>true</PublishSingleFile>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <!-- Misc -->
     <ProjectGuid>{C6922C15-C0C1-46D0-B2BC-2B0FF2BAD82B}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductName>SPV3 Loader</ProductName>
     <PublisherName>Halo SPV3 Team</PublisherName>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ToolCommandName>spv3</ToolCommandName>
     <UseWPF>true</UseWPF>
     <StartupObject>SPV3.App</StartupObject>

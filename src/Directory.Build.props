@@ -1,6 +1,31 @@
-<Project>
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
  <PropertyGroup>
+  <!-- Build -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Prefer32Bit>false</Prefer32Bit>
+    <OutputPath>..\bin\$(Configuration)\</OutputPath>
    <Deterministic>true</Deterministic>
    <NoLogo>true</NoLogo>
+    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
+  <!-- GitVersion DotNet SDK Compatibility -->
+    <GenerateAssemblyFileVersionAttribute Condition="'$(UpdateVersion)' == 'true'">
+      false
+    </GenerateAssemblyFileVersionAttribute>
+  <!-- NuGet Packaging -->
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSymbols>false</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl Condition="'$(RepositoryUrl)' != ''">
+      true
+    </PublishRepositoryUrl>
+  <!-- Publish -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>win10-x86</RuntimeIdentifier>
+    <!-- Misc -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
  </PropertyGroup>
 </Project>
