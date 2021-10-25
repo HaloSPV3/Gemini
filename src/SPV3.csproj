@@ -30,6 +30,7 @@
     <PublisherName>Halo SPV3 Team</PublisherName>
     <ToolCommandName>spv3</ToolCommandName>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>SPV3.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
