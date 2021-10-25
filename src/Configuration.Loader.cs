@@ -273,7 +273,7 @@ namespace SPV3
                 }
             }
 
-            public List<string> Adapters => AllScreens
+            public static List<string> Adapters => AllScreens
               .Select
               (
                 screen => screen.DeviceName
@@ -454,7 +454,7 @@ namespace SPV3
                 }
             }
 
-            public bool Exists()
+            public static bool Exists()
             {
                 return File.Exists(Paths.Configuration);
             }
