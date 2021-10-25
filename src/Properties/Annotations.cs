@@ -1,4 +1,4 @@
-﻿/* MIT License
+/* MIT License
 
 Copyright (c) 2016 JetBrains http://www.jetbrains.com
 
@@ -39,7 +39,7 @@ namespace SPV3.Annotations
   /// <example>
   ///   <code>
   /// [CanBeNull] object Test() => null;
-  /// 
+  ///
   /// void UseTest() {
   ///   var p = Test();
   ///   var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
@@ -105,7 +105,7 @@ namespace SPV3.Annotations
   ///   <code>
   /// [StringFormatMethod("message")]
   /// void ShowError(string message, params object[] args) { /* do something */ }
-  /// 
+  ///
   /// void Foo() {
   ///   ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
   /// }
@@ -194,12 +194,12 @@ namespace SPV3.Annotations
   ///   <code>
   /// public class Foo : INotifyPropertyChanged {
   ///   public event PropertyChangedEventHandler PropertyChanged;
-  /// 
+  ///
   ///   [NotifyPropertyChangedInvocator]
   ///   protected virtual void NotifyChanged(string propertyName) { ... }
-  /// 
+  ///
   ///   string _name;
-  /// 
+  ///
   ///   public string Name {
   ///     get { return _name; }
   ///     set { _name = value; NotifyChanged("LastName"); /* Warning */ }
@@ -282,7 +282,7 @@ namespace SPV3.Annotations
   /// // A method that returns null if the parameter is null,
   /// // and not null if the parameter is not null
   /// [ContractAnnotation("null =&gt; null; notnull =&gt; notnull")]
-  /// public object Transform(object data) 
+  /// public object Transform(object data)
   /// </code>
   ///     </item>
   ///     <item>
@@ -348,7 +348,7 @@ namespace SPV3.Annotations
   ///   <code>
   /// [CannotApplyEqualityOperator]
   /// class NoEquality { }
-  /// 
+  ///
   /// class UsesNoEquality {
   ///   void Test() {
   ///     var ca1 = new NoEquality();
@@ -373,7 +373,7 @@ namespace SPV3.Annotations
   ///   <code>
   /// [BaseTypeRequired(typeof(IComponent)] // Specify requirement
   /// class ComponentAttribute : Attribute { }
-  /// 
+  ///
   /// [Component] // ComponentAttribute requires implementing IComponent interface
   /// class MyComponent : IComponent { }
   /// </code>
@@ -530,7 +530,7 @@ namespace SPV3.Annotations
   /// <example>
   ///   <code>
   /// [Pure] int Multiply(int x, int y) => x * y;
-  /// 
+  ///
   /// void M() {
   ///   Multiply(123, 42); // Waring: Return value of pure method is not used
   /// }
@@ -568,7 +568,7 @@ namespace SPV3.Annotations
   ///   <code>
   /// class Foo {
   ///   [ProvidesContext] IBarService _barService = ...;
-  /// 
+  ///
   ///   void ProcessNode(INode node) {
   ///     DoSomething(node, node.GetGlobalServices().Bar);
   ///     //              ^ Warning: use value of '_barService' field

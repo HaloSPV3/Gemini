@@ -1,4 +1,4 @@
-﻿using static System.IO.File;
+using static System.IO.File;
 using KernelConf = HXE.Kernel.Configuration;
 using LoaderConf = SPV3.Configuration.ConfigurationLoader;
 
@@ -70,11 +70,11 @@ namespace SPV3
       {
         spv3.DisplayMode = (byte) LoaderConf.DisplayModes.Borderless;
         /* spv3.ResolutionEnabled = false;
-         * 
+         *
             spv3.Window     = true;
             spv3.Borderless = true;
             spv3.Vsync      = false;
-            spv3.Elevated   = false; 
+            spv3.Elevated   = false;
           */
       }
       else
@@ -93,7 +93,7 @@ namespace SPV3
     }
 
     /// <summary>
-    /// Apply SPV3 Loader settings to the Kernel state 
+    /// Apply SPV3 Loader settings to the Kernel state
     /// and save the Kernel state to the file system.
     /// </summary>
     public static void Save()
