@@ -181,7 +181,7 @@ namespace SPV3
                 }
             }
 
-            public bool EAX
+            public bool EAX //DevSkim: ignore DS187371
             {
                 get => _eax;
                 set
@@ -368,7 +368,7 @@ namespace SPV3
 
                         /* tweaks */
                         {
-                            bw.Write(EAX);
+                            bw.Write(EAX); //DevSkim: ignore DS187371
                             bw.Write(Preset);
                             bw.Write(CinemaBars);
                             bw.Write(Elevated);
@@ -432,7 +432,7 @@ namespace SPV3
 
                         /* tweaks */
                         {
-                            EAX = br.ReadBoolean();
+                            EAX = br.ReadBoolean(); //DevSkim: ignore DS187371
                             Preset = br.ReadBoolean();
                             CinemaBars = br.ReadBoolean();
                             Elevated = br.ReadBoolean();
