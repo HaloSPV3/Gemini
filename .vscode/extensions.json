@@ -21,6 +21,7 @@
         "fudge.auto-using",
         "bierner.github-markdown-preview",
         "emilast.logfilehighlighter",
-        "fernandoescolar.vscode-solution-explorer"
+        "fernandoescolar.vscode-solution-explorer",
+        "ms-cst-e.vscode-devskim"
     ]
 }
