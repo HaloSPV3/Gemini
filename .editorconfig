@@ -4,12 +4,38 @@
 # top-most EditorConfig file
 root = true
 
-# Default settings:
 [*]
 charset = utf-8
 end_of_line = crlf
 trim_trailing_whitespace = true
 insert_final_newline = true
+# Don't use tabs for indentation.
+indent_style = space
+
+# XML project files
+[*.csproj]
+indent_size = 2
+charset = utf-8
+
+# XML config files
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_size = 2
+
+# Powershell files
+[*.ps1]
+indent_size = 2
+
+# Shell script files
+[*.sh]
+end_of_line = lf
+indent_size = 2
+[*.{cmd,bat}]
+end_of_line = crlf
+indent_size = 2
 
 # License header
 #file_header_template =
@@ -17,62 +43,44 @@ insert_final_newline = true
 [.editorconfig]
 insert_final_newline = true
 
-[*.{xml,xaml}]
-indent_style = tab
-
-[project.json]
-indent_size = 2
 
 # Generated code
 [*{_AssemblyInfo.cs,.notsupported.cs}]
 generated_code = true
-
-# Xml project files
-[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
-indent_size = 2
-
-[*.{csproj,vbproj,proj,nativeproj,locproj}]
-charset = utf-8
 
 # Xml build files
 [*.builds]
 indent_size = 2
 
 # Xml files
-[*.{xml,stylecop,resx,ruleset}]
+[*.{xml,xaml}]
 indent_size = 2
-
-# Xml config files
-[*.{props,targets,config,nuspec}]
-indent_size = 2
+indent_style = tab
 
 # YAML config files
 [*.{yml,yaml}]
 indent_size = 2
 charset=unset
 
-# Shell scripts
-[*.sh]
-end_of_line = lf
-[*.{cmd,bat}]
-end_of_line = crlf
-
-# C# files
-[*.cs]
-#### not in DotNet's editorconfig
-dotnet_separate_import_directive_groups                                  = false
-dotnet_style_parentheses_in_arithmetic_binary_operators                  = always_for_clarity : silent
-dotnet_style_parentheses_in_other_binary_operators                       = always_for_clarity : silent
-dotnet_style_parentheses_in_other_operators                              = never_if_unnecessary : silent
-dotnet_style_parentheses_in_relational_binary_operators                  = always_for_clarity : silent
-dotnet_style_prefer_compound_assignment                                  = true : silent
-dotnet_style_prefer_simplified_boolean_expressions                       = true : silent
-dotnet_style_prefer_simplified_interpolation                             = true : silent
-dotnet_remove_unnecessary_suppression_exclusions                         = <rule IDs or categories>
-dotnet_code_quality_unused_parameters                                    = unset
-csharp_style_deconstructed_variable_declaration                          = true : suggestion
-csharp_style_prefer_not_pattern                                          = true : suggestion
-csharp_style_prefer_pattern_matching                                     = true : suggestion
+# Code files
+[*.{cs,csx}]
+indent_size = 4
+insert_final_newline = true
+charset = utf-8-bom
+# not in DotNet's editorconfig
+dotnet_separate_import_directive_groups                 = false
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity : silent
+dotnet_style_parentheses_in_other_binary_operators      = always_for_clarity : silent
+dotnet_style_parentheses_in_other_operators             = never_if_unnecessary : silent
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity : silent
+dotnet_style_prefer_compound_assignment                 = true : silent
+dotnet_style_prefer_simplified_boolean_expressions      = true : silent
+dotnet_style_prefer_simplified_interpolation            = true : silent
+dotnet_remove_unnecessary_suppression_exclusions        = <rule IDs or categories>
+dotnet_code_quality_unused_parameters                   = unset
+csharp_style_deconstructed_variable_declaration         = true : suggestion
+csharp_style_prefer_not_pattern                         = true : suggestion
+csharp_style_prefer_pattern_matching                    = true : suggestion
 
 # Core editorconfig formatting - indentation
 indent_style = space
