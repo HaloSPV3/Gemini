@@ -7,19 +7,32 @@ the SPV3 loader's capabilities:
   ---------------------------------------------------------------------
   Contributor                   Acknowledgement
   ----------------------------- ---------------------------------------
-  SubhadeepJasu                 Implemented Windows 10 Tile support and
-                                improved shortcuts.
+  Emilian "Miris" Roman         Manned the ship for four years, without
+                                aid for most of that period. Wrote and
+                                rewrote the frontend and backend
+                                many times during his 2016-2020 tenure.
+                                Provided guidance and mentorship to
+                                contributors.
 
   giraffe                       Contributed the principal Discord Rich
                                 Presence code to the SPV3 project.
 
   jzimmm                        Implemented the ability to configure
                                 the SSR post-processing effect.
+                                
+  loudCDPman                    Improved Halo MCC (WinStore) detection.
 
-  VoidsShadow                   Improved HCE executable detection and
+  Noah "BinToss" Sherwin        Improved HCE executable detection and
                                 bug reports, suggestions, feedback.
+                                Promoted to project lead c. 2020.
+
+  SubhadeepJasu                 Implemented Windows 10 Tile support and
+                                improved shortcuts. Improved post-
+                                processing effect configuration and
+                                visual quality presets.
+                                
   ---------------------------------------------------------------------
 
 And of course, a thank you to all of the testers who have reported bugs
-and proposed suggestions that contributed to a much better, reliable and
+and proposed suggestions that contributed to a much better, reliable, and
 pleasant loader for the SPV3 project.
