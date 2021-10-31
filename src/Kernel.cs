@@ -44,7 +44,7 @@ namespace SPV3
       hxe.Video.GammaOn      = spv3.GammaOn;
       hxe.Video.Gamma        = spv3.Gamma;
       hxe.Video.Bless        = spv3.DisplayMode == (byte) LoaderConf.DisplayModes.Borderless;
-      hxe.Audio.Enhancements = spv3.EAX;
+      hxe.Audio.Enhancements = spv3.EAX; //DevSkim: ignore DS187371
       hxe.Input.Override     = spv3.Preset;
       hxe.Tweaks.CinemaBars  = spv3.CinemaBars;
       hxe.Tweaks.Unload      = !spv3.Shaders;
@@ -61,7 +61,7 @@ namespace SPV3
       spv3.Photo      = Exists(Paths.Photo) && hxe.Tweaks.Sensor == false;
       spv3.GammaOn    = hxe.Video.GammaOn;
       spv3.Gamma      = hxe.Video.Gamma;
-      spv3.EAX        = hxe.Audio.Enhancements;
+      spv3.EAX        = hxe.Audio.Enhancements; //DevSkim: ignore DS187371
       spv3.Preset     = hxe.Input.Override;
       spv3.CinemaBars = hxe.Tweaks.CinemaBars;
       spv3.Shaders    = hxe.Tweaks.Unload == false;
