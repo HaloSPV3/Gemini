@@ -9,7 +9,8 @@ charset = utf-8
 end_of_line = crlf
 trim_trailing_whitespace = true
 insert_final_newline = true
-indent_style = space # Don't use tabs for indentation.
+# Don't use tabs for indentation.
+indent_style = space
 
 # XML project files
 [*.{csproj,sln}]
@@ -202,19 +203,9 @@ dotnet_remove_unnecessary_suppression_exclusions        = <rule IDs or categorie
 #######################
 # MOVED
 #######################
-# Style - modifier options
-dotnet_style_require_accessibility_modifiers = for_non_interface_members : suggestion
-
 # name all constant fields using PascalCase
-dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
-dotnet_naming_rule.constant_fields_should_be_pascal_case.style    = pascal_case_style
-dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols  = constant_fields
 dotnet_naming_symbols.constant_fields.applicable_kinds   = field
 dotnet_naming_symbols.constant_fields.required_modifiers = const
-
-# Types: use keywords instead of BCL types, and permit var only when the type is clear
-dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
-dotnet_style_predefined_type_for_member_access = true:suggestion
 
 # internal and private fields should be _camelCase
 dotnet_naming_rule.camel_case_for_private_internal_fields.severity = suggestion
@@ -226,7 +217,6 @@ dotnet_naming_symbols.private_internal_fields.applicable_accessibilities = priva
 dotnet_naming_symbols.private_internal_fields.applicable_kinds = field
 
 # DotNet Code Style Defaults
-dotnet_sort_system_directives_first = true
 dotnet_style_prefer_auto_properties = true:suggestion
 dotnet_style_prefer_conditional_expression_over_assignment = true:silent
 dotnet_style_prefer_conditional_expression_over_return = true:silent
