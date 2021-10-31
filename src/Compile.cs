@@ -32,115 +32,115 @@ using static System.Reflection.Assembly;
 
 namespace SPV3
 {
-  public class Compile : INotifyPropertyChanged
-  {
-    private bool   _canCompile = true;
-    private string _status     = "Awaiting user input...";
-    private string _target     = Combine(GetFolderPath(Personal), "My Games", "Halo SPV3 Compiled");
-
-    public bool CanCompile
+    public class Compile : INotifyPropertyChanged
     {
-      get => _canCompile;
-      set
-      {
-        if (value == _canCompile) return;
-        _canCompile = value;
-        OnPropertyChanged();
-      }
+        private bool _canCompile = true;
+        private string _status = "Awaiting user input...";
+        private string _target = Combine(GetFolderPath(Personal), "My Games", "Halo SPV3 Compiled");
+
+        public bool CanCompile
+        {
+            get => _canCompile;
+            set
+            {
+                if (value == _canCompile) return;
+                _canCompile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Status
+        {
+            get => _status;
+            set
+            {
+                if (value == _status) return;
+                _status = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Target
+        {
+            get => _target;
+            set
+            {
+                if (value == _target) return;
+                _target = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public async void Commit()
+        {
+            try
+            {
+                CanCompile = false;
+
+                /**
+                 * Back up the file which permits us to compile.
+                 *
+                 * After all, we wouldn't want our end-users compiling. ^_^
+                 */
+
+                var sourceCompileFile = Combine(CurrentDirectory, Paths.Compile);
+                var backupCompileFile = Combine(GetFolderPath(ApplicationData), Paths.Compile);
+
+                if (Exists(backupCompileFile))
+                    Delete(backupCompileFile);
+
+                if (Exists(sourceCompileFile))
+                    Move(sourceCompileFile, backupCompileFile);
+
+                /**
+                 * And now... we lift off!
+                 */
+
+                var progress = new Progress<Status>();
+                progress.ProgressChanged +=
+                  (o, s) => Status =
+                    $"Compiling SPV3. Please wait until this is finished! - {(decimal)s.Current / s.Total:P}";
+
+                await Task.Run(() => { Compiler.Compile(CurrentDirectory, Paths.Packages(Target), progress); });
+
+                /**
+                 * Copy data...
+                 */
+
+                Copy(AppContext.BaseDirectory, Combine(Target, "spv3.exe"));
+                Copy(Combine(CurrentDirectory, "hxe.exe"), Combine(Target, "hxe.exe"));
+
+                /**
+                 * Restore the file which permits us to compile!
+                 */
+
+                if (Exists(backupCompileFile))
+                    Move(backupCompileFile, sourceCompileFile);
+
+                var redundantHxeExecutable = Combine(Paths.Packages(Target), HXE.Paths.Executable);
+
+                if (Exists(redundantHxeExecutable))
+                    Delete(redundantHxeExecutable);
+
+                Status = "Compilation has successfully finished!";
+                CanCompile = true;
+            }
+            catch (Exception e)
+            {
+                var msg = "Compilation failed.\n Error:  " + e.ToString() + "\n";
+                var log = (HXE.File)Paths.Exception;
+                log.AppendAllText(msg);
+                Status = msg;
+                CanCompile = true;
+            }
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
-
-    public string Status
-    {
-      get => _status;
-      set
-      {
-        if (value == _status) return;
-        _status = value;
-        OnPropertyChanged();
-      }
-    }
-
-    public string Target
-    {
-      get => _target;
-      set
-      {
-        if (value == _target) return;
-        _target = value;
-        OnPropertyChanged();
-      }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    public async void Commit()
-    {
-      try
-      {
-        CanCompile = false;
-
-        /**
-         * Back up the file which permits us to compile.
-         *
-         * After all, we wouldn't want our end-users compiling. ^_^
-         */
-
-        var sourceCompileFile = Combine(CurrentDirectory,               Paths.Compile);
-        var backupCompileFile = Combine(GetFolderPath(ApplicationData), Paths.Compile);
-
-        if (Exists(backupCompileFile))
-          Delete(backupCompileFile);
-
-        if (Exists(sourceCompileFile))
-          Move(sourceCompileFile, backupCompileFile);
-
-        /**
-         * And now... we lift off!
-         */
-
-        var progress = new Progress<Status>();
-        progress.ProgressChanged +=
-          (o, s) => Status =
-            $"Compiling SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
-
-        await Task.Run(() => { Compiler.Compile(CurrentDirectory, Paths.Packages(Target), progress); });
-
-        /**
-         * Copy data...
-         */
-
-        Copy(AppContext.BaseDirectory, Combine(Target, "spv3.exe"));
-        Copy(Combine(CurrentDirectory, "hxe.exe"), Combine(Target, "hxe.exe"));
-
-        /**
-         * Restore the file which permits us to compile!
-         */
-
-        if (Exists(backupCompileFile))
-          Move(backupCompileFile, sourceCompileFile);
-
-        var redundantHxeExecutable = Combine(Paths.Packages(Target), HXE.Paths.Executable);
-
-        if (Exists(redundantHxeExecutable))
-          Delete(redundantHxeExecutable);
-
-        Status     = "Compilation has successfully finished!";
-        CanCompile = true;
-      }
-      catch (Exception e)
-      {
-        var msg = "Compilation failed.\n Error:  " + e.ToString() + "\n";
-        var log = (HXE.File)Paths.Exception;
-        log.AppendAllText(msg);
-        Status     = msg;
-        CanCompile = true;
-      }
-    }
-
-    [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-  }
 }
