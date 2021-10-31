@@ -15,5 +15,6 @@
     "commitizen",
     "pull-requests", // pull requests workflow
     "SPV3"
-  ]
+  ],
+  "xml.codeLens.enabled": true
 }
