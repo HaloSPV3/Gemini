@@ -22,6 +22,9 @@
         "bierner.github-markdown-preview",
         "emilast.logfilehighlighter",
         "fernandoescolar.vscode-solution-explorer",
-        "ms-cst-e.vscode-devskim"
+        "ms-cst-e.vscode-devskim",
+        "aliasadidev.nugetpackagemanagergui",
+        "rogalmic.vscode-xml-complete",
+        "redhat.vscode-xml"
     ]
 }
