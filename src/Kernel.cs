@@ -1,4 +1,4 @@
-using static System.IO.File;
+﻿using static System.IO.File;
 using KernelConf = HXE.Kernel.Configuration;
 using LoaderConf = SPV3.Configuration.ConfigurationLoader;
 
