@@ -63,16 +63,6 @@ jobs:
     - name: Set NuGet.org Credentials
       run: dotnet nuget update source "nuget.org" -u USERNAME -p ${{ secrets.NUGET_TOKEN }} --store-password-in-clear-text
 
-    # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitversion/index.md
-    # GitVersion.MSBuild is already used to stamp the assembly/package versions.
-    # This action is used to ensure we can pass the appropriate variables to Semantic Release
-    - name: Setup GitVersion
-      uses: GitTools/actions/gitversion/setup@v0.9.10
-      id: gitversion
-      with:
-        versionSpec: '5.x'
-    - run: echo {{ steps.gitversion.outputs.fullSemVer }}
-
     ################
     # BUILD
     ################
@@ -114,15 +104,6 @@ jobs:
     ################
     # RELEASE
     ################
-    # GitReleaseManager or Semantic Release?
-
-    # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitreleasemanager/index.md
-    - name: Setup GitReleaseManager
-      id: gitRM
-      uses: gittools/actions/gitreleasemanager/setup@v0.9.10
-      with:
-        versionSpec: '0.12.x'
-
     # https://github.com/marketplace/actions/action-for-semantic-release
     - name: Setup Semantic Release
       run: npx semantic-release
