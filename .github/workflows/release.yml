@@ -75,8 +75,9 @@ jobs:
         src/.msb.noConfig.ps1
 
     - name: Compress Publish Artifacts
-      working-directory: bin/Release/${{ env.TFM }}/${{ env.RID }}/publish
-      run: 7z a "SPV3.$env:GitVersion_FullSemVer.zip" *.*
+      run: |
+         Set-Location .\bin\Release\$env:TFM\$env:RID\publish
+         7z a "SPV3.$env:GitVersion_FullSemVer.zip" *.*
 
     ################
     # TESTS
