@@ -117,7 +117,7 @@
     <PackageReference Include="MahApps.Metro">
       <Version>2.4.9</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0-rc.2.21480.5" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup> <!-- IL Link -->
     <Content Update="HXE.dll">
