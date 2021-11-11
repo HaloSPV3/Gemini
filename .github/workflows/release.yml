@@ -3,6 +3,7 @@ name: release
 # TODO
 # - Get AssemblyName, TargetFramework (TFM), RuntimeIdentifier (RID) from Directory.Build.props, *.csproj
 # - Overwrite `$env:RID and `$env:TFM with build props, allowing workflows to be driven by the project(s)
+# - support multiple ASSEMBLYNAME parameters for matrices
 
 on:
   push:
@@ -19,7 +20,7 @@ jobs:
     env:
       RID: "win-x86"
       TFM: "net5.0-windows"
-      ASSEMBLYNAME: "SPV3-Loader" # Later, must support multiple Assembly Names for matrix strategies
+      ASSEMBLYNAME: "SPV3-Loader"
       CSPROJ_RELPATH: "./src/SPV3.csproj"
 
     steps:
