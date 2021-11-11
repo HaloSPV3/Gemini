@@ -24,7 +24,6 @@ jobs:
     ################
     # SETUP
     ################
-
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0 # Required by GitVersion
@@ -50,7 +49,7 @@ jobs:
     ################
     # BUILD
     ################
-    - name: Build, Pack, and prep for Publish
+    - name: dotnet-publish
       run: |
         dotnet publish src/SPV3.csproj -c Release --no-self-contained -p:ContinuousIntegrationBuild=true
         src/.msb.noConfig.ps1
