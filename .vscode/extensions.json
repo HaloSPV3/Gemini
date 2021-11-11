@@ -25,6 +25,7 @@
         "ms-cst-e.vscode-devskim",
         "aliasadidev.nugetpackagemanagergui",
         "rogalmic.vscode-xml-complete",
-        "redhat.vscode-xml"
+        "redhat.vscode-xml",
+        "k--kato.docomment"
     ]
 }
