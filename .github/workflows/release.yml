@@ -19,6 +19,8 @@ jobs:
     env:
       RID: "win-x86"
       TFM: "net5.0-windows"
+      ASSEMBLYNAME: "SPV3-Loader" # Later, must support multiple Assembly Names for matrix strategies
+      CSPROJ_RELPATH: "./src/SPV3.csproj"
 
     steps:
     ################
@@ -51,18 +53,14 @@ jobs:
     ################
     - name: dotnet-publish
       run: |
-        dotnet publish src/SPV3.csproj -c Release --no-self-contained -p:ContinuousIntegrationBuild=true
+        dotnet publish $env:CSPROJ_RELPATH -c Release --no-self-contained -p:ContinuousIntegrationBuild=true
         src/.msb.noConfig.ps1
 
     # required variables: TargetFramework, RuntimeIdentifier, GitVersion_FullSemVer
     - name: Compress-PublishArtifacts
       run: |
-        Write-Output "NOTE: step 'Compress-PublishArtifacts' requires  `$env:TFM, `$env:RID ";
-
-        $projectName = "SPV3-Loader";
         $publishPath = Resolve-Path ".\bin\Release\$env:TFM\$env:RID\publish";
-        $archiveName = "$projectName.$env:TFM-$env:RID.$env:GitVersion_FullSemVer.zip";
-
+        $archiveName = "$env:ASSEMBLYNAME.$env:TFM-$env:RID.$env:GitVersion_FullSemVer.zip";
         Set-Location $publishPath;
         Compress-Archive -Path $publishPath -DestinationPath $archiveName -CompressionLevel Optimal;
 
