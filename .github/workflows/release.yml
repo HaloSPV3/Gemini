@@ -26,10 +26,6 @@ jobs:
         fetch-depth: 0 # Required by tj-actions/changed-files and GitVersion
         submodules: 'recursive'
 
-    - name: Extract branch name
-      uses: nelonoel/branch-name@v1.0.1
-      id: extract_branch
-
     - name: Setup Node
       uses: actions/setup-node@v2
     - run: npm install
