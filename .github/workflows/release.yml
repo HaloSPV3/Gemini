@@ -1,5 +1,9 @@
 name: release
 
+# TODO
+# - Get AssemblyName, TargetFramework (TFM), RuntimeIdentifier (RID) from Directory.Build.props, *.csproj
+# - Overwrite `$env:RID and `$env:TFM with build props, allowing workflows to be driven by the project(s)
+
 on:
   push:
     branches: [ main ]
