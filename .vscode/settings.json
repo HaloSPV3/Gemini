@@ -23,5 +23,11 @@
   ],
   "devskim.ignoreRulesList": [
     "DS187371"
-  ]
+  ],
+  "markdownlint.config": {
+    "MD025": {
+      "front_matter_title": ""
+    },
+    "MD028": false
+  }
 }
