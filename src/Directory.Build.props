@@ -31,12 +31,9 @@
     <!-- Misc -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
-  <PropertyGroup
-    Condition="'$(TargetFramework)' == 'net6.0-windows'
-            Or '$(TargetFramework)' == 'net6.0' ">
-    <EnableCompressionInSingleFile>
-      true
-    </EnableCompressionInSingleFile>
+  <PropertyGroup Condition="'$(TargetFramework).TrimEnd(`-windows`)' == 'net6.0'
+                         Or '$(TargetFramework).TrimEnd(`-windows`)' == 'net7.0' ">
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <PublishTrimmed>true</PublishTrimmed>
