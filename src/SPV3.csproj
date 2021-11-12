@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <Platform>AnyCPU</Platform>
+    <Prefer32Bit>false</Prefer32Bit>
+    <OutputPath>..\bin\$(Configuration)\</OutputPath>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <AssemblyName>SPV3-Loader</AssemblyName>
     <StartupObject>SPV3.App</StartupObject>
