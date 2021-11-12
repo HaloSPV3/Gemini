@@ -121,14 +121,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MahApps.Metro">
       <Version>2.4.9</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0-rc.2.21480.5" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup> <!-- IL Link -->
     <Content Update="HXE.dll">
