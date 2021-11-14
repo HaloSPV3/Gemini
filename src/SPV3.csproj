@@ -29,6 +29,7 @@
     <Copyright>Copyright © 2019 Emilian Roman</Copyright>
     <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <!-- Publish -->
     <RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <!-- GitVersion DotNet SDK Compatibility -->
