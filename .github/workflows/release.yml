@@ -7,7 +7,7 @@ name: release
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
     paths-ignore:
       - ".github/**/*.*"
       - "**/*.md"
