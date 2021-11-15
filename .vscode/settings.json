@@ -1,19 +1,18 @@
 {
   "conventionalCommits.scopes": [
     "contributing", // contributing.md
-    "deps", // Node dependencies
+    "deps", // Node,  dependencies
     "release", // Release workflow
     "semantic-release",
-    "giversion",
+    "gitversion",
     "codeql",
     "ci", // CI workflow
     "vscode", // VSCode configs
     "editorconfig",
     "readme",
     "renovate",
-    "conv-pr", // Conventional Pull Request config
+    "cpr", // Conventional Pull Request
     "commitizen",
-    "pull-requests", // pull requests workflow
     "SPV3"
   ],
   "xml.codeLens.enabled": true,
