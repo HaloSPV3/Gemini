@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2019 Emilian Roman
+ * Copyright (c) 2021 Noah Sherwin
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -40,8 +41,8 @@ namespace SPV3
     {
       var startInfo = new ProcessStartInfo()
       {
-          FileName = @"https://github.com/HaloSPV3/SPV3-Loader/releases/" +
-                    $"v{Assembly.Version.ToString(3)}",
+          FileName = @"https://github.com/HaloSPV3/SPV3-Loader/compare/" +
+                    $"v{Assembly.Version.ToString(3)}...v{Upstream.Version.ToString(3)}",
           UseShellExecute = true
       };
       Process.Start(startInfo);
