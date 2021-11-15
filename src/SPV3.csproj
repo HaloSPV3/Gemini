@@ -7,7 +7,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
-    <AssemblyName>SPV3-Loader</AssemblyName>
+    <AssemblyName>SPV3.Loader</AssemblyName>
     <StartupObject>SPV3.App</StartupObject>
     <!-- Application | Resources -->
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
@@ -54,14 +54,14 @@
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
       <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageIconUrl>https://github.com/HaloSPV3/SPV3-Loader/blob/main/src/Assets/logo.png</PackageIconUrl>
+    <PackageIconUrl>https://github.com/HaloSPV3/SPV3.Loader/blob/main/src/Assets/logo.png</PackageIconUrl>
     <PackageIcon>logo.png</PackageIcon>
-    <PackageLicenseUrl>https://github.com/HaloSPV3/SPV3-Loader/blob/main/COPYRIGHT</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/HaloSPV3/SPV3.Loader/blob/main/COPYRIGHT</PackageLicenseUrl>
     <PackageLicenseExpression>Zlib</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/HaloSPV3/SPV3-Loader</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/HaloSPV3/SPV3.Loader</PackageProjectUrl>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <PackageReleaseNotes>https://github.com/HaloSPV3-Loader/releases/v$(Version)</PackageReleaseNotes> <!-- TODO: Set up NuGet release notes -->
-    <RepositoryUrl>https://github.com/HaloSPV3/SPV3-Loader</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/HaloSPV3.Loader/releases/v$(Version)</PackageReleaseNotes> <!-- TODO: Set up NuGet release notes -->
+    <RepositoryUrl>https://github.com/HaloSPV3/SPV3.Loader</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup> <!-- Misc Project Items -->
     <None Include="..\README.md">
