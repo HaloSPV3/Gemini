@@ -29,7 +29,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ProductName>SPV3 Loader</ProductName>
     <PublisherName>Halo SPV3 Team</PublisherName>
-    <ToolCommandName>spv3</ToolCommandName>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
