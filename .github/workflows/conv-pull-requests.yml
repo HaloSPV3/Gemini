@@ -12,7 +12,7 @@ jobs:
         uses: Namchee/conventional-pr@v0.6.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
+          close: false
           check_draft: true
           ignore_bot: true
-          close: false
           link_issue: false
