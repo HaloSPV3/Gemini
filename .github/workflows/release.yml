@@ -20,7 +20,7 @@ jobs:
     env:
       RID: "win-x86"
       TFM: "net5.0-windows"
-      ASSEMBLYNAME: "SPV3-Loader"
+      ASSEMBLYNAME: "SPV3.Loader"
       CSPROJ_RELPATH: "./src/SPV3.csproj"
 
     steps:

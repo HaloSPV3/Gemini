@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "debug_net5.0-windows_win10-x64",
-            "program": "${workspaceFolder}/bin/Debug/net5.0-windows/win10-x64/SPV3-Loader.exe",
+            "program": "${workspaceFolder}/bin/Debug/net5.0-windows/win10-x64/SPV3.Loader.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
