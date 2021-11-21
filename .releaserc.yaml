@@ -30,7 +30,7 @@
     ['@semantic-release/github',
       {
         "assets": [
-          {"path": "bin/release/win-x64/publish"}
+          {"path": "bin/release/net5.0-windows/win-x86/publish"}
         ]
       }
     ]
