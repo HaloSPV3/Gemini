@@ -7,11 +7,11 @@ name: release
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
     paths-ignore:
-      - ".github/**/*.*"
-      - "**/*.md"
-      - "**/*.txt"
+    - ".github/**/*.*"
+    - "**/*.md"
+    - "**/*.txt"
 
 jobs:
   build:
@@ -21,96 +21,66 @@ jobs:
       RID: "win-x86"
       TFM: "net5.0-windows"
       ASSEMBLYNAME: "SPV3.Loader"
-      CSPROJ_RELPATH: "./src/SPV3.csproj"
+      PROJPATH: "./src/${{ env.ASSEMBLYNAME }}.csproj"
 
     steps:
-      ################
-      # SETUP
-      ################
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Required by GitVersion
-          submodules: "recursive"
+    ################
+    # SETUP
+    ################
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Required by GitVersion
+        submodules: "recursive"
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
-      - run: npm install
-      # Dependents: Semantic Release
+    - name: Setup Node
+      uses: actions/setup-node@v2
+    - run: npm install # Required by Semantic Release
 
-      # Authenticates packages to push to GPR
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.x" # SDK Version to use.
-          include-prerelease: true
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: "6.0.x"
+        include-prerelease: true
+    - name: Add GitHub NuGet Package Repository
+      run: dotnet nuget add source https://nuget.pkg.github.com/HaloSPV3/index.json -n "github" -u USERNAME -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+    - name: Set NuGet.org Credentials
+      run: dotnet nuget update source "nuget.org" -u USERNAME -p ${{ secrets.NUGET_TOKEN }} --store-password-in-clear-text
 
-      - name: Add GitHub Package Repository
-        run: dotnet nuget add source https://nuget.pkg.github.com/HaloSPV3/index.json -n "github" -u USERNAME -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+    ################
+    # BUILD
+    ################
+    - name: dotnet-publish
+      run: |
+        dotnet publish $env:CSPROJ_RELPATH -c Release --no-self-contained -p:ContinuousIntegrationBuild=true
+        src/.msb.noConfig.ps1
 
-      - name: Set NuGet.org Credentials
-        run: dotnet nuget update source "nuget.org" -u USERNAME -p ${{ secrets.NUGET_TOKEN }} --store-password-in-clear-text
+    # required variables: TargetFramework, RuntimeIdentifier, GitVersion_FullSemVer
+    - name: Compress-PublishArtifacts
+      shell: pwsh
+      run: |
+        $publishPath = Resolve-Path ".\bin\Release\$env:TFM\$env:RID\publish";
+        $archiveName = "$env:ASSEMBLYNAME.$env:TFM-$env:RID.$env:GitVersion_FullSemVer.zip";
+        Compress-Archive -Path $publishPath -DestinationPath $archiveName -CompressionLevel Optimal;
 
-      ################
-      # BUILD
-      ################
-      - name: dotnet-publish
-        run: |
-          dotnet publish $env:CSPROJ_RELPATH -c Release --no-self-contained -p:ContinuousIntegrationBuild=true
-          src/.msb.noConfig.ps1
+    ################
+    # RELEASE
+    ################
+    # https://github.com/semantic-release/semantic-release
+    - name: Semantic Release
+      run: npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
 
-      # required variables: TargetFramework, RuntimeIdentifier, GitVersion_FullSemVer
-      - name: Compress-PublishArtifacts
-        run: |
-          $publishPath = Resolve-Path ".\bin\Release\$env:TFM\$env:RID\publish";
-          $archiveName = "$env:ASSEMBLYNAME.$env:TFM-$env:RID.$env:GitVersion_FullSemVer.zip";
-          Set-Location $publishPath;
-          Compress-Archive -Path $publishPath -DestinationPath $archiveName -CompressionLevel Optimal;
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: publish-artifacts
+        path: bin/Release/${{ env.TFM }}/${{ env.RID }}/publish
 
-      ################
-      # TESTS
-      # TODO: Move Unit Tests to separate workflows
-      ################
+    - name: Publish to GitHub Packages
+      working-directory: bin/Release
+      run: dotnet nuget push *.nupkg -s "github" -k ${{ secrets.GITHUB_TOKEN }}
 
-      #- name: Setup OpenCover, XUnit for .NET Framework
-      #  run: |
-      #    choco install opencover.portable
-      #    choco install xunit
-      #
-      # docs: https://github.com/codecov/example-csharp
-      # - name: Write Unit Test Reports
-      #   working-directory: ./src/
-      #   run: OpenCover.Console.exe -register:user -target:"xunit.console.x86.exe" -targetargs:"..\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:"..\hxe_coverage.xml"
-      #
-      # - name: Upload unit test reports to CodeCoverage
-      #   uses: codecov/codecov-action@v1
-      #   with:
-      #     # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-      #     files: ./hxe_coverage.xml
-      #     flags: unittests # optional
-      #     functionalities: recursesubs # search for code in git submodules as well
-      #     # name: codecov-umbrella # optional
-      #     # fail_ci_if_error: true # optional (default = false)
-      #     # verbose: true # optional (default = false)
-
-      ################
-      # RELEASE
-      ################
-      # https://github.com/marketplace/actions/action-for-semantic-release
-      - name: Setup Semantic Release
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: publish-artifacts
-          path: bin/Release/${{ env.TFM }}/${{ env.RID }}/publish
-
-      - name: Publish to GitHub Packages
-        working-directory: bin/Release
-        run: dotnet nuget push *.nupkg -s "github" -k ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to nuget.org
-        working-directory: bin/Release
-        run: dotnet nuget push *.nupkg -s "nuget.org" -k ${{ secrets.NUGET_TOKEN }}
+    - name: Publish to nuget.org
+      working-directory: bin/Release
+      run: dotnet nuget push *.nupkg -s "nuget.org" -k ${{ secrets.NUGET_TOKEN }}
