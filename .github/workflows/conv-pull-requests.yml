@@ -3,7 +3,6 @@
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]
 permissions:
   checks: write
   issues: write
@@ -17,3 +16,4 @@ jobs:
         uses: Namchee/conventional-pr@v0.9.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
+          ignored_users: snyk-bot
