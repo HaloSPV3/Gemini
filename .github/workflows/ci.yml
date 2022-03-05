@@ -29,12 +29,12 @@ jobs:
         buildConfig: [ "Release", "Debug" ]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: 'recursive'
         fetch-depth: 0
 
-    - uses: actions/setup-dotnet@v1
+    - uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x' # SDK Version to use.
         include-prerelease: true
@@ -56,12 +56,12 @@ jobs:
         buildConfig: [ "Release", "Debug" ]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: 'recursive'
         fetch-depth: 0
 
-    - uses: actions/setup-dotnet@v1
+    - uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x' # SDK Version to use.
         include-prerelease: true
