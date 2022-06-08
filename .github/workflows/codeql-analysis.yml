@@ -35,7 +35,7 @@ jobs:
         include-prerelease: true
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         config-file: 'lgtm.yml'
         languages: 'csharp'
@@ -47,4 +47,4 @@ jobs:
       run: dotnet build --no-incremental -p:UseSharedCompilation=false SPV3.csproj
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
