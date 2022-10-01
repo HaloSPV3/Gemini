@@ -34,7 +34,7 @@ jobs:
         submodules: 'recursive'
         fetch-depth: 0
 
-    - uses: actions/setup-dotnet@v2
+    - uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x' # SDK Version to use.
         include-prerelease: true
@@ -61,7 +61,7 @@ jobs:
         submodules: 'recursive'
         fetch-depth: 0
 
-    - uses: actions/setup-dotnet@v2
+    - uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x' # SDK Version to use.
         include-prerelease: true
