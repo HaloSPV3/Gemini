@@ -6,17 +6,12 @@
     "@halospv3/hce.shared": "github:HaloSPV3/HCE.Shared"
   },
   "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    },
     "husky": {
       "hooks": {
-        "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
       }
     }
   },
   "scripts": {
-    "cm": "cz",
     "prepare": "husky install"
   }
 }
