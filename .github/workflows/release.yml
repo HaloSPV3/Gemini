@@ -27,16 +27,16 @@ jobs:
     ################
     # SETUP
     ################
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0 # Required by GitVersion
         submodules: "recursive"
 
     - name: Setup Node
-      uses: actions/setup-node@v4.0.0
+      uses: actions/setup-node@v4.0.2
     - run: npm install # Required by Semantic Release
 
-    - uses: actions/setup-dotnet@v3
+    - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: "6.0.x"
         include-prerelease: true
@@ -72,7 +72,7 @@ jobs:
         NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: publish-artifacts
         path: bin/Release/${{ env.TFM }}/${{ env.RID }}/publish
