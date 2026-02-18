@@ -2,16 +2,13 @@
   "name": "SPV3.Loader",
   "description": "Automate commit messages quality, changelog generation, and release creation",
   "version": "1.0.0",
-  "devDependencies": {
-    "@halospv3/hce.shared": "github:HaloSPV3/HCE.Shared"
-  },
-  "config": {
-    "husky": {
-      "hooks": {
-      }
-    }
-  },
   "scripts": {
-    "prepare": "husky install"
+    "postinstall": "husky",
+    "build": "dotnet build",
+    "test": "dotnet test",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@halospv3/hce.shared-config": "^3.4.3"
   }
 }
