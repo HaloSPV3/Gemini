@@ -9,6 +9,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@halospv3/hce.shared-config": "^3.4.3"
+    "@halospv3/hce.shared-config": "^3.5.2"
   }
 }
