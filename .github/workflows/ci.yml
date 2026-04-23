@@ -1,71 +1,59 @@
-﻿name: ci
-# This workflow demonstrates the minimal requirements for building, publishing, and packing the Solution with DotNet CLI
-
+name: ci
 
 on:
   push:
-    branches: [ main, develop ]
-    paths:
-    - '!**/*.md'
-    - '!**/*.txt'
+    # ignore release branches; See file://./release.yml#on.push.branches , file://./../../.releaserc.ts
+    branches-ignore: [main, develop]
+    paths-ignore:
+      - "**/*.md"
+      - "**/*.txt"
+  workflow_call:
 
-  pull_request:
-    types:
-    - opened
-    - reopened
-    - ready_for_review
+env:
+  DOTNET_ROLL_FORWARD: Major
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: 1
+  # https://stackoverflow.com/questions/75180149/how-to-cache-dotnet-installation-in-github-actions
+  # access to "usr/lib/dotnet" is denied
+  DOTNET_INSTALL_DIR: /usr/share/dotnet
+  DOTNET_ROOT: /usr/share/dotnet
 
 jobs:
-  ################
-  # BUILD
-  ################
-  build:
-    name: Build
-    runs-on: windows-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        buildConfig: [ "Release", "Debug" ]
-
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: 'recursive'
-        fetch-depth: 0
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - id: isDepUpBranch
+        name: Is the current branch a dep-upgrade branch?
+        shell: bash
+        run: |
+          BRANCH_NAME="$(git branch --show-current)"
+          echo "BRANCH_NAME is '$BRANCH_NAME'"
+          [[ "$BRANCH_NAME" =~ ^(renovate|dependabot)/.+$ ]] &&
+            echo $'V=true\nIMMUTABLE_CACHE=--immutable-cache' > $GITHUB_OUTPUT ||
+            echo 'This branch is not a dep-upgrade branch.'
 
-    - uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '6.0.x' # SDK Version to use.
-        include-prerelease: true
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          cache: yarn
+      - run: yarn install --immutable ${{ steps.isDepUpBranch.outputs.IMMUTABLE_CACHE}}
 
-    - name: Build
-      working-directory: ./src/
-      run: dotnet build SPV3.csproj -c ${{ matrix.buildConfig }}
+      - uses: actions/setup-dotnet@v5
 
-  ################
-  # BUILD AND PUBLISH
-  ################
-  publish:
-    name: Publish
-    runs-on: windows-latest
+      # if run simultaneously, the logs would be a mess
+      - name: Build (Debug)
+        run: dotnet build -c Debug -check
+      # if run simultaneously, the logs would be a mess
+      - name: Build (Release)
+        run: dotnet build -c Release -check
 
-    strategy:
-      fail-fast: false
-      matrix:
-        buildConfig: [ "Release", "Debug" ]
-
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: 'recursive'
-        fetch-depth: 0
-
-    - uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '6.0.x' # SDK Version to use.
-        include-prerelease: true
-
-    - name: Build and Publish
-      working-directory: ./src/
-      run: dotnet publish SPV3.csproj -c ${{ matrix.buildConfig }}
+      - name: Publish (Release)
+        run: dotnet restore -t:PublishAll
