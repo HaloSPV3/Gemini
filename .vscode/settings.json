@@ -1,20 +1,4 @@
 {
-  "conventionalCommits.scopes": [
-    "contributing", // contributing.md
-    "deps", // Node,  dependencies
-    "release", // Release workflow
-    "semantic-release",
-    "gitversion",
-    "codeql",
-    "ci", // CI workflow
-    "vscode", // VSCode configs
-    "editorconfig",
-    "readme",
-    "renovate",
-    "cpr", // Conventional Pull Request
-    "commitizen",
-    "SPV3"
-  ],
   "xml.codeLens.enabled": true,
   "github-actions.workflows.pinned.workflows": [
     ".github/workflows/release.yml",
