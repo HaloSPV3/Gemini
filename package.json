@@ -2,6 +2,7 @@
   "name": "SPV3.Loader",
   "description": "Automate commit messages quality, changelog generation, and release creation",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "postinstall": "husky",
     "build": "dotnet build",
