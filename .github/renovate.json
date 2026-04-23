@@ -6,25 +6,22 @@
   "semanticCommitType": "build",
   "packageRules": [
     {
-      "matchDepTypes": [
-        "dependencies"
-      ],
-      "matchCategories": [
-        "js"
-      ],
+      "matchCategories": [ "js" ],
+      "semanticCommitType": "build",
+      "semanticCommitScope": "deps-dev",
+      "automerge": true
+    },
+    {
+      "matchDatasources": [ "nuget" ],
+      "matchDepTypes": [ "dependencies" ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "deps"
     },
     {
-      "matchDepTypes": [
-        "devDependencies"
-      ],
-      "matchCategories": [
-        "js"
-      ],
+      "matchDatasources": [ "nuget" ],
+      "matchDepTypes": [ "devDependencies" ],
       "semanticCommitType": "build",
-      "semanticCommitScope": "deps-dev",
-      "automerge": true
+      "semanticCommitScope": "deps-dev"
     }
   ]
 }
