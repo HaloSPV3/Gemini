@@ -31,6 +31,7 @@ const RAW_RUNTIME_STATE =
           ["@commitlint/config-conventional", "npm:20.5.0"],\
           ["@commitlint/types", "npm:20.5.0"],\
           ["@halospv3/hce.shared-config", "virtual:2025dd6cf61a7448ccf7ddb5c95837229b8cf35180d50c4d05e7891d7ef4d3eea23506b11aa0ed56364a012d9b5de14f7b09d5a076734dcacb812acffb050095#npm:3.5.2"],\
+          ["@types/node", "npm:24.12.2"],\
           ["commitlint", "npm:20.5.0"],\
           ["eslint", "virtual:2025dd6cf61a7448ccf7ddb5c95837229b8cf35180d50c4d05e7891d7ef4d3eea23506b11aa0ed56364a012d9b5de14f7b09d5a076734dcacb812acffb050095#npm:10.2.1"],\
           ["husky", "npm:9.1.7"],\
@@ -6166,6 +6167,7 @@ const RAW_RUNTIME_STATE =
           ["@commitlint/config-conventional", "npm:20.5.0"],\
           ["@commitlint/types", "npm:20.5.0"],\
           ["@halospv3/hce.shared-config", "virtual:2025dd6cf61a7448ccf7ddb5c95837229b8cf35180d50c4d05e7891d7ef4d3eea23506b11aa0ed56364a012d9b5de14f7b09d5a076734dcacb812acffb050095#npm:3.5.2"],\
+          ["@types/node", "npm:24.12.2"],\
           ["commitlint", "npm:20.5.0"],\
           ["eslint", "virtual:2025dd6cf61a7448ccf7ddb5c95837229b8cf35180d50c4d05e7891d7ef4d3eea23506b11aa0ed56364a012d9b5de14f7b09d5a076734dcacb812acffb050095#npm:10.2.1"],\
           ["husky", "npm:9.1.7"],\
