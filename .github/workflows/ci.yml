@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     # ignore release branches; See file://./release.yml#on.push.branches , file://./../../.releaserc.ts
-    branches-ignore: [main, develop]
+    branches-ignore: [ main, develop ]
     paths-ignore:
       - "**/*.md"
       - "**/*.txt"
