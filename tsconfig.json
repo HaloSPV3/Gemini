@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2024",
+      "ESNext.Array",
+      "ESNext.Collection",
+      "ESNext.Error",
+      "ESNext.Iterator",
+      "ESNext.Promise"
+    ],
+    "module": "nodenext",
+    "target": "es2024",
+    "types": [ "node" ],
+
+    "skipLibCheck": true,
+
+    "erasableSyntaxOnly": true,
+    "allowImportingTsExtensions": true,
+    "composite": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedDeclarations": true,
+    "isolatedModules": true,
+    "noEmitOnError": true,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "verbatimModuleSyntax": true
+  },
+  "compileOnSave": true,
+  "include": [ "**/.*.ts", "**/*.ts" ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/tsconfig.json",
+    "**/tsconfig.*.json"
+  ]
+}
