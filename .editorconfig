@@ -6,7 +6,6 @@ root = true
 
 [*]
 charset = utf-8
-end_of_line = crlf
 trim_trailing_whitespace = true
 insert_final_newline = true
 # Don't use tabs for indentation.
