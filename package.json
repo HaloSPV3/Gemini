@@ -3,6 +3,7 @@
   "description": "Automate commit messages quality, changelog generation, and release creation",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "postinstall": "husky",
     "build": "dotnet build",
