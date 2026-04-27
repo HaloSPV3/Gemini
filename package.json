@@ -13,7 +13,7 @@
     "@commitlint/config-conventional": "^20.5.0",
     "@commitlint/types": "^20.5.0",
     "@halospv3/hce.shared-config": "^3.5.2",
-    "commitlint": "^20.5.0",
+    "commitlint": "^20.5.2",
     "eslint": "^10.2.1",
     "husky": "^9.1.7",
     "typescript": "^6.0.3"
