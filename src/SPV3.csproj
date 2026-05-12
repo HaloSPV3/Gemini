@@ -123,18 +123,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup> <!-- Package References -->
-    <PackageReference Include="GitVersion.MsBuild" Version="6.0.2">
+    <PackageReference Include="GitVersion.MsBuild" Version="6.7.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MahApps.Metro">
-      <Version>2.4.10</Version>
+      <Version>2.4.11</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.8" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="10.0.8" />
   </ItemGroup>
   <ItemGroup> <!-- IL Link -->
     <Content Update="HXE.dll">
