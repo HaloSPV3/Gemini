@@ -31,14 +31,14 @@ jobs:
       pull-requests: write # comment on released pull requests
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Required by GitVersion, Semantic Release
           submodules: recursive
 
       - run: corepack enable
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           cache: yarn
           node-version-file: .nvmrc
@@ -46,7 +46,7 @@ jobs:
       - run: yarn install --immutable --immutable-cache
 
       - name: Setup Dotnet
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           cache: dotnet
 
