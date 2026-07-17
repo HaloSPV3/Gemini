@@ -1,27 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>bintoss/renovate-config"
-  ],
-  "semanticCommitType": "build",
-  "packageRules": [
-    {
-      "matchCategories": [ "js" ],
-      "semanticCommitType": "build",
-      "semanticCommitScope": "deps-dev",
-      "automerge": true
-    },
-    {
-      "matchDatasources": [ "nuget" ],
-      "matchDepTypes": [ "dependencies" ],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "deps"
-    },
-    {
-      "matchDatasources": [ "nuget" ],
-      "matchDepTypes": [ "devDependencies" ],
-      "semanticCommitType": "build",
-      "semanticCommitScope": "deps-dev"
-    }
+    "github>BinToss/renovate-config"
   ]
 }
