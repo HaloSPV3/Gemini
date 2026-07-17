@@ -1,0 +1,81 @@
+<Project>
+  <PropertyGroup>
+    <RepoRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), '.git/index'))</RepoRoot>
+    <_HCESharedDirSuffix>node_modules/@halospv3/hce.shared-config/</_HCESharedDirSuffix>
+    <HCESharedDir>$(RepoRoot)$(_HCESharedDirSuffix)</HCESharedDir>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</RestoreLockedMode>
+    <NuGetLockFilePath Condition="'$(Configuration)' == Debug">$(MSBuildProjectDirectory)/packages-debug.lock.json</NuGetLockFilePath>
+    <NuGetLockFilePath Condition="'$(Configuration)' == Debug AND Exists('$(MSBuildProjectDirectory)/packages.$(_MSBuildProjectNameUnderscored).lock.json')">
+      $(MSBuildProjectDirectory)/packages-debug.$(_MSBuildProjectNameUnderscored).lock.json
+    </NuGetLockFilePath>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Yarn-unplugged HCE.Shared" Condition="!Exists($(HCESharedDir))">
+    <_yarnUnplugged>$([System.IO.Path]::Join("$(RepoRoot)", '.yarn/unplugged/'))</_yarnUnplugged>
+    <_yarnUnpluggedChildren>$([System.IO.Directory]::GetDirectories($(_yarnUnplugged)))</_yarnUnpluggedChildren>
+    <_yarnUnpluggedHceSharedMatches>$([System.Text.RegularExpressions.Regex]::Matches(
+      $(_yarnUnpluggedChildren),'@halospv3-hce.shared-config-[^;]+')
+      )</_yarnUnpluggedHceSharedMatches>
+    <_yarnUnplugged_lastMatch>$([MSBuild]::Subtract(
+      $(_yarnUnpluggedHceSharedMatches.Split(';').Length),
+      1
+      ))</_yarnUnplugged_lastMatch>
+    <HCESharedDir>$(_yarnUnplugged)$(_yarnUnpluggedHceSharedMatches.Split(';')[$(_yarnUnplugged_lastMatch)])/$(_HCESharedDirSuffix)</HCESharedDir>
+  </PropertyGroup>
+
+  <Import Project="$(HCESharedDir)dotnet/HCE.Shared.CI.props" />
+  <Import Project="$(HCESharedDir)dotnet/ZipPublishDir.targets" />
+  <!-- Must be explicitly targeted via 'dotnet restore project.csproj -t:PublishAll'. May lead to incompatibility errors -->
+  <Import Project="$(HCESharedDir)dotnet/PublishAll.targets" />
+  <!-- Auto-runs after 'dotnet build' if (TargetFramework != '') AND (RuntimeIdentifier == '') AND (RuntimeIdentifiers != '');
+    The SDK iterates through TargetFrameworks for each TFM. We iterate each TFM's RIDs.
+    Intended for ensuring RID-dependent build permutations are successful before attempting PublishAll. -->
+  <Import Project="$(HCESharedDir)dotnet/BuildEachRID.targets" />
+  <!-- Created by Brant Burnett - https://github.com/dotnet/wpf/issues/2930#issuecomment-2562793707
+    WPF projects tend to leave dangling "_wpftmp" directories in the "artifacts/bin" directory, clean these up after build -->
+  <Import Project="$(HCESharedDir)dotnet/CleanupWpfTmp.targets" />
+
+  <PropertyGroup>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- Build -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Prefer32Bit>false</Prefer32Bit>
+    <OutputPath>..\bin\$(Configuration)\</OutputPath>
+    <Deterministic>true</Deterministic>
+    <NoLogo>true</NoLogo>
+    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
+    <!-- NuGet Packaging -->
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSymbols>false</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl Condition="'$(RepositoryUrl)' != ''">
+      true
+    </PublishRepositoryUrl>
+    <!-- Publish -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishSelfContained>false</PublishSelfContained>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+    <!-- Misc -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+  <PropertyGroup Condition="
+  (
+    '$(TargetFramework).TrimEnd(`-windows`)' == 'net6.0'
+    Or '$(TargetFramework).TrimEnd(`-windows`)' == 'net7.0'
+  )
+  And '$(PulishSelfContained)' == 'true' ">
+    <!-- Requires net6.0 or later and 'PublishSelfContained' -->
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
+
+</Project>
