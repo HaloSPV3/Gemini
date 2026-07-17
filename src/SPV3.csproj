@@ -27,6 +27,8 @@
     <PublisherName>Halo SPV3 Team</PublisherName>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <GenerateClickOnceMaGenerate>false</GenerateClickOnceMaGenerate>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -156,8 +158,5 @@
   </Target>
   <Target Name="CreateHashFile" BeforeTargets="PreBuildEvent">
     <Exec Command="git rev-parse --short HEAD &gt; $(MSBuildProjectDirectory)/hash" />
-  </Target>
-  <Target Name="NoConfig" AfterTargets="PostBuildEvent;AfterPublish">
-    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/hxe/src/.msb.noConfig.ps1" />
   </Target>
 </Project>
