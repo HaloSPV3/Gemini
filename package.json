@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "postinstall": "husky",
-    "build": "dotnet build",
+    "build": "dotnet build && dotnet build -c:Release",
     "test": "dotnet test",
     "prepare": "husky"
   },
