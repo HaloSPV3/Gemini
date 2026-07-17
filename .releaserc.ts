@@ -3,28 +3,50 @@ import { getConfig } from '@halospv3/hce.shared-config/semanticReleaseConfigDotn
 import type { Options } from 'semantic-release';
 import type { PluginSpecSRCommitAnalyzer, PluginSpecSRReleaseNotesGen } from '@halospv3/hce.shared-config/semanticReleaseConfig';
 import type { RuleObjects } from '@semantic-release/commit-analyzer';
+import { exit } from 'node:process';
 
 const projectsToPublish = ['./src/HXE.csproj'];
 const projectsToPackAndPush: Parameters<typeof getConfig>[1] = [];
-const config: Options | Error = await getConfig(
+
+async function tryGetConfig(projectsToPublish: Parameters<typeof getConfig>[0], projectsToPackAndPush: Parameters<typeof getConfig>[1]) {
+  try {
+    return await getConfig(projectsToPublish, projectsToPackAndPush);
+  }
+  catch (error: unknown) {
+    const _error = Error.isError(error)
+      ? error
+      : new Error('unknown error', { cause: error });
+    console.error(_error);
+    return _error;
+  }
+}
+
+const config: Options | Error = await tryGetConfig(
   projectsToPublish,
   projectsToPackAndPush,
-).catch((error: unknown) => {
-  const _error = Error.isError(error)
-    ? error
-    : new Error('unknown error', { cause: error });
-  console.error(_error);
-  return _error;
-});
+);
 
-if (!Error.isError(config)) {
+if (Error.isError(config)) {
+  console.error(config);
+  exit(1);
+}
+else {
+  config.branches ??= [];
+  if (typeof config.branches === 'string' || !('find' in config.branches))
+    config.branches = [config.branches];
+  const developmentBranch = config.branches.find(branch =>
+    typeof branch !== 'string' && branch.name === 'develop',
+  ) as Exclude<typeof config.branches[number], string>;
+  developmentBranch.prerelease = 'alpha';
   const sRCA = config.plugins?.find<PluginSpecSRCommitAnalyzer>(
-    (p): p is PluginSpecSRCommitAnalyzer => p[0] === '@semantic-release/commit-analyzer'
+    (p): p is PluginSpecSRCommitAnalyzer => p[0] === '@semantic-release/commit-analyzer',
   );
   if (sRCA) {
-    if (typeof sRCA[1].releaseRules === 'string')
-      throw new Error('releaseRules was a string; the path to a module whose default export provides RuleObject[]. I don\'t want to deal with it.');
-    let releaseRules = sRCA[1].releaseRules ??= [];
+    const releaseRules = (
+      typeof sRCA[1].releaseRules === 'string'
+        ? (await import(sRCA[1].releaseRules) as (Exclude<typeof sRCA[1]['releaseRules'], string>))
+        : sRCA[1].releaseRules
+    ) ?? [];
     sRCA[1].releaseRules = [
       ...releaseRules,
       { type: 'revert', subject: '!(feat|fix|perf)', release: false },
@@ -33,7 +55,7 @@ if (!Error.isError(config)) {
   }
 
   const releaseNotesGen = config.plugins?.find<PluginSpecSRReleaseNotesGen>(
-    (p): p is PluginSpecSRReleaseNotesGen => p[0] === '@semantic-release/release-notes-generator'
+    (p): p is PluginSpecSRReleaseNotesGen => p[0] === '@semantic-release/release-notes-generator',
   );
   if (releaseNotesGen) {
     releaseNotesGen[1].preset = 'conventionalcommits';
