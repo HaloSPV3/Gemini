@@ -13,14 +13,14 @@
     "sdks": "yarn dlx @yarnpkg/sdks"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^20.5.0",
-    "@commitlint/types": "^20.5.0",
+    "@commitlint/config-conventional": "^21.2.0",
+    "@commitlint/types": "^21.2.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.1",
     "@eslint/markdown": "^8.0.3",
     "@halospv3/hce.shared-config": "^3.11.1",
-    "@types/node": "^24",
-    "commitlint": "^20.5.0",
+    "@types/node": "^26",
+    "commitlint": "^21.2.1",
     "eslint": "^10.7.0",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
