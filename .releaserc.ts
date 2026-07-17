@@ -5,7 +5,7 @@ import type { PluginSpecSRCommitAnalyzer, PluginSpecSRReleaseNotesGen } from '@h
 import type { RuleObjects } from '@semantic-release/commit-analyzer';
 import { exit } from 'node:process';
 
-const projectsToPublish = ['./src/HXE.csproj'];
+const projectsToPublish = ['./src/SPV3.csproj'];
 const projectsToPackAndPush: Parameters<typeof getConfig>[1] = [];
 
 async function tryGetConfig(projectsToPublish: Parameters<typeof getConfig>[0], projectsToPackAndPush: Parameters<typeof getConfig>[1]) {
