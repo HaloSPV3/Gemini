@@ -9,6 +9,7 @@
     "build": "dotnet build && dotnet build -c:Release",
     "test": "dotnet test",
     "prepare": "husky",
+    "restore": "dotnet restore && dotnet restore -p:Configuration=Release",
     "sdks": "yarn dlx @yarnpkg/sdks"
   },
   "devDependencies": {
