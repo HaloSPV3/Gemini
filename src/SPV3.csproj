@@ -58,6 +58,14 @@
     <PackageReleaseNotes>https://github.com/HaloSPV3.Loader/releases/v$(Version)</PackageReleaseNotes> <!-- TODO: Set up NuGet release notes -->
     <RepositoryUrl>https://github.com/HaloSPV3/SPV3.Loader</RepositoryUrl>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(NET6_0_OR_GREATER)' == 'true'">
+    <PublishSingleFile>true</PublishSingleFile>
+    <!-- Requires net6.0 or later and 'PublishSelfContained' -->
+    <EnableCompressionInSingleFile Condition="'$(PublishSelfContained)' == 'true'">$(NET6_OR_LATER)</EnableCompressionInSingleFile>
+    <PublishTrimmed Condition="'$(UseWPF)' != 'true' and '$(UseWindowsForms)' != 'true'"></PublishTrimmed>
+  </PropertyGroup>
+
   <ItemGroup> <!-- Misc Project Items -->
     <None Include="..\README.md">
       <Link>.docs-misc\REAMDE.md</Link>

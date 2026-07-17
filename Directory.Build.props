@@ -53,11 +53,4 @@
     <!-- Misc -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(NET6_0_OR_GREATER)' == 'true'">
-    <PublishSingleFile>true</PublishSingleFile>
-    <!-- Requires net6.0 or later and 'PublishSelfContained' -->
-    <EnableCompressionInSingleFile Condition="'$(PublishSelfContained)' == 'true'">$(NET6_OR_LATER)</EnableCompressionInSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
-  </PropertyGroup>
-
 </Project>
