@@ -70,7 +70,7 @@
     '$(TargetFramework).TrimEnd(`-windows`)' == 'net6.0'
     Or '$(TargetFramework).TrimEnd(`-windows`)' == 'net7.0'
   )
-  And '$(PulishSelfContained)' == 'true' ">
+  And '$(PublishSelfContained)' == 'true' ">
     <!-- Requires net6.0 or later and 'PublishSelfContained' -->
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
