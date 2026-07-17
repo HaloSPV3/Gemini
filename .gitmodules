@@ -2,7 +2,6 @@
 	path = ext/hxe
 	url = https://github.com/HaloSPV3/hxe
 	branch = main
-	ignore = all
 [submodule "ext/HCE.DRP"]
 	path = ext/HCE.DRP
 	url = https://github.com/HaloSPV3/HCE.DRP.git
