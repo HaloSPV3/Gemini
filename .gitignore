@@ -361,3 +361,5 @@ hash
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.tsOut
