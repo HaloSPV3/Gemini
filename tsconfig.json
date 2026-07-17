@@ -11,6 +11,7 @@
     "module": "nodenext",
     "target": "es2024",
     "types": [ "node" ],
+    "outDir": ".tsOut",
 
     "skipLibCheck": true,
 
@@ -38,6 +39,7 @@
   "compileOnSave": true,
   "include": [ "**/.*.ts", "**/*.ts" ],
   "exclude": [
+    ".tsOut",
     "**/node_modules/**",
     "**/tsconfig.json",
     "**/tsconfig.*.json"
