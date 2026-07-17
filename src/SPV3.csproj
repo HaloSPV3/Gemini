@@ -3,7 +3,6 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <Prefer32Bit>false</Prefer32Bit>
-    <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <TargetFrameworks>net462;net480;net6.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <AssemblyName>SPV3.Loader</AssemblyName>
