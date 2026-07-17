@@ -152,12 +152,12 @@
     <TrimmerRootAssembly Include="HXE" />
   </ItemGroup>
   <Target Name="Unshallow" BeforeTargets="CreateHashFile">
-    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/HXE/src/.msb.prebuild.ps1" />
+    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/hxe/src/.msb.prebuild.ps1" />
   </Target>
   <Target Name="CreateHashFile" BeforeTargets="PreBuildEvent">
     <Exec Command="git rev-parse --short HEAD &gt; $(MSBuildProjectDirectory)/hash" />
   </Target>
   <Target Name="NoConfig" AfterTargets="PostBuildEvent;AfterPublish">
-    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/HXE/src/.msb.noConfig.ps1" />
+    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/hxe/src/.msb.noConfig.ps1" />
   </Target>
 </Project>
