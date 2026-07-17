@@ -10,6 +10,10 @@
     <NuGetLockFilePath Condition="'$(Configuration)' == Debug AND Exists('$(MSBuildProjectDirectory)/packages.$(_MSBuildProjectNameUnderscored).lock.json')">
       $(MSBuildProjectDirectory)/packages-debug.$(_MSBuildProjectNameUnderscored).lock.json
     </NuGetLockFilePath>
+
+    <NET6_0_OR_GREATER>$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))</NET6_0_OR_GREATER>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <EnableBleedingEdgeHXE Condition="'$(CI)' != 'true'">false</EnableBleedingEdgeHXE>
   </PropertyGroup>
 
   <PropertyGroup Label="Yarn-unplugged HCE.Shared" Condition="!Exists($(HCESharedDir))">
@@ -38,43 +42,21 @@
   <Import Project="$(HCESharedDir)dotnet/CleanupWpfTmp.targets" />
 
   <PropertyGroup>
-    <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <!-- Build -->
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Prefer32Bit>false</Prefer32Bit>
-    <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <Deterministic>true</Deterministic>
     <NoLogo>true</NoLogo>
     <FileAlignment>512</FileAlignment>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
-    <!-- NuGet Packaging -->
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <IncludeSymbols>false</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PublishRepositoryUrl Condition="'$(RepositoryUrl)' != ''">
-      true
-    </PublishRepositoryUrl>
     <!-- Publish -->
-    <PublishSingleFile>true</PublishSingleFile>
     <PublishSelfContained>false</PublishSelfContained>
-    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <TrimmerDefaultAction>link</TrimmerDefaultAction>
     <!-- Misc -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
-  <PropertyGroup Condition="
-  (
-    '$(TargetFramework).TrimEnd(`-windows`)' == 'net6.0'
-    Or '$(TargetFramework).TrimEnd(`-windows`)' == 'net7.0'
-  )
-  And '$(PublishSelfContained)' == 'true' ">
+  <PropertyGroup Condition="'$(NET6_0_OR_GREATER)' == 'true'">
+    <PublishSingleFile>true</PublishSingleFile>
     <!-- Requires net6.0 or later and 'PublishSelfContained' -->
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <EnableCompressionInSingleFile Condition="'$(PublishSelfContained)' == 'true'">$(NET6_OR_LATER)</EnableCompressionInSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
