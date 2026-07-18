@@ -98,11 +98,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup> <!-- Commit Hash -->
-    <EmbeddedResource Include="hash">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
   <ItemGroup> <!-- Logos & Icons -->
     <Resource Include="Assets\*.*" Exclude="Assets\logo*" />
     <Resource Include="Assets\logo.png" Pack="True" PackagePath="\" />
@@ -156,10 +151,4 @@
     <!--<TrimmerRootAssembly Include="System.Security" />-->
     <TrimmerRootAssembly Include="HXE" />
   </ItemGroup>
-  <Target Name="Unshallow" BeforeTargets="CreateHashFile">
-    <Exec Command="pwsh $(MSBuildProjectDirectory)/../ext/hxe/src/.msb.prebuild.ps1" />
-  </Target>
-  <Target Name="CreateHashFile" BeforeTargets="PreBuildEvent">
-    <Exec Command="git rev-parse --short HEAD &gt; $(MSBuildProjectDirectory)/hash" />
-  </Target>
 </Project>

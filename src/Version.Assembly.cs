@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  * Copyright (c) 2021 Noah Sherwin
  *
@@ -90,12 +90,7 @@ namespace SPV3
 				var version = GetExecutingAssembly()?.GetName().Version;
 				if (version.Major == 0) return;
 
-				var refHash = new Func<string>(() =>
-				{
-					using (var stream = GetExecutingAssembly().GetManifestResourceStream("SPV3.hash"))
-					using (var reader = new StreamReader(stream ?? throw new InvalidOperationException()))
-						return reader.ReadToEnd();
-				})();
+				var refHash = GitVersionInformation.ShortSha;
 
 				Version = version;
 				Content = $"Version {version}-{refHash.ToUpper()}";
