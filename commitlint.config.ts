@@ -6,6 +6,7 @@ const scopes = {
   'deps-dev': 'Affects dependencies not included at runtime.',
   README: 'Affects "README.md".',
   release: 'Reserved for release commits.',
+  Version: 'Affects "src/Version.*".',
   vscode: 'Affects "./vscode/**/*".'
 };
 
