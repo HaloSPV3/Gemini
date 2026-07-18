@@ -8,6 +8,17 @@
         "resolved": "6.0.2",
         "contentHash": "rGj4pT8bBEb92ajJR0eFvY5apVy/U4GdsQ89vLBv0zFGJ8ddEv3Fq27mN8oI+xmCIdx6PlPs+JNFA22FCR5VjA=="
       },
+      "HXE": {
+        "type": "Direct",
+        "requested": "[2.3.1, )",
+        "resolved": "2.3.1",
+        "contentHash": "ZO/oqIut5wJTOt8VnTIKFKylNl6dptwMzl0+2IBCNT5q0qsBAC/oErthacgfYucKkav72bbMix9WSOZSBD3HoQ==",
+        "dependencies": {
+          "System.Memory": "4.6.3",
+          "System.Text.Json": "4.6.0",
+          "XmlSourceGenerator": "1.0.2-alpha"
+        }
+      },
       "MahApps.Metro": {
         "type": "Direct",
         "requested": "[2.4.10, )",
@@ -490,14 +501,6 @@
         "type": "Transitive",
         "resolved": "1.0.2-alpha",
         "contentHash": "66rw74gtxwAsQEWoBq5xyT/g90zqNUCp4ubbHnGSpGQPm51FgUdC71WBvadb1dBJ/2YYX4pDKBnI7OQPIVSJIQ=="
-      },
-      "hxe": {
-        "type": "Project",
-        "dependencies": {
-          "System.Memory": "[4.6.3, )",
-          "System.Text.Json": "[4.6.0, )",
-          "XmlSourceGenerator": "[1.0.2-alpha, )"
-        }
       }
     },
     ".NETFramework,Version=v4.6.2/win7-x86": {
@@ -569,6 +572,17 @@
         "requested": "[6.0.2, )",
         "resolved": "6.0.2",
         "contentHash": "rGj4pT8bBEb92ajJR0eFvY5apVy/U4GdsQ89vLBv0zFGJ8ddEv3Fq27mN8oI+xmCIdx6PlPs+JNFA22FCR5VjA=="
+      },
+      "HXE": {
+        "type": "Direct",
+        "requested": "[2.3.1, )",
+        "resolved": "2.3.1",
+        "contentHash": "ZO/oqIut5wJTOt8VnTIKFKylNl6dptwMzl0+2IBCNT5q0qsBAC/oErthacgfYucKkav72bbMix9WSOZSBD3HoQ==",
+        "dependencies": {
+          "System.Memory": "4.6.3",
+          "System.Text.Json": "4.6.0",
+          "XmlSourceGenerator": "1.0.2-alpha"
+        }
       },
       "MahApps.Metro": {
         "type": "Direct",
@@ -1070,14 +1084,6 @@
         "type": "Transitive",
         "resolved": "1.0.2-alpha",
         "contentHash": "66rw74gtxwAsQEWoBq5xyT/g90zqNUCp4ubbHnGSpGQPm51FgUdC71WBvadb1dBJ/2YYX4pDKBnI7OQPIVSJIQ=="
-      },
-      "hxe": {
-        "type": "Project",
-        "dependencies": {
-          "System.Memory": "[4.6.3, )",
-          "System.Text.Json": "[4.6.0, )",
-          "XmlSourceGenerator": "[1.0.2-alpha, )"
-        }
       }
     },
     ".NETFramework,Version=v4.8/win7-x86": {
@@ -1157,6 +1163,15 @@
         "requested": "[6.0.2, )",
         "resolved": "6.0.2",
         "contentHash": "rGj4pT8bBEb92ajJR0eFvY5apVy/U4GdsQ89vLBv0zFGJ8ddEv3Fq27mN8oI+xmCIdx6PlPs+JNFA22FCR5VjA=="
+      },
+      "HXE": {
+        "type": "Direct",
+        "requested": "[2.3.1, )",
+        "resolved": "2.3.1",
+        "contentHash": "ZO/oqIut5wJTOt8VnTIKFKylNl6dptwMzl0+2IBCNT5q0qsBAC/oErthacgfYucKkav72bbMix9WSOZSBD3HoQ==",
+        "dependencies": {
+          "XmlSourceGenerator": "1.0.2-alpha"
+        }
       },
       "MahApps.Metro": {
         "type": "Direct",
@@ -1651,12 +1666,6 @@
         "type": "Transitive",
         "resolved": "1.0.2-alpha",
         "contentHash": "66rw74gtxwAsQEWoBq5xyT/g90zqNUCp4ubbHnGSpGQPm51FgUdC71WBvadb1dBJ/2YYX4pDKBnI7OQPIVSJIQ=="
-      },
-      "hxe": {
-        "type": "Project",
-        "dependencies": {
-          "XmlSourceGenerator": "[1.0.2-alpha, )"
-        }
       }
     },
     "net6.0-windows7.0/win7-x86": {

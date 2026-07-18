@@ -1,5 +1,4 @@
 <Solution>
   <Project Path="ext/HCE.DRP/src/DRP.vcxproj" Type="C#" />
-  <Project Path="ext/hxe/src/HXE.csproj" />
   <Project Path="src/SPV3.csproj" />
 </Solution>
