@@ -4,9 +4,9 @@
     ".NETFramework,Version=v4.6.2": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.0.2, )",
-        "resolved": "6.0.2",
-        "contentHash": "rGj4pT8bBEb92ajJR0eFvY5apVy/U4GdsQ89vLBv0zFGJ8ddEv3Fq27mN8oI+xmCIdx6PlPs+JNFA22FCR5VjA=="
+        "requested": "[6.8.2, )",
+        "resolved": "6.8.2",
+        "contentHash": "eTd8jUiogUXpVssFyDWWdMrPr5Cdc57tWaQ3Cv/eMIhnumOHZhDkc/wcy8hYU8aH7NS4VT2w/pHjVITDSTXMGw=="
       },
       "HXE": {
         "type": "Direct",
@@ -549,9 +549,9 @@
     ".NETFramework,Version=v4.8": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.0.2, )",
-        "resolved": "6.0.2",
-        "contentHash": "rGj4pT8bBEb92ajJR0eFvY5apVy/U4GdsQ89vLBv0zFGJ8ddEv3Fq27mN8oI+xmCIdx6PlPs+JNFA22FCR5VjA=="
+        "requested": "[6.8.2, )",
+        "resolved": "6.8.2",
+        "contentHash": "eTd8jUiogUXpVssFyDWWdMrPr5Cdc57tWaQ3Cv/eMIhnumOHZhDkc/wcy8hYU8aH7NS4VT2w/pHjVITDSTXMGw=="
       },
       "HXE": {
         "type": "Direct",
@@ -1120,9 +1120,9 @@
     "net6.0-windows7.0": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.0.2, )",
-        "resolved": "6.0.2",
-        "contentHash": "rGj4pT8bBEb92ajJR0eFvY5apVy/U4GdsQ89vLBv0zFGJ8ddEv3Fq27mN8oI+xmCIdx6PlPs+JNFA22FCR5VjA=="
+        "requested": "[6.8.2, )",
+        "resolved": "6.8.2",
+        "contentHash": "eTd8jUiogUXpVssFyDWWdMrPr5Cdc57tWaQ3Cv/eMIhnumOHZhDkc/wcy8hYU8aH7NS4VT2w/pHjVITDSTXMGw=="
       },
       "HXE": {
         "type": "Direct",
