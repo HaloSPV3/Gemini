@@ -2,6 +2,15 @@
   "version": 1,
   "dependencies": {
     ".NETFramework,Version=v4.6.2": {
+      "Costura.Fody": {
+        "type": "Direct",
+        "requested": "[6.2.0, )",
+        "resolved": "6.2.0",
+        "contentHash": "jaX+A6sw6pI7lkLDTvxN7zU8Ja/a50N2xPKF6RYy0J6QF62wVg+hJMXJph2K8XarDaAlxQ82EaKv3fAvUNyRpg==",
+        "dependencies": {
+          "Fody": "6.9.3"
+        }
+      },
       "GitVersion.MsBuild": {
         "type": "Direct",
         "requested": "[6.8.2, )",
@@ -50,6 +59,11 @@
         "dependencies": {
           "Microsoft.Xaml.Behaviors.Wpf": "1.1.19"
         }
+      },
+      "Fody": {
+        "type": "Transitive",
+        "resolved": "6.9.3",
+        "contentHash": "1CUGgFdyECDKgi5HaUBhdv6k+VG9Iy4OCforGfHyar3xQXAJypZkzymgKtWj/4SPd6nSG0Qi7NH71qHrDSZLaA=="
       },
       "Microsoft.Bcl.AsyncInterfaces": {
         "type": "Transitive",
@@ -138,6 +152,15 @@
     },
     ".NETFramework,Version=v4.6.2/win7-x86": {},
     ".NETFramework,Version=v4.8": {
+      "Costura.Fody": {
+        "type": "Direct",
+        "requested": "[6.2.0, )",
+        "resolved": "6.2.0",
+        "contentHash": "jaX+A6sw6pI7lkLDTvxN7zU8Ja/a50N2xPKF6RYy0J6QF62wVg+hJMXJph2K8XarDaAlxQ82EaKv3fAvUNyRpg==",
+        "dependencies": {
+          "Fody": "6.9.3"
+        }
+      },
       "GitVersion.MsBuild": {
         "type": "Direct",
         "requested": "[6.8.2, )",
@@ -186,6 +209,11 @@
         "dependencies": {
           "Microsoft.Xaml.Behaviors.Wpf": "1.1.19"
         }
+      },
+      "Fody": {
+        "type": "Transitive",
+        "resolved": "6.9.3",
+        "contentHash": "1CUGgFdyECDKgi5HaUBhdv6k+VG9Iy4OCforGfHyar3xQXAJypZkzymgKtWj/4SPd6nSG0Qi7NH71qHrDSZLaA=="
       },
       "Microsoft.Bcl.AsyncInterfaces": {
         "type": "Transitive",

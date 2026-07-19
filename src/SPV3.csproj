@@ -27,7 +27,6 @@
     <PublisherName>Halo SPV3 Team</PublisherName>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <GenerateClickOnceMaGenerate>false</GenerateClickOnceMaGenerate>
   </PropertyGroup>
 
@@ -147,6 +146,24 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+
+  <Choose>
+    <When Condition="$(TargetFramework.StartsWith('net4'))">
+      <PropertyGroup Label="Additional Properties (NET4)">
+        <!-- Disabling these two properties prevents the output of (App).exe.config. Yippee! -->
+        <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+        <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
+        <WeaverConfiguration>
+          <Weavers>
+            <Costura />
+          </Weavers>
+        </WeaverConfiguration>
+      </PropertyGroup>
+      <ItemGroup Label="Additional References (NET4)">
+        <PackageReference Include="Costura.Fody" Version="6.2.0" PrivateAssets="all" />
+      </ItemGroup>
+    </When>
+  </Choose>
 
   <ItemGroup> <!-- IL Link -->
     <Content Update="HXE.dll">

@@ -363,3 +363,4 @@ hash
 !.yarn/versions
 
 .tsOut
+src/FodyWeavers.xsd
