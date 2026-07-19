@@ -483,7 +483,7 @@ namespace SPV3
                 {
                     while (!Directory.Exists(path))
                     {
-                        path = Directory.GetParent(path)?.FullName;
+                        path = Directory.GetParent(path)?.FullName ?? Directory.GetDirectoryRoot(path);
                         if (path == CurrentDirectory)
                         {
                             Status = "Enter a valid path.";
