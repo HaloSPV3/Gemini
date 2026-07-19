@@ -52,7 +52,7 @@ jobs:
 
       - name: Semantic Release
         id: semantic-release
-        run: npx semantic-release -- --debug
+        run: yarn release
         env:
           DEBUG: semantic-release*
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
