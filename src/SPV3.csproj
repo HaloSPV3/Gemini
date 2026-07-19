@@ -8,7 +8,7 @@
     <AssemblyName>SPV3.Loader</AssemblyName>
     <StartupObject>SPV3.App</StartupObject>
     <!-- Application | Resources -->
-    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets/icon.ico</ApplicationIcon>
     <RootNamespace>SPV3</RootNamespace>
     <!-- Build | General -->
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -67,61 +67,61 @@
   </PropertyGroup>
 
   <ItemGroup> <!-- Misc Project Items -->
-    <None Include="..\README.md">
-      <Link>.docs-misc\REAMDE.md</Link>
+    <None Include="../README.md">
+      <Link>.docs-misc/REAMDE.md</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
+      <PackagePath>/</PackagePath>
     </None>
-    <None Include="..\*.*">
-      <Link>.root\%(Filename)%(Extension)</Link>
+    <None Include="../*.*">
+      <Link>.root/%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="..\.github/**/*.*">
-      <Link>.root\.github\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    <None Include="../.github/**/*.*">
+      <Link>.root/.github/%(RecursiveDir)%(Filename)%(Extension)</Link>
     </None>
-    <None Include="..\doc/**/*.*">
-      <Link>.docs\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    <None Include="../doc/**/*.*">
+      <Link>.docs/%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="..\*.md">
-      <Link>.docs-misc\%(Filename)%(Extension)</Link>
+    <None Include="../*.md">
+      <Link>.docs-misc/%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Include="*.txt">
-      <Link>.docs-misc\%(Filename)%(Extension)</Link>
+      <Link>.docs-misc/%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Include="src.licenseheader">
-      <Link>.docs-misc\%(Filename)%(Extension)</Link>
+      <Link>.docs-misc/%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup> <!-- Logos & Icons -->
-    <Resource Include="Assets\*.*" Exclude="Assets\logo*" />
-    <Resource Include="Assets\logo.png" Pack="True" PackagePath="\" />
-    <Content Include="Assets\logo_chief.png" />
+    <Resource Include="Assets/*.*" Exclude="Assets/logo*" />
+    <Resource Include="Assets/logo.png" Pack="True" PackagePath="/" />
+    <Content Include="Assets/logo_chief.png" />
   </ItemGroup>
   <ItemGroup> <!-- SxS Content -->
     <!-- Positions -->
-    <Content Include="Positions\*.*">
+    <Content Include="Positions/*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>%(FileName)%(Extension)</TargetPath>
     </Content>
     <!-- Presence Support -->
-    <Content Include="Presence\DRP.dll">
+    <Content Include="Presence/DRP.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>controls\haloce_presence.dll</TargetPath>
+      <TargetPath>controls/haloce_presence.dll</TargetPath>
     </Content>
     <!-- Tile Support -->
-    <Content Include="Tile\*.*">
+    <Content Include="Tile/*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>%(FileName)%(Extension)</TargetPath>
     </Content>
   </ItemGroup>
   <ItemGroup> <!-- Project References -->
     <ProjectReference Condition="'$(EnableBleedingEdgeHXE)' == 'true' AND '$(CI)' != 'true'"
-      Include="$(MSBuildProjectDirectory)\..\ext\hxe\src\HXE.csproj">
+      Include="$(MSBuildProjectDirectory)/../ext/hxe/src/HXE.csproj">
       <Project>{acaa5d9f-b23d-43e1-b2df-8c03230975a1}</Project>
       <Name>HXE</Name>
     </ProjectReference>
