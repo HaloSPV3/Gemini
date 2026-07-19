@@ -41,7 +41,7 @@ jobs:
             echo 'This branch is not a dep-upgrade branch.'
 
       - run: corepack enable
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           cache: yarn
       - run: yarn install --immutable ${{ steps.isDepUpBranch.outputs.IMMUTABLE_CACHE}}
