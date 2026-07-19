@@ -4,6 +4,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <Prefer32Bit>false</Prefer32Bit>
     <TargetFrameworks>net462;net480;net6.0-windows</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <OutputType>WinExe</OutputType>
     <AssemblyName>SPV3.Loader</AssemblyName>
     <StartupObject>SPV3.App</StartupObject>
@@ -140,6 +142,10 @@
     </PackageReference>
     <PackageReference Include="HXE" Version="2.3.1" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="Meziantou.Polyfill" Version="1.0.157">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup> <!-- IL Link -->
