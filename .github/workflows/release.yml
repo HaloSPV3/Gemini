@@ -19,8 +19,8 @@ jobs:
     uses: ./.github/workflows/ci.yml
     permissions:
       contents: read
-  build:
-    name: Build
+  release:
+    name: Release
     # required for proper WPF builds/publishes
     runs-on: windows-latest
     needs: ci
