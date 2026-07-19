@@ -42,7 +42,6 @@ jobs:
         with:
           cache: yarn
           node-version-file: .nvmrc
-          check-latest: true
       - run: corepack enable
       - run: yarn install --immutable --immutable-cache
 
