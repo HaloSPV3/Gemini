@@ -12,6 +12,7 @@ const scopes = {
     + 'but are not required at runtime nor bundled with or statically linked into the published '
     + 'binaries or packages. For NuGet packages/PackageReferences, this would be anything with'
     + 'PrivateAssets="All" and no "runtime", "native", or "contentfiles" to be included in output.',
+  Install: 'Affects "src/Main.Install.cs", its section in "src/Main.Window.*", or "src/Install*".',
   README: 'Affects README.md or any other README documents.',
   release: 'Reserved for release commits.',
   Version: 'Affects "src/Version.*".',
