@@ -27,7 +27,6 @@
     <PublisherName>Halo SPV3 Team</PublisherName>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <GenerateClickOnceMaGenerate>false</GenerateClickOnceMaGenerate>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
