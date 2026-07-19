@@ -219,6 +219,14 @@ namespace SPV3
                 return;
             }
 
+            Activate(
+                "Free For All." + NewLine
+                + "Halo SPV3 could¹ be played in Halo: The Master Chief Collection's free, Halo: CE Mod Tools." + NewLine
+                + "¹with stripped down features or a lot of reverse-engineering to get them working"
+            );
+            outputInfo();
+            return;
+
             /** Passively detect Steam MCC CEA */
             if (Exists(SteamExePath))
             {
