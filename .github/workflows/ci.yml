@@ -50,10 +50,10 @@ jobs:
 
       # if run simultaneously, the logs would be a mess
       - name: Build (Debug)
-        run: dotnet build -c Debug -check
+        run: dotnet build src -c Debug -check
       # if run simultaneously, the logs would be a mess
       - name: Build (Release)
-        run: dotnet build -c Release -check
+        run: dotnet build src -c Release -check
 
       - name: Publish (Release)
-        run: dotnet restore -t:PublishAll
+        run: dotnet restore src -t:PublishAll
