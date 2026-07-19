@@ -183,7 +183,7 @@ namespace SPV3
             ValidateTarget(Target);
 
             /** Determine if the current environment fulfills the installation requirements. */
-            var manifest = (Manifest) Path.Combine(_source, HXE.Paths.Manifest);
+            var manifest = (Manifest)Path.Combine(_source, HXE.Paths.Manifest);
 
             if (!manifest.Exists())
             {
@@ -244,7 +244,7 @@ namespace SPV3
 
             void outputInfo()
             {
-                HXE.File file = (HXE.File) Paths.Install;
+                HXE.File file = (HXE.File)Paths.Install;
                 string output = string.Empty;
                 output += $"INFO -- DRM patch queued: {(Kernel.hxe.Tweaks.Patches & Patcher.EXEP.DISABLE_DRM_AND_KEY_CHECKS) == 1}{NewLine}";
                 output += $"INFO -- Custom Edition is activated: {CustomActivated}{NewLine}";
@@ -263,7 +263,7 @@ namespace SPV3
                 var progress = new Progress<Status>();
                 progress.ProgressChanged +=
                   (o, s) => Status =
-                    $"Installing SPV3. Please wait until this is finished! - {(decimal) s.Current / s.Total:P}";
+                    $"Installing SPV3. Please wait until this is finished! - {(decimal)s.Current / s.Total:P}";
 
                 try
                 {
@@ -309,7 +309,7 @@ namespace SPV3
                         catch (Exception e)
                         {
                             var msg = "Shortcut error.\n Error:  " + e.ToString() + "\n";
-                            var log = (HXE.File) Paths.Exception;
+                            var log = (HXE.File)Paths.Exception;
                             log.AppendAllText(msg);
                             Status = msg;
                         }
@@ -361,7 +361,7 @@ namespace SPV3
                 catch (Exception e)
                 {
                     var msg = "Failed to install OpenSauce via Amai Sosu.\n Error:  " + e.ToString() + "\n";
-                    var log = (HXE.File) Paths.Exception;
+                    var log = (HXE.File)Paths.Exception;
                     log.AppendAllText(msg);
                     Status = msg;
                 }
@@ -387,7 +387,7 @@ namespace SPV3
             catch (Exception e)
             {
                 var msg = "Failed to install SPV3.\n Error:  " + e.ToString() + "\n";
-                var log = (HXE.File) Paths.Exception;
+                var log = (HXE.File)Paths.Exception;
                 log.AppendAllText(msg);
                 Status = msg;
                 CanInstall = true;
@@ -425,7 +425,7 @@ namespace SPV3
                         SteamStatus = "Failed to find CEA";
                         var msg = SteamStatus + NewLine
                                 + " Error: " + e.Message + NewLine;
-                        var log = (HXE.File) Paths.Exception;
+                        var log = (HXE.File)Paths.Exception;
                         log.AppendAllText(msg);
                         return;
                     }
@@ -455,7 +455,7 @@ namespace SPV3
                 WinStoreStatus = "Failed to find CEA on the drive";
                 var msg = WinStoreStatus + NewLine
                         + " Error: " + "Could not find CEA for Winstore on " + drive + NewLine;
-                var log = (HXE.File) Paths.Exception;
+                var log = (HXE.File)Paths.Exception;
                 log.AppendAllText(msg);
             }
         }
@@ -505,7 +505,7 @@ namespace SPV3
             catch (Exception e)
             {
                 var msg = "Installation not possible at selected path: " + path + "\n Error: " + e.ToString() + "\n";
-                var log = (HXE.File) Paths.Exception;
+                var log = (HXE.File)Paths.Exception;
                 log.AppendAllText(msg);
                 Status = msg;
                 CanInstall = false;
@@ -574,7 +574,7 @@ namespace SPV3
             catch (Exception e)
             {
                 var msg = "Failed to get drive space.\n Error:  " + e.ToString() + "\n";
-                var log = (HXE.File) Paths.Exception;
+                var log = (HXE.File)Paths.Exception;
                 log.AppendAllText(msg);
                 Status = msg;
                 CanInstall = false;
@@ -603,8 +603,8 @@ namespace SPV3
             {
                 var msg = "Failed to install Halo Custom Edition." + NewLine
                          + " Error:  " + e.ToString() + NewLine;
-                var log = (HXE.File) Paths.Exception;
-                var ilog = (HXE.File) Paths.Install;
+                var log = (HXE.File)Paths.Exception;
+                var ilog = (HXE.File)Paths.Install;
                 log.AppendAllText(msg);
                 ilog.AppendAllText(msg);
                 Status = "Failed to install Halo Custom Edition." + NewLine
@@ -623,8 +623,8 @@ namespace SPV3
             {
                 var msg = "Failed to infer Halo process." + NewLine
                          + " Error:  " + e.ToString() + NewLine;
-                var log = (HXE.File) Paths.Exception;
-                var ilog = (HXE.File) Paths.Install;
+                var log = (HXE.File)Paths.Exception;
+                var ilog = (HXE.File)Paths.Install;
                 log.AppendAllText(msg);
                 ilog.AppendAllText(msg);
                 Status = "Failed to infer Halo process." + NewLine
