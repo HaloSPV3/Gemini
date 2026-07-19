@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  * Copyright (c) 2021 Noah Sherwin
  *
@@ -173,7 +173,7 @@ namespace SPV3
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void Initialise()
         {
@@ -301,10 +301,10 @@ namespace SPV3
                             shortcutPath = Path.Combine(shortcutPath, "SPV3.lnk");
                             Create(shortcutPath);
 
-                            shortcutFile.shellLink.SetDescription("Single Player Version 3");
-                            shortcutFile.shellLink.SetPath(targetFileLocation);
-                            shortcutFile.shellLink.SetWorkingDirectory(Target);
-                            shortcutFile.persistFile.Save(shortcutPath, false);
+                            shortcutFile.shellLink?.SetDescription("Single Player Version 3");
+                            shortcutFile.shellLink?.SetPath(targetFileLocation);
+                            shortcutFile.shellLink?.SetWorkingDirectory(Target);
+                            shortcutFile.persistFile?.Save(shortcutPath, false);
                         }
                         catch (Exception e)
                         {
@@ -437,7 +437,7 @@ namespace SPV3
                 Update_SteamStatus();
         }
 
-        public void CheckMCCWinStorePath(string drive = null)
+        public void CheckMCCWinStorePath(string? drive = null)
         {
             /** SET or GET UWP MCC's Halo1.dll path */
             if (drive == null)
@@ -483,7 +483,7 @@ namespace SPV3
                 {
                     while (!Directory.Exists(path))
                     {
-                        path = Directory.GetParent(path).FullName;
+                        path = Directory.GetParent(path)?.FullName;
                         if (path == CurrentDirectory)
                         {
                             Status = "Enter a valid path.";
@@ -544,7 +544,7 @@ namespace SPV3
                   * for temporary extraction to %temp%
                   */
                 {
-                    var tmpath = Path.GetPathRoot(Path.GetTempPath());
+                    var tmpath = Path.GetPathRoot(Path.GetTempPath())!;
                     var systemDrive = new DriveInfo(tmpath);
                     if (systemDrive.TotalFreeSpace < 11811160064)
                     {
@@ -680,8 +680,8 @@ namespace SPV3
         [Guid("00021401-0000-0000-C000-000000000046")]
         internal class ShortcutFile
         {
-            internal IShellLink shellLink;
-            internal IPersistFile persistFile;
+            internal IShellLink? shellLink;
+            internal IPersistFile? persistFile;
         }
 
         /// <summary>
@@ -718,7 +718,7 @@ namespace SPV3
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
