@@ -5,4 +5,4 @@
 [submodule "ext/HCE.DRP"]
 	path = ext/HCE.DRP
 	url = https://github.com/HaloSPV3/HCE.DRP.git
-	branch = main
+	branch = develop
