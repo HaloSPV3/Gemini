@@ -6353,6 +6353,7 @@ __metadata:
     husky: "npm:^9.1.7"
     jiti: "npm:^2.7.0"
     semantic-release: "npm:^25.0.8"
+    semantic-release-export-data: "npm:^1.2.0"
     typescript: "npm:^6.0.3"
     typescript-eslint: "npm:^8.64.0"
   languageName: unknown
