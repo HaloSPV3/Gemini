@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  * Copyright (c) 2021 Noah Sherwin
  *
@@ -258,9 +258,9 @@ namespace SPV3
 
         private void EaxChanged(object sender, RoutedEventArgs e)
         {
-            if (_configuration.Loader.EAX)
-                MessageBox.Show("WARNING: EAX sound enhancements coincide with certain " +
-                                "crashes. Please do not report sound effect crashes when EAX is ON.");
+            if (_configuration.Loader.EAX) // DevSkim: ignore DS187371
+                MessageBox.Show("WARNING: EAX sound enhancements coincide with certain " + // DevSkim: ignore DS187371
+                                "crashes. Please do not report sound effect crashes when EAX is ON."); // DevSkim: ignore DS187371
         }
 
         private void SSR_Or_ResolutionChanged(object sender, RoutedEventArgs e)
