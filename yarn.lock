@@ -2457,7 +2457,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog-conventionalcommits@npm:^10.0.0":
+"conventional-changelog-conventionalcommits@npm:^10.0.0, conventional-changelog-conventionalcommits@npm:^10.2.1":
   version: 10.2.1
   resolution: "conventional-changelog-conventionalcommits@npm:10.2.1"
   dependencies:
@@ -6354,6 +6354,7 @@ __metadata:
     "@semantic-release/release-notes-generator": "npm:^14.1.1"
     "@types/node": "npm:^24.13.3"
     commitlint: "npm:^20.5.3"
+    conventional-changelog-conventionalcommits: "npm:^10.2.1"
     eslint: "npm:^10.7.0"
     globals: "npm:^17.7.0"
     husky: "npm:^9.1.7"
