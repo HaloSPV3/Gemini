@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="LibreWPF.Sdk/0.1.0-preview.21" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <Prefer32Bit>false</Prefer32Bit>
-    <TargetFrameworks>net462;net480;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <OutputType>WinExe</OutputType>
@@ -62,7 +62,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(NET6_0_OR_GREATER)' == 'true'">
-    <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <PublishSingleFile>true</PublishSingleFile>
     <EnableCompressionInSingleFile>$(PublishSelfContained)</EnableCompressionInSingleFile>
     <PublishTrimmed>$('$(UseWPF)' != 'true' AND '$(UseWindowsForms)' != 'true')</PublishTrimmed>
@@ -144,24 +144,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
-  <Choose>
-    <When Condition="$(TargetFramework.StartsWith('net4'))">
-      <PropertyGroup Label="Additional Properties (NET4)">
-        <!-- Disabling these two properties prevents the output of (App).exe.config. Yippee! -->
-        <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-        <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
-        <WeaverConfiguration>
-          <Weavers>
-            <Costura />
-          </Weavers>
-        </WeaverConfiguration>
-      </PropertyGroup>
-      <ItemGroup Label="Additional References (NET4)">
-        <PackageReference Include="Costura.Fody" Version="6.2.0" PrivateAssets="all" />
-      </ItemGroup>
-    </When>
-  </Choose>
 
   <ItemGroup> <!-- IL Link -->
     <Content Update="HXE.dll">
