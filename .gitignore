@@ -364,3 +364,4 @@ hash
 
 .tsOut
 src/FodyWeavers.xsd
+.dotnet
