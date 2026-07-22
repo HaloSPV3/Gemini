@@ -3,6 +3,7 @@ import hceShared from '@halospv3/hce.shared-config/commitlintConfig';
 const scopes = {
   CHANGELOG: 'Affects "CHANGELOG.md".',
   commitlint: 'Affects this repo\'s commitlint config, esp. its commit scopes.',
+  Configuration: 'Affects "src/Configuration*".',
   contributing: 'Affects CONTRIBUTING.md',
   'conv-pr': 'Affects ".github/workflows/conv-pull-requests.yml".',
   deps: 'Affects dependencies bundled with or depended on by published packages and artifacts. '
