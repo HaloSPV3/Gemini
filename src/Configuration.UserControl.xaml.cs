@@ -32,7 +32,7 @@ namespace SPV3
         public Configuration_UserControl()
         {
             InitializeComponent();
-            _configuration = (Configuration) DataContext;
+            _configuration = (Configuration)DataContext;
             _configuration.Load();
         }
 
@@ -80,14 +80,14 @@ namespace SPV3
 
         private void GBufferChanged(object sender, RoutedEventArgs e)
         {
-            if ((bool) !GBuffer_CheckBox.IsChecked)
+            if ((bool)!GBuffer_CheckBox.IsChecked)
                 MessageBox.Show("WARNING: VISR and Thermal Vision will not work. " +
                                 "This should only be used on low-end computers as a last resort.");
         }
 
         private void AdaptiveHDRChanged(object sender, RoutedEventArgs e)
         {
-            if ((bool) !AdaptiveHDR_CheckBox.IsChecked)
+            if ((bool)!AdaptiveHDR_CheckBox.IsChecked)
             {
                 _configuration.OpenSauce.Bloom = false;
                 _configuration.Shaders.SSR = false;
