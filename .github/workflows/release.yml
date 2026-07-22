@@ -53,7 +53,7 @@ jobs:
       - name: Setup Dotnet
         uses: actions/setup-dotnet@v5
         with:
-          cache: dotnet
+          cache: true
 
       - name: Semantic Release
         id: semantic-release
