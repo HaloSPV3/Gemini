@@ -19,8 +19,8 @@ if ($isUnixLike) { $DOTNET_INSTALL_DIR = "$env:HOME/.dotnet" }
 if (-not (Test-Path "$DOTNET_INSTALL_DIR")) {
   New-Item -ItemType Directory "$DOTNET_INSTALL_DIR"
   $ItemType = if ($PSVersionTable.Platform -eq 'Unix')
-  { $ItemType = SymbolicLink }
-  else { $ItemType = Junction }
+  { $ItemType = 'SymbolicLink' }
+  else { $ItemType = 'Junction' }
 
   New-Item -ItemType $ItemType -Path "$installDir" -Target "$DOTNET_INSTALL_DIR"
 }
