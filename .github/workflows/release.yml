@@ -54,6 +54,9 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           cache: true
+          cache-dependency-path: |
+            src/packages.lock.json
+            src/packages-debug.lock.json
 
       - name: Semantic Release
         id: semantic-release
