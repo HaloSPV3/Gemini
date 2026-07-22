@@ -22,6 +22,8 @@
     "redhat.vscode-xml",
     "k--kato.docomment",
     "arcanis.vscode-zipfs",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "wieslawsoltes.axsg-language-server",
+    "dabbinavo.xamlstyler"
   ]
 }
