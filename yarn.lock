@@ -3696,13 +3696,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-from-esm@npm:^2.0.0":
+"import-from-esm@npm:2.0.0":
   version: 2.0.0
   resolution: "import-from-esm@npm:2.0.0"
   dependencies:
     debug: "npm:^4.3.4"
     import-meta-resolve: "npm:^4.0.0"
   checksum: 10c0/6ee85521a1b540927c50f9f16c4f1fc25fa0383c16740483b5ba838d8deea8f5e7a30b6a9f6dff28292589317e679a07da8fa63890a0fd2e549a51e9d28a66fd
+  languageName: node
+  linkType: hard
+
+"import-from-esm@patch:import-from-esm@npm%3A2.0.0#~/.yarn/patches/import-from-esm-npm-2.0.0-8866147795.patch":
+  version: 2.0.0
+  resolution: "import-from-esm@patch:import-from-esm@npm%3A2.0.0#~/.yarn/patches/import-from-esm-npm-2.0.0-8866147795.patch::version=2.0.0&hash=50a83d"
+  dependencies:
+    debug: "npm:^4.3.4"
+    import-meta-resolve: "npm:^4.0.0"
+  checksum: 10c0/a40a06b4faf25e43b3a6fab3c6b29c0e9c1c10666a125bce6a7419dcc56844d7987e75a5d70d75b448e8ec29b04dde16be7bff1db4c256dd97ef102171a0e6a4
   languageName: node
   linkType: hard
 
