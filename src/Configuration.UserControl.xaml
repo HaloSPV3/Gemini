@@ -508,8 +508,8 @@
       <local:Version_UserControl />
 
       <!-- HXE Config -->
-      <Button Content="Advanced"
-              Click="ShowAdvanced"
+      <Button Content="More Settings..."
+              Click="ShowMore"
               HorizontalAlignment="Right"
               Margin="350,0"
               Width="100" />

@@ -246,7 +246,7 @@ namespace SPV3
             _configuration.Chimera.BlockLOD = false;
         }
 
-        private void ShowAdvanced(object sender, RoutedEventArgs e)
+        private void ShowMore(object sender, RoutedEventArgs e)
         {
             _configuration.ShowHxeSettings();
         }
