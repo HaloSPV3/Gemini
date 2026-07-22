@@ -33,8 +33,8 @@ namespace SPV3
   public class News : INotifyPropertyChanged
   {
     private const string Address = "https://github.com/HaloSPV3/HCE/raw/meta/news.xml";
-    private string _content;
-    private string _link;
+    private string _content = string.Empty;
+    private string _link = string.Empty;
     private Visibility _visibility = Visibility.Collapsed;
 
     [XmlIgnore]
@@ -71,7 +71,7 @@ namespace SPV3
       }
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public async void Initialise()
     {
@@ -99,7 +99,7 @@ namespace SPV3
     }
 
     [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
