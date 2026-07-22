@@ -1,7 +1,5 @@
 import hceShared from '@halospv3/hce.shared-config/eslintConfig';
-import { defineConfig, type Config } from 'eslint/config';
+import { type Config } from 'eslint/config';
 
-const config: Config[] = defineConfig([
-  ...hceShared,
-]);
+const config: Config[] = hceShared;
 export default config;
