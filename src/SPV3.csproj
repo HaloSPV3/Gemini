@@ -24,6 +24,7 @@
     <ProductName>SPV3 Loader</ProductName>
     <PublisherName>Halo SPV3 Team</PublisherName>
     <UseWPF>true</UseWPF>
+    <WpfXsgEnabled>true</WpfXsgEnabled>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
@@ -125,8 +126,7 @@
   </ItemGroup>
 
   <ItemGroup> <!-- Project References -->
-    <ProjectReference Condition="'$(EnableBleedingEdgeHXE)' == 'true' AND '$(CI)' != 'true'"
-      Include="$(MSBuildProjectDirectory)/../ext/hxe/src/HXE.csproj">
+    <ProjectReference Condition="'$(EnableBleedingEdgeHXE)' == 'true' AND '$(CI)' != 'true'" Include="$(MSBuildProjectDirectory)/../ext/hxe/src/HXE.csproj">
       <Project>{acaa5d9f-b23d-43e1-b2df-8c03230975a1}</Project>
       <Name>HXE</Name>
     </ProjectReference>
@@ -143,6 +143,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="XamlToCSharpGenerator.Generator.WPF" Version="0.1.20" />
   </ItemGroup>
 
   <Choose>

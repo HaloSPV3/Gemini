@@ -52,6 +52,12 @@
           "Microsoft.NETFramework.ReferenceAssemblies.net462": "1.0.3"
         }
       },
+      "XamlToCSharpGenerator.Generator.WPF": {
+        "type": "Direct",
+        "requested": "[0.1.20, )",
+        "resolved": "0.1.20",
+        "contentHash": "8FOSR/XCM7doolasKV4epcp6ee8EaZZXRSw0SfHSuZGd9IPiDHta0I18YDINAWTo0qvmnOu1QhnoMj+tfTSDZg=="
+      },
       "ControlzEx": {
         "type": "Transitive",
         "resolved": "4.4.0",
@@ -202,6 +208,12 @@
           "Microsoft.NETFramework.ReferenceAssemblies.net48": "1.0.3"
         }
       },
+      "XamlToCSharpGenerator.Generator.WPF": {
+        "type": "Direct",
+        "requested": "[0.1.20, )",
+        "resolved": "0.1.20",
+        "contentHash": "8FOSR/XCM7doolasKV4epcp6ee8EaZZXRSw0SfHSuZGd9IPiDHta0I18YDINAWTo0qvmnOu1QhnoMj+tfTSDZg=="
+      },
       "ControlzEx": {
         "type": "Transitive",
         "resolved": "4.4.0",
@@ -343,6 +355,12 @@
         "requested": "[7.0.100-1.23211.1, )",
         "resolved": "7.0.100-1.23211.1",
         "contentHash": "tvG8XZYLjT0o3WicCyKBZysVWo1jC9HdCFmNRmddx3WbAz0UCsd0qKZqpiEo99VLA8Re+FzWK51OcRldQPbt2Q=="
+      },
+      "XamlToCSharpGenerator.Generator.WPF": {
+        "type": "Direct",
+        "requested": "[0.1.20, )",
+        "resolved": "0.1.20",
+        "contentHash": "8FOSR/XCM7doolasKV4epcp6ee8EaZZXRSw0SfHSuZGd9IPiDHta0I18YDINAWTo0qvmnOu1QhnoMj+tfTSDZg=="
       },
       "ControlzEx": {
         "type": "Transitive",
