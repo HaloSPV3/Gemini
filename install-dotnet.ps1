@@ -2,7 +2,7 @@
 $ErrorActionPreference = 'Stop'
 
 # -------- Configuration --------
-$Channel = '11.0'
+$Channel = '10.0'
 $Quality = 'GA'
 # Uncomment the workloads your project needs:
 # $Workloads = @('maui', 'wasm-tools')

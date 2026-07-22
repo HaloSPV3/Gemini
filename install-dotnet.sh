@@ -2,7 +2,7 @@
 set -e
 
 # -------- Configuration --------
-CHANNEL="11.0"
+CHANNEL="10.0"
 QUALITY="GA"
 # Uncomment the workloads your project needs:
 # WORKLOADS="maui wasm-tools"
