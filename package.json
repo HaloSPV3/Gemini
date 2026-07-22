@@ -9,7 +9,7 @@
     "build": "dotnet build && dotnet build -c:Release",
     "test": "dotnet test",
     "prepare": "husky",
-    "release": "yarn exec semantic-release --debug",
+    "release": "semantic-release --debug",
     "restore": "dotnet restore && dotnet restore -p:Configuration=Release",
     "sdks": "yarn dlx @yarnpkg/sdks"
   },
