@@ -365,3 +365,4 @@ hash
 .tsOut
 src/FodyWeavers.xsd
 .dotnet
+.dotnet-win
