@@ -4,6 +4,14 @@ import type { PluginSpecSRCommitAnalyzer, PluginSpecSRReleaseNotesGen } from '@h
 import type { RuleObjects } from '@semantic-release/commit-analyzer';
 import { exit } from 'node:process';
 
+import '@semantic-release/commit-analyzer';
+import 'semantic-release-export-data';
+import '@semantic-release/release-notes-generator';
+import '@semantic-release/changelog';
+import '@semantic-release/git';
+import '@semantic-release/exec';
+import '@semantic-release/github';
+
 const projectsToPublish = ['./src/SPV3.csproj'];
 
 let config: Awaited<ReturnType<typeof getConfig>>;
