@@ -1,7 +1,7 @@
 name: fast-forward
 on:
   issue_comment:
-    types: [ created, edited ]
+    types: [created, edited]
 jobs:
   fast-forward:
     # Only run if the comment contains the /fast-forward command.
