@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  *
  * This software is provided 'as-is', without any express or implied
@@ -32,7 +32,7 @@ namespace SPV3
     public News_UserControl()
     {
       InitializeComponent();
-      _news = (News) DataContext;
+      _news = (News)DataContext;
       Task.Run(() => _news.Initialise());
     }
 
