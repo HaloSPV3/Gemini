@@ -24,20 +24,20 @@ using System.Windows;
 
 namespace SPV3
 {
-    /// <summary>
-    ///   Interaction logic for App.xaml
-    /// </summary>
-    public partial class App
+  /// <summary>
+  ///   Interaction logic for App.xaml
+  /// </summary>
+  public partial class App
+  {
+    protected override void OnStartup(StartupEventArgs e)
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            if (e.Args.Any(arg => arg.Equals("-auto")))
-            {
-                new Main().Invoke();
-                Environment.Exit(0);
-            }
+      if (e.Args.Any(arg => arg.Equals("-auto")))
+      {
+        new Main().Invoke();
+        Environment.Exit(0);
+      }
 
-            base.OnStartup(e);
-        }
+      base.OnStartup(e);
     }
+  }
 }
