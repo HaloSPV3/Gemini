@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  * Copyright (c) 2021 Noah Sherwin
  *
@@ -27,87 +27,87 @@ using static HXE.Paths.Custom;
 
 namespace SPV3
 {
-    public class ConfigurationChimera : INotifyPropertyChanged
+  public class ConfigurationChimera : INotifyPropertyChanged
+  {
+    private bool _anisotropicFiltering = true;
+    private bool _blockLOD = false;
+    private int _interpolation = 8;
+    private bool _uncapCinematic = true;
+
+    public Chimera Configuration { get; } = (Chimera)Chimera(Paths.Directory);
+
+    public int Interpolation
     {
-        private bool _anisotropicFiltering = true;
-        private bool _blockLOD = false;
-        private int _interpolation = 8;
-        private bool _uncapCinematic = true;
-
-        public Chimera Configuration { get; } = (Chimera) Chimera(Paths.Directory);
-
-        public int Interpolation
-        {
-            get => _interpolation;
-            set
-            {
-                if (value == _interpolation) return;
-                _interpolation = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool AnisotropicFiltering
-        {
-            get => _anisotropicFiltering;
-            set
-            {
-                if (value == _anisotropicFiltering) return;
-                _anisotropicFiltering = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool UncapCinematic
-        {
-            get => _uncapCinematic;
-            set
-            {
-                if (value == _uncapCinematic) return;
-                _uncapCinematic = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool BlockLOD
-        {
-            get => _blockLOD;
-            set
-            {
-                if (value == _blockLOD) return;
-                _blockLOD = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void Load()
-        {
-            if (!Configuration.Exists()) return;
-
-            Configuration.Load();
-
-            Interpolation = Configuration.Interpolation;
-            AnisotropicFiltering = Configuration.AnisotropicFiltering;
-            UncapCinematic = Configuration.UncapCinematic;
-            BlockLOD = Configuration.BlockLOD;
-        }
-
-        public void Save()
-        {
-            Configuration.Interpolation = (byte) Interpolation;
-            Configuration.AnisotropicFiltering = AnisotropicFiltering;
-            Configuration.UncapCinematic = UncapCinematic;
-            Configuration.BlockLOD = BlockLOD;
-
-            Configuration.Save();
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+      get => _interpolation;
+      set
+      {
+        if (value == _interpolation) return;
+        _interpolation = value;
+        OnPropertyChanged();
+      }
     }
+
+    public bool AnisotropicFiltering
+    {
+      get => _anisotropicFiltering;
+      set
+      {
+        if (value == _anisotropicFiltering) return;
+        _anisotropicFiltering = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public bool UncapCinematic
+    {
+      get => _uncapCinematic;
+      set
+      {
+        if (value == _uncapCinematic) return;
+        _uncapCinematic = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public bool BlockLOD
+    {
+      get => _blockLOD;
+      set
+      {
+        if (value == _blockLOD) return;
+        _blockLOD = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public void Load()
+    {
+      if (!Configuration.Exists()) return;
+
+      Configuration.Load();
+
+      Interpolation = Configuration.Interpolation;
+      AnisotropicFiltering = Configuration.AnisotropicFiltering;
+      UncapCinematic = Configuration.UncapCinematic;
+      BlockLOD = Configuration.BlockLOD;
+    }
+
+    public void Save()
+    {
+      Configuration.Interpolation = (byte)Interpolation;
+      Configuration.AnisotropicFiltering = AnisotropicFiltering;
+      Configuration.UncapCinematic = UncapCinematic;
+      Configuration.BlockLOD = BlockLOD;
+
+      Configuration.Save();
+    }
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+  }
 }
