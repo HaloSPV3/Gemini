@@ -1,6 +1,7 @@
 import hceShared from '@halospv3/hce.shared-config/commitlintConfig';
 
 const scopes = {
+  AmaiSosu: 'Affects "src/AmaiSosu.cs".',
   App: 'Affects "src/App.*".',
   CHANGELOG: 'Affects "CHANGELOG.md".',
   commitlint: 'Affects this repo\'s commitlint config, esp. its commit scopes.',
