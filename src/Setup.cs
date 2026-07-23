@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  * Copyright (c) 2021 Noah Sherwin
  *
@@ -26,62 +26,62 @@ using static System.IO.Path;
 
 namespace SPV3
 {
+  /// <summary>
+  ///   Object representing the HCE installer.
+  /// </summary>
+  public class Setup
+  {
     /// <summary>
-    ///   Object representing the HCE installer.
+    ///   Setup download path.
     /// </summary>
-    public class Setup
+    public const string Address = "https://haloce3.com/ce/?_sft_category=official-files";
+
+    /// <summary>
+    ///   Setup executable path.
+    /// </summary>
+    public string Path { get; set; } = Combine(CurrentDirectory, Paths.Setup);
+
+    public bool Exists()
     {
-        /// <summary>
-        ///   Setup download path.
-        /// </summary>
-        public const string Address = "https://haloce3.com/ce/?_sft_category=official-files";
-
-        /// <summary>
-        ///   Setup executable path.
-        /// </summary>
-        public string Path { get; set; } = Combine(CurrentDirectory, Paths.Setup);
-
-        public bool Exists()
-        {
-            return File.Exists(Path);
-        }
-
-        public void Execute()
-        {
-            var uri = Exists() ? Path : Address;
-            var startInfo = new ProcessStartInfo(uri) { UseShellExecute = true };
-            Process.Start(startInfo);
-        }
-
-        /// <summary>
-        ///   Represents the inbound object as a string.
-        /// </summary>
-        /// <param name="setup">
-        ///   Object to represent as string.
-        /// </param>
-        /// <returns>
-        ///   String representation of the inbound object.
-        /// </returns>
-        public static implicit operator string(Setup setup)
-        {
-            return setup.Path;
-        }
-
-        /// <summary>
-        ///   Represents the inbound string as an object.
-        /// </summary>
-        /// <param name="path">
-        ///   String to represent as object.
-        /// </param>
-        /// <returns>
-        ///   Object representation of the inbound string.
-        /// </returns>
-        public static explicit operator Setup(string path)
-        {
-            return new Setup
-            {
-                Path = path
-            };
-        }
+      return File.Exists(Path);
     }
+
+    public void Execute()
+    {
+      var uri = Exists() ? Path : Address;
+      var startInfo = new ProcessStartInfo(uri) { UseShellExecute = true };
+      Process.Start(startInfo);
+    }
+
+    /// <summary>
+    ///   Represents the inbound object as a string.
+    /// </summary>
+    /// <param name="setup">
+    ///   Object to represent as string.
+    /// </param>
+    /// <returns>
+    ///   String representation of the inbound object.
+    /// </returns>
+    public static implicit operator string(Setup setup)
+    {
+      return setup.Path;
+    }
+
+    /// <summary>
+    ///   Represents the inbound string as an object.
+    /// </summary>
+    /// <param name="path">
+    ///   String to represent as object.
+    /// </param>
+    /// <returns>
+    ///   Object representation of the inbound string.
+    /// </returns>
+    public static explicit operator Setup(string path)
+    {
+      return new Setup
+      {
+        Path = path
+      };
+    }
+  }
 }
