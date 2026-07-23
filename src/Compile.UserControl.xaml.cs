@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  *
  * This software is provided 'as-is', without any express or implied
@@ -33,7 +33,7 @@ namespace SPV3
     public Compile_UserControl()
     {
       InitializeComponent();
-      _compile = (Compile) DataContext;
+      _compile = (Compile)DataContext;
     }
 
     public event EventHandler Home;
