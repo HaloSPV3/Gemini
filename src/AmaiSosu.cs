@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  *
  * This software is provided 'as-is', without any express or implied
@@ -55,7 +55,7 @@ namespace SPV3
       var uri = exists ? Path : Address;
       var args = exists ? "--auto" : "";
       var startInfo = new ProcessStartInfo(uri, args) { UseShellExecute = true };
-      Process.Start(startInfo).WaitForExit();
+      Process.Start(startInfo)?.WaitForExit();
     }
 
     /// <summary>
