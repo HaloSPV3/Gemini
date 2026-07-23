@@ -4,6 +4,7 @@ const scopes = {
   App: 'Affects "src/App.*"',
   CHANGELOG: 'Affects "CHANGELOG.md".',
   commitlint: 'Affects this repo\'s commitlint config, esp. its commit scopes.',
+  Compile: 'Affects "src/Compile.*"',
   Configuration: 'Affects "src/Configuration*".',
   contributing: 'Affects CONTRIBUTING.md',
   'conv-pr': 'Affects ".github/workflows/conv-pull-requests.yml".',
