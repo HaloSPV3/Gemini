@@ -36,31 +36,31 @@ namespace SPV3
       _configuration.Load();
     }
 
-    public event EventHandler Home;
+    public event EventHandler? Home;
 
-    private void Save(object sender, RoutedEventArgs e)
+    private void Save(object? sender, RoutedEventArgs e)
     {
       _configuration.Save();
       Home?.Invoke(sender, e);
     }
 
-    private void Cancel(object sender, RoutedEventArgs e)
+    private void Cancel(object? sender, RoutedEventArgs e)
     {
       _configuration.Load();
       Home?.Invoke(sender, e);
     }
 
-    private void CalculateFOV(object sender, RoutedEventArgs e)
+    private void CalculateFOV(object? sender, RoutedEventArgs e)
     {
       _configuration.CalculateFOV();
     }
 
-    private void ResetWeaponPositions(object sender, RoutedEventArgs e)
+    private void ResetWeaponPositions(object? sender, RoutedEventArgs e)
     {
       _configuration.ResetWeaponPositions();
     }
 
-    private void InstallOpenSauce(object sender, RoutedEventArgs e)
+    private void InstallOpenSauce(object? sender, RoutedEventArgs e)
     {
       try
       {
@@ -72,20 +72,20 @@ namespace SPV3
       }
     }
 
-    private void ShowInputPresetWindow(object sender, RoutedEventArgs e)
+    private void ShowInputPresetWindow(object? sender, RoutedEventArgs e)
     {
       ControllerPreset controllerPresetWindow = new ControllerPreset();
       controllerPresetWindow.Show();
     }
 
-    private void GBufferChanged(object sender, RoutedEventArgs e)
+    private void GBufferChanged(object? sender, RoutedEventArgs e)
     {
       if ((bool)!GBuffer_CheckBox.IsChecked)
         MessageBox.Show("WARNING: VISR and Thermal Vision will not work. " +
                         "This should only be used on low-end computers as a last resort.");
     }
 
-    private void AdaptiveHDRChanged(object sender, RoutedEventArgs e)
+    private void AdaptiveHDRChanged(object? sender, RoutedEventArgs e)
     {
       if ((bool)!AdaptiveHDR_CheckBox.IsChecked)
       {
@@ -96,13 +96,13 @@ namespace SPV3
       }
     }
 
-    private void Update_AdaptiveHDRisReady(object sender, RoutedEventArgs e)
+    private void Update_AdaptiveHDRisReady(object? sender, RoutedEventArgs e)
     {
       if (_configuration == null) return;
       _configuration.Shaders.AdaptiveHDRisReady = true == _configuration.Loader.Shaders == _configuration.Shaders.AdaptiveHDR;
     }
 
-    private void PresetVeryLow(object sender, RoutedEventArgs e)
+    private void PresetVeryLow(object? sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = false;
       _configuration.Shaders.AdaptiveHDR = true;
@@ -126,7 +126,7 @@ namespace SPV3
       _configuration.Chimera.BlockLOD = false;
     }
 
-    private void PresetLow(object sender, RoutedEventArgs e)
+    private void PresetLow(object? sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
@@ -150,7 +150,7 @@ namespace SPV3
       _configuration.Chimera.BlockLOD = false;
     }
 
-    private void PresetMedium(object sender, RoutedEventArgs e)
+    private void PresetMedium(object? sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
@@ -174,7 +174,7 @@ namespace SPV3
       _configuration.Chimera.BlockLOD = false;
     }
 
-    private void PresetHigh(object sender, RoutedEventArgs e)
+    private void PresetHigh(object? sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
@@ -198,7 +198,7 @@ namespace SPV3
       _configuration.Chimera.BlockLOD = false;
     }
 
-    private void PresetVeryHigh(object sender, RoutedEventArgs e)
+    private void PresetVeryHigh(object? sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
@@ -222,7 +222,7 @@ namespace SPV3
       _configuration.Chimera.BlockLOD = false;
     }
 
-    private void PresetUltra(object sender, RoutedEventArgs e)
+    private void PresetUltra(object? sender, RoutedEventArgs e)
     {
       _configuration.OpenSauce.GBuffer = true;
       _configuration.Shaders.AdaptiveHDR = true;
@@ -246,24 +246,24 @@ namespace SPV3
       _configuration.Chimera.BlockLOD = false;
     }
 
-    private void ShowMore(object sender, RoutedEventArgs e)
+    private void ShowMore(object? sender, RoutedEventArgs e)
     {
       _configuration.ShowHxeSettings();
     }
 
-    private void ShowPositions(object sender, RoutedEventArgs e)
+    private void ShowPositions(object? sender, RoutedEventArgs e)
     {
       _configuration.ShowHxeWepPositions();
     }
 
-    private void EaxChanged(object sender, RoutedEventArgs e)
+    private void EaxChanged(object? sender, RoutedEventArgs e)
     {
       if (_configuration.Loader.EAX) // DevSkim: ignore DS187371
         MessageBox.Show("WARNING: EAX sound enhancements coincide with certain " + // DevSkim: ignore DS187371
                         "crashes. Please do not report sound effect crashes when EAX is ON."); // DevSkim: ignore DS187371
     }
 
-    private void SSR_Or_ResolutionChanged(object sender, RoutedEventArgs e)
+    private void SSR_Or_ResolutionChanged(object? sender, RoutedEventArgs e)
     {
       if (_configuration == null)
         return;
