@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  *
  * This software is provided 'as-is', without any express or implied
@@ -26,6 +26,7 @@ namespace SPV3
 {
   public static class Paths
   {
+#pragma warning disable format
     public const string Compile    = "0xCOMPILE";
     public const string AmaiSosu   = "amaisosu.exe";
     public const string Executable = "spv3.exe";
@@ -44,6 +45,7 @@ namespace SPV3
     public static readonly string Changelog     = Combine(CurrentDirectory,               "changelog.pdf");
     public static readonly string Credits       = Combine(CurrentDirectory,               "credits.pdf");
     public static readonly string OptimizeGuide = Combine(CurrentDirectory,               "optimization_guide.pdf");
+#pragma warning restore format
 
     public static string Packages(string target)
     {
