@@ -21,12 +21,12 @@
 
 namespace SPV3
 {
-    public static class Debug
-    {
+  public static class Debug
+  {
 #if DEBUG
     public const bool IsDebug = true;
 #else
-        public const bool IsDebug = false;
+    public const bool IsDebug = false;
 #endif
-    }
+  }
 }
