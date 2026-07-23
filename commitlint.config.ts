@@ -7,6 +7,7 @@ const scopes = {
   Compile: 'Affects "src/Compile.*"',
   Configuration: 'Affects "src/Configuration*".',
   contributing: 'Affects CONTRIBUTING.md',
+  ControllerPreset: 'Affects "src/ControllerPreset*".',
   'conv-pr': 'Affects ".github/workflows/conv-pull-requests.yml".',
   deps: 'Affects dependencies bundled with or depended on by published packages and artifacts. '
     + 'For NuGet package/PackageReferences, this means anything that has "runtime", "native" or '
