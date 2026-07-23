@@ -29,6 +29,7 @@ const scopes = {
   release: 'Reserved for release commits.',
   Setup: 'src/Setup.cs',
   Social: 'src/Social.*',
+  Splash: 'src/Splash.*',
   Version: 'src/Version.*',
   TODO: 'TODO.md or any todo comments.',
   vscode: './vscode/**/*',
