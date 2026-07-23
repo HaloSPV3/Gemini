@@ -38,21 +38,21 @@ namespace SPV3
       _install.Initialise();
     }
 
-    public event EventHandler Home;
+    public event EventHandler? Home;
 
-    private async void Install(object sender, RoutedEventArgs e)
+    private async void Install(object? sender, RoutedEventArgs e)
     {
       InstallButton.Content = "Installing...";
       await Task.Run(() => _install.Commit());
       InstallButton.Content = "Install";
     }
 
-    private void Back(object sender, RoutedEventArgs e)
+    private void Back(object? sender, RoutedEventArgs e)
     {
       Home?.Invoke(sender, e);
     }
 
-    private void Browse(object sender, RoutedEventArgs e)
+    private void Browse(object? sender, RoutedEventArgs e)
     {
       using (var dialog = new FolderBrowserDialog())
       {
@@ -61,7 +61,7 @@ namespace SPV3
       }
     }
 
-    private void BrowseSteam(object sender, RoutedEventArgs e)
+    private void BrowseSteam(object? sender, RoutedEventArgs e)
     {
       using (var dialog = new OpenFileDialog())
       {
@@ -73,37 +73,37 @@ namespace SPV3
       }
     }
 
-    private void InstallHce(object sender, RoutedEventArgs e)
+    private void InstallHce(object? sender, RoutedEventArgs e)
     {
       _install.InstallHce();
     }
 
-    private void InvokeSpv3(object sender, RoutedEventArgs e)
+    private void InvokeSpv3(object? sender, RoutedEventArgs e)
     {
       _install.InvokeSpv3();
     }
 
-    private void VerifyHce(object sender, RoutedEventArgs e)
+    private void VerifyHce(object? sender, RoutedEventArgs e)
     {
       _install.Initialise();
     }
 
-    private void CheckRunningProcesses(object sender, RoutedEventArgs e)
+    private void CheckRunningProcesses(object? sender, RoutedEventArgs e)
     {
       _install.IsHaloOrCEARunning();
     }
 
-    private void Quit(object sender, RoutedEventArgs e)
+    private void Quit(object? sender, RoutedEventArgs e)
     {
       Environment.Exit(0);
     }
 
-    private void ViewMain(object sender, RoutedEventArgs e)
+    private void ViewMain(object? sender, RoutedEventArgs e)
     {
       _install.ViewMain();
     }
 
-    private void Target_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    private void Target_TextChanged(object? sender, System.Windows.Controls.TextChangedEventArgs e)
     {
       try
       {
@@ -117,7 +117,7 @@ namespace SPV3
       }
     }
 
-    private void SteamExePath_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    private void SteamExePath_TextChanged(object? sender, System.Windows.Controls.TextChangedEventArgs e)
     {
       try
       {
@@ -139,12 +139,12 @@ namespace SPV3
     /// <summary>
     ///   Flip boolean on click
     /// </summary>
-    private void CompressButton_Click(object sender, RoutedEventArgs e)
+    private void CompressButton_Click(object? sender, RoutedEventArgs e)
     {
       _install.Compress = !_install.Compress;
     }
 
-    private void DirctList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    private void DirctList_SelectionChanged(object? sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
       /** After returning to the main menu to restart the
 			 * Install/Activation procedure, the selection will
@@ -160,7 +160,7 @@ namespace SPV3
       }
     }
 
-    private void OnLoadDrive(object sender, RoutedEventArgs e)
+    private void OnLoadDrive(object? sender, RoutedEventArgs e)
     {
       DirctList.ItemsSource = DriveInfo.GetDrives();
     }
