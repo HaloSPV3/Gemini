@@ -21,6 +21,7 @@ const scopes = {
   Kernel: 'Affects "src/Kernel*".',
   Main: 'Affects "src/Main.*".',
   News: 'Affects "src/News.*".',
+  Paths: 'Affects "src/Paths.cs".',
   README: 'Affects README.md or any other README documents.',
   release: 'Reserved for release commits.',
   Version: 'Affects "src/Version.*".',
