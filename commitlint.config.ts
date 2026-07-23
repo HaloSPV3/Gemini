@@ -28,6 +28,7 @@ const scopes = {
   Report: 'Affects "src/Report.*".',
   release: 'Reserved for release commits.',
   Setup: 'Affects "src/Setup.cs".',
+  Social: 'src/Social.*',
   Version: 'Affects "src/Version.*".',
   TODO: 'Affects TODO.md or any todo comments.',
   vscode: 'Affects "./vscode/**/*".',
