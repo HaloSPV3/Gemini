@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  *
  * This software is provided 'as-is', without any express or implied
@@ -43,7 +43,7 @@ namespace SPV3
 
     private void Twitter(object sender, MouseButtonEventArgs e)
     {
-      Process.Start(_getStartInfo("https://twitter.com/halo_spv3"));
+      Process.Start(_getStartInfo("https://x.com/halo_legacies"));
     }
 
     private void Discord(object sender, MouseButtonEventArgs e)
