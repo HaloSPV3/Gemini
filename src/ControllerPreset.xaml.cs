@@ -14,14 +14,14 @@ using System.Windows.Shapes;
 
 namespace SPV3
 {
-    /// <summary>
-    /// Interaction logic for ControllerPreset.xaml
-    /// </summary>
-    public partial class ControllerPreset : Window
+  /// <summary>
+  /// Interaction logic for ControllerPreset.xaml
+  /// </summary>
+  public partial class ControllerPreset : Window
+  {
+    public ControllerPreset()
     {
-        public ControllerPreset()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
     }
+  }
 }
