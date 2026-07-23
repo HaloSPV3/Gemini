@@ -227,29 +227,6 @@ namespace SPV3
       outputInfo();
       return;
 
-      /** Passively detect Steam MCC CEA */
-      if (Exists(SteamExePath))
-      {
-        CheckSteamPath(SteamExePath);
-        outputInfo();
-        return;
-      }
-
-      /** Passively detect Modifiable UWP MCC CEA */
-      if (string.IsNullOrEmpty(Halo1Path) || !Exists(Halo1Path))
-      {
-        CheckMCCWinStorePath();
-        outputInfo();
-        return;
-      }
-
-      /** else, prompt for activation */
-      outputInfo();
-      Status = "Please install a legal copy of Halo 1 before installing SPV3.";
-      CanInstall = false;
-      Main = Collapsed;
-      Activation = Visible;
-
       void outputInfo()
       {
         HXE.File file = (HXE.File)Paths.Install;
