@@ -19,6 +19,7 @@ const scopes = {
   Information: 'Affects "src/Information.*".',
   Install: 'Affects "src/Main.Install.cs", its section in "src/Main.Window.*", or "src/Install*".',
   Kernel: 'Affects "src/Kernel*".',
+  Main: 'Affects "src/Main.*".',
   News: 'Affects "src/News.*".',
   README: 'Affects README.md or any other README documents.',
   release: 'Reserved for release commits.',
