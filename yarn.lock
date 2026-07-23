@@ -638,9 +638,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@halospv3/hce.shared-config@npm:^3.12.2":
-  version: 3.12.2
-  resolution: "@halospv3/hce.shared-config@npm:3.12.2"
+"@halospv3/hce.shared-config@npm:^3.13.0":
+  version: 3.13.0
+  resolution: "@halospv3/hce.shared-config@npm:3.13.0"
   dependencies:
     "@commitlint/cli": "npm:^21.2.1"
     "@commitlint/config-conventional": "npm:^21.2.0"
@@ -680,7 +680,7 @@ __metadata:
       optional: true
     "@semantic-release/gitlab":
       optional: true
-  checksum: 10c0/5bc2400a1817669d4280ab6ceeb4344465a47190cdf055be84d0a0abe6aca3e54eecdb0e06e4844040c757b38206476d2a9ee874abbc3c31c791aafcc6d47afb
+  checksum: 10c0/3b66e4eed95bd017dc193f366888fe891db640441c41746abf63396edd0b082ca0a37b7fabbad44b4e014aaf8922215af3c41bb0e06f953515fb76d93f129bc0
   languageName: node
   linkType: hard
 
@@ -6355,7 +6355,7 @@ __metadata:
     "@eslint/js": "npm:^10.0.1"
     "@eslint/json": "npm:^2.0.1"
     "@eslint/markdown": "npm:^8.0.3"
-    "@halospv3/hce.shared-config": "npm:^3.12.2"
+    "@halospv3/hce.shared-config": "npm:^3.13.0"
     "@semantic-release/changelog": "npm:^7.0.0"
     "@semantic-release/commit-analyzer": "npm:^13.0.1"
     "@semantic-release/exec": "npm:^7.1.0"
