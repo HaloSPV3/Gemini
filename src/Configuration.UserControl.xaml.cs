@@ -87,7 +87,7 @@ namespace SPV3
 
     private void AdaptiveHDRChanged(object? sender, RoutedEventArgs e)
     {
-      if ((bool)!AdaptiveHDR_CheckBox.IsChecked)
+      if (!(AdaptiveHDR_CheckBox.IsChecked ?? false))
       {
         _configuration.OpenSauce.Bloom = false;
         _configuration.Shaders.SSR = false;
