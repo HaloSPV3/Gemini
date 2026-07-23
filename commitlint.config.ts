@@ -18,6 +18,7 @@ const scopes = {
     + 'PrivateAssets="All" and no "runtime", "native", or "contentfiles" to be included in output.',
   Information: 'Affects "src/Information.*".',
   Install: 'Affects "src/Main.Install.cs", its section in "src/Main.Window.*", or "src/Install*".',
+  Kernel: 'Affects "src/Kernel*".',
   News: 'Affects "src/News.*".',
   README: 'Affects README.md or any other README documents.',
   release: 'Reserved for release commits.',
