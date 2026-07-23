@@ -25,6 +25,7 @@ const scopes = {
   News: 'Affects "src/News.*".',
   Paths: 'Affects "src/Paths.cs".',
   README: 'Affects README.md or any other README documents.',
+  Report: 'Affects "src/Report.*".',
   release: 'Reserved for release commits.',
   Version: 'Affects "src/Version.*".',
   TODO: 'Affects TODO.md or any todo comments.',
