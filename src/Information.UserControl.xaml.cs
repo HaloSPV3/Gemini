@@ -38,22 +38,22 @@ namespace SPV3
       OptiGuideButton.Visibility = File.Exists(Paths.OptimizeGuide) ? Visibility.Visible : Visibility.Collapsed;
     }
 
-    private void Readme(object sender, MouseButtonEventArgs e)
+    private void Readme(object? sender, MouseButtonEventArgs e)
     {
       Process.Start(Paths.Readme);
     }
 
-    private void Changelog(object sender, MouseButtonEventArgs e)
+    private void Changelog(object? sender, MouseButtonEventArgs e)
     {
       Process.Start(Paths.Changelog);
     }
 
-    private void Credits(object sender, MouseButtonEventArgs e)
+    private void Credits(object? sender, MouseButtonEventArgs e)
     {
       Process.Start(Paths.Credits);
     }
 
-    private void OptimizationGuide(object sender, MouseButtonEventArgs e)
+    private void OptimizationGuide(object? sender, MouseButtonEventArgs e)
     {
       Process.Start(Paths.OptimizeGuide);
     }
