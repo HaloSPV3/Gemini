@@ -64,3 +64,4 @@ jobs:
         env:
           DEBUG: semantic-release*
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BuildInParallel: 'false'
