@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  * Copyright (c) 2021 Noah Sherwin
  *
@@ -41,9 +41,9 @@ namespace SPV3
     {
       var startInfo = new ProcessStartInfo()
       {
-          FileName = "https://github.com/HaloSPV3/SPV3.Loader/compare/" +
-                    $"v{Assembly.Version}...v{Upstream.Version}",
-          UseShellExecute = true
+        FileName = "https://github.com/HaloSPV3/SPV3.Loader/compare/" +
+          $"v{Assembly.Version}...v{Upstream.Version}",
+        UseShellExecute = true
       };
       Process.Start(startInfo);
     }

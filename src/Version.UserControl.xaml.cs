@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  *
  * This software is provided 'as-is', without any express or implied
@@ -36,7 +36,7 @@ namespace SPV3
     public Version_UserControl()
     {
       InitializeComponent();
-      _version = (Version) DataContext;
+      _version = (Version)DataContext;
       _version.Initialise();
     }
 
