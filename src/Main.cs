@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  * Copyright (c) 2021 Noah Sherwin
  *
@@ -27,103 +27,103 @@ using static System.IO.File;
 
 namespace SPV3
 {
-    public partial class Main
+  public partial class Main
+  {
+    public MainError Error { get; set; } = new MainError();   /* catches & shows exceptions   */
+    public MainInstall Install { get; set; } = new MainInstall(); /* checks & allows installation */
+    public MainCompile Compile { get; set; } = new MainCompile(); /* checks & allows compilation  */
+    public MainLoad Load { get; set; } = new MainLoad();    /* checks & allows loading      */
+    public MainAssets Assets { get; set; } = new MainAssets();  /* permits SPV3 assets update   */
+
+    /// <summary>
+    ///   Wrapper for subclass initialization methods.
+    /// </summary>
+    public void Initialise()
     {
-        public MainError Error { get; set; } = new MainError();   /* catches & shows exceptions   */
-        public MainInstall Install { get; set; } = new MainInstall(); /* checks & allows installation */
-        public MainCompile Compile { get; set; } = new MainCompile(); /* checks & allows compilation  */
-        public MainLoad Load { get; set; } = new MainLoad();    /* checks & allows loading      */
-        public MainAssets Assets { get; set; } = new MainAssets();  /* permits SPV3 assets update   */
+      Directory.CreateDirectory(Paths.Directory);     /* create data directory */
 
-        /// <summary>
-        ///   Wrapper for subclass initialization methods.
-        /// </summary>
-        public void Initialise()
-        {
-            Directory.CreateDirectory(Paths.Directory);     /* create data directory */
+      if (Exists(Paths.Exception) && new FileInfo(Paths.Exception).Length > 0x100000) // If larger than 1 MiB, ...
+        WriteAllText(Paths.Exception, ""); // ...clear log.
 
-            if (Exists(Paths.Exception) && new FileInfo(Paths.Exception).Length > 0x100000) // If larger than 1 MiB, ...
-                WriteAllText(Paths.Exception, ""); // ...clear log.
+      /**
+       * We determine installation or initiation mode:
+       *
+       * -   initiation: The HCE executable exists, thus SPV3 is ready to be loaded.
+       * -   installation: The manifest exists, thus SPV3 is ready to be installed.
+       *
+       * If neither of the above apply in this scenario, then we prohibit loading or installing; instead, we prompt the
+       * user to place the loader in the current directory.
+       */
 
-            /**
-             * We determine installation or initiation mode:
-             *
-             * -   initiation: The HCE executable exists, thus SPV3 is ready to be loaded.
-             * -   installation: The manifest exists, thus SPV3 is ready to be installed.
-             *
-             * If neither of the above apply in this scenario, then we prohibit loading or installing; instead, we prompt the
-             * user to place the loader in the current directory.
-             */
+      switch (Context.Infer())
+      {
+        case Context.Type.Load:
+          Load.Visibility = Visibility.Visible;
+          Task.Run(() => { Assets.Initialise(); });
+          break;
 
-            switch (Context.Infer())
-            {
-                case Context.Type.Load:
-                    Load.Visibility = Visibility.Visible;
-                    Task.Run(() => { Assets.Initialise(); });
-                    break;
+        case Context.Type.Install:
+          Install.Visibility = Visibility.Visible;
+          break;
 
-                case Context.Type.Install:
-                    Install.Visibility = Visibility.Visible;
-                    break;
+        case Context.Type.Invalid:
+          Error.Visibility = Visibility.Visible;
+          Error.Content = "Please ensure this loader is in the appropriate SPV3 folder.";
 
-                case Context.Type.Invalid:
-                    Error.Visibility = Visibility.Visible;
-                    Error.Content = "Please ensure this loader is in the appropriate SPV3 folder.";
+          break;
 
-                    break;
+        default:
+          throw new ArgumentOutOfRangeException();
+      }
 
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            if (Exists(Paths.Compile))
-                Compile.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        ///   Wrapper for the load routine with UI support.
-        /// </summary>
-        public void Invoke()
-        {
-            try
-            {
-                Load.Invoke();
-            }
-            catch (Exception e)
-            {
-                Exception(e, "Loading error");
-            }
-        }
-
-        /// <summary>
-        ///   Wrapper for the asset update routine with UI support.
-        /// </summary>
-        public void Update()
-        {
-            try
-            {
-                Assets.Update();
-            }
-            catch (Exception e)
-            {
-                Exception(e, "Update error");
-            }
-        }
-
-        /// <summary>
-        ///   Successfully exits the SPV3 loader.
-        /// </summary>
-        public void Quit()
-        {
-            Environment.Exit(0);
-        }
-
-        private void Exception(Exception e, string description)
-        {
-            AppendAllText(Paths.Exception, e.ToString() + "\n");
-
-            Error.Visibility = Visibility.Visible;
-            Error.Content = $"{description}: {e.Message.ToLower()}\n\nClick here for more information.";
-        }
+      if (Exists(Paths.Compile))
+        Compile.Visibility = Visibility.Visible;
     }
+
+    /// <summary>
+    ///   Wrapper for the load routine with UI support.
+    /// </summary>
+    public void Invoke()
+    {
+      try
+      {
+        Load.Invoke();
+      }
+      catch (Exception e)
+      {
+        Exception(e, "Loading error");
+      }
+    }
+
+    /// <summary>
+    ///   Wrapper for the asset update routine with UI support.
+    /// </summary>
+    public void Update()
+    {
+      try
+      {
+        Assets.Update();
+      }
+      catch (Exception e)
+      {
+        Exception(e, "Update error");
+      }
+    }
+
+    /// <summary>
+    ///   Successfully exits the SPV3 loader.
+    /// </summary>
+    public void Quit()
+    {
+      Environment.Exit(0);
+    }
+
+    private void Exception(Exception e, string description)
+    {
+      AppendAllText(Paths.Exception, e.ToString() + "\n");
+
+      Error.Visibility = Visibility.Visible;
+      Error.Content = $"{description}: {e.Message.ToLower()}\n\nClick here for more information.";
+    }
+  }
 }

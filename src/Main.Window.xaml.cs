@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019 Emilian Roman
  *
  * This software is provided 'as-is', without any express or implied
@@ -38,14 +38,16 @@ namespace SPV3
       InitializeComponent();
       MainWindow.WindowTitleBrush = new SolidColorBrush(Color.FromArgb(100, 21, 43, 82));
 
-      _main = (Main) DataContext;
+      _main = (Main)DataContext;
       _main.Initialise();
 
+#pragma warning disable format
       ConfigurationUserControl.Home += Main;
       ReportUserControl.Home        += Main;
       InstallUserControl.Home       += Main;
       CompileUserControl.Home       += Main;
       VersionUserControl.Update     += Update;
+#pragma warning restore format
     }
 
     private async void Load(object sender, RoutedEventArgs e)
