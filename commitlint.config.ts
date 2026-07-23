@@ -27,6 +27,7 @@ const scopes = {
   README: 'Affects README.md or any other README documents.',
   Report: 'Affects "src/Report.*".',
   release: 'Reserved for release commits.',
+  Setup: 'Affects "src/Setup.cs".',
   Version: 'Affects "src/Version.*".',
   TODO: 'Affects TODO.md or any todo comments.',
   vscode: 'Affects "./vscode/**/*".',
