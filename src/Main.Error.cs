@@ -29,7 +29,7 @@ namespace SPV3
   {
     public class MainError : INotifyPropertyChanged
     {
-      private string     _content;
+      private string _content = string.Empty;
       private Visibility _visibility = Visibility.Collapsed;
 
       public Visibility Visibility
