@@ -82,9 +82,9 @@ namespace SPV3
         using (var sr = new StreamReader(contentStream))
         using (var reader = new StringReader(sr.ReadToEnd()))
         {
-          var news = (News)new XmlSerializer(typeof(News)).Deserialize(reader);
-          Content = news.Content;
-          Link = news.Link;
+          var news = (News?)new XmlSerializer(typeof(News)).Deserialize(reader);
+          Content = news?.Content ?? "Failed to  parse News";
+          Link = news?.Link ?? string.Empty;
           Visibility = Visibility.Visible;
         }
       }
