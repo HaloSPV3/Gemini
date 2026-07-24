@@ -92,9 +92,10 @@ namespace SPV3
 
       public async void Initialise()
       {
+        TimeSpan? oldTimeout = null;
         try
         {
-          var oldTimeout = Client.Timeout;
+          oldTimeout = Client.Timeout;
           Client.Timeout = TimeSpan.FromSeconds(10);
 
           try
@@ -123,11 +124,15 @@ namespace SPV3
             Visibility = serverVersion > clientVersion ? Visibility.Visible : Visibility.Collapsed;
             Address = sr.ReadLine()?.TrimEnd() ?? throw new NullReferenceException("Update manifest did not contain file URL.");
           }
-          Client.Timeout = oldTimeout;
         }
         catch (Exception)
         {
           Visibility = Visibility.Collapsed;
+        }
+        finally
+        {
+          if (oldTimeout.HasValue)
+            Client.Timeout = (TimeSpan)oldTimeout;
         }
       }
 
