@@ -51,7 +51,7 @@ jobs:
       - run: yarn install --immutable
 
       - name: Setup Dotnet
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           cache: true
           cache-dependency-path: |
