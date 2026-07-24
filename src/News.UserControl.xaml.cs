@@ -36,7 +36,7 @@ namespace SPV3
       Task.Run(() => _news.Initialise());
     }
 
-    private void Visit(object sender, MouseButtonEventArgs e)
+    private void Visit(object? sender, MouseButtonEventArgs e)
     {
       var startInfo = new ProcessStartInfo(_news.Link) { UseShellExecute = true };
       Process.Start(startInfo);
