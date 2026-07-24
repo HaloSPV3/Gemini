@@ -40,14 +40,14 @@ namespace SPV3
       _version.Initialise();
     }
 
-    public event EventHandler Update;
+    public event EventHandler? Update;
 
-    private void Assembly(object sender, MouseButtonEventArgs e)
+    private void Assembly(object? sender, MouseButtonEventArgs e)
     {
       Process.Start(_startInfo);
     }
 
-    private async void Upstream(object sender, MouseButtonEventArgs e)
+    private async void Upstream(object? sender, MouseButtonEventArgs e)
     {
       Update?.Invoke(sender, e);
 
@@ -61,7 +61,7 @@ namespace SPV3
       Environment.Exit(0);
     }
 
-    private void Changelog(object sender, MouseButtonEventArgs e)
+    private void Changelog(object? sender, MouseButtonEventArgs e)
     {
       _version.Changelog();
     }
