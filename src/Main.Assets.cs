@@ -35,7 +35,7 @@ namespace SPV3
     public class MainAssets : INotifyPropertyChanged
     {
       private static readonly string Address =
-        "https://raw.githubusercontent.com/HaloSPV3/HCE/main/spv3/updates/update.hxe?" + Guid.NewGuid();
+        "https://raw.githubusercontent.com/HaloSPV3/HCE/meta/update.hxe?" + Guid.NewGuid();
 
       private readonly Update _update = new Update();
       private string _status = "Update SPV3 Data";
