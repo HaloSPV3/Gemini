@@ -50,7 +50,7 @@ namespace SPV3
 #pragma warning restore format
     }
 
-    private async void Load(object sender, RoutedEventArgs e)
+    private async void Load(object? sender, RoutedEventArgs e)
     {
       Splash loading_splash = new Splash();
       LoadButton.IsEnabled = false;
@@ -60,45 +60,45 @@ namespace SPV3
       loading_splash.QueueSplashClose();
     }
 
-    private async void Assets(object sender, RoutedEventArgs e)
+    private async void Assets(object? sender, RoutedEventArgs e)
     {
       AssetsButton.IsEnabled = false;
       await Task.Run(() => { _main.Update(); });
       AssetsButton.IsEnabled = true;
     }
 
-    private void Quit(object sender, RoutedEventArgs e)
+    private void Quit(object? sender, RoutedEventArgs e)
     {
       _main.Quit();
     }
 
-    private void Report(object sender, MouseButtonEventArgs e)
+    private void Report(object? sender, MouseButtonEventArgs e)
     {
       MainTabControl.SelectedItem = ReportTabItem;
       ReportUserControl.Report.Initialise();
     }
 
-    private void Main(object sender, EventArgs e)
+    private void Main(object? sender, EventArgs e)
     {
       MainTabControl.SelectedItem = MainTabItem;
     }
 
-    private void Update(object sender, EventArgs e)
+    private void Update(object? sender, EventArgs e)
     {
       MainTabControl.SelectedItem = UpdateTabItem;
     }
 
-    private void Install(object sender, RoutedEventArgs e)
+    private void Install(object? sender, RoutedEventArgs e)
     {
       MainTabControl.SelectedItem = InstallTabItem;
     }
 
-    private void Compile(object sender, RoutedEventArgs e)
+    private void Compile(object? sender, RoutedEventArgs e)
     {
       MainTabControl.SelectedItem = CompileTabItem;
     }
 
-    private void Settings(object sender, RoutedEventArgs e)
+    private void Settings(object? sender, RoutedEventArgs e)
     {
       MainTabControl.SelectedItem = ConfigurationTabItem;
     }
