@@ -1,3 +1,17 @@
+## [2.3.0-alpha.2](https://github.com/HaloSPV3/SPV3.Loader/compare/v2.3.0-alpha.1...v2.3.0-alpha.2) (2026-07-24)
+
+### Bug Fixes
+
+* **Configuration:** prevent possible `InvalidOperationException` in `AdaptiveHDRChanged` ([7454ea0](https://github.com/HaloSPV3/SPV3.Loader/commit/7454ea01fb33c1bc374342ae6caaebd87047caf2))
+* **Install:** add detailed Exception when the install path lacks a path root i.e. drive/volume letter ([a0f17da](https://github.com/HaloSPV3/SPV3.Loader/commit/a0f17da2263dfd6a6fa79fd3417fc72c12671007))
+* **Main:** change Assets (update.hxe) address to https://raw.githubusercontent.com/HaloSPV3/HCE/meta/update.hxe ([c869e93](https://github.com/HaloSPV3/SPV3.Loader/commit/c869e9329d15fa42128470f4bc4dd7b6b336ab51))
+* **Main:** initialize MainError.Content to `string.Empty` ([3419e29](https://github.com/HaloSPV3/SPV3.Loader/commit/3419e29613ce775dbc52ad85a48dd6d58211aacc))
+* **News:** add default "Fail" message when News fails to fetch or parse ([f2cb2b1](https://github.com/HaloSPV3/SPV3.Loader/commit/f2cb2b119e41d3977d7bc9b01fc0fbb5966d5f8b))
+* **Report:** init Report.Stack to `string.Empty` ([6adc027](https://github.com/HaloSPV3/SPV3.Loader/commit/6adc027d0db3db43dcbdbac226014cfa2fe49648))
+* **Version:** gracefully handle `HXE.Latest` null deserialization ([2fea9d2](https://github.com/HaloSPV3/SPV3.Loader/commit/2fea9d22983643ca82e2476e25be8d3fe4ad57db))
+* **Version:** init Address, Content to `string.Empty` and `Version` to a new `Version` object to prevent read-before-init errors ([d046e92](https://github.com/HaloSPV3/SPV3.Loader/commit/d046e92b1ad143ab58e07457b1b8b4933ba3a90d))
+* **Version:** restore HttpClient timeout in `finally` clause ([56824e4](https://github.com/HaloSPV3/SPV3.Loader/commit/56824e4ebf7f4de2e7dd1d31c1af7b76e0cf2bd0))
+
 ## [2.3.0-alpha.1](https://github.com/HaloSPV3/SPV3.Loader/compare/v2.2.2...v2.3.0-alpha.1) (2026-07-23)
 
 ### Features
