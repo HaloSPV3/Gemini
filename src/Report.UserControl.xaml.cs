@@ -31,7 +31,7 @@ namespace SPV3
     public Report_UserControl()
     {
       InitializeComponent();
-      Report = (Report) DataContext;
+      Report = (Report)DataContext;
       Report.Initialise();
     }
 
