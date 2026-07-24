@@ -27,7 +27,7 @@ namespace SPV3
 {
   public class Report : INotifyPropertyChanged
   {
-    private string _stack;
+    private string _stack = string.Empty;
 
     public string Stack
     {
