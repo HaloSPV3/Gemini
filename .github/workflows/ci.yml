@@ -45,7 +45,7 @@ jobs:
 
       - run: yarn install --immutable
 
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
 
       # if run simultaneously, the logs would be a mess
       - name: Build (Debug)
