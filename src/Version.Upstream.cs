@@ -114,7 +114,15 @@ namespace SPV3
           using (var sr = new StreamReader(rs
             ?? throw new NullReferenceException("There was a 'success' response from the server, but the expected content was not found.")))
           {
-            var latest = (HXE.Latest)new XmlSerializer(typeof(HXE.Latest)).Deserialize(rs);
+            var latest = (HXE.Latest?)new XmlSerializer(typeof(HXE.Latest)).Deserialize(rs);
+            if (latest == null)
+            {
+              // for debug purposes
+              Content = "Unable to parse HTTP response";
+              Visibility = Visibility.Collapsed;
+              return;
+            }
+
             var app = latest.Apps.First(x => x.name.Equals("SPV3", StringComparison.Ordinal));
             var serverVersion = app.version;
             var clientVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
