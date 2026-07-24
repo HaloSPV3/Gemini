@@ -543,7 +543,9 @@ namespace SPV3
         /**
           * Check if the target drive has at least 16GB of free space
           */
-        var targetDrive = new DriveInfo(Path.GetPathRoot(path));
+        var pathRoot = Path.GetPathRoot(path)
+          ?? throw new Exception($"The following path does not have drive/root information: \"{path}\".");
+        var targetDrive = new DriveInfo(pathRoot);
 
         if (targetDrive.IsReady && targetDrive.TotalFreeSpace > 17179869184)
         {
