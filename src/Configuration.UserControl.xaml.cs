@@ -80,7 +80,7 @@ namespace SPV3
 
     private void GBufferChanged(object? sender, RoutedEventArgs e)
     {
-      if ((bool)!GBuffer_CheckBox.IsChecked)
+      if (!(GBuffer_CheckBox.IsChecked ?? false))
         MessageBox.Show("WARNING: VISR and Thermal Vision will not work. " +
                         "This should only be used on low-end computers as a last resort.");
     }
