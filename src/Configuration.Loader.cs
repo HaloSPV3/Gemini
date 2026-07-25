@@ -43,9 +43,9 @@ namespace SPV3
       private bool _doom = false;                                 /* toggle spv3 doom mode                      */
       private bool _eax = false;                                 /* toggle hw accel. & environmental sound     */
       private bool _elevated = false;                                 /* runs spv3/hce in elevated (admin) mode     */
-      private byte _framerate = 60;                                   /* framerate to run spv3 at (in vsync mode)   */
+      private byte _framerate = 60;                                   /* framerate to run spv3 at (in v-sync mode)   */
       private bool _gammaOn = false;                                 /* when false, runs spv3/hce with -nogamma    */
-      private byte _gamma = 150;                                   /* gamma level to run spv3 at (in vsync mode) */
+      private byte _gamma = 150;                                   /* gamma level to run spv3 at (in v-sync mode) */
       private ushort _height = (ushort)PrimaryScreen.Bounds.Height;  /* height spv3/hce will be displayed at       */
       private bool _photo = false;                                 /* enables spv3 photo/blind mode              */
       private bool _preset = true;                                  /* use the built-in spv3 controller preset    */
