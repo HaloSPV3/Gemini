@@ -38,7 +38,7 @@ namespace SPV3
 
       private byte _adapter;                                          /* physical monitor to run hce/spv3 on        */
       private bool _borderless = false;                               /* run hce/spv3 without window borders        */
-      private bool _cinemabars = false;                               /* toggle spv3 cinematic black bars           */
+      private bool _cinemaBars = false;                               /* toggle spv3 cinematic black bars           */
       private byte _displayMode = 0;                                  /* display - fullscreen/window/borderless     */
       private bool _doom = false;                                 /* toggle spv3 doom mode                      */
       private bool _eax = false;                                 /* toggle hw accel. & environmental sound     */
@@ -227,11 +227,11 @@ namespace SPV3
 
       public bool CinemaBars
       {
-        get => _cinemabars;
+        get => _cinemaBars;
         set
         {
-          if (value == _cinemabars) return;
-          _cinemabars = value;
+          if (value == _cinemaBars) return;
+          _cinemaBars = value;
           OnPropertyChanged();
         }
       }
