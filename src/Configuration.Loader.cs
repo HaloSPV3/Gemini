@@ -51,7 +51,7 @@ namespace SPV3
       private bool _preset = true;                                  /* use the built-in spv3 controller preset    */
       private bool _resolutionEnabled = false;                        /* ability to provide custom resolution       */
       private bool _shaders = true;                                  /* toggle spv3 post-processing effects        */
-      private bool _vsync = false;                                 /* V-sync preference (locked vs unlocked)     */
+      private bool _vSync = false;                                 /* V-sync preference (locked vs unlocked)     */
       private ushort _width = (ushort)PrimaryScreen.Bounds.Width;   /* width spv3/hce will be displayed at        */
       private bool _window = false;                                 /* runs spv3/hce as a windowed application    */
 
@@ -170,11 +170,11 @@ namespace SPV3
 
       public bool Vsync
       {
-        get => _vsync;
+        get => _vSync;
         set
         {
-          if (value == _vsync) return;
-          _vsync = value;
+          if (value == _vSync) return;
+          _vSync = value;
           OnPropertyChanged();
           if (value == true)
             ResetDisplayMode();
