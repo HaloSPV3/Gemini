@@ -71,7 +71,7 @@ namespace SPV3
       }
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public async void Commit()
     {
@@ -138,7 +138,7 @@ namespace SPV3
     }
 
     [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
