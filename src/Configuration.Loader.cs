@@ -281,7 +281,7 @@ namespace SPV3
             .Replace("DISPLAY", "Display ")
         ).ToList();
 
-      public event PropertyChangedEventHandler PropertyChanged;
+      public event PropertyChangedEventHandler? PropertyChanged;
 
       public void ResetDisplayMode()
       {
@@ -460,7 +460,7 @@ namespace SPV3
       }
 
       [NotifyPropertyChangedInvocator]
-      protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+      protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
       {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
       }

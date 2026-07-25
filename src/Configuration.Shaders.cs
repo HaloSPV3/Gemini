@@ -210,7 +210,7 @@ namespace SPV3
         }
       }
 
-      public event PropertyChangedEventHandler PropertyChanged;
+      public event PropertyChangedEventHandler? PropertyChanged;
 
       /// <summary>
       /// Saves this instance to SPV3.Kernel.hxe
@@ -288,7 +288,7 @@ namespace SPV3
       }
 
       [NotifyPropertyChangedInvocator]
-      protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+      protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
       {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
       }
