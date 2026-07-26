@@ -33,9 +33,9 @@ namespace SPV3
   {
     public class VersionAssembly : INotifyPropertyChanged
     {
-      private string _address;
-      private string _content;
-      private System.Version _version;
+      private string _address = string.Empty;
+      private string _content = string.Empty;
+      private System.Version _version = new();
 
       private Visibility _visibility = Visibility.Collapsed;
 
