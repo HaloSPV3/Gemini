@@ -19,13 +19,10 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using SPV3.Annotations;
-using static System.Reflection.Assembly;
 
 namespace SPV3
 {
