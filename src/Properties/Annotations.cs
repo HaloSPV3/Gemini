@@ -193,7 +193,7 @@ namespace SPV3.Annotations
   /// <example>
   ///   <code>
   /// public class Foo : INotifyPropertyChanged {
-  ///   public event PropertyChangedEventHandler PropertyChanged;
+  ///   public event PropertyChangedEventHandler? PropertyChanged;
   ///
   ///   [NotifyPropertyChangedInvocator]
   ///   protected virtual void NotifyChanged(string propertyName) { ... }
