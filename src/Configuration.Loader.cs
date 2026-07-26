@@ -177,6 +177,7 @@ namespace SPV3
       }
 
       /// <summary> V-sync preference (locked vs unlocked) </summary>
+      // TODO: rename to VSync
       public bool Vsync
       {
         get => _vSync;
