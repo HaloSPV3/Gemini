@@ -32,6 +32,7 @@ namespace SPV3
 {
   public partial class Configuration
   {
+    /// <summary>See <see cref="HXE.Kernel.Configuration" />, <see cref="Kernel" /> </summary>
     public class ConfigurationLoader : INotifyPropertyChanged
     {
       private const int Length = 256;
