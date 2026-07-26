@@ -499,6 +499,7 @@ namespace SPV3.Annotations
   ///   which should not be removed and so is treated as used.
   /// </summary>
   [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
+  [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
   public sealed class PublicAPIAttribute : Attribute
   {
     public PublicAPIAttribute()
