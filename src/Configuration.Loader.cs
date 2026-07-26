@@ -36,31 +36,30 @@ namespace SPV3
     {
       private const int Length = 256;
 
-      private byte _adapter;                                          /* physical monitor to run hce/spv3 on        */
-      private bool _borderless = false;                               /* run hce/spv3 without window borders        */
-      private bool _cinemaBars = false;                               /* toggle spv3 cinematic black bars           */
-      private byte _displayMode = 0;                                  /* display - fullscreen/window/borderless     */
-      private bool _doom = false;                                 /* toggle spv3 doom mode                      */
-      private bool _eax = false;                                 /* toggle hw accel. & environmental sound     */
-      private bool _elevated = false;                                 /* runs spv3/hce in elevated (admin) mode     */
-      private byte _framerate = 60;                                   /* framerate to run spv3 at (in v-sync mode)   */
-      private bool _gammaOn = false;                                 /* when false, runs spv3/hce with -nogamma    */
-      private byte _gamma = 150;                                   /* gamma level to run spv3 at (in v-sync mode) */
-      private ushort _height = (ushort)PrimaryScreen.Bounds.Height;  /* height spv3/hce will be displayed at       */
-      private bool _photo = false;                                 /* enables spv3 photo/blind mode              */
-      private bool _preset = true;                                  /* use the built-in spv3 controller preset    */
-      private bool _resolutionEnabled = false;                        /* ability to provide custom resolution       */
-      private bool _shaders = true;                                  /* toggle spv3 post-processing effects        */
-      private bool _vSync = false;                                 /* V-sync preference (locked vs unlocked)     */
-      private ushort _width = (ushort)PrimaryScreen.Bounds.Width;   /* width spv3/hce will be displayed at        */
-      private bool _window = false;                                 /* runs spv3/hce as a windowed application    */
+      private byte _adapter;
+      private bool _borderless = false;
+      private bool _cinemaBars = false;
+      private byte _displayMode = 0;
+      private bool _doom = false;
+      private bool _eax = false;
+      private bool _elevated = false;
+      private byte _framerate = 60;
+      private bool _gammaOn = false;
+      private byte _gamma = 150;
+      private ushort _height = (ushort)PrimaryScreen.Bounds.Height;
+      private bool _photo = false;
+      private bool _preset = true;
+      private bool _resolutionEnabled = false;
+      private bool _shaders = true;
+      private bool _vSync = false;
+      private ushort _width = (ushort)PrimaryScreen.Bounds.Width;
+      private bool _window = false;
 
-      /**
-      * 0 == Fullscreen
-      * 1 == Window
-      * 2 == Borderless
-      */
-
+      /// <summary> display - fullscreen/window/borderless </summary>
+      /// <value> An untyped, signed-byte enum. See <see cref="DisplayModes"/>br/>
+      /// 0 == Fullscreen  <br/>
+      /// 1 == Window  <br/>
+      /// 2 == Borderless  <br/></value>
       public byte DisplayMode
       {
         get => _displayMode;
@@ -80,6 +79,7 @@ namespace SPV3
         Borderless = 2
       }
 
+      /// <summary> runs spv3/hce as a windowed application </summary>
       public bool Window
       {
         get => _window;
@@ -91,6 +91,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> width spv3/hce will be displayed at </summary>
       public ushort Width
       {
         get => _width;
@@ -102,6 +103,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> height spv3/hce will be displayed at </summary>
       public ushort Height
       {
         get => _height;
@@ -113,6 +115,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> toggle spv3 doom mode </summary>
       public bool DOOM
       {
         get => _doom;
@@ -124,6 +127,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> enables spv3 photo/blind mode </summary>
       public bool Photo
       {
         get => _photo;
@@ -135,6 +139,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> use the built-in spv3 controller preset </summary>
       public bool Preset
       {
         get => _preset;
@@ -146,6 +151,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> toggle spv3 post-processing effects </summary>
       public bool Shaders
       {
         get => _shaders;
@@ -157,6 +163,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> framerate to run spv3 at (in v-sync mode) </summary>
       public byte Framerate
       {
         get => _framerate;
@@ -168,6 +175,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> V-sync preference (locked vs unlocked) </summary>
       public bool Vsync
       {
         get => _vSync;
@@ -181,6 +189,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> toggle hardware acceleration and environmental sound (emulated via OpenAL-soft)</summary>
       public bool EAX //DevSkim: ignore DS187371
       {
         get => _eax;
@@ -192,6 +201,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> when false, runs spv3/hce with -nogamma </summary>
       public bool GammaOn
       {
         get => _gammaOn;
@@ -203,6 +213,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> gamma level to run spv3 at (in v-sync mode) </summary>
       public byte Gamma
       {
         get => _gamma;
@@ -214,6 +225,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> physical monitor to run hce/spv3 on </summary>
       public byte Adapter
       {
         get => _adapter;
@@ -225,6 +237,8 @@ namespace SPV3
         }
       }
 
+      /// <summary> toggle spv3 cinematic black bars </summary>
+      /// <seealso cref="HXE.Kernel.Configuration.ConfigurationTweaks.CinemaBars"/>
       public bool CinemaBars
       {
         get => _cinemaBars;
@@ -236,6 +250,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> run hce/spv3 without window borders </summary>
       public bool Borderless
       {
         get => _borderless;
@@ -247,6 +262,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> ability to provide custom resolution </summary>
       public bool ResolutionEnabled
       {
         get => _resolutionEnabled;
@@ -260,6 +276,7 @@ namespace SPV3
         }
       }
 
+      /// <summary> runs spv3/hce in elevated (admin) mode </summary>
       public bool Elevated
       {
         get => _elevated;
