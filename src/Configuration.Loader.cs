@@ -38,23 +38,23 @@ namespace SPV3
       private const int Length = 256;
 
       private byte _adapter;
-      private bool _borderless = false;
-      private bool _cinemaBars = false;
-      private byte _displayMode = 0;
-      private bool _doom = false;
-      private bool _eax = false;
-      private bool _elevated = false;
+      private bool _borderless;
+      private bool _cinemaBars;
+      private byte _displayMode;
+      private bool _doom;
+      private bool _eax;
+      private bool _elevated;
       private byte _framerate = 60;
-      private bool _gammaOn = false;
+      private bool _gammaOn;
       private byte _gamma = 150;
       private ushort _height = (ushort)PrimaryScreen.Bounds.Height;
-      private bool _photo = false;
+      private bool _photo;
       private bool _preset = true;
-      private bool _resolutionEnabled = false;
+      private bool _resolutionEnabled;
       private bool _shaders = true;
-      private bool _vSync = false;
+      private bool _vSync;
       private ushort _width = (ushort)PrimaryScreen.Bounds.Width;
-      private bool _window = false;
+      private bool _window;
 
       /// <summary> display - fullscreen/window/borderless </summary>
       /// <value> An untyped, signed-byte enum. See <see cref="DisplayModes"/>br/>
