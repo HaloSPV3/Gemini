@@ -191,4 +191,22 @@
     <!--<TrimmerRootAssembly Include="System.Security" />-->
     <TrimmerRootAssembly Include="HXE" />
   </ItemGroup>
+
+  <Target Name="BeforeWpfBuild" BeforeTargets="GenerateTemporaryTargetAssembly">
+    <PropertyGroup>
+      <_cfg>release</_cfg>
+      <_cfg Condition="'$(Configuration)' == 'debug'">debug</_cfg>
+      <_incompletePath>$([System.Text.RegularExpressions.Regex]::Matches(
+        "$(IntermediateOutputPath)", '([\\/])(release_)([\\/])')
+        )</_incompletePath>
+      <_tfm>$(TargetFramework)</_tfm>
+      <_tfm Condition="'$(_tfm)' == ''">UNKNOWN_$([System.Text.RegularExpressions.Regex]::Replace("$(MSBuildThisFileName)", "$(AssemblyName)_([a-zA-Z0-9]+)_wpftmp.csproj", "$1", "System.Text.RegularExpressions.RegexOptions.ECMAScript"))</_tfm>
+      <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+      <IntermediateOutputPath Condition="
+        '$(MSBuildThisFileName)' != ''
+        AND '$(MSBuildThisFileName.EndsWith(`_wpftmp`))'
+        AND '$(IntermediateOutputPath)' != ''
+        AND '$(_incompletePath)' != ''">$([System.Text.RegularExpressions.Regex]::Replace("$(IntermediateOutputPath)","([\\/])$(_cfg)_([\\/])", "$1$(_cfg)_$(_tfm)$2", "System.Text.RegularExpressions.RegexOptions.ECMAScript"))</IntermediateOutputPath>
+    </PropertyGroup>
+  </Target>
 </Project>
