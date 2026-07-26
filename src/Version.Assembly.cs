@@ -87,14 +87,11 @@ namespace SPV3
 
       public void Initialise()
       {
-        var version = GetExecutingAssembly()?.GetName().Version;
-        if (version.Major == 0) return;
-
-        var refHash = GitVersionInformation.ShortSha;
-
-        Version = version;
-        Content = $"Version {version}-{refHash.ToUpper()}";
-        Address = $"https://github.com/HaloSPV3/SPV3.Loader/commit/{refHash}";
+        Version = System.Version.TryParse(GitVersionInformation.AssemblySemVer, out var result)
+          ? result
+          : new();
+        Content = $"Version {GitVersionInformation.FullSemVer}-{GitVersionInformation.ShortSha.ToUpper()}";
+        Address = $"https://github.com/HaloSPV3/SPV3.Loader/releases/v{GitVersionInformation.FullSemVer}";
         Visibility = Visibility.Visible;
       }
 
