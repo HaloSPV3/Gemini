@@ -176,11 +176,7 @@
   </Choose>
 
   <ItemGroup> <!-- IL Link -->
-    <Content Update="HXE.dll">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <ExcludeFromSingleFile>false</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="sni.dll">
+    <Content Update="D3DCompiler_47_cor3.dll;HXE.dll;sni.dll;PenImc_cor3.dll;PresentationNative_cor3.dll;vcruntime140_core3.dll;wpfgfx_cor3.dll">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <ExcludeFromSingleFile>false</ExcludeFromSingleFile>
     </Content>
