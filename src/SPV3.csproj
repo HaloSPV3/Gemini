@@ -187,9 +187,9 @@
   </ItemGroup>
 
   <ItemGroup> <!-- Trimmer -->
-    <TrimmerRootAssembly Include="sni" /> <!-- runtime.native.system.data.sqlclient.sni -->
+    <!-- runtime.native.system.data.sqlclient.sni -->
+    <TrimmerRootAssembly Include="sni;HXE" />
     <!--<TrimmerRootAssembly Include="System.Security" />-->
-    <TrimmerRootAssembly Include="HXE" />
   </ItemGroup>
 
   <Target Name="BeforeWpfBuild" BeforeTargets="GenerateTemporaryTargetAssembly">
