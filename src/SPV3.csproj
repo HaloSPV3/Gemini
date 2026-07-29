@@ -126,7 +126,7 @@
   </ItemGroup>
 
   <ItemGroup> <!-- Project References -->
-    <ProjectReference Condition="'$(EnableBleedingEdgeHXE)' == 'true' AND '$(CI)' != 'true'"
+    <ProjectReference Condition="'$(EnableBleedingEdgeHXE)' == 'true'"
       Include="$(MSBuildProjectDirectory)/../ext/hxe/src/HXE.csproj">
       <Project>{acaa5d9f-b23d-43e1-b2df-8c03230975a1}</Project>
       <Name>HXE</Name>
@@ -138,7 +138,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="HXE" Version="2.3.1" />
+    <PackageReference Condition="'$(EnableBleedingEdgeHXE)' != 'true'"
+      Include="HXE" Version="2.3.1" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="Meziantou.Polyfill" Version="1.0.157">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
