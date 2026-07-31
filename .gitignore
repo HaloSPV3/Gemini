@@ -1,3 +1,20 @@
+.tsOut
+src/FodyWeavers.xsd
+.dotnet
+.dotnet-win
+.wineprefix
+
+### yarn ###
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # CodeQL Databases
 codeql/
 databases/
@@ -351,18 +368,3 @@ MigrationBackup/
 hash
 
 ### Created by https://www.gitignore.io
-### yarn ###
-# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
-
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
-.tsOut
-src/FodyWeavers.xsd
-.dotnet
-.dotnet-win
