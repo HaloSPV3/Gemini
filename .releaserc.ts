@@ -1,16 +1,16 @@
 /// <reference types="@halospv3/hce.shared-config/semantic-release__commit-analyzer" />
+/// <reference types="@halospv3/hce.shared-config/semantic-release__github" />
+import { type PluginSpecSRCommitAnalyzer, type PluginSpecSRGithub, type PluginSpecSRReleaseNotesGen } from '@halospv3/hce.shared-config/semanticReleaseConfig';
 import { getConfig } from '@halospv3/hce.shared-config/semanticReleaseConfigDotnet';
-import type { PluginSpecSRCommitAnalyzer, PluginSpecSRReleaseNotesGen } from '@halospv3/hce.shared-config/semanticReleaseConfig';
-import type { RuleObjects } from '@semantic-release/commit-analyzer';
-import { exit } from 'node:process';
-
-import '@semantic-release/commit-analyzer';
-import 'semantic-release-export-data';
-import '@semantic-release/release-notes-generator';
 import '@semantic-release/changelog';
-import '@semantic-release/git';
+import '@semantic-release/commit-analyzer';
+import type { RuleObjects } from '@semantic-release/commit-analyzer';
 import '@semantic-release/exec';
+import '@semantic-release/git';
 import '@semantic-release/github';
+import '@semantic-release/release-notes-generator';
+import { exit } from 'node:process';
+import 'semantic-release-export-data';
 
 const projectsToPublish = ['./src/SPV3.csproj'];
 
