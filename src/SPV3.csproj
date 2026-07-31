@@ -160,6 +160,7 @@
   <Choose>
     <When Condition="$(TargetFramework.StartsWith('net4'))">
       <PropertyGroup Label="Additional Properties (NET4)">
+        <PreferNativeArm64>true</PreferNativeArm64>
         <!-- Disabling these two properties prevents the output of (App).exe.config. Yippee! -->
         <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
         <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
