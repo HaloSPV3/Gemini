@@ -33,16 +33,17 @@ const developmentBranch = config.branches.find(branch =>
   typeof branch !== 'string' && branch.name === 'develop',
 ) as Exclude<typeof config.branches[number], string>;
 developmentBranch.prerelease = 'alpha';
-const sRCA = config.plugins?.find<PluginSpecSRCommitAnalyzer>(
+
+const commitAnalyzer = config.plugins?.find<PluginSpecSRCommitAnalyzer>(
   (p): p is PluginSpecSRCommitAnalyzer => p[0] === '@semantic-release/commit-analyzer',
 );
-if (sRCA) {
+if (commitAnalyzer) {
   const releaseRules = (
-    typeof sRCA[1].releaseRules === 'string'
-      ? (await import(sRCA[1].releaseRules) as (Exclude<typeof sRCA[1]['releaseRules'], string>))
-      : sRCA[1].releaseRules
+    typeof commitAnalyzer[1].releaseRules === 'string'
+      ? (await import(commitAnalyzer[1].releaseRules) as (Exclude<typeof commitAnalyzer[1]['releaseRules'], string>))
+      : commitAnalyzer[1].releaseRules
   ) ?? [];
-  sRCA[1].releaseRules = [
+  commitAnalyzer[1].releaseRules = [
     ...releaseRules,
     { type: 'revert', subject: '!(feat|fix|perf)', release: false },
     { type: 'revert', subject: '(build|chore|ci|docs|refactor|revert|style|test)', release: false },
