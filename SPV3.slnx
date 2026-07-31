@@ -1,4 +1,8 @@
+<!-- Example: https://github.com/microsoft/vs-solutionpersistence/blob/main/test/Microsoft.VisualStudio.SolutionPersistence.Tests/SlnAssets/Everything.slnx.xml -->
 <Solution>
   <Project Path="ext/HCE.DRP/src/DRP.vcxproj" Type="C#" />
-  <Project Path="src/SPV3.csproj" />
+  <Project Path="ext/hxe/src/HXE.csproj" />
+  <Project Path="src/SPV3.csproj">
+    <BuildDependency Project="ext/hxe/src/HXE.csproj" />
+  </Project>
 </Solution>
