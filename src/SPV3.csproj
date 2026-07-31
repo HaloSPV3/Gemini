@@ -173,6 +173,7 @@
       <ItemGroup Label="Additional References (NET4)">
         <PackageReference Include="Costura.Fody" Version="6.2.0" PrivateAssets="all" />
         <PackageReference Include="System.Text.Json" Version="10.0.10" />
+        <Reference Include="System.Net.Http" Version="4.2.0.0" Culture="neutral" PublicKeyToken="b03f5f7f11d50a3a" />
       </ItemGroup>
     </When>
   </Choose>
