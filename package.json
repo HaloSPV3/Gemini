@@ -17,6 +17,7 @@
   "scripts": {
     "postinstall": "husky",
     "build": "dotnet build && dotnet build -c:Release",
+    "lint": "eslint --cache",
     "test": "dotnet test",
     "publish": "dotnet restore src -t:PublishAll",
     "release": "semantic-release --debug",
