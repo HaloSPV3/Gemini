@@ -18,7 +18,6 @@
     "postinstall": "husky",
     "build": "dotnet build && dotnet build -c:Release",
     "test": "dotnet test",
-    "prepare": "husky",
     "publish": "dotnet restore src -t:PublishAll",
     "release": "semantic-release --debug",
     "restore": "dotnet restore && dotnet restore -p:Configuration=Release",
