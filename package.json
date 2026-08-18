@@ -4,6 +4,16 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "^24.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "onFail": "error",
+      "name": "node",
+      "version": "24.18.0"
+    }
+  },
   "scripts": {
     "postinstall": "husky",
     "build": "dotnet build && dotnet build -c:Release",
