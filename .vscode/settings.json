@@ -97,5 +97,8 @@
     "XBCD",
     "yumiris"
   ],
-  "cmake.sourceDirectory": "/home/noah/repos/HaloSPV3/SPV3.Loader/ext/HCE.DRP/src"
+  "cmake.sourceDirectory": "/home/noah/repos/HaloSPV3/SPV3.Loader/ext/HCE.DRP/src",
+  "csharp-dev-tools.solutionViewer.selectedWorkspaceSolutions": [
+    "SPV3.slnx"
+  ]
 }
