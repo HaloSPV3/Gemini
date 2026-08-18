@@ -15,14 +15,14 @@
     }
   },
   "scripts": {
-    "postinstall": "husky",
     "build": "dotnet build && dotnet build -c:Release",
     "lint": "eslint --cache",
-    "test": "dotnet test",
+    "postinstall": "husky",
     "publish": "dotnet restore src -t:PublishAll",
     "release": "semantic-release --debug",
     "restore": "dotnet restore && dotnet restore -p:Configuration=Release",
-    "sdks": "yarn dlx @yarnpkg/sdks"
+    "sdks": "yarn dlx @yarnpkg/sdks",
+    "test": "dotnet test"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^21.2.2",
