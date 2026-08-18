@@ -1,7 +1,7 @@
 .tsOut
 src/FodyWeavers.xsd
-.dotnet
-.dotnet-win
+**/.dotnet
+**/.dotnet-win
 .wineprefix
 
 ### yarn ###
