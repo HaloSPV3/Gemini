@@ -5,5 +5,6 @@
     "rollForward": "latestFeature",
     "paths": [".dotnet", ".dotnet-win", "$host$"],
     "errorMessage": "Required .NET SDK not found. Run ./install-dotnet.sh (macOS/Linux) or .\\install-dotnet.ps1 (Windows/Wine) to install it locally."
-  }
+  },
+  "test": { "runner": "Microsoft.Testing.Platform" }
 }
