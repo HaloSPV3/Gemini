@@ -54,11 +54,11 @@ $sdkVersion = & (Join-Path $installDir 'dotnet.exe') --version
 
 # Ensure .dotnet, .dotnet-win are in .gitignore
 $gitignorePath = Join-Path $scriptDir '.gitignore'
-if (!(Test-Path $gitignorePath) -or !(Select-String -Path $gitignorePath -Pattern '^\s*\.dotnet\s*$' -Quiet)) {
-  Add-Content -Path $gitignorePath -Value '.dotnet'
+if (!(Test-Path $gitignorePath) -or !(Select-String -Path $gitignorePath -SimpleMatch -Pattern '**/.dotnet' -Quiet)) {
+  Add-Content -Path $gitignorePath -Value '**/.dotnet'
 }
-if (!(Test-Path $gitignorePath) -or !(Select-String -Path $gitignorePath -Pattern '^\s*\.dotnet-win\s*$' -Quiet)) {
-  Add-Content -Path $gitignorePath -Value '.dotnet-win'
+if (!(Test-Path $gitignorePath) -or !(Select-String -Path $gitignorePath -SimpleMatch -Pattern '**/.dotnet-win' -Quiet)) {
+  Add-Content -Path $gitignorePath -Value '**/.dotnet-win'
 }
 
 # Install workloads if configured

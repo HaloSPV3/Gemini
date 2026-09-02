@@ -69,11 +69,11 @@ cat > "$SCRIPT_DIR/global.json" << EOF
 EOF
 
 # Ensure .dotnet, .dotnet-win are in .gitignore
-if ! grep -qxF '.dotnet' "$SCRIPT_DIR/.gitignore" 2>/dev/null; then
-    echo '.dotnet' >> "$SCRIPT_DIR/.gitignore"
+if ! grep -qxF '**/.dotnet' "$SCRIPT_DIR/.gitignore" 2>/dev/null; then
+    echo '**/.dotnet' >> "$SCRIPT_DIR/.gitignore"
 fi
-if ! grep -qxF '.dotnet-win' "$SCRIPT_DIR/.gitignore" 2>/dev/null; then
-    echo '.dotnet-win' >> "$SCRIPT_DIR/.gitignore"
+if ! grep -qxF '**/.dotnet-win' "$SCRIPT_DIR/.gitignore" 2>/dev/null; then
+    echo '**/.dotnet-win' >> "$SCRIPT_DIR/.gitignore"
 fi
 
 # Install workloads if configured
