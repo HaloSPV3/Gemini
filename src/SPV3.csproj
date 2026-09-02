@@ -26,6 +26,10 @@
     <PublisherName>Halo SPV3 Team</PublisherName>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+
+    <NET6_0_OR_GREATER Condition="'$(TargetFramework)' != ''">$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))</NET6_0_OR_GREATER>
+    <!-- <NET7_0_OR_GREATER Condition="'$(TargetFramework)' != ''">$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))</NET7_0_OR_GREATER> -->
+    <NET7_0_OR_GREATER Condition="'$(TargetFramework)' != ''">$([System.Text.RegularExpressions.Regex]::IsMatch("$(TargetFramework)", 'net([7-9]|\d{2}).0', RegexOptions.ECMAScript))</NET7_0_OR_GREATER>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
