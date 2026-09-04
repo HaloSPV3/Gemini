@@ -1,3 +1,24 @@
+## [2.3.0-alpha.3](https://github.com/HaloSPV3/SPV3.Loader/compare/v2.3.0-alpha.2...v2.3.0-alpha.3) (2026-09-04)
+
+### Features
+
+* **deps:** support .NET Framework 4.8 for legacy clients e.g. Windows 7/8/8.1/ and/or 32-bit x86 CPUs ([9b4232b](https://github.com/HaloSPV3/SPV3.Loader/commit/9b4232b1f47f175ed407825e08f309a696cc86f3))
+
+### Bug Fixes
+
+* **Configuration:** prevent `InvalidOperationException` when checking `GBuffer_CheckBox.IsChecked` ([ac1f7b7](https://github.com/HaloSPV3/SPV3.Loader/commit/ac1f7b788d5111c95d2b109f200f47ccb9e44978))
+* **deps:** upgrade System.Text.Json in .NET Framework releases for feature parity e.g. source generation ([57cf3c8](https://github.com/HaloSPV3/SPV3.Loader/commit/57cf3c82d97c30329747a495aa4b5bac74c62892))
+* **Version:** init Address, Content, Version ([80bcaf5](https://github.com/HaloSPV3/SPV3.Loader/commit/80bcaf57cbd858ef6efeef199a80621ee7eceb8e))
+* **Version:** use code-generated assembly version; change version URL to GitHub Release URL ([4af5cd4](https://github.com/HaloSPV3/SPV3.Loader/commit/4af5cd4816a02117413407acc7a5dbc14ea7dff2))
+
+### Performance Improvements
+
+* **deps:** prefer running as native Arm64 instead of emulated x64 when applicable ([1c3e146](https://github.com/HaloSPV3/SPV3.Loader/commit/1c3e14607d05a0d81a67f44742f81ac066e1b8c8))
+
+### Reverts
+
+* **deps:** drop support for net462 (.NET Framework 4.6.2), net480 (.NET Framework 4.8) ([5547773](https://github.com/HaloSPV3/SPV3.Loader/commit/5547773d81dc15dd4580a8fb4ddf5860176a8ae7))
+
 ## [2.3.0-alpha.2](https://github.com/HaloSPV3/SPV3.Loader/compare/v2.3.0-alpha.1...v2.3.0-alpha.2) (2026-07-24)
 
 ### Bug Fixes
